@@ -16,9 +16,9 @@ VDB serves as the authoritative source of genomic evidence that enables downstre
 ---
 
 ## Layer Ecosystem
-1. provider layer (VDB)
-2. contract layer (vdb_rdgp_interface)
-3. overlay layer (GSC)
+1. evidence providers (VAP, GSC, future RSP)
+2. authoritative evidence layer (VDB)
+3. interface contract layer (vdb_rdgp_interface)
 4. reasoning layer (RDGP)
 
 ---
@@ -41,6 +41,7 @@ Core entities:
 - run_id
 - source_pipeline
 - ingest_timestamp
+- assay_type
 
 ### Variants
 - variant_id
@@ -72,6 +73,53 @@ Core entities:
 - gene_symbol
 - ensembl_gene_id (if available)
 - gene_biotype (optional)
+
+---
+
+### Gene Identity Resolution (v1)
+
+VDB is the authoritative namespace-resolution layer for the ecosystem.
+
+VDB must support deterministic normalization and preservation of:
+
+- Ensembl gene identifiers
+- Entrez identifiers (if available)
+- HGNC-approved gene symbols
+- historical/deprecated symbols
+- source-specific aliases
+- unresolved or ambiguous mappings
+
+Gene identity normalization must preserve provenance and must never silently collapse ambiguous mappings.
+
+Namespace resolution decisions must be:
+
+- reproducible
+- traceable
+- source-aware
+- deterministic
+
+VDB acts as the canonical identity broker between:
+
+- VAP variant evidence
+- GSC phenotype overlays
+- future RSP convergence overlays
+- RDGP reasoning inputs
+
+---
+
+### Gene Namespace Aliases
+
+- alias_id
+- canonical_gene_id
+- alias_symbol
+- alias_source
+- alias_type
+- resolution_status
+- mapping_confidence
+- provenance_note
+
+Goal:
+Preserve namespace provenance without silently discarding source-specific identity information.
 
 ---
 
@@ -184,13 +232,45 @@ Ensure:
   - primary keys defined for all tables
   - foreign key relationships enforced
   - gene mapping is normalized (no free-text duplication)
+  - canonical namespace-resolution strategy defined
+  - alias preservation behavior defined
+  - ambiguous mapping behavior explicitly documented
 
 Goal:
-A normalized schema that can represent variant data correctly
+A normalized schema capable of preserving genomic evidence identity and namespace provenance deterministically.
 
 ---
 
-### M2 — Ingestion from VAP (Data Enters System)
+### M2 — Namespace Resolution Layer
+
+Implement deterministic namespace handling for:
+
+- Ensembl IDs
+- HGNC symbols
+- historical aliases
+- source-specific gene identifiers
+
+Requirements:
+
+- canonical identity preservation
+- alias traceability
+- provenance-aware mapping
+- unresolved-state preservation
+- no silent namespace collapse
+
+Validation should include:
+
+- deterministic normalization behavior
+- reproducible alias resolution
+- ambiguous mapping detection
+- source-aware namespace provenance
+
+Goal:
+VDB becomes the authoritative identity-resolution layer for downstream ecosystem integration.
+
+---
+
+### M3 — Ingestion from VAP (Data Enters System)
   - Parse VAP output (VCF or derived table) 
   - Insert into database 
   - Ensure: 
@@ -203,7 +283,7 @@ You can run VAP → load results into VDB reliably
 
 ---
 
-### M3 — Annotation Linkage (Meaningful Data Layer)
+### M4 — Annotation Linkage (Meaningful Data Layer)
 Extend schema to support:
   - functional consequence 
   - population frequency (even mock initially) 
@@ -221,7 +301,7 @@ Variants are no longer raw—they are interpretable
 
 ---
 
-### M4 — Query Layer
+### M5 — Query Layer
 
 VDB must expose all aggregation metrics required for deterministic downstream computation of variant_score.
 
@@ -254,7 +334,7 @@ Database supports deterministic construction of the gene-level evidence records 
 
 ---
 
-### M5 — Provenance + Auditability
+### M6 — Provenance + Auditability
 Track:
   - which pipeline generated data 
   - when data was ingested 
@@ -279,7 +359,15 @@ Every stored evidence record can be traced back to its origin.
 
 ---
 
-### M6 — Edge Cases + Data Integrity
+### M7 — Edge Cases + Data Integrity
+
+VDB must mediate cross-repository identity reconciliation without requiring upstream repositories to share identical namespace conventions.
+
+All cross-system overlays must preserve:
+- source identity
+- namespace provenance
+- normalization traceability
+
 Address:
   - multi-allelic variants 
   - missing annotations 
@@ -308,7 +396,7 @@ System handles real-world genomic data without silent failure.
 
 ---
 
-### M7 — Integration Hooks (Prepare for Ecosystem)
+### M8 — Integration Hooks (Prepare for Ecosystem)
 Prepare for:
 - GSC: 
     - gene-level joins 
@@ -353,6 +441,10 @@ VDB is portfolio-ready when:
       - edge cases 
       - validation strategy 
       - implementation details 
+  - namespace normalization behavior documented
+  - alias handling behavior documented
+  - unresolved mapping behavior validated
+  - provenance-preserving normalization demonstrated
 
 ---
 
