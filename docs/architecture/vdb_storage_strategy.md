@@ -4,7 +4,15 @@
 
 VDB is the normalized relational integration layer for the computational genomics ecosystem.
 
-Producer repositories such as VAP and RSP generate biological and computational artifacts within defined workflow boundaries. VDB provides the persistent relational space where those outputs can be normalized, linked, queried, and reinterpreted across semantic domains.
+Producer repositories such as VAP and RSP generate biological and computational artifacts within defined workflow boundaries. VDB provides the persistent relational space where those outputs can be normalized, linked, queried, intersected, and reinterpreted across semantic domains.
+
+For example, VDB alone permits:
+
+- variant ∩ gene set
+- variant ∩ phenotype
+- variant ∩ expression contrast
+- variant ∩ physiology
+- variant ∩ infection history
 
 VDB is therefore not designed to duplicate raw producer-repository storage. It is designed to preserve relational meaning across producer outputs.
 
@@ -26,7 +34,7 @@ VDB is therefore not designed to duplicate raw producer-repository storage. It i
 
 ## 3. VDB Storage Identity
 
-VDB owns normalized relational derivatives.
+VDB owns normalized relational derivatives and semantic integration products.
 
 It does not own:
 
@@ -147,7 +155,7 @@ This transition matters because biological significance often emerges through re
 * variant ↔ physiological context,
 * variant ↔ future annotation framework.
 
-VDB therefore transforms static producer outputs into an active semantic interrogation substrate.
+VDB therefore transforms static producer outputs into an active relational interrogation layer.
 
 ---
 
@@ -186,7 +194,9 @@ This is especially important for:
 * chromatin organization hypotheses,
 * and genotype–environment interaction models.
 
-VDB preserves the relational substrate needed to revisit these patterns without requiring producer repositories to permanently retain every bulky execution artifact.
+VDB preserves the relational substrate needed to revisit these patterns without requiring producer repositories to indefinitely retain every bulky execution artifact.
+
+This is particularly important because biologically meaningful patterns may only emerge statistically across cohorts, semantic overlays, or future annotation frameworks that do not yet exist at the time of original variant acquisition.
 
 ---
 
