@@ -214,3 +214,7 @@ VDB’s storage strategy is therefore guided by one central principle:
 Do not duplicate raw producer artifacts.
 Preserve normalized relational meaning.
 ```
+
+> VDB is where variants stop being files, and become entities.
+
+---
