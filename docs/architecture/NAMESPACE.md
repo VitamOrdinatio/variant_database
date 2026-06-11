@@ -1,31 +1,36 @@
-# NAMESPACE.md for `docs/architecture/`
+# Architecture Namespace
 
-**Architecture = system worldview**
+Namespace: `docs/architecture/`
 
+**Architecture = System worldview**
+
+> Core question:
 > What is VDB philosophically and structurally?
 
 Examples:
 
-- ecosystem role
-- persistence domains
-- namespace authority
-- interoperability topology
-- evidence-layer boundaries
-- normalization philosophy
+- architecture.md
+- ecosystem_layer_model.md
+- interoperability_topology.md
+- evidence_persistence_philosophy.md
 
 Architecture documents answer:
 
-1. What are the major conceptual layers?
-2. How do systems relate?
-3. What responsibilities belong where?
-4. What are the invariants and boundaries?
+1. What is VDB?
+2. What responsibilities does VDB own?
+3. How does VDB fit into the ecosystem?
+4. What enduring truths govern the system?
 
 Architecture is:
 
-- high-level
-- structural
 - conceptual
-- durable
-- system-oriented
+- foundational
+- long-lived
+- implementation-independent
 
-> Architecture changes slowly.
+> Principle:
+> Architecture defines enduring system truths.
+
+> Anti-pattern:
+> Architecture documents should not contain implementation details,
+> schemas, query definitions, or validation procedures.

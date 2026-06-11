@@ -1,29 +1,36 @@
-# NAMESPACE.md for `docs/design/`
+# Design Namespace
 
-**Design = implementation strategy for a subsystem**
+Namespace: `docs/design/`
 
-> How does a subsystem behave operationally?
+**Design = Subsystem operational strategy**
+
+> Core question:
+> How should major VDB subsystems behave?
 
 Examples:
 
-- discovery engine
-- ingestion orchestration
-- namespace resolution engine
-- schema drift handling
-- telemetry engine
-- query surface generation
+- vdb_discovery_engine_design.md
+- namespace_resolution_engine_design.md
+- query_surface_design.md
+- ingestion_orchestration_design.md
 
 Design documents answer:
 
-1. How should this subsystem actually work?
-2. What algorithms, layers, flows, and validations exist?
-3. What are the engineering tradeoffs?
+1. How should a subsystem operate?
+2. What responsibilities does the subsystem own?
+3. What major design decisions shape subsystem behavior?
+4. How does the subsystem support architectural goals?
 
 Design is:
 
-- subsystem-oriented
-- more detailed
-- more operational
-- closer to implementation
+- strategic
+- subsystem-focused
+- operational
+- architecture-derived
 
-> Design evolves faster than architecture.
+> Principle:
+> Design translates architectural intent into subsystem strategy.
+
+> Anti-pattern:
+> Design documents should not become implementation plans,
+> task lists, or coding instructions.
