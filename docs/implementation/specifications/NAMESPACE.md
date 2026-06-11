@@ -19,7 +19,7 @@ Specification documents answer:
 1. What constitutes a valid object?
 2. What rules must be satisfied?
 3. What behaviors are expected?
-4. What implementation contracts exist?
+4. What formal implementation rules exist?
 
 Specifications are:
 

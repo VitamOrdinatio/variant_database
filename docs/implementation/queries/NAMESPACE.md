@@ -9,10 +9,10 @@ Namespace: `docs/implementation/queries/`
 
 Examples:
 
-- rdgp_query_surface_schema.md
-- future query surface specifications
-- retrieval patterns
-- evidence access definitions
+- rdgp_surface_query.md
+- sample_gene_evidence_query.md
+- overlay_attachment_query.md
+- provenance_audit_query.md
 
 Query documents answer:
 

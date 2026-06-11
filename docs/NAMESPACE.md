@@ -303,8 +303,6 @@ Taxon 2 is implementation-facing because it governs how VDB’s architecture, de
 
 ---
 
----
-
 ## Taxon 3 — Governance Lifecycle Layer
 
 Taxon 3 governs how VDB is planned, verified, tracked, and released.
