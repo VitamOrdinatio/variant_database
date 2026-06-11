@@ -619,3 +619,22 @@ contracts, or architectural authorities.
 | rdgp_query_surface.md | implementation/queries/ | dominant function = retrieval behavior |
 
 ---
+
+# Appendix G: Cross-cutting Architectural Taxonomy
+
+```text
+Variant Persistence      = VAP → VDB
+Overlay Persistence      = GSC → VDB
+Functional Persistence   = future RSP → VDB
+Aggregation              = VDB → RDGP
+Overlay Attachment       = GSC → RDGP / VDB-derived views
+Identity-Space Bridging  = cross-space joins
+```
+
+Examples:
+
+| Operation class | Architecture                    | Design                         | Interface         | Schema/spec/query                       |
+| --------------- | ------------------------------- | ------------------------------ | ----------------- | --------------------------------------- |
+| Persistence     | evidence persistence philosophy | ingestion orchestration        | VAP→VDB           | provenance schema, ingestion event spec |
+| Aggregation     | interoperability topology       | query surface design           | VDB→RDGP          | sample-gene evidence query              |
+| Overlay         | ecosystem layer model           | query surface / overlay design | GSC↔VDB, GSC→RDGP | overlay attachment query/spec           |
