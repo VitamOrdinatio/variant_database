@@ -159,6 +159,162 @@ Annotation:
 
 ---
 
+## Metadata Normalization Layer
+
+VDB must normalize metadata associated with samples, runs, projects, assays, and source repositories.
+
+VAP-derived evidence should not enter VDB as isolated variant rows. Each ingested record must remain linked to contextual metadata sufficient to support downstream stratified queries.
+
+Metadata entities may include:
+
+* sample_id
+* run_id
+* source_pipeline
+* source_repository
+* BioProject accession
+* SRA accession
+* assay_type
+* sequencing_strategy
+* cohort_label
+* case_study_context
+* organism
+* sex / gender, if available
+* tissue / source material, if available
+* disease or phenotype label, if available
+* ingest_timestamp
+* metadata_source
+* metadata_resolution_status
+
+VDB should preserve missing, partial, ambiguous, or unavailable metadata explicitly.
+
+Goal:
+VDB supports biologically meaningful cross-sample and cross-cohort queries without forcing upstream repositories to flatten or over-normalize their metadata before ingestion.
+
+---
+
+## VAP Multi-Artifact Ingestion Strategy
+
+VDB should ingest VAP outputs as a structured multi-artifact evidence package rather than as a single flat file.
+
+VAP produces stage-specific TSV outputs with different downstream utilities. VDB should preserve this structure by mapping distinct VAP artifacts into appropriate relational tables or staging tables.
+
+Representative VAP-derived artifact classes include:
+
+* normalized variant substrates
+* annotated variant substrates
+* Stage 08 coding candidate substrates
+* Stage 08 noncoding candidate substrates
+* RDGP-oriented gene evidence substrates
+* variant summary substrates
+* prioritization outputs
+* validation candidate outputs
+* telemetry and provenance summaries
+* run-level metadata artifacts
+
+VDB ingestion should therefore support:
+
+* artifact manifest ingestion
+* source artifact identity
+* artifact type classification
+* stage provenance
+* schema validation per artifact type
+* deterministic replay of ingestion
+* preservation of artifact-to-table lineage
+
+Goal:
+VDB functions as a normalized evidence warehouse for VAP-derived semantic substrates rather than a simple TSV loader.
+
+---
+
+## Query and View Layer
+
+VDB must expose stable query surfaces for downstream repositories.
+
+The core relational schema should remain normalized, but downstream systems should not be forced to reconstruct complex joins manually.
+
+VDB should provide documented SQL queries, materialized views, or Python accessors for:
+
+* sample-linked variant evidence
+* annotation-linked variant evidence
+* gene-linked variant aggregation
+* `(sample_id, gene_id)` RDGP evidence records
+* GSC overlay attachment
+* cohort-level variant summaries
+* BioProject / SRA stratified summaries
+* metadata-aware filtering
+* provenance-aware audit trails
+
+The RDGP-facing query surface should produce one unique evidence record per `(sample_id, gene_id)` pair while preserving traceability to contributing variants, annotations, overlays, and source artifacts.
+
+Goal:
+VDB becomes both the authoritative evidence store and the stable query interface for downstream reasoning systems.
+
+---
+
+## Run-Package Ingestion and Discovery Governance
+
+VDB v1.0 adopts a manifest-mediated run-package ingestion architecture.  Within VDB, this architecture is referred to as the VDB Discovery Engine.
+
+Rather than ingesting isolated flat files, VDB ingests governed evidence packages originating from upstream repositories such as VAP.
+
+Each run package may contain:
+
+* stage-specific semantic substrates
+* annotation outputs
+* prioritization outputs
+* validation outputs
+* telemetry artifacts
+* provenance artifacts
+* metadata sidecars
+* execution summaries
+* interoperability-oriented substrates
+
+VDB ingestion therefore operates through three coordinated layers:
+
+### 1. Discovery Layer
+
+Artifact discovery performs deterministic profiling of incoming artifacts including:
+
+* column discovery
+* datatype inference
+* categorical value profiling
+* null-state profiling
+* namespace candidate detection
+* metadata candidate detection
+* provenance field discovery
+
+Discovery layers do not silently mutate schemas.
+
+They generate auditable discovery reports used for governance validation.
+
+### 2. Governance Mapping Layer
+
+Governance mapping aligns discovered artifacts to canonical ecosystem semantics including:
+
+* namespace normalization
+* ontology alignment
+* provenance semantics
+* null semantics
+* stage identity
+* artifact identity
+* allowed value domains
+
+### 3. Deterministic Ingestion Layer
+
+Validated artifacts are ingested into normalized VDB relational structures while preserving:
+
+* provenance continuity
+* artifact lineage
+* source identities
+* run identities
+* stage identities
+* replayability
+
+Goal:
+VDB functions as the authoritative governed evidence nexus for the broader repository ecosystem.
+
+---
+
 ## Interface Contract (RDGP Alignment)
 
 VDB must support the VDB ↔ RDGP interface contract.
