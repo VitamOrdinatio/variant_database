@@ -136,6 +136,7 @@ Together they define:
 * taxonomy groupings
 * document placement authority
 * namespace principles and anti-patterns
+* constitutional authority relationships
 
 These appendices should be consulted before introducing new documentation namespaces or placing new documents within existing namespaces.
 
@@ -211,6 +212,8 @@ Design
     ↓
 Interfaces + Contracts
     ↓
+Namespace Authority
+    ↓
 Implementation
     ↓
 Validation
@@ -262,11 +265,12 @@ Taxon 4 = Orientation
 Taxon 1 defines the top-level governance perimeter for VDB documentation.
 
 ```text
-architecture/
-design/
-interfaces/
-contracts/
-implementation/
+docs/
+docs/architecture/
+docs/design/
+docs/interfaces/
+docs/contracts/
+docs/implementation/
 ```
 
 These namespaces establish:
@@ -286,10 +290,10 @@ Taxon 1 is constitutional because mistakes here propagate into every downstream 
 Taxon 2 defines the nested implementation territories beneath implementation/.
 
 ```text
-implementation/schemas/
-implementation/specifications/
-implementation/workflow/
-implementation/queries/
+docs/implementation/schemas/
+docs/implementation/specifications/
+docs/implementation/workflow/
+docs/implementation/queries/
 ```
 
 These namespaces establish:
@@ -308,10 +312,10 @@ Taxon 2 is implementation-facing because it governs how VDB’s architecture, de
 Taxon 3 governs how VDB is planned, verified, tracked, and released.
 
 ```text
-plans/
-validation/
-status/
-releases/
+docs/plans/
+docs/validation/
+docs/status/
+docs/releases/
 ```
 
 These namespaces establish:
@@ -330,8 +334,8 @@ Taxon 3 is governance-facing because it governs the lifecycle of VDB rather than
 Taxon 4 improves repository understanding, navigation, and adoption.
 
 ```text
-maps/
-examples/
+docs/maps/
+docs/examples/
 ```
 
 These namespaces establish:
@@ -628,8 +632,11 @@ Overlay Persistence      = GSC → VDB
 Functional Persistence   = future RSP → VDB
 Aggregation              = VDB → RDGP
 Overlay Attachment       = GSC → RDGP / VDB-derived views
-Identity-Space Bridging  = cross-space joins
+Identity Brokerage       = identity governance + preservation + routing
+Identity-Space Bridging  = cross-space joins + map + reconcile
 ```
+
+> Note the subtle difference that identity brokerage is governance while identity-space bridging is execution.
 
 Examples:
 
