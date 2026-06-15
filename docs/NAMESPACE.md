@@ -185,20 +185,21 @@ These appendices should be consulted before introducing new documentation namesp
 | Namespace | Identity |
 |---|---|
 | Architecture | System worldview |
-| Design | Subsystem operational strategy |
-| Interfaces | Cross-repository communication |
 | Contracts | Guarantees and invariants |
+| Design | Subsystem operational strategy |
+| Examples | Concrete artifacts |
 | Implementation | Realized operational behavior |
+| Interfaces | Cross-repository communication |
+| Maps | Strategic directionality |
+| Plans | Execution sequencing |
+| Queries | Stable retrieval surfaces |
+| Rationale | Justification |
+| Releases | Historical milestones |
 | Schemas | Exact structures |
 | Specifications | Formal implementation definitions |
-| Workflow | Operational sequence |
-| Queries | Stable retrieval surfaces |
-| Validation | Proof |
-| Plans | Execution sequencing |
-| Maps | Strategic directionality |
 | Status | Current repository state |
-| Releases | Historical milestones |
-| Examples | Concrete artifacts |
+| Validation | Proof |
+| Workflow | Operational sequence |
 
 ---
 
@@ -206,21 +207,29 @@ These appendices should be consulted before introducing new documentation namesp
 
 
 ```text
-Architecture
+Rationale (why do we want it?)
     ↓
-Design
+Architecture (what is it?)
     ↓
-Interfaces + Contracts
+Design (how do subsystems behave?)
+    ↓
+Interfaces (How do systems interact?)
+    ↓
+Contracts (What must we achieve?)
+    ↓
+Specifications (What exactly is required?)
+    ↓
+Schemas (What exact structures exist?)
     ↓
 Namespace Authority
     ↓
-Implementation
+Implementation (How do we build it?)
     ↓
-Validation
+Validation (How do we prove it works?)
     ↓
-Status
+Status (Where are we in development?)
     ↓
-Releases
+Releases (What are the official release versions?)
 ```
 
 ```text
@@ -336,6 +345,7 @@ Taxon 4 improves repository understanding, navigation, and adoption.
 ```text
 docs/maps/
 docs/examples/
+docs/rationale/
 ```
 
 These namespaces establish:
@@ -630,13 +640,20 @@ contracts, or architectural authorities.
 Variant Persistence      = VAP → VDB
 Overlay Persistence      = GSC → VDB
 Functional Persistence   = future RSP → VDB
-Aggregation              = VDB → RDGP
-Overlay Attachment       = GSC → RDGP / VDB-derived views
+
+TEP Transport            = producer evidence transport
 Identity Brokerage       = identity governance + preservation + routing
 Identity-Space Bridging  = cross-space joins + map + reconcile
+
+Aggregation              = VDB → RDGP
+Overlay Attachment       = GSC → RDGP / VDB-derived views
 ```
 
-> Note the subtle difference that identity brokerage is governance while identity-space bridging is execution.
+> Identity brokerage is governance.
+>
+> Identity-space bridging is execution.
+>
+> TEP transport is preservation-oriented transport governance that occurs prior to identity brokerage.
 
 Examples:
 

@@ -9,10 +9,10 @@ Namespace: `docs/validation/`
 
 Examples:
 
-- validation_strategy.md
-- schema_validation.md
-- namespace_resolution_validation.md
 - ingestion_validation.md
+- namespace_resolution_validation.md
+- schema_validation.md
+- validation_strategy.md
 
 Validation documents answer:
 
