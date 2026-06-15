@@ -73,6 +73,25 @@ VDB consumes these outputs and transforms them into persistent relational entiti
 
 ---
 
+### TEP and Brokerage Boundary
+
+When producer outputs arrive as Transitional Evidence Products (TEPs), VDB should treat the TEP payload as producer-owned source truth.
+
+VDB may ingest, validate, route, persist, and derive relational entities from TEPs, but it should not mutate producer-owned TEP payload semantics.
+
+Namespace normalization performed by VDB is additive brokerage, not payload mutation.
+
+Thus:
+
+```text
+Producer repositories own source truth.
+TEPs transport source truth.
+VDB brokers and persists source truth.
+Discovery exposes source truth through governed query surfaces.
+```
+
+---
+
 ## 5. Semantic Domain Integration
 
 VDB is designed to integrate multiple semantic domains, including:
@@ -133,6 +152,7 @@ Examples include:
 | source file paths and checksums      | provenance linkage back to producer artifacts |
 | SQL indexes/materialized views       | performant query and integration layers       |
 | database backups/dumps               | operational database resilience               |
+| TEP envelopes, payload references, and source artifact manifests | governed transport, provenance, and topology preservation |
 
 VDB may reference producer-owned files by path and checksum, but should not mutate producer-owned artifacts.
 
@@ -212,7 +232,8 @@ VDB’s storage strategy is therefore guided by one central principle:
 
 ```text
 Do not duplicate raw producer artifacts.
-Preserve normalized relational meaning.
+Do not mutate producer-owned transport payloads.
+Preserve normalized relational meaning through additive brokerage.
 ```
 
 > VDB is where variants stop being files, and become entities.

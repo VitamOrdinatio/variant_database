@@ -11,8 +11,10 @@ Examples:
 
 - architecture.md
 - ecosystem_layer_model.md
-- interoperability_topology.md
 - evidence_persistence_philosophy.md
+- interoperability_topology.md
+- namespace_authority_model.md
+- vdb_storage_strategy.md
 
 Architecture documents answer:
 
