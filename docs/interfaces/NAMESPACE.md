@@ -9,9 +9,9 @@ Namespace: `docs/interfaces/`
 
 Examples:
 
-- vap_vdb_interface.md
 - gsc_vdb_interface.md
 - rsp_vdb_interface.md
+- vap_vdb_interface.md
 - vdb_rdgp_interface.md
 
 Interface documents answer:
