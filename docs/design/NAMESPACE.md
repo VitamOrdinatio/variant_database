@@ -9,10 +9,13 @@ Namespace: `docs/design/`
 
 Examples:
 
-- vdb_discovery_engine_design.md
+- ingestion_orchestration_design.md
 - namespace_resolution_engine_design.md
 - query_surface_design.md
-- ingestion_orchestration_design.md
+- vdb_discovery_engine_design.md
+- vdb_semantic_persistence_domains.md
+- vdb_tep_clinical_justification.md
+- vdb_tep_technical_justification.md
 
 Design documents answer:
 

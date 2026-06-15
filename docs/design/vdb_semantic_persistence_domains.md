@@ -58,6 +58,36 @@ This distinction is critical for preserving:
 
 ---
 
+# Relationship to TEP Transport and Namespace Brokerage
+
+Producer repositories may emit evidence directly through source artifacts or through Transitional Evidence Products (TEPs).
+
+When evidence arrives as a TEP, VDB must treat the TEP payload as producer-owned source truth.
+
+TEP transport, namespace brokerage, and semantic persistence are distinct responsibilities:
+
+```text
+Producer Repository
+        ↓
+TEP Transport
+        ↓
+Namespace Brokerage
+        ↓
+Semantic Persistence Domain
+        ↓
+Query Surface
+```
+
+TEPs preserve producer-owned evidence states.
+
+Namespace brokerage creates additive canonical identity relationships.
+
+Semantic persistence domains organize evidence into durable relational structures.
+
+VDB must not mutate TEP payload semantics in order to persist them.
+
+---
+
 # VDB Roles in the Ecosystem
 
 VDB occupies four primary architectural roles.
@@ -98,7 +128,7 @@ The goal is durable evidence retention without silent semantic collapse.
 
 # Namespace Authority
 
-VDB acts as the ecosystem authority for identity normalization.
+VDB acts as the ecosystem authority for additive identity brokerage and namespace normalization.
 
 This includes:
 
@@ -374,6 +404,7 @@ Every persistence domain should preserve:
 * source-native identifiers
 * normalization mappings
 * transformation lineage
+* TEP envelope and source artifact manifest, when applicable
 
 No evidence should become detached from its origin.
 
@@ -462,6 +493,8 @@ This allows the ecosystem to preserve:
 
 Repositories emit evidence.
 
-VDB governs and persists evidence semantically.
+TEPs may transport evidence.
+
+VDB brokers identities additively and persists evidence semantically.
 
 That distinction is foundational to the architecture.

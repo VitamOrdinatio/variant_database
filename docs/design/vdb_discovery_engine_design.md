@@ -73,10 +73,56 @@ governance mapping
         ↓
 deterministic ingestion
         ↓
-normalized VDB evidence store
+namespace brokerage
+        ↓
+semantic persistence domains
         ↓
 query surfaces / RDGP / downstream systems
 ```
+
+---
+
+# Relationship to TEP Transport and Namespace Brokerage
+
+The discovery engine is not responsible for transport governance.
+
+The discovery engine is not responsible for identity brokerage.
+
+Those responsibilities belong to:
+
+```text
+TEP Transport
+        ↓
+Namespace Brokerage
+```
+
+respectively.
+
+The discovery engine operates on artifacts that have arrived through approved transport mechanisms and produces governance decisions that support downstream persistence.
+
+The relationship is:
+
+```text
+Producer Repository
+        ↓
+TEP Transport
+        ↓
+Discovery
+        ↓
+Namespace Brokerage
+        ↓
+Semantic Persistence Domain
+        ↓
+Query Surface
+```
+
+Discovery determines what an artifact appears to contain.
+
+Namespace brokerage determines how identities relate.
+
+Persistence determines where evidence belongs.
+
+These responsibilities must remain distinct.
 
 ---
 
@@ -296,7 +342,9 @@ Therefore, VDB should define:
 * accepted artifact classes
 * required fields for ingestion
 * canonical table destinations
-* namespace normalization rules
+* namespace brokerage requirements
+* canonical identity requirements
+* namespace-resolution governance requirements
 * metadata normalization rules
 * allowed null-state representations
 * artifact lineage requirements
@@ -622,7 +670,9 @@ Adapters should perform only minimal source-specific access or extraction.
 
 They should not contain hidden biological normalization logic.
 
-All semantic normalization should occur in the governance mapping and deterministic ingestion layers.
+All semantic interpretation should occur through governed discovery and ingestion workflows.
+
+Identity normalization and canonical-identity assignment should occur through additive namespace brokerage rather than through adapter-specific logic.
 
 ---
 
