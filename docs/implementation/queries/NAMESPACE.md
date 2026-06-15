@@ -9,10 +9,10 @@ Namespace: `docs/implementation/queries/`
 
 Examples:
 
-- rdgp_surface_query.md
-- sample_gene_evidence_query.md
 - overlay_attachment_query.md
 - provenance_audit_query.md
+- rdgp_surface_query.md
+- sample_gene_evidence_query.md
 
 Query documents answer:
 

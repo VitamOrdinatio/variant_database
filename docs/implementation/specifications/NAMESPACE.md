@@ -10,9 +10,11 @@ Namespace: `docs/implementation/specifications/`
 Examples:
 
 - artifact_manifest_spec.md
+- discovery_report_spec.md
 - ingestion_event_spec.md
 - namespace_resolution_spec.md
 - provenance_spec.md
+- tep_spec.md
 
 Specification documents answer:
 

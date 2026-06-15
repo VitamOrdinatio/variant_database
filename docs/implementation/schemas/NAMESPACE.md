@@ -9,10 +9,12 @@ Namespace: `docs/implementation/schemas/`
 
 Examples:
 
-- relational_schema.md
+- data_schema.md
+- discovery_schema.md
 - metadata_schema.md
 - provenance_schema.md
-- discovery_schema.md
+- rdgp_query_surface_schema.md
+- relational_schema.md
 
 Schemas documents answer:
 
