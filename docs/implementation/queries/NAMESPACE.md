@@ -10,7 +10,7 @@ Namespace: `docs/implementation/queries/`
 Examples:
 
 - overlay_attachment_query.md
-- provenance_audit_query.md
+- evidence_reconstruction_query.md
 - rdgp_surface_query.md
 - sample_gene_evidence_query.md
 

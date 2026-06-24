@@ -139,6 +139,40 @@ These questions are related but distinct.
 
 ---
 
+## Evidence-State Retrieval
+
+A VDB query surface should be understood as an evidence-state retrieval layer.
+
+Most databases expose rows.
+
+VDB exposes evidence states.
+
+A query surface may physically return tabular rows, JSON objects, or materialized records, but those returned structures should represent preserved evidence states rather than isolated database rows.
+
+Examples:
+
+```text
+sample-gene evidence state
+
+variant observation evidence state
+
+phenotype-gene semantic prior state
+
+overlay attachment state
+
+provenance reconstruction state
+```
+
+This distinction is important because VDB preserves evidence lifecycles.
+
+A query surface should therefore expose not only current values, but also enough identity, provenance, state, and transition context to reconstruct how the returned evidence state came into existence.
+
+Query surfaces may simplify access.
+
+Query surfaces must not erase evidence-state lineage.
+
+---
+
 ## Query Surface Categories
 
 VDB should support multiple query-surface classes.
