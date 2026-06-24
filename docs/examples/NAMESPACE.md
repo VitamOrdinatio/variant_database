@@ -13,6 +13,7 @@ Examples:
 - toy discovery reports
 - toy ingestion examples
 - toy query outputs
+- vdb_evidence_lifecycle_example.md
 
 Example documents answer:
 
