@@ -15,6 +15,11 @@ from typing import Any
 import hashlib
 
 
+IGNORED_ARTIFACTS = {
+    "_emulation_manifest.json",
+    "_emulation_report.md",
+}
+
 MANIFEST_FILENAMES = {
     "entity_inventory.json",
     "lineage_manifest.json",
@@ -76,6 +81,9 @@ def scan_package(package_path: Path | str) -> PackageInventory:
             continue
 
         rel = path.relative_to(root).as_posix()
+
+        if path.name in IGNORED_ARTIFACTS:
+            continue
 
         if path.name in MANIFEST_FILENAMES:
             manifest_paths.append(rel)

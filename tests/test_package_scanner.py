@@ -44,3 +44,18 @@ def test_scan_package_inventory_is_deterministic(tmp_path: Path) -> None:
         "entity_inventory.json",
     ]
     assert all(a.sha256 for a in first.artifacts)
+
+
+def test_scan_ignores_emulation_housekeeping_files(tmp_path: Path) -> None:
+    package = tmp_path / "tep"
+    package.mkdir()
+
+    (package / "_emulation_manifest.json").write_text("{}", encoding="utf-8")
+    (package / "_emulation_report.md").write_text("report", encoding="utf-8")
+    (package / "entity_inventory.json").write_text("{}", encoding="utf-8")
+
+    inventory = scan_package(package)
+
+    assert inventory.artifact_count == 1
+    assert inventory.manifest_paths == ["entity_inventory.json"]
+    assert [a.relative_path for a in inventory.artifacts] == ["entity_inventory.json"]
