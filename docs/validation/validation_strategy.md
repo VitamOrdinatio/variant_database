@@ -16,7 +16,7 @@ Validation does not exist to replace scientific interpretation.
 
 This document defines:
 
-```text id="vjlwm7"
+```text
 validation objectives
 
 validation layers
@@ -30,7 +30,7 @@ validation philosophy
 
 This document does not define:
 
-```text id="m1q5kv"
+```text
 specific validation implementations
 
 database constraints
@@ -48,7 +48,7 @@ Those concerns belong to implementation-level validation documentation.
 
 # Core Principle
 
-```text id="zjlwm5"
+```text
 Validation protects preservation.
 ```
 
@@ -56,7 +56,7 @@ VDB is fundamentally a preservation-oriented repository.
 
 Therefore validation focuses on preserving:
 
-```text id="y9cfmi"
+```text
 evidence
 
 provenance
@@ -78,7 +78,7 @@ Validation should detect conditions that threaten those goals.
 
 Validation is performed to answer a simple question:
 
-```text id="1pq3w7"
+```text
 Can this evidence be trusted
 to preserve its intended meaning?
 ```
@@ -97,7 +97,7 @@ Validation within VDB occurs across multiple layers.
 
 Conceptually:
 
-```text id="4uz6lk"
+```text
 Producer Validation
         ↓
 Transport Validation
@@ -121,7 +121,7 @@ Producer validation occurs before evidence reaches VDB.
 
 Examples include:
 
-```text id="rvpr6w"
+```text
 GSC-TEP validation
 
 VAP-TEP validation
@@ -133,7 +133,7 @@ future RDGP-TEP validation
 
 Producer repositories remain responsible for validating:
 
-```text id="svzlsk"
+```text
 producer outputs
 
 producer artifacts
@@ -151,7 +151,7 @@ Transport validation evaluates whether a TEP can be safely interpreted by VDB.
 
 Examples include:
 
-```text id="2z3dbj"
+```text
 required fields present
 
 required artifacts declared
@@ -173,7 +173,7 @@ Ingestion validation evaluates whether a TEP satisfies VDB ingestion requirement
 
 Examples include:
 
-```text id="wjmq8q"
+```text
 TEP compliance
 
 artifact manifest compliance
@@ -195,7 +195,7 @@ Namespace validation evaluates identity integrity.
 
 Examples include:
 
-```text id="9a3rdo"
+```text
 identifier preservation
 
 namespace authority preservation
@@ -217,7 +217,7 @@ Persistence validation evaluates whether evidence remains correctly represented 
 
 Examples include:
 
-```text id="ik7rwe"
+```text
 artifact persistence
 
 identity persistence
@@ -239,7 +239,7 @@ Discovery validation evaluates whether persisted evidence remains discoverable.
 
 Examples include:
 
-```text id="x4kksy"
+```text
 evidence retrieval
 
 relationship traversal
@@ -261,7 +261,7 @@ The following concepts are considered preservation-critical.
 
 Validation should prioritize protecting:
 
-```text id="v7m5dq"
+```text
 evidence payloads
 
 artifact manifests
@@ -289,7 +289,7 @@ VDB distinguishes authority preservation from evidence preservation.
 
 Validation should verify:
 
-```text id="5b3f0u"
+```text
 producer authority retained
 
 source authority retained
@@ -307,7 +307,7 @@ Authority loss is considered a validation concern.
 
 Validation should verify:
 
-```text id="gyx27e"
+```text
 producer provenance
 
 run provenance
@@ -331,7 +331,7 @@ Evidence without provenance should be considered incomplete.
 
 Validation should verify:
 
-```text id="ynv4np"
+```text
 source identifiers preserved
 
 canonical identifiers stable
@@ -351,7 +351,7 @@ Validation should verify that preservation-critical relationships remain intact.
 
 Examples include:
 
-```text id="rv9lgj"
+```text
 phenotype ↔ gene
 
 gene ↔ variant
@@ -373,7 +373,7 @@ Validation should preserve uncertainty.
 
 The following states must remain distinguishable:
 
-```text id="2z1eww"
+```text
 unknown
 
 missing
@@ -389,7 +389,7 @@ not assessed
 
 Validation must not silently convert these states into:
 
-```text id="3v08cs"
+```text
 negative
 
 resolved
@@ -411,7 +411,7 @@ Conditions that do not threaten preservation.
 
 Examples:
 
-```text id="6rt11w"
+```text
 optional metadata absent
 
 non-critical summaries absent
@@ -425,7 +425,7 @@ Conditions that may reduce utility but do not invalidate evidence.
 
 Examples:
 
-```text id="njckb0"
+```text
 partial namespace resolution
 
 optional provenance unavailable
@@ -439,7 +439,7 @@ Conditions that threaten preservation or interoperability.
 
 Examples:
 
-```text id="9m6c0w"
+```text
 required provenance missing
 
 required identities missing
@@ -455,7 +455,7 @@ Conditions that invalidate safe ingestion or persistence.
 
 Examples:
 
-```text id="yn0vjp"
+```text
 authority loss
 
 unrecoverable identity loss
@@ -473,7 +473,7 @@ Responsibility for validation is distributed.
 
 Producer repositories validate:
 
-```text id="8jylcu"
+```text
 producer correctness
 
 producer outputs
@@ -483,7 +483,7 @@ producer contracts
 
 VDB validates:
 
-```text id="fjn8kc"
+```text
 interoperability
 
 preservation
@@ -505,7 +505,7 @@ Validation derives from repository specifications.
 
 Examples include:
 
-```text id="0j50ae"
+```text
 tep_spec.md
 
 artifact_manifest_spec.md
@@ -527,7 +527,7 @@ Implementation-level validation documentation should refine this strategy.
 
 Examples include:
 
-```text id="4e16sq"
+```text
 schema_validation.md
 
 ingestion_validation.md
@@ -545,7 +545,7 @@ This document defines only the governing philosophy.
 
 The validation strategy succeeds when VDB can confidently determine:
 
-```text id="1l5cgc"
+```text
 evidence is preserved
 
 identities are preserved
@@ -575,7 +575,7 @@ It is a preservation activity.
 
 The central question of VDB validation is:
 
-```text id="w0a0rh"
+```text
 Can future systems still understand,
 trust,
 and reuse this evidence?
