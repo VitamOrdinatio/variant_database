@@ -20,7 +20,7 @@ Each system introduces its own identifiers, naming conventions, authority struct
 
 Examples include:
 
-```text id="j4i2zx"
+```text
 Ensembl
 
 HGNC
@@ -56,7 +56,7 @@ Many systems attempt to solve identity complexity through normalization.
 
 Conceptually:
 
-```text id="prjgoe"
+```text
 Source Identity
         ↓
 Normalization
@@ -72,7 +72,7 @@ However, it introduces important risks.
 
 Examples include:
 
-```text id="jlhyfe"
+```text
 loss of provenance
 
 loss of historical context
@@ -92,7 +92,7 @@ VDB intentionally rejects this approach.
 
 One of the central assumptions of VDB is:
 
-```text id="m7g8kr"
+```text
 Identity is evidence.
 ```
 
@@ -100,7 +100,7 @@ Identifiers are not merely implementation details.
 
 Identifiers encode:
 
-```text id="36m4mw"
+```text
 authority
 
 historical context
@@ -122,7 +122,7 @@ Each producer repository owns identities within its own domain.
 
 Examples:
 
-```text id="tvljlwm"
+```text
 VAP
     run identifiers
 
@@ -154,7 +154,7 @@ The ecosystem intentionally embraces distributed authority.
 
 Examples:
 
-```text id="e7bybn"
+```text
 HGNC
     symbol authority
 
@@ -185,7 +185,7 @@ Interoperability does not require identity replacement.
 
 Consider:
 
-```text id="b6s7gv"
+```text
 SCN1A
 
 ENSG00000144285
@@ -199,7 +199,7 @@ They are not identical.
 
 The goal is therefore:
 
-```text id="g4jho0"
+```text
 connect identities
 
 without erasing identities
@@ -213,7 +213,7 @@ Namespace brokerage achieves this objective.
 
 Conceptually:
 
-```text id="bww05u"
+```text
 Source Identity
         ↓
 Namespace Brokerage
@@ -237,7 +237,7 @@ VDB may assign canonical identities.
 
 Canonical identities provide:
 
-```text id="7y2x5w"
+```text
 stable references
 
 cross-repository linkage
@@ -249,7 +249,7 @@ persistence stability
 
 However:
 
-```text id="6elvgg"
+```text
 canonical identity
     ≠
 source identity
@@ -269,7 +269,7 @@ VDB intentionally rejects this assumption.
 
 Examples include:
 
-```text id="bpbq7f"
+```text
 novel variants
 
 novel genes
@@ -285,7 +285,7 @@ An unresolved identity may still represent valid evidence.
 
 Therefore:
 
-```text id="m8jl3z"
+```text
 unresolved
     ≠
 invalid
@@ -303,7 +303,7 @@ VDB treats ambiguity as evidence.
 
 Examples include:
 
-```text id="wmvr6l"
+```text
 historical aliases
 
 deprecated identifiers
@@ -319,7 +319,7 @@ Removing ambiguity destroys information.
 
 Therefore:
 
-```text id="f0hpx8"
+```text
 ambiguity should be preserved
 
 not hidden
@@ -335,7 +335,7 @@ Many future discoveries will emerge from relationships that are not obvious toda
 
 Examples may include:
 
-```text id="3zxhjf"
+```text
 new phenotype relationships
 
 new gene relationships
@@ -357,7 +357,7 @@ Scientific understanding evolves continuously.
 
 New resources may eventually resolve identities that are currently:
 
-```text id="u56tnl"
+```text
 unknown
 
 ambiguous
@@ -379,7 +379,7 @@ Clinical interpretation often occurs over long time horizons.
 
 A future clinician may need to understand:
 
-```text id="9p8rvz"
+```text
 what identifier was originally observed
 
 what authority assigned it
@@ -401,7 +401,7 @@ Transitional Evidence Products (TEPs) preserve source identities during transpor
 
 Examples include:
 
-```text id="ixmt0m"
+```text
 sample identifiers
 
 gene identifiers
@@ -445,7 +445,7 @@ Namespace brokerage introduces complexity.
 
 Examples include:
 
-```text id="6btr7f"
+```text
 identity lineage tracking
 
 authority tracking
@@ -473,7 +473,7 @@ VDB does not define external authority systems.
 
 Instead:
 
-```text id="hy3h7m"
+```text
 VDB preserves
 
 VDB relates
@@ -489,7 +489,7 @@ Authority remains with authoritative sources.
 
 The namespace brokerage mission succeeds when future users can:
 
-```text id="c7fg9f"
+```text
 recover original identifiers
 
 recover authority context
@@ -521,7 +521,7 @@ VDB therefore treats identities as evidence-bearing objects rather than disposab
 
 The mission of namespace brokerage is simple:
 
-```text id="tnc3gh"
+```text
 Preserve identities.
 
 Relate identities.
