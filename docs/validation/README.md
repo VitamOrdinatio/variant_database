@@ -41,3 +41,33 @@ namespace_resolution_validation.md
 vdb_end_to_end_lifecycle_walkthrough.md
     lifecycle validation execution
 ```
+
+# Test Taxonomy
+
+```text
+                MARK Canonical HG002
+                     (13 GB)
+                         ▲
+                         │
+              Lightweight HG002 Emulator
+               (real structure, tiny data)
+                         ▲
+                         │
+          Integration / Developer Scripts
+                         ▲
+                         │
+               Synthetic Unit Tests
+```
+
+Each layer serves a different purpose.
+
+```text
+Synthetic Unit Tests
+    Does this one function work?
+
+Lightweight Emulator
+    Does the VDB architecture work against a realistic TEP?
+
+Canonical HG002 on MARK
+    Does everything still work on production-scale evidence?
+```

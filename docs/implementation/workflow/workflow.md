@@ -138,6 +138,48 @@ Consumer Repositories
 
 This lifecycle supports both one-way evidence consumption and bidirectional evidence refinement.
 
+Empirical lifecycle:
+
+```text
+Filesystem
+    ↓
+Package Scanner
+
+Package Scanner
+    ↓
+Package Inventory
+
+Package Inventory
+    ↓
+Persistence
+
+Persistence
+    ↓
+Manifest Reader
+
+Manifest Reader
+    ↓
+Evidence Surface Classification
+
+Evidence Surface Classification
+    ↓
+Evidence Registration
+
+Evidence Registration
+    ↓
+Namespace Resolution
+
+Namespace Resolution
+    ↓
+Discovery Overlay Attachment
+
+Discovery Overlay Attachment
+    ↓
+Query Surface Construction
+```
+
+> Each implementation layer should answer exactly one new architectural question.
+
 ---
 
 ## Stage 01 — Producer Evidence Creation
@@ -279,6 +321,36 @@ Discovery does not mutate payloads.
 Discovery does not own namespace authority.
 
 Discovery does not persist evidence directly.
+
+### Second Producer Rule
+
+No Discovery Engine abstraction may be introduced unless
+it can reasonably accommodate at least two independent
+TEP producers.
+
+The initial implementation may target a single producer
+(VAP), but the abstraction itself must remain producer-
+agnostic.
+
+### Producer-Agnostic Development Invariant
+
+Every Discovery Engine abstraction shall satisfy:
+
+• Implementable using the current producer benchmark.
+• Reasonably applicable to at least one additional producer
+  without architectural redesign.
+• Preserve producer identity.
+• Avoid biological interpretation unless explicitly required.
+• Preserve future namespace brokerage.
+• Preserve future overlay attachment.
+
+### Lowest Stable Abstraction Rule
+
+Every new Discovery Engine subsystem shall implement the lowest abstraction that can be independently reasoned about, tested, and validated.
+
+Higher-order reasoning (biological interpretation, namespace brokerage, evidence synthesis, and query composition) shall only be introduced after the lower abstraction has been independently demonstrated to be deterministic and stable.
+
+Each subsystem should have a single conceptual responsibility. New responsibilities should emerge by composing previously validated abstractions rather than expanding existing ones.
 
 ---
 
