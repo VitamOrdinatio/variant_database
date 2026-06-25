@@ -34,6 +34,40 @@ def initialize_schema(connection: sqlite3.Connection) -> None:
             is_manifest INTEGER NOT NULL,
             FOREIGN KEY(package_id) REFERENCES tep_packages(package_id)
         );
+
+        CREATE TABLE IF NOT EXISTS assertion_registrations (
+            assertion_registration_id TEXT PRIMARY KEY,
+            package_id TEXT NOT NULL,
+            artifact_id TEXT NOT NULL,
+            surface_role TEXT NOT NULL,
+            evidence_domain TEXT NOT NULL,
+            producer_family TEXT NOT NULL,
+            source_record_ref TEXT,
+            assertion_type TEXT NOT NULL,
+            participant_summary_json TEXT NOT NULL,
+            support_ref_json TEXT NOT NULL,
+            authority_context TEXT NOT NULL,
+            uncertainty_context TEXT NOT NULL,
+            registration_status TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            FOREIGN KEY(package_id) REFERENCES tep_packages(package_id),
+            FOREIGN KEY(artifact_id) REFERENCES artifacts(artifact_id)
+        );
+
+        CREATE TABLE IF NOT EXISTS source_identities (
+            source_identity_id TEXT PRIMARY KEY,
+            assertion_registration_id TEXT NOT NULL,
+            identity_kind TEXT NOT NULL,
+            participant_role TEXT NOT NULL,
+            source_value TEXT NOT NULL,
+            source_namespace TEXT NOT NULL,
+            source_label TEXT,
+            extraction_method TEXT NOT NULL,
+            source_record_ref TEXT,
+            payload_json TEXT NOT NULL,
+            FOREIGN KEY(assertion_registration_id)
+                REFERENCES assertion_registrations(assertion_registration_id)
+        );        
         """
     )
 
