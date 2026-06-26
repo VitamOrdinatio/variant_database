@@ -62,7 +62,10 @@ def build_artifact_level_assertion_registration(
     relative_path = str(artifact_record["relative_path"])
     artifact_id = str(artifact_record["artifact_id"])
 
-    surface = classify_surface(relative_path)
+    surface = classify_surface(
+        relative_path=relative_path,
+        producer_family=producer_family,
+    )
 
     if not surface.evidence_bearing:
         return None

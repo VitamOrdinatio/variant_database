@@ -130,6 +130,7 @@ def build_vap_sample_identity_for_registration(
 def persist_source_identity(
     connection: sqlite3.Connection,
     source_identity: SourceIdentity,
+    commit: bool = True,
 ) -> str:
     """Persist one source identity attachment."""
     connection.execute(
@@ -171,7 +172,10 @@ def persist_source_identity(
             source_identity.payload_json,
         ),
     )
-    connection.commit()
+
+    if commit:
+        connection.commit()
+
     return source_identity.source_identity_id
 
 
@@ -270,6 +274,7 @@ def attach_participants_to_assertion(
     connection: sqlite3.Connection,
     assertion_registration_id: str,
     participants: list[ExtractedParticipant],
+    commit: bool = True,
 ) -> list[str]:
     """Persist extracted participants as source identities."""
     source_identity_ids: list[str] = []
@@ -280,7 +285,11 @@ def attach_participants_to_assertion(
             participant=participant,
         )
         source_identity_ids.append(
-            persist_source_identity(connection, source_identity)
+            persist_source_identity(
+                connection,
+                source_identity,
+                commit=commit,
+            )
         )
 
     return source_identity_ids

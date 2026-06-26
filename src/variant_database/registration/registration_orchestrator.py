@@ -14,6 +14,7 @@ from __future__ import annotations
 import csv
 from dataclasses import dataclass
 from pathlib import Path
+from time import perf_counter
 from typing import Iterator
 
 from variant_database.ingestion.package_scanner import scan_package
@@ -51,6 +52,9 @@ class RegistrationPipelineSummary:
     row_count_scanned: int
     participant_count_discovered: int
     source_identity_count: int
+    elapsed_seconds: float
+    rows_per_second: float
+    participants_per_second: float
 
 
 def _iter_tsv_rows(
@@ -79,6 +83,7 @@ def run_registration_pipeline(
     max_rows_per_artifact: int | None = None,
 ) -> RegistrationPipelineSummary:
     """Run the VDB registration pipeline for one package."""
+    started_at = perf_counter()    
     package = Path(package_path).expanduser().resolve()
     database = Path(db_path)
 
@@ -118,39 +123,53 @@ def run_registration_pipeline(
     row_count_scanned = 0
     participant_count_discovered = 0
 
-    for registration in assertion_registrations:
-        artifact_id = str(registration["artifact_id"])
-        artifact = artifact_by_id[artifact_id]
-        relative_path = str(artifact["relative_path"])
+    with connection:
+        for registration in assertion_registrations:
+            artifact_id = str(registration["artifact_id"])
+            artifact = artifact_by_id[artifact_id]
+            relative_path = str(artifact["relative_path"])
 
-        if not _is_tsv_artifact(relative_path):
-            continue
+            if not _is_tsv_artifact(relative_path):
+                continue
 
-        artifact_path = package / relative_path
+            artifact_path = package / relative_path
 
-        for source_record_ref, row in _iter_tsv_rows(
-            artifact_path,
-            max_rows=max_rows_per_artifact,
-        ):
-            row_count_scanned += 1
+            for source_record_ref, row in _iter_tsv_rows(
+                artifact_path,
+                max_rows=max_rows_per_artifact,
+            ):
+                row_count_scanned += 1
 
-            participants = discover_participants_from_row(
-                producer_family=producer_family,
-                row=row,
-                source_record_ref=source_record_ref,
-            )
+                participants = discover_participants_from_row(
+                    producer_family=producer_family,
+                    row=row,
+                    source_record_ref=source_record_ref,
+                )
 
-            participant_count_discovered += len(participants)
+                participant_count_discovered += len(participants)
 
-            attach_participants_to_assertion(
-                connection=connection,
-                assertion_registration_id=str(
-                    registration["assertion_registration_id"]
-                ),
-                participants=participants,
-            )
+                attach_participants_to_assertion(
+                    connection=connection,
+                    assertion_registration_id=str(
+                        registration["assertion_registration_id"]
+                    ),
+                    participants=participants,
+                    commit=False,
+                )
 
     source_identities = list_source_identities(connection)
+
+    elapsed_seconds = perf_counter() - started_at
+    rows_per_second = (
+        row_count_scanned / elapsed_seconds
+        if elapsed_seconds > 0
+        else 0.0
+    )
+    participants_per_second = (
+        participant_count_discovered / elapsed_seconds
+        if elapsed_seconds > 0
+        else 0.0
+    )
 
     return RegistrationPipelineSummary(
         package_id=package_id,
@@ -163,4 +182,7 @@ def run_registration_pipeline(
         row_count_scanned=row_count_scanned,
         participant_count_discovered=participant_count_discovered,
         source_identity_count=len(source_identities),
+        elapsed_seconds=elapsed_seconds,
+        rows_per_second=rows_per_second,
+        participants_per_second=participants_per_second,
     )
