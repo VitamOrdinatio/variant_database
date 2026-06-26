@@ -21,7 +21,7 @@ class EvidenceSurface:
     evidence_bearing: bool
 
 
-type SurfaceRule = tuple[str, EvidenceSurface]
+SurfaceRule = tuple[str, EvidenceSurface]
 
 VAP_SURFACE_RULES: tuple[SurfaceRule, ...] = (
     (
