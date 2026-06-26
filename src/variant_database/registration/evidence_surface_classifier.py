@@ -21,7 +21,9 @@ class EvidenceSurface:
     evidence_bearing: bool
 
 
-SURFACE_RULES: tuple[tuple[str, EvidenceSurface], ...] = (
+type SurfaceRule = tuple[str, EvidenceSurface]
+
+VAP_SURFACE_RULES: tuple[SurfaceRule, ...] = (
     (
         "entities/coding_interpretation/",
         EvidenceSurface(
@@ -88,7 +90,58 @@ SURFACE_RULES: tuple[tuple[str, EvidenceSurface], ...] = (
     ),
 )
 
-SPECIAL_ARTIFACTS = {
+GSC_SURFACE_RULES: tuple[SurfaceRule, ...] = (
+    (
+        "consensus_gene_set.tsv",
+        EvidenceSurface(
+            "semantic_prior_table",
+            "phenotype_gene_semantic_prior",
+            True,
+        ),
+    ),
+    (
+        "gene_provenance.tsv",
+        EvidenceSurface(
+            "gene_provenance",
+            "phenotype_gene_provenance",
+            True,
+        ),
+    ),
+    (
+        "source_contributions.tsv",
+        EvidenceSurface(
+            "source_contribution_topology",
+            "source_contribution_topology",
+            True,
+        ),
+    ),
+    (
+        "gene_source_matrix.tsv",
+        EvidenceSurface(
+            "gene_source_matrix",
+            "source_gene_relationship",
+            True,
+        ),
+    ),
+    (
+        "gene_frequency_table.tsv",
+        EvidenceSurface(
+            "gene_frequency_table",
+            "aggregation_support",
+            True,
+        ),
+    ),
+    (
+        "output_contract_validation.tsv",
+        EvidenceSurface(
+            "output_contract_validation",
+            "producer_contract_validation",
+            True,
+        ),
+    ),
+)
+
+NON_EVIDENCE_ARTIFACTS = {
     "entity_inventory.json": EvidenceSurface(
         "package_manifest",
         "manifest",
@@ -107,18 +160,28 @@ SPECIAL_ARTIFACTS = {
 }
 
 
-def classify_surface(relative_path: str) -> EvidenceSurface:
+def classify_surface(
+    relative_path: str,
+    producer_family: str = "VAP",
+) -> EvidenceSurface:
     """Classify an artifact into a VDB evidence surface."""
     filename = PurePosixPath(relative_path).name
 
-    if filename in SPECIAL_ARTIFACTS:
-        return SPECIAL_ARTIFACTS[filename]
+    if filename in NON_EVIDENCE_ARTIFACTS:
+        return NON_EVIDENCE_ARTIFACTS[filename]
 
     normalized = relative_path.replace("\\", "/")
+    producer = producer_family.strip().upper()
 
-    for prefix, surface in SURFACE_RULES:
-        if normalized.startswith(prefix):
-            return surface
+    if producer == "VAP":
+        for prefix, surface in VAP_SURFACE_RULES:
+            if normalized.startswith(prefix):
+                return surface
+
+    if producer == "GSC":
+        for artifact_name, surface in GSC_SURFACE_RULES:
+            if filename == artifact_name:
+                return surface
 
     return EvidenceSurface(
         "unclassified",

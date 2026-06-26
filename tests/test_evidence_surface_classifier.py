@@ -38,3 +38,45 @@ def test_unknown_surface() -> None:
     assert surface.surface_role == "unclassified"
     assert surface.evidence_domain == "unknown"
     assert surface.evidence_bearing is False
+
+
+def test_classifies_gsc_consensus_gene_set() -> None:
+    classification = classify_surface(
+        relative_path="tables/mitochondrial_semantic_gtr_experimental/consensus_gene_set.tsv",
+        producer_family="GSC",
+    )
+
+    assert classification.evidence_bearing is True
+    assert classification.surface_role == "semantic_prior_table"
+    assert classification.evidence_domain == "phenotype_gene_semantic_prior"
+
+
+def test_classifies_gsc_source_contributions() -> None:
+    classification = classify_surface(
+        relative_path="tables/mitochondrial_semantic_gtr_experimental/source_contributions.tsv",
+        producer_family="GSC",
+    )
+
+    assert classification.evidence_bearing is True
+    assert classification.surface_role == "source_contribution_topology"
+    assert classification.evidence_domain == "source_contribution_topology"
+
+
+def test_classifies_gsc_gene_provenance() -> None:
+    classification = classify_surface(
+        relative_path="tables/epilepsy_semantic_gtr_experimental/gene_provenance.tsv",
+        producer_family="GSC",
+    )
+
+    assert classification.evidence_bearing is True
+    assert classification.surface_role == "gene_provenance"
+    assert classification.evidence_domain == "phenotype_gene_provenance"
+
+
+def test_does_not_classify_gsc_validation_report_as_row_evidence() -> None:
+    classification = classify_surface(
+        relative_path="reports/epilepsy_semantic_gtr_experimental/validation_report.md",
+        producer_family="GSC",
+    )
+
+    assert classification.evidence_bearing is False

@@ -56,6 +56,24 @@ ENSEMBL_GENE_ID_COLUMNS = (
     "ensembl_id",
 )
 
+PHENOTYPE_COLUMNS = (
+    "phenotype",
+    "disease",
+    "disease_name",
+)
+
+GSC_SOURCE_ID_COLUMNS = (
+    "source_id",
+)
+
+GSC_SEMANTIC_CHANNEL_COLUMNS = (
+    "semantic_channel",
+)
+
+GSC_PROVENANCE_ID_COLUMNS = (
+    "provenance_id",
+)
+
 
 @dataclass(frozen=True)
 class ExtractedParticipant:
@@ -204,6 +222,125 @@ def extract_vap_participants_from_row(
     )
 
 
+def extract_gsc_participants_from_row(
+    row: Mapping[str, object],
+    source_record_ref: str | None = None,
+) -> list[ExtractedParticipant]:
+    """Extract GSC row-level participants.
+
+    GSC is phenotype-gene centered. Its primary producer-native identity
+    space is phenotype × gene_id.
+    """
+    participants: list[ExtractedParticipant] = []
+
+    phenotype = _first_nonempty_value(row, PHENOTYPE_COLUMNS)
+    if phenotype is not None:
+        column, value = phenotype
+        participants.append(
+            ExtractedParticipant(
+                participant_kind="phenotype",
+                participant_role="phenotype",
+                source_namespace="gsc_phenotype",
+                source_value=value,
+                source_label=value,
+                extraction_method=f"gsc_row_column:{column}",
+                source_record_ref=source_record_ref,
+            )
+        )
+
+    gene_id = _first_nonempty_value(row, ENSEMBL_GENE_ID_COLUMNS)
+    if gene_id is not None:
+        column, value = gene_id
+        participants.append(
+            ExtractedParticipant(
+                participant_kind="gene",
+                participant_role="gene",
+                source_namespace="gsc_ensembl_gene_id",
+                source_value=value,
+                source_label=value,
+                extraction_method=f"gsc_row_column:{column}",
+                source_record_ref=source_record_ref,
+            )
+        )
+
+    gene_symbol = _first_nonempty_value(row, GENE_SYMBOL_COLUMNS)
+    if gene_symbol is not None:
+        column, value = gene_symbol
+        participants.append(
+            ExtractedParticipant(
+                participant_kind="gene_label",
+                participant_role="gene_label",
+                source_namespace="gsc_gene_symbol",
+                source_value=value,
+                source_label=value,
+                extraction_method=f"gsc_row_column:{column}",
+                source_record_ref=source_record_ref,
+            )
+        )
+
+    source_gene_id = _first_nonempty_value(row, ("source_gene_id",))
+    if source_gene_id is not None:
+        column, value = source_gene_id
+        participants.append(
+            ExtractedParticipant(
+                participant_kind="source_gene",
+                participant_role="source_gene",
+                source_namespace="gsc_source_gene_id",
+                source_value=value,
+                source_label=value,
+                extraction_method=f"gsc_row_column:{column}",
+                source_record_ref=source_record_ref,
+            )
+        )
+
+    source_id = _first_nonempty_value(row, GSC_SOURCE_ID_COLUMNS)
+    if source_id is not None:
+        column, value = source_id
+        participants.append(
+            ExtractedParticipant(
+                participant_kind="evidence_source",
+                participant_role="evidence_source",
+                source_namespace="gsc_source_id",
+                source_value=value,
+                source_label=value,
+                extraction_method=f"gsc_row_column:{column}",
+                source_record_ref=source_record_ref,
+            )
+        )
+
+    semantic_channel = _first_nonempty_value(row, GSC_SEMANTIC_CHANNEL_COLUMNS)
+    if semantic_channel is not None:
+        column, value = semantic_channel
+        participants.append(
+            ExtractedParticipant(
+                participant_kind="semantic_channel",
+                participant_role="semantic_channel",
+                source_namespace="gsc_semantic_channel",
+                source_value=value,
+                source_label=value,
+                extraction_method=f"gsc_row_column:{column}",
+                source_record_ref=source_record_ref,
+            )
+        )
+
+    provenance_id = _first_nonempty_value(row, GSC_PROVENANCE_ID_COLUMNS)
+    if provenance_id is not None:
+        column, value = provenance_id
+        participants.append(
+            ExtractedParticipant(
+                participant_kind="provenance",
+                participant_role="provenance",
+                source_namespace="gsc_provenance_id",
+                source_value=value,
+                source_label=value,
+                extraction_method=f"gsc_row_column:{column}",
+                source_record_ref=source_record_ref,
+            )
+        )
+
+    return participants
+
+
 def discover_participants_from_row(
     producer_family: str,
     row: Mapping[str, object],
@@ -218,6 +355,12 @@ def discover_participants_from_row(
 
     if producer == "VAP":
         return extract_vap_participants_from_row(
+            row=row,
+            source_record_ref=source_record_ref,
+        )
+
+    if producer == "GSC":
+        return extract_gsc_participants_from_row(
             row=row,
             source_record_ref=source_record_ref,
         )

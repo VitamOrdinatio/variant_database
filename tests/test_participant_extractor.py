@@ -196,6 +196,83 @@ def test_discover_participants_rejects_unimplemented_producer() -> None:
 
     with pytest.raises(NotImplementedError):
         discover_participants_from_row(
-            producer_family="GSC",
+            producer_family="RDGP",
             row={"gene_symbol": "POLG"},
         )
+
+
+def test_extract_gsc_primary_phenotype_gene_identity() -> None:
+    from variant_database.registration.participant_extractor import (
+        extract_gsc_participants_from_row,
+    )
+
+    row = {
+        "phenotype": "mitochondrial_disease",
+        "gene_id": "ENSG00000140521",
+        "gene_symbol": "POLG",
+        "provenance_id": "abc123",
+    }
+
+    participants = extract_gsc_participants_from_row(row, source_record_ref="row:1")
+
+    assert [p.source_namespace for p in participants] == [
+        "gsc_phenotype",
+        "gsc_ensembl_gene_id",
+        "gsc_gene_symbol",
+        "gsc_provenance_id",
+    ]
+    assert [p.source_value for p in participants] == [
+        "mitochondrial_disease",
+        "ENSG00000140521",
+        "POLG",
+        "abc123",
+    ]
+
+
+def test_extract_gsc_source_contribution_topology() -> None:
+    from variant_database.registration.participant_extractor import (
+        extract_gsc_participants_from_row,
+    )
+
+    row = {
+        "gene_id": "ENSG00000140521",
+        "gene_symbol": "POLG",
+        "source_gene_id": "ENSG00000140521",
+        "source_id": "mitocarta_human",
+        "semantic_channel": "contextual_biology",
+    }
+
+    participants = extract_gsc_participants_from_row(row, source_record_ref="row:7")
+
+    assert [p.source_namespace for p in participants] == [
+        "gsc_ensembl_gene_id",
+        "gsc_gene_symbol",
+        "gsc_source_gene_id",
+        "gsc_source_id",
+        "gsc_semantic_channel",
+    ]
+    assert all(p.source_record_ref == "row:7" for p in participants)
+
+
+def test_discover_participants_dispatches_to_gsc() -> None:
+    from variant_database.registration.participant_extractor import (
+        discover_participants_from_row,
+    )
+
+    row = {
+        "phenotype": "epilepsy",
+        "gene_id": "ENSG00000140521",
+        "gene_symbol": "POLG",
+    }
+
+    participants = discover_participants_from_row(
+        producer_family="GSC",
+        row=row,
+        source_record_ref="row:1",
+    )
+
+    assert [p.source_namespace for p in participants] == [
+        "gsc_phenotype",
+        "gsc_ensembl_gene_id",
+        "gsc_gene_symbol",
+    ]
