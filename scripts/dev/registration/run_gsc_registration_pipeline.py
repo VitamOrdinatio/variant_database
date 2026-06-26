@@ -10,7 +10,7 @@ from variant_database.registration.registration_orchestrator import (
 )
 
 
-GSC_REPO_ROOT = Path("/home/steelsparrow/dev/portfolio_projects/gene_set_consensus")
+GSC_REPO_ROOT = Path.home() / "dev/portfolio_projects/gene_set_consensus"
 
 GSC_TEPS = {
     "epilepsy": GSC_REPO_ROOT / "results/teps/gsc/epilepsy_semantic_gtr_experimental/run_2026_06_22_184534/gsc_tep.json",

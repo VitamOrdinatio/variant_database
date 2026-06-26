@@ -15,9 +15,7 @@ from variant_database.ingestion.tep_package_resolver import (
 )
 
 
-GSC_REPO_ROOT = Path(
-    "/home/steelsparrow/dev/portfolio_projects/gene_set_consensus"
-)
+GSC_REPO_ROOT = Path.home() / "dev/portfolio_projects/gene_set_consensus"
 
 GSC_TEPS = {
     "epilepsy": GSC_REPO_ROOT
