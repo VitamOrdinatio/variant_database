@@ -2,9 +2,11 @@
 _notes
 
 # Results
-results/
-/results
-/results/
+results/*
+!results/validation/
+results/validation/*
+!results/validation/phase3_registration_certification/
+!results/validation/phase3_registration_certification/**
 
 # Local machine configs:
 config/config.sys76.local.yaml

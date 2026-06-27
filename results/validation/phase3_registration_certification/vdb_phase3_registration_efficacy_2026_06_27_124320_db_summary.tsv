@@ -1,0 +1,7 @@
+label	db_path	passed_all_invariants	tep_packages	artifacts	assertion_registrations	source_identities	schema_metadata	missing_tables
+gsc_epilepsy	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite	True	1	9	6	89138	1	
+gsc_mitochondrial_disease	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite	True	1	9	6	85434	1	
+vap_hg002	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite	True	1	16	10	97369849	1	
+vap_median_ERR10619300	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_median_ERR10619300/vdb.sqlite	True	1	16	10	15467317	1	
+vap_q1_ERR10619212	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q1_ERR10619212/vdb.sqlite	True	1	16	10	19017490	1	
+vap_q3_ERR10619225	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q3_ERR10619225/vdb.sqlite	True	1	16	10	15911968	1	

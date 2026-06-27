@@ -1,0 +1,3497 @@
+{
+  "probe": "vdb_phase3_registration_efficacy",
+  "generated_at_utc": "2026-06-27T12:43:20.718827+00:00",
+  "repo_root": "/root/dev/portfolio_projects/variant_database",
+  "registration_root": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical",
+  "db_count": 6,
+  "databases": [
+    {
+      "label": "gsc_epilepsy",
+      "db_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite",
+      "tables": [
+        "artifacts",
+        "assertion_registrations",
+        "schema_metadata",
+        "source_identities",
+        "tep_packages"
+      ],
+      "missing_tables": [],
+      "counts": {
+        "artifacts": 9,
+        "assertion_registrations": 6,
+        "schema_metadata": 1,
+        "source_identities": 89138,
+        "tep_packages": 1
+      },
+      "package_rows": [
+        {
+          "package_id": "f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43",
+          "package_path": "/root/dev/portfolio_projects/gene_set_consensus/results/runs/run_2026_06_22_184534",
+          "package_exists": 1,
+          "artifact_count": 9,
+          "manifest_count": 1
+        }
+      ],
+      "artifact_breakdown": [
+        {
+          "is_manifest": 0,
+          "n": 8,
+          "total_size_bytes": 4289864
+        },
+        {
+          "is_manifest": 1,
+          "n": 1,
+          "total_size_bytes": 948
+        }
+      ],
+      "assertion_breakdown": [
+        {
+          "producer_family": "GSC",
+          "surface_role": "gene_frequency_table",
+          "evidence_domain": "aggregation_support",
+          "assertion_type": "aggregation_support",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "gene_provenance",
+          "evidence_domain": "phenotype_gene_provenance",
+          "assertion_type": "phenotype_gene_provenance",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "gene_source_matrix",
+          "evidence_domain": "source_gene_relationship",
+          "assertion_type": "source_gene_relationship",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "output_contract_validation",
+          "evidence_domain": "producer_contract_validation",
+          "assertion_type": "producer_contract_validation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "semantic_prior_table",
+          "evidence_domain": "phenotype_gene_semantic_prior",
+          "assertion_type": "phenotype_gene_semantic_prior",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "source_contribution_topology",
+          "evidence_domain": "source_contribution_topology",
+          "assertion_type": "source_contribution_topology",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        }
+      ],
+      "identity_breakdown": [
+        {
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_namespace": "gsc_source_id",
+          "extraction_method": "gsc_row_column:source_id",
+          "n": 8810
+        },
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "extraction_method": "gsc_row_column:gene_id",
+          "n": 19439
+        },
+        {
+          "identity_kind": "gene_label",
+          "participant_role": "gene_label",
+          "source_namespace": "gsc_gene_symbol",
+          "extraction_method": "gsc_row_column:gene_symbol",
+          "n": 15896
+        },
+        {
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_namespace": "gsc_phenotype",
+          "extraction_method": "gsc_row_column:phenotype",
+          "n": 19439
+        },
+        {
+          "identity_kind": "provenance",
+          "participant_role": "provenance",
+          "source_namespace": "gsc_provenance_id",
+          "extraction_method": "gsc_row_column:provenance_id",
+          "n": 12353
+        },
+        {
+          "identity_kind": "semantic_channel",
+          "participant_role": "semantic_channel",
+          "source_namespace": "gsc_semantic_channel",
+          "extraction_method": "gsc_row_column:semantic_channel",
+          "n": 4405
+        },
+        {
+          "identity_kind": "source_gene",
+          "participant_role": "source_gene",
+          "source_namespace": "gsc_source_gene_id",
+          "extraction_method": "gsc_row_column:source_gene_id",
+          "n": 8796
+        }
+      ],
+      "sample_assertions": [
+        {
+          "assertion_registration_id": "0958865944cfc4551a2a9d70cf8587a80761d10f60feaa9317c43dba3899bff3",
+          "package_id": "f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43",
+          "artifact_id": "ae4f9ff72a674f966e3f39585075bbf4f6dd614b5014fccf50401c8da8bed8c2",
+          "surface_role": "gene_frequency_table",
+          "evidence_domain": "aggregation_support",
+          "producer_family": "GSC",
+          "assertion_type": "aggregation_support",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"ae4f9ff72a674f966e3f39585075bbf4f6dd614b5014fccf50401c8da8bed8c2\", \"package_id\": \"f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experim",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experimental/gene_frequency_table.tsv\", \"sha256\": \"369f4223bb271c800a4a5ab686ccad74b6011afd29e3827891615a7e4551198e\", \"size_bytes\": 663138"
+        },
+        {
+          "assertion_registration_id": "550655acd592399532576b4a11550e944b718b143a480c316eea2a5762317a7a",
+          "package_id": "f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43",
+          "artifact_id": "1148d39680533720e8746eca26b4ca4c757322d9a966f24b938da77f9d7f1cf8",
+          "surface_role": "gene_provenance",
+          "evidence_domain": "phenotype_gene_provenance",
+          "producer_family": "GSC",
+          "assertion_type": "phenotype_gene_provenance",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"1148d39680533720e8746eca26b4ca4c757322d9a966f24b938da77f9d7f1cf8\", \"package_id\": \"f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experim",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experimental/gene_provenance.tsv\", \"sha256\": \"2899caf9db9b6f92fa02ca34892da75041e8e8540bddc905de886b4c6618ab4d\", \"size_bytes\": 940241}"
+        },
+        {
+          "assertion_registration_id": "9208504e5cea72e6437b7f4dd060ac98dde18d374ea3cceea000a586e5f262a8",
+          "package_id": "f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43",
+          "artifact_id": "dd411f9240f6218c7628acb912a3bea9b8d4bf35a62ef8c818bc25b93433dee1",
+          "surface_role": "gene_source_matrix",
+          "evidence_domain": "source_gene_relationship",
+          "producer_family": "GSC",
+          "assertion_type": "source_gene_relationship",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"dd411f9240f6218c7628acb912a3bea9b8d4bf35a62ef8c818bc25b93433dee1\", \"package_id\": \"f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experim",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experimental/gene_source_matrix.tsv\", \"sha256\": \"c8ebd94d25f75c901d22a473968bfd27daeaabea166107cadb9478d536694695\", \"size_bytes\": 198775}"
+        },
+        {
+          "assertion_registration_id": "ccf2ed6fb745d3fff803b9444dd0ff1c8fa50d967a96c2de374930daca25a430",
+          "package_id": "f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43",
+          "artifact_id": "c3503b52c380295522b5a189f4c086ebfa6cfb9f1a737fa66158dd05cd0cfbe7",
+          "surface_role": "semantic_prior_table",
+          "evidence_domain": "phenotype_gene_semantic_prior",
+          "producer_family": "GSC",
+          "assertion_type": "phenotype_gene_semantic_prior",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"c3503b52c380295522b5a189f4c086ebfa6cfb9f1a737fa66158dd05cd0cfbe7\", \"package_id\": \"f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experim",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experimental/consensus_gene_set.tsv\", \"sha256\": \"c0bb4d075d04d7f0fd934ab2222879aa6f5ec446ad696a39e9cf2119b2d64248\", \"size_bytes\": 1218925}"
+        },
+        {
+          "assertion_registration_id": "ddb279b548eadce8eebbf2e3d71fcd1c6e76e0d90377aa0d3e2946a384d3128b",
+          "package_id": "f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43",
+          "artifact_id": "668d3753cd7c238c75ddf8c83bf5eeacf4a0c848f9a1ef739746973aa3252d55",
+          "surface_role": "output_contract_validation",
+          "evidence_domain": "producer_contract_validation",
+          "producer_family": "GSC",
+          "assertion_type": "producer_contract_validation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"668d3753cd7c238c75ddf8c83bf5eeacf4a0c848f9a1ef739746973aa3252d55\", \"package_id\": \"f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43\", \"relative_path\": \"reports/epilepsy_semantic_gtr_experi",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"reports/epilepsy_semantic_gtr_experimental/output_contract_validation.tsv\", \"sha256\": \"f47e56cbbb7dedba216e1e5d497eebc6385963912530e6c11386b27b82dadc29\", \"size_bytes\":"
+        },
+        {
+          "assertion_registration_id": "f6ceb91c3307a0a84290cc2585c9e0b1cdc82f435e4eaff192b5c598ed445946",
+          "package_id": "f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43",
+          "artifact_id": "aad5426a40a541ae398e8e6cfdb246a1e0aeeeb30c6ea9a7e503b3290712cbed",
+          "surface_role": "source_contribution_topology",
+          "evidence_domain": "source_contribution_topology",
+          "producer_family": "GSC",
+          "assertion_type": "source_contribution_topology",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"aad5426a40a541ae398e8e6cfdb246a1e0aeeeb30c6ea9a7e503b3290712cbed\", \"package_id\": \"f5052d5c4405ec759e8b61270f6c361d9bd6861ea4e0f81847e39a974e401e43\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experim",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/epilepsy_semantic_gtr_experimental/source_contributions.tsv\", \"sha256\": \"4f08c2a4504f5557757479e11983bd1cb598ce86e69c761ed39ef92be53ee63d\", \"size_bytes\": 126374"
+        }
+      ],
+      "sample_identities": [
+        {
+          "source_identity_id": "00004e67266f460039f43d64957ff25f57f06ae952a08235e0ad70649613b9b0",
+          "assertion_registration_id": "f6ceb91c3307a0a84290cc2585c9e0b1cdc82f435e4eaff192b5c598ed445946",
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_value": "gtr_epilepsy_gene_summary",
+          "source_namespace": "gsc_source_id",
+          "source_label": "gtr_epilepsy_gene_summary",
+          "extraction_method": "gsc_row_column:source_id",
+          "source_record_ref": "row:3713",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000a7f6e1b325f5823c7db56c15371134ee5429fa2abcebbbf2f44a04aa0a0e",
+          "assertion_registration_id": "9208504e5cea72e6437b7f4dd060ac98dde18d374ea3cceea000a586e5f262a8",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "epilepsy",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "epilepsy",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:1261",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000111b6f5f89e234f650f981ba7d3b48a3acc3facac19040fb38de6c23d018e",
+          "assertion_registration_id": "9208504e5cea72e6437b7f4dd060ac98dde18d374ea3cceea000a586e5f262a8",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000163755",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000163755",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:1858",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0001edfcc3d032765cf4c2a34b700184499287a36ee53ce2065f1b97e4041bb7",
+          "assertion_registration_id": "550655acd592399532576b4a11550e944b718b143a480c316eea2a5762317a7a",
+          "identity_kind": "provenance",
+          "participant_role": "provenance",
+          "source_value": "a0219e82517fd3a8",
+          "source_namespace": "gsc_provenance_id",
+          "source_label": "a0219e82517fd3a8",
+          "extraction_method": "gsc_row_column:provenance_id",
+          "source_record_ref": "row:838",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0003544651867427b063eb2632b4ba73a35fdf57cecb5e9fba396a422a14756e",
+          "assertion_registration_id": "550655acd592399532576b4a11550e944b718b143a480c316eea2a5762317a7a",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000160194",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000160194",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:2585",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0003acceede3fefb4b2e6d98a6b64f82d63f1d2c61e699f93adf83c14a164d88",
+          "assertion_registration_id": "ccf2ed6fb745d3fff803b9444dd0ff1c8fa50d967a96c2de374930daca25a430",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000168040",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000168040",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:1595",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0004c1bead7d9b8f17fad12ec9e742b0ab4274647694354e6503e6e87bf230a0",
+          "assertion_registration_id": "f6ceb91c3307a0a84290cc2585c9e0b1cdc82f435e4eaff192b5c598ed445946",
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_value": "gtr_epilepsy_gene_summary",
+          "source_namespace": "gsc_source_id",
+          "source_label": "gtr_epilepsy_gene_summary",
+          "extraction_method": "gsc_row_column:source_id",
+          "source_record_ref": "row:4224",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0005ebf17590bc6971b7d1a7ca8f774682c59c6cb45c9a5386c3d39efff78d73",
+          "assertion_registration_id": "ccf2ed6fb745d3fff803b9444dd0ff1c8fa50d967a96c2de374930daca25a430",
+          "identity_kind": "gene_label",
+          "participant_role": "gene_label",
+          "source_value": "B4GALT1",
+          "source_namespace": "gsc_gene_symbol",
+          "source_label": "B4GALT1",
+          "extraction_method": "gsc_row_column:gene_symbol",
+          "source_record_ref": "row:1068",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00069234eb777a4daadba4db5dda8961fcb894774bc89b5efa35f5e5ddb775bd",
+          "assertion_registration_id": "9208504e5cea72e6437b7f4dd060ac98dde18d374ea3cceea000a586e5f262a8",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "epilepsy",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "epilepsy",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:1477",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00073f62304b5b5ba44c48788dda38ee1a179df5726723060f08bb95556a3d7b",
+          "assertion_registration_id": "9208504e5cea72e6437b7f4dd060ac98dde18d374ea3cceea000a586e5f262a8",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "epilepsy",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "epilepsy",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:3511",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00075c725823ea048e908498f8c044b32a70067e6fbabab2d640568bcda066c5",
+          "assertion_registration_id": "550655acd592399532576b4a11550e944b718b143a480c316eea2a5762317a7a",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "epilepsy",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "epilepsy",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:727",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0007c47caa5097bfd125116748fa2bf91b249216da6c81c029c5b75a851397ac",
+          "assertion_registration_id": "0958865944cfc4551a2a9d70cf8587a80761d10f60feaa9317c43dba3899bff3",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000001626",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000001626",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:1228",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000868b07fb901a76c2c1772ae42635b60f1052129d60b33604307db4085ca4f",
+          "assertion_registration_id": "9208504e5cea72e6437b7f4dd060ac98dde18d374ea3cceea000a586e5f262a8",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000079482",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000079482",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:521",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00095e2d33e4cbff3835e56cdefd277f6fd351057f220465eb22482f3a0be342",
+          "assertion_registration_id": "550655acd592399532576b4a11550e944b718b143a480c316eea2a5762317a7a",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000117308",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000117308",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:1497",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000a049e50a2b248ad2b27f3715726926712de57a61b4a2a6b55d09654f13938",
+          "assertion_registration_id": "ccf2ed6fb745d3fff803b9444dd0ff1c8fa50d967a96c2de374930daca25a430",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000143252",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000143252",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:2786",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000bbe9dcea94c36dc3252cb4f09a356879f7a207359fe31aba830515dd7a455",
+          "assertion_registration_id": "f6ceb91c3307a0a84290cc2585c9e0b1cdc82f435e4eaff192b5c598ed445946",
+          "identity_kind": "source_gene",
+          "participant_role": "source_gene",
+          "source_value": "5052",
+          "source_namespace": "gsc_source_gene_id",
+          "source_label": "5052",
+          "extraction_method": "gsc_row_column:source_gene_id",
+          "source_record_ref": "row:3116",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000c521140b86e67a418c74aa22989d3dc7f6e9719572bff5916d499b3856ac9",
+          "assertion_registration_id": "ccf2ed6fb745d3fff803b9444dd0ff1c8fa50d967a96c2de374930daca25a430",
+          "identity_kind": "gene_label",
+          "participant_role": "gene_label",
+          "source_value": "PGM2L1",
+          "source_namespace": "gsc_gene_symbol",
+          "source_label": "PGM2L1",
+          "extraction_method": "gsc_row_column:gene_symbol",
+          "source_record_ref": "row:3459",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000d4e61610098c22e1d0d66e46cec23f5b601911e8185963095300c4a1aca65",
+          "assertion_registration_id": "550655acd592399532576b4a11550e944b718b143a480c316eea2a5762317a7a",
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_value": "gtr_epilepsy_gene_summary",
+          "source_namespace": "gsc_source_id",
+          "source_label": "gtr_epilepsy_gene_summary",
+          "extraction_method": "gsc_row_column:source_id",
+          "source_record_ref": "row:2484",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000d7c69e3494b857b5e70319b5014cc73c80031a5e773b363d6aba9b0f1e6ad",
+          "assertion_registration_id": "f6ceb91c3307a0a84290cc2585c9e0b1cdc82f435e4eaff192b5c598ed445946",
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_value": "gtr_epilepsy_gene_summary",
+          "source_namespace": "gsc_source_id",
+          "source_label": "gtr_epilepsy_gene_summary",
+          "extraction_method": "gsc_row_column:source_id",
+          "source_record_ref": "row:3072",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000db7a250ba9524c0dc2229ef8024e8e13f801a65e9b3fc94834b9bfca5db22",
+          "assertion_registration_id": "550655acd592399532576b4a11550e944b718b143a480c316eea2a5762317a7a",
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_value": "gtr_epilepsy_gene_summary",
+          "source_namespace": "gsc_source_id",
+          "source_label": "gtr_epilepsy_gene_summary",
+          "extraction_method": "gsc_row_column:source_id",
+          "source_record_ref": "row:1839",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        }
+      ],
+      "invariants": [
+        {
+          "name": "required_tables_present",
+          "passed": true,
+          "detail": "all required tables present"
+        },
+        {
+          "name": "single_tep_package",
+          "passed": true,
+          "detail": "tep_packages=1"
+        },
+        {
+          "name": "artifacts_registered",
+          "passed": true,
+          "detail": "artifacts=9"
+        },
+        {
+          "name": "assertions_registered",
+          "passed": true,
+          "detail": "assertion_registrations=6"
+        },
+        {
+          "name": "source_identities_registered",
+          "passed": true,
+          "detail": "source_identities=89138"
+        },
+        {
+          "name": "assertion_package_artifact_refs_present",
+          "passed": true,
+          "detail": "assertion rows missing package/artifact refs=0"
+        },
+        {
+          "name": "all_assertions_registered_status",
+          "passed": true,
+          "detail": "non-registered assertion rows=0"
+        },
+        {
+          "name": "source_identity_assertion_refs_resolve",
+          "passed": true,
+          "detail": "source identities with missing assertion refs=0"
+        },
+        {
+          "name": "producer_family_present",
+          "passed": true,
+          "detail": "distinct producer_family count=1"
+        },
+        {
+          "name": "source_namespaces_present",
+          "passed": true,
+          "detail": "distinct source_namespace count=7"
+        }
+      ],
+      "passed_all_invariants": true
+    },
+    {
+      "label": "gsc_mitochondrial_disease",
+      "db_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite",
+      "tables": [
+        "artifacts",
+        "assertion_registrations",
+        "schema_metadata",
+        "source_identities",
+        "tep_packages"
+      ],
+      "missing_tables": [],
+      "counts": {
+        "artifacts": 9,
+        "assertion_registrations": 6,
+        "schema_metadata": 1,
+        "source_identities": 85434,
+        "tep_packages": 1
+      },
+      "package_rows": [
+        {
+          "package_id": "e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6",
+          "package_path": "/root/dev/portfolio_projects/gene_set_consensus/results/runs/run_2026_06_23_015533",
+          "package_exists": 1,
+          "artifact_count": 9,
+          "manifest_count": 1
+        }
+      ],
+      "artifact_breakdown": [
+        {
+          "is_manifest": 0,
+          "n": 8,
+          "total_size_bytes": 4623752
+        },
+        {
+          "is_manifest": 1,
+          "n": 1,
+          "total_size_bytes": 961
+        }
+      ],
+      "assertion_breakdown": [
+        {
+          "producer_family": "GSC",
+          "surface_role": "gene_frequency_table",
+          "evidence_domain": "aggregation_support",
+          "assertion_type": "aggregation_support",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "gene_provenance",
+          "evidence_domain": "phenotype_gene_provenance",
+          "assertion_type": "phenotype_gene_provenance",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "gene_source_matrix",
+          "evidence_domain": "source_gene_relationship",
+          "assertion_type": "source_gene_relationship",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "output_contract_validation",
+          "evidence_domain": "producer_contract_validation",
+          "assertion_type": "producer_contract_validation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "semantic_prior_table",
+          "evidence_domain": "phenotype_gene_semantic_prior",
+          "assertion_type": "phenotype_gene_semantic_prior",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "GSC",
+          "surface_role": "source_contribution_topology",
+          "evidence_domain": "source_contribution_topology",
+          "assertion_type": "source_contribution_topology",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        }
+      ],
+      "identity_breakdown": [
+        {
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_namespace": "gsc_source_id",
+          "extraction_method": "gsc_row_column:source_id",
+          "n": 7770
+        },
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "extraction_method": "gsc_row_column:gene_id",
+          "n": 19413
+        },
+        {
+          "identity_kind": "gene_label",
+          "participant_role": "gene_label",
+          "source_namespace": "gsc_gene_symbol",
+          "extraction_method": "gsc_row_column:gene_symbol",
+          "n": 15532
+        },
+        {
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_namespace": "gsc_phenotype",
+          "extraction_method": "gsc_row_column:phenotype",
+          "n": 19413
+        },
+        {
+          "identity_kind": "provenance",
+          "participant_role": "provenance",
+          "source_namespace": "gsc_provenance_id",
+          "extraction_method": "gsc_row_column:provenance_id",
+          "n": 11651
+        },
+        {
+          "identity_kind": "semantic_channel",
+          "participant_role": "semantic_channel",
+          "source_namespace": "gsc_semantic_channel",
+          "extraction_method": "gsc_row_column:semantic_channel",
+          "n": 3885
+        },
+        {
+          "identity_kind": "source_gene",
+          "participant_role": "source_gene",
+          "source_namespace": "gsc_source_gene_id",
+          "extraction_method": "gsc_row_column:source_gene_id",
+          "n": 7770
+        }
+      ],
+      "sample_assertions": [
+        {
+          "assertion_registration_id": "1b0b1db7115e2d15932fbd31d8d244cf3666fd0aba1e37db60033b09383ba602",
+          "package_id": "e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6",
+          "artifact_id": "8774972cd7b43ff7f376ec7ee37b7b27aca6a83fce6ed9aef3eaa085a5e32107",
+          "surface_role": "output_contract_validation",
+          "evidence_domain": "producer_contract_validation",
+          "producer_family": "GSC",
+          "assertion_type": "producer_contract_validation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"8774972cd7b43ff7f376ec7ee37b7b27aca6a83fce6ed9aef3eaa085a5e32107\", \"package_id\": \"e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6\", \"relative_path\": \"reports/mitochondrial_semantic_gtr_e",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"reports/mitochondrial_semantic_gtr_experimental/output_contract_validation.tsv\", \"sha256\": \"4db5c2914c134b668f8cd451b273064362f05d84e4018f68ed45519174a2f00b\", \"size_by"
+        },
+        {
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "package_id": "e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6",
+          "artifact_id": "65b55966efb64f51adf75efeb6cd03c2734b5bc03efb124635d0b8df8389a548",
+          "surface_role": "source_contribution_topology",
+          "evidence_domain": "source_contribution_topology",
+          "producer_family": "GSC",
+          "assertion_type": "source_contribution_topology",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"65b55966efb64f51adf75efeb6cd03c2734b5bc03efb124635d0b8df8389a548\", \"package_id\": \"e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_ex",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_experimental/source_contributions.tsv\", \"sha256\": \"1abfb9cbeb04496bed201e0dfd326847e6a731785ee3393a194572fa331e33e0\", \"size_bytes\": 1"
+        },
+        {
+          "assertion_registration_id": "8a80ff3f4bc4e0df615180dee8d89789a952920a6f073a84767397279a53fbcf",
+          "package_id": "e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6",
+          "artifact_id": "6214ecef5cd9c07f5b4edc3aaa70187489b810ec6283e2ab9a6f41cac282bbf9",
+          "surface_role": "gene_source_matrix",
+          "evidence_domain": "source_gene_relationship",
+          "producer_family": "GSC",
+          "assertion_type": "source_gene_relationship",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"6214ecef5cd9c07f5b4edc3aaa70187489b810ec6283e2ab9a6f41cac282bbf9\", \"package_id\": \"e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_ex",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_experimental/gene_source_matrix.tsv\", \"sha256\": \"3653c00f779467aab4acc47a06c3434e962c05ff32c08b6a8cf47cb9ba5a483d\", \"size_bytes\": 225"
+        },
+        {
+          "assertion_registration_id": "a11f588287e2858eb96a94ec52f24159e174354de67452664c87e718cb6c89b6",
+          "package_id": "e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6",
+          "artifact_id": "79f71e52fddfbfa123bdc41aa4ba8e147f5c8dc855d23cabffc6b78bc10906b5",
+          "surface_role": "semantic_prior_table",
+          "evidence_domain": "phenotype_gene_semantic_prior",
+          "producer_family": "GSC",
+          "assertion_type": "phenotype_gene_semantic_prior",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"79f71e52fddfbfa123bdc41aa4ba8e147f5c8dc855d23cabffc6b78bc10906b5\", \"package_id\": \"e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_ex",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_experimental/consensus_gene_set.tsv\", \"sha256\": \"6467d77e60edb8b2953bfde9039518c9e50de344993b9cc46ae93f768592169e\", \"size_bytes\": 133"
+        },
+        {
+          "assertion_registration_id": "b0bc75522990d62ae916320c1e5183a8c3f8e37839de9316be52f46601fadf26",
+          "package_id": "e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6",
+          "artifact_id": "e310302ddfc6b39a7232d85284af7319fc3fa9616bc7ffeed59d8d3a1cff2728",
+          "surface_role": "gene_provenance",
+          "evidence_domain": "phenotype_gene_provenance",
+          "producer_family": "GSC",
+          "assertion_type": "phenotype_gene_provenance",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"e310302ddfc6b39a7232d85284af7319fc3fa9616bc7ffeed59d8d3a1cff2728\", \"package_id\": \"e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_ex",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_experimental/gene_provenance.tsv\", \"sha256\": \"4d5c977f3386738348ef53f05b86f5ab71b2deb008ad8479829e5d8d3944aa0a\", \"size_bytes\": 102309"
+        },
+        {
+          "assertion_registration_id": "c8c94902a880f0643e37a2a83e8923087788d8d778e333dfc96d50764e6693ce",
+          "package_id": "e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6",
+          "artifact_id": "5b766b381994e32c65400e2ea34c41e57367d9afdfb584ad3fc04931b1357d10",
+          "surface_role": "gene_frequency_table",
+          "evidence_domain": "aggregation_support",
+          "producer_family": "GSC",
+          "assertion_type": "aggregation_support",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"5b766b381994e32c65400e2ea34c41e57367d9afdfb584ad3fc04931b1357d10\", \"package_id\": \"e86a4d7480405ed214d1b9894fdc00e59ac104243854d889d61de46fff1ea0a6\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_ex",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"tables/mitochondrial_semantic_gtr_experimental/gene_frequency_table.tsv\", \"sha256\": \"ae6148e257ea68104aa624c197fa18cd4f356fe2a657320cdd6f6ca86b439593\", \"size_bytes\": 7"
+        }
+      ],
+      "sample_identities": [
+        {
+          "source_identity_id": "00013b6e9b1ec9cdf570b653a0c8ec9fa9602576472030360972db5476eb9125",
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "identity_kind": "semantic_channel",
+          "participant_role": "semantic_channel",
+          "source_value": "contextual_biology",
+          "source_namespace": "gsc_semantic_channel",
+          "source_label": "contextual_biology",
+          "extraction_method": "gsc_row_column:semantic_channel",
+          "source_record_ref": "row:3767",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000142a4eabd3eb177a5339c50a10d2eb1243f37eed711ac864bc0d75b309141",
+          "assertion_registration_id": "c8c94902a880f0643e37a2a83e8923087788d8d778e333dfc96d50764e6693ce",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:723",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0001b14c3a6938bc927126ee89696cd0b677d91b434b858ba56c71dda3f7654d",
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "identity_kind": "provenance",
+          "participant_role": "provenance",
+          "source_value": "79fe1a95c05e2e92",
+          "source_namespace": "gsc_provenance_id",
+          "source_label": "79fe1a95c05e2e92",
+          "extraction_method": "gsc_row_column:provenance_id",
+          "source_record_ref": "row:1244",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000284ed53d5257b40ad8642fe5bb8313ea4b8faa41418fc0c501682c128eaa5",
+          "assertion_registration_id": "a11f588287e2858eb96a94ec52f24159e174354de67452664c87e718cb6c89b6",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:458",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0004289517673716f115cea7fa3c05cdac7711783934fdfcf03282a2f448a6e3",
+          "assertion_registration_id": "a11f588287e2858eb96a94ec52f24159e174354de67452664c87e718cb6c89b6",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:1103",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00045404dab3d4c4c81f84990b4eac28a7a1f473def2f9551692d97bd9f032a6",
+          "assertion_registration_id": "8a80ff3f4bc4e0df615180dee8d89789a952920a6f073a84767397279a53fbcf",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:1141",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000496173e458c177d2766a2d983ceef35efed78f341d9d15beb61e84d3f4873",
+          "assertion_registration_id": "b0bc75522990d62ae916320c1e5183a8c3f8e37839de9316be52f46601fadf26",
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_value": "gtr_mitochondrial_gene_summary",
+          "source_namespace": "gsc_source_id",
+          "source_label": "gtr_mitochondrial_gene_summary",
+          "extraction_method": "gsc_row_column:source_id",
+          "source_record_ref": "row:1963",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0004b731b8499491e4782247a5b6eff02a4e08a8334e12855426292d7a2e402f",
+          "assertion_registration_id": "a11f588287e2858eb96a94ec52f24159e174354de67452664c87e718cb6c89b6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000119431",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "ENSG00000119431",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:432",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0005220a5227d4cbe0b6f03baca8c0adbde8bd254d341b84f28e437c2656ec53",
+          "assertion_registration_id": "8a80ff3f4bc4e0df615180dee8d89789a952920a6f073a84767397279a53fbcf",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:3431",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0005649ef75203ea328a73fc3d7c6422373d7f6b92ab6a3bfe14ab2d9d723a97",
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "identity_kind": "semantic_channel",
+          "participant_role": "semantic_channel",
+          "source_value": "contextual_biology",
+          "source_namespace": "gsc_semantic_channel",
+          "source_label": "contextual_biology",
+          "extraction_method": "gsc_row_column:semantic_channel",
+          "source_record_ref": "row:340",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000666bf88e0cf707c7a976a2dbcba056c075f543e97955e590bff3722da92f3",
+          "assertion_registration_id": "a11f588287e2858eb96a94ec52f24159e174354de67452664c87e718cb6c89b6",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:3260",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0006874375cac9e4965493dd7f01f288e1c4b364de2b833942891a8430f9eac7",
+          "assertion_registration_id": "c8c94902a880f0643e37a2a83e8923087788d8d778e333dfc96d50764e6693ce",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "1288",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "1288",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:1671",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0006f92806f936f258c407c248c07bdda97a976750696fd9d1166a52ee84a687",
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "identity_kind": "semantic_channel",
+          "participant_role": "semantic_channel",
+          "source_value": "clinical_utilization",
+          "source_namespace": "gsc_semantic_channel",
+          "source_label": "clinical_utilization",
+          "extraction_method": "gsc_row_column:semantic_channel",
+          "source_record_ref": "row:1042",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0007b8fbfebb8be7f1209d0c4c4a5ebfb58b6edfd126fc2a945876b68c73e3d1",
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:433",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0007c60d77b10a86ecfebec0baa4aca63e4e6de8b21aa4f9d861e145afb9b600",
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "identity_kind": "gene_label",
+          "participant_role": "gene_label",
+          "source_value": "MTERF4",
+          "source_namespace": "gsc_gene_symbol",
+          "source_label": "MTERF4",
+          "extraction_method": "gsc_row_column:gene_symbol",
+          "source_record_ref": "row:2203",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000839941d9cdecfcea857cce115cda96991f933f9de011de833921e88394346",
+          "assertion_registration_id": "43eecf1345d2adfb6cb05920b7a4f9e3a84751ac7117f093c6a07e8b4831716e",
+          "identity_kind": "semantic_channel",
+          "participant_role": "semantic_channel",
+          "source_value": "contextual_biology",
+          "source_namespace": "gsc_semantic_channel",
+          "source_label": "contextual_biology",
+          "extraction_method": "gsc_row_column:semantic_channel",
+          "source_record_ref": "row:73",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000909a87fe2852a0507f0f7fa8ef5a12299976d8cf2b508c20d23ef4918ae1a",
+          "assertion_registration_id": "b0bc75522990d62ae916320c1e5183a8c3f8e37839de9316be52f46601fadf26",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "78989",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "78989",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:759",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000cb3e6806485ad16875de738d72b79bcc16935bb709c00d105cd1d2b92aa5b",
+          "assertion_registration_id": "b0bc75522990d62ae916320c1e5183a8c3f8e37839de9316be52f46601fadf26",
+          "identity_kind": "evidence_source",
+          "participant_role": "evidence_source",
+          "source_value": "mitocarta_human",
+          "source_namespace": "gsc_source_id",
+          "source_label": "mitocarta_human",
+          "extraction_method": "gsc_row_column:source_id",
+          "source_record_ref": "row:3796",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000da857e61310520d8ec26936babd0f6990672b434008b768122e1e4c718b00",
+          "assertion_registration_id": "a11f588287e2858eb96a94ec52f24159e174354de67452664c87e718cb6c89b6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "2887",
+          "source_namespace": "gsc_ensembl_gene_id",
+          "source_label": "2887",
+          "extraction_method": "gsc_row_column:gene_id",
+          "source_record_ref": "row:2179",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000de6b52f5f4232a48cc719942822cfe19d3ce5c49349a0056f66d3e85a8129",
+          "assertion_registration_id": "b0bc75522990d62ae916320c1e5183a8c3f8e37839de9316be52f46601fadf26",
+          "identity_kind": "phenotype",
+          "participant_role": "phenotype",
+          "source_value": "mitochondrial_disease",
+          "source_namespace": "gsc_phenotype",
+          "source_label": "mitochondrial_disease",
+          "extraction_method": "gsc_row_column:phenotype",
+          "source_record_ref": "row:1625",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        }
+      ],
+      "invariants": [
+        {
+          "name": "required_tables_present",
+          "passed": true,
+          "detail": "all required tables present"
+        },
+        {
+          "name": "single_tep_package",
+          "passed": true,
+          "detail": "tep_packages=1"
+        },
+        {
+          "name": "artifacts_registered",
+          "passed": true,
+          "detail": "artifacts=9"
+        },
+        {
+          "name": "assertions_registered",
+          "passed": true,
+          "detail": "assertion_registrations=6"
+        },
+        {
+          "name": "source_identities_registered",
+          "passed": true,
+          "detail": "source_identities=85434"
+        },
+        {
+          "name": "assertion_package_artifact_refs_present",
+          "passed": true,
+          "detail": "assertion rows missing package/artifact refs=0"
+        },
+        {
+          "name": "all_assertions_registered_status",
+          "passed": true,
+          "detail": "non-registered assertion rows=0"
+        },
+        {
+          "name": "source_identity_assertion_refs_resolve",
+          "passed": true,
+          "detail": "source identities with missing assertion refs=0"
+        },
+        {
+          "name": "producer_family_present",
+          "passed": true,
+          "detail": "distinct producer_family count=1"
+        },
+        {
+          "name": "source_namespaces_present",
+          "passed": true,
+          "detail": "distinct source_namespace count=7"
+        }
+      ],
+      "passed_all_invariants": true
+    },
+    {
+      "label": "vap_hg002",
+      "db_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite",
+      "tables": [
+        "artifacts",
+        "assertion_registrations",
+        "schema_metadata",
+        "source_identities",
+        "tep_packages"
+      ],
+      "missing_tables": [],
+      "counts": {
+        "artifacts": 16,
+        "assertion_registrations": 10,
+        "schema_metadata": 1,
+        "source_identities": 97369849,
+        "tep_packages": 1
+      },
+      "package_rows": [
+        {
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "package_path": "/root/dev/portfolio_projects/variant_annotation_pipeline/results/run_2026_06_03_010030/tep/vap_tep_HG002_run_2026_06_03_010030_v1",
+          "package_exists": 1,
+          "artifact_count": 16,
+          "manifest_count": 3
+        }
+      ],
+      "artifact_breakdown": [
+        {
+          "is_manifest": 0,
+          "n": 13,
+          "total_size_bytes": 12853354043
+        },
+        {
+          "is_manifest": 1,
+          "n": 3,
+          "total_size_bytes": 98790
+        }
+      ],
+      "assertion_breakdown": [
+        {
+          "producer_family": "VAP",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "assertion_type": "variant_normalization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 2
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "assertion_type": "variant_observation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "assertion_type": "variant_prioritization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "assertion_type": "candidate_routing",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 3
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "assertion_type": "validation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        }
+      ],
+      "identity_breakdown": [
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_ensembl_gene_id",
+          "extraction_method": "vap_row_column:gene_id",
+          "n": 32456613
+        },
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_gene_symbol",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "n": 32456613
+        },
+        {
+          "identity_kind": "sample",
+          "participant_role": "sample",
+          "source_namespace": "vap_sample_id",
+          "extraction_method": "vap_package_path",
+          "n": 10
+        },
+        {
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_namespace": "vap_variant_id",
+          "extraction_method": "vap_row_column:variant_id",
+          "n": 32456613
+        }
+      ],
+      "sample_assertions": [
+        {
+          "assertion_registration_id": "0fd2114955425d2175ce5f3753d31979f95b8da04a445a238796d26be3cbd1b4",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "b1b5fa0908e03c605326277a89f52aa2a9cb19d0985bf53e027bea944b504b5c",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "producer_family": "VAP",
+          "assertion_type": "validation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"b1b5fa0908e03c605326277a89f52aa2a9cb19d0985bf53e027bea944b504b5c\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/validation/stage_12_validat",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/validation/stage_12_validation_candidates.tsv\", \"sha256\": \"32ecaaf7a6ef854ba47606e261c5974b42efdb773ad7b1cab7c24438a8eb6df0\", \"size_bytes\": 2701088532}"
+        },
+        {
+          "assertion_registration_id": "3bdefa41efc2b128a0bab30d8425e2ce67b56e09887d226207d258196f4c239d",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "edfd651d220902f2fca249d4abf56de031a496abd5def27fc522804b4338a62f",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"edfd651d220902f2fca249d4abf56de031a496abd5def27fc522804b4338a62f\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/noncoding_interpretation/st",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/noncoding_interpretation/stage_10_noncoding_interpreted.tsv\", \"sha256\": \"f936ffebc4f31f13e74478851a568f920935b94a0d7633b5eb342c13bcde946f\", \"size_bytes\": 2001"
+        },
+        {
+          "assertion_registration_id": "475b6c6ca95cf3e004b382164ddacf9186cf826c95ecdf43406f9c001343964c",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "3f180f75e1451c29a30b732bcdbb5700c42d59780879c2178f9df3ee9b2750cb",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_prioritization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"3f180f75e1451c29a30b732bcdbb5700c42d59780879c2178f9df3ee9b2750cb\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/prioritization/stage_11_pri",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/prioritization/stage_11_prioritized_variants.tsv\", \"sha256\": \"276436e7c6df03f42ca1eb8edce3e362dd822cc262524660f853ed211a2a42cb\", \"size_bytes\": 2488077748}"
+        },
+        {
+          "assertion_registration_id": "5930a5267626ae712f74c50433eba47daf2f83b81675f9805150fb90c61ef3dc",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "441a6ba2cd21eb9431b20a9e3b539cfc54c3c1cf7a3e41a1fd0eb201a7bd0b2e",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_observation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"441a6ba2cd21eb9431b20a9e3b539cfc54c3c1cf7a3e41a1fd0eb201a7bd0b2e\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/observation/HG002_run_2026_",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/observation/HG002_run_2026_06_03_010030.annotated_variants.tsv\", \"sha256\": \"e07a4f243fd623c03a2d803235b5d7b6e6d0cb325e7a423a2ff9cbe9272fcb44\", \"size_bytes\": 1"
+        },
+        {
+          "assertion_registration_id": "6e64f0af7158409348f67a1cbcf62a4545f16a8035703854faa252123744b7e0",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "2e74bac3d06acb034f8b7b293012b8561712236148101a3c8de84c28a38c494a",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"2e74bac3d06acb034f8b7b293012b8561712236148101a3c8de84c28a38c494a\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/coding_interpretation/stage",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/coding_interpretation/stage_09_coding_interpreted.tsv\", \"sha256\": \"c5b215d02354e5729ce4bb400ae560ecae37504fd03570077c013e03f004fd19\", \"size_bytes\": 11562281}"
+        },
+        {
+          "assertion_registration_id": "978c99e62cc4d19e2114fe047db489d242a17e1fb99592182840714d934a0dcc",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "cc5247abfb0ca42d9f4defc55ff7b2570877a38e21f60e8c757c7fc796d6dec2",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"cc5247abfb0ca42d9f4defc55ff7b2570877a38e21f60e8c757c7fc796d6dec2\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/routing/coding_candidates.t",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/coding_candidates.tsv\", \"sha256\": \"ea1e0349a92053248f30fb7519d931df0ab6ba3300a2ad199d59ed1ef045f7b0\", \"size_bytes\": 7654401}"
+        },
+        {
+          "assertion_registration_id": "bd6c6d863d00622fb1cb92aa2cd4e90988295661e2217431ba04ea63dd3cbfa7",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "d3f77a6db85cdec07af639fb07faebe2ef1f5a8c84a8f62ff170fff932b7d607",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"d3f77a6db85cdec07af639fb07faebe2ef1f5a8c84a8f62ff170fff932b7d607\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/normalization/stage_08_sele",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_selected_transcript_consequences.tsv\", \"sha256\": \"d7c8348883258ce9624b95c26470a6cde7bb5ed92ea24e019678a8317f5bff64\", \"size_bytes\": 1532"
+        },
+        {
+          "assertion_registration_id": "c4be66409992e0fa3cd72efed3f5e6e22103d239021a2e9758ddb376af14a469",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "98c7ada5ad077ab5ba74e9bdfe394ed1b17cf19f08d63df8326c4bfd62c9248a",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"98c7ada5ad077ab5ba74e9bdfe394ed1b17cf19f08d63df8326c4bfd62c9248a\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/routing/splice_region_candi",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/splice_region_candidates.tsv\", \"sha256\": \"76bb3bb2fe6e39a9f3e227058e13fe11ab9cd90b0ab759bcbd6f5cb62c575779\", \"size_bytes\": 1357199}"
+        },
+        {
+          "assertion_registration_id": "d25d9eb852c7e8087b71c4c7288037f771a1ff314538ac287ad1980f3840327f",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "df880f3a0ab2d5fa9abeb506d374d5cfe9e15906e8867af55fa9b9201437493a",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"df880f3a0ab2d5fa9abeb506d374d5cfe9e15906e8867af55fa9b9201437493a\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/normalization/stage_08_vdb_",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_vdb_ready_variants.tsv\", \"sha256\": \"d7c8348883258ce9624b95c26470a6cde7bb5ed92ea24e019678a8317f5bff64\", \"size_bytes\": 1532561623}"
+        },
+        {
+          "assertion_registration_id": "e53214585a2e995f5692e9132c95162536357e2eb6e6eaabaeee19cbe195dc9f",
+          "package_id": "c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47",
+          "artifact_id": "8c0fc12798156b880a1c7de49500547ca2b8c87d786c2a440f71ab7d0ece57c1",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"8c0fc12798156b880a1c7de49500547ca2b8c87d786c2a440f71ab7d0ece57c1\", \"package_id\": \"c4d344b3839efaa0d8f2ba62b743de54af2e1218f4e3fe332f7ca235ec8ddc47\", \"relative_path\": \"entities/routing/noncoding_candidate",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/noncoding_candidates.tsv\", \"sha256\": \"51d36be60622041146d4e737e83f25a1f4ef403955ecab09797cfe77880926fd\", \"size_bytes\": 1523731924}"
+        }
+      ],
+      "sample_identities": [
+        {
+          "source_identity_id": "0000002d9378d78fd906d496f3e23a78abc3ebfaa4488d19c1eb61532d95091d",
+          "assertion_registration_id": "bd6c6d863d00622fb1cb92aa2cd4e90988295661e2217431ba04ea63dd3cbfa7",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "8:40983451:G:A",
+          "source_namespace": "vap_variant_id",
+          "source_label": "8:40983451:G:A",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:4128007",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000003499776891bbcb6ada9d69ccbe1cfb1f13a7b0d23519fb835b55849e8c",
+          "assertion_registration_id": "475b6c6ca95cf3e004b382164ddacf9186cf826c95ecdf43406f9c001343964c",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "2:181384485:C:G",
+          "source_namespace": "vap_variant_id",
+          "source_label": "2:181384485:C:G",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:2225318",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000070e9bc36becde8d8ea94db958d28b33f2e41ebceb297e25e95c95d00a6",
+          "assertion_registration_id": "475b6c6ca95cf3e004b382164ddacf9186cf826c95ecdf43406f9c001343964c",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:2680831",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000000b12a7e119addbde78be29db8faca58044b3597b2d2600f8a16677b872c",
+          "assertion_registration_id": "e53214585a2e995f5692e9132c95162536357e2eb6e6eaabaeee19cbe195dc9f",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000108953",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000108953",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:1587121",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000000cf2640465cf8fec7c23549ad25f875e1bfc5328ef9506e817c728d4335",
+          "assertion_registration_id": "bd6c6d863d00622fb1cb92aa2cd4e90988295661e2217431ba04ea63dd3cbfa7",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:4634074",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000011104f69b13ae9afe4a7ca6ab4b703f51881fcd737c03a44c6c6de58622",
+          "assertion_registration_id": "e53214585a2e995f5692e9132c95162536357e2eb6e6eaabaeee19cbe195dc9f",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "4:82250560:G:T",
+          "source_namespace": "vap_variant_id",
+          "source_label": "4:82250560:G:T",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:3019409",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000011e36cf142c8d53b5187a270be4e3bcb2e88ce8c9d973dbed4e8b4c8206",
+          "assertion_registration_id": "5930a5267626ae712f74c50433eba47daf2f83b81675f9805150fb90c61ef3dc",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000008869",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000008869",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:2013768",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000015fdf513cafc7c34510130209f7024df7d93aff54f8a07f10bd7af1a61b",
+          "assertion_registration_id": "d25d9eb852c7e8087b71c4c7288037f771a1ff314538ac287ad1980f3840327f",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "LINC01701",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "LINC01701",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:249372",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000189f9100f4125a9a510695f1a6a6c7d9f9d126f45f7f1797eafa67008a1",
+          "assertion_registration_id": "e53214585a2e995f5692e9132c95162536357e2eb6e6eaabaeee19cbe195dc9f",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:3263327",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000001991c8a7b620e4e9e50b7a9c5ac26d2505acc555d1382b0ef4d8e52e7f5",
+          "assertion_registration_id": "bd6c6d863d00622fb1cb92aa2cd4e90988295661e2217431ba04ea63dd3cbfa7",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:4607481",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000001e4444a0317087a0ffdf2297fa2af5c9b574de1084ddfc437cb082b14e7",
+          "assertion_registration_id": "d25d9eb852c7e8087b71c4c7288037f771a1ff314538ac287ad1980f3840327f",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "16:63920527:G:A",
+          "source_namespace": "vap_variant_id",
+          "source_label": "16:63920527:G:A",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:1546828",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000020d77bb7b4238c9c0bb8afcb9aabfd0c0cb68de72e85ff62f0973d4ca21",
+          "assertion_registration_id": "0fd2114955425d2175ce5f3753d31979f95b8da04a445a238796d26be3cbd1b4",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "6:14167340:C:T",
+          "source_namespace": "vap_variant_id",
+          "source_label": "6:14167340:C:T",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:3526405",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000002159b80306d9ba4bbcef3c2aa1718945710281940f51a672d97f7413411",
+          "assertion_registration_id": "e53214585a2e995f5692e9132c95162536357e2eb6e6eaabaeee19cbe195dc9f",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000122870",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000122870",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:457819",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000021b9142d561f2305f12b256f1ffd760bc34fefe5c3a9807024b5922bce3",
+          "assertion_registration_id": "0fd2114955425d2175ce5f3753d31979f95b8da04a445a238796d26be3cbd1b4",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000304100",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000304100",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:1081765",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000252198d8bb3136631381a0ff1569b0a42701c2611a060c18498d74dd4d2",
+          "assertion_registration_id": "d25d9eb852c7e8087b71c4c7288037f771a1ff314538ac287ad1980f3840327f",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "14:58030790:A:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "14:58030790:A:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:1248214",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000252b236ea85983b71dedb02d40964450425b457134121c9a114c20dc35e",
+          "assertion_registration_id": "bd6c6d863d00622fb1cb92aa2cd4e90988295661e2217431ba04ea63dd3cbfa7",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ZNF786",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "ZNF786",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:4020246",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000026e7ca40b6ca0e8b0ebc0c318d450b76358b54e6b6a956e9a225ffc959d",
+          "assertion_registration_id": "475b6c6ca95cf3e004b382164ddacf9186cf826c95ecdf43406f9c001343964c",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:3111827",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000027cb7488dc2401d5904efb1fba983108159e7154f3091530a6e78f6407c",
+          "assertion_registration_id": "bd6c6d863d00622fb1cb92aa2cd4e90988295661e2217431ba04ea63dd3cbfa7",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "12:21447509:T:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "12:21447509:T:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:843328",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000002952c374770ee9b9a8ba3d4c8fdf26035d63b2d4ec67c08051ea052ea37",
+          "assertion_registration_id": "5930a5267626ae712f74c50433eba47daf2f83b81675f9805150fb90c61ef3dc",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000100319",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000100319",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:2550753",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000029cbb25b1d6d7f998c104ee9ac030dc5ec5274401d70d79ce463fdb3f7f",
+          "assertion_registration_id": "e53214585a2e995f5692e9132c95162536357e2eb6e6eaabaeee19cbe195dc9f",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:3205387",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        }
+      ],
+      "invariants": [
+        {
+          "name": "required_tables_present",
+          "passed": true,
+          "detail": "all required tables present"
+        },
+        {
+          "name": "single_tep_package",
+          "passed": true,
+          "detail": "tep_packages=1"
+        },
+        {
+          "name": "artifacts_registered",
+          "passed": true,
+          "detail": "artifacts=16"
+        },
+        {
+          "name": "assertions_registered",
+          "passed": true,
+          "detail": "assertion_registrations=10"
+        },
+        {
+          "name": "source_identities_registered",
+          "passed": true,
+          "detail": "source_identities=97369849"
+        },
+        {
+          "name": "assertion_package_artifact_refs_present",
+          "passed": true,
+          "detail": "assertion rows missing package/artifact refs=0"
+        },
+        {
+          "name": "all_assertions_registered_status",
+          "passed": true,
+          "detail": "non-registered assertion rows=0"
+        },
+        {
+          "name": "source_identity_assertion_refs_resolve",
+          "passed": true,
+          "detail": "source identities with missing assertion refs=0"
+        },
+        {
+          "name": "producer_family_present",
+          "passed": true,
+          "detail": "distinct producer_family count=1"
+        },
+        {
+          "name": "source_namespaces_present",
+          "passed": true,
+          "detail": "distinct source_namespace count=4"
+        }
+      ],
+      "passed_all_invariants": true
+    },
+    {
+      "label": "vap_median_ERR10619300",
+      "db_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_median_ERR10619300/vdb.sqlite",
+      "tables": [
+        "artifacts",
+        "assertion_registrations",
+        "schema_metadata",
+        "source_identities",
+        "tep_packages"
+      ],
+      "missing_tables": [],
+      "counts": {
+        "artifacts": 16,
+        "assertion_registrations": 10,
+        "schema_metadata": 1,
+        "source_identities": 15467317,
+        "tep_packages": 1
+      },
+      "package_rows": [
+        {
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "package_path": "/root/dev/portfolio_projects/variant_annotation_pipeline/results/run_2026_05_27_172531/tep/vap_tep_ERR10619300_run_2026_05_27_172531_v1",
+          "package_exists": 1,
+          "artifact_count": 16,
+          "manifest_count": 3
+        }
+      ],
+      "artifact_breakdown": [
+        {
+          "is_manifest": 0,
+          "n": 13,
+          "total_size_bytes": 2076927141
+        },
+        {
+          "is_manifest": 1,
+          "n": 3,
+          "total_size_bytes": 98747
+        }
+      ],
+      "assertion_breakdown": [
+        {
+          "producer_family": "VAP",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "assertion_type": "variant_normalization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 2
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "assertion_type": "variant_observation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "assertion_type": "variant_prioritization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "assertion_type": "candidate_routing",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 3
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "assertion_type": "validation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        }
+      ],
+      "identity_breakdown": [
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_ensembl_gene_id",
+          "extraction_method": "vap_row_column:gene_id",
+          "n": 5155769
+        },
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_gene_symbol",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "n": 5155769
+        },
+        {
+          "identity_kind": "sample",
+          "participant_role": "sample",
+          "source_namespace": "vap_sample_id",
+          "extraction_method": "vap_package_path",
+          "n": 10
+        },
+        {
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_namespace": "vap_variant_id",
+          "extraction_method": "vap_row_column:variant_id",
+          "n": 5155769
+        }
+      ],
+      "sample_assertions": [
+        {
+          "assertion_registration_id": "41477a08c4122f0577663bd1f9960a7b10a5737fc0467fff3faee3269faed1f3",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "85e06fc50b37eff5643a8314312de058a02c98a71fb06ed84ed8f82762ae6777",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"85e06fc50b37eff5643a8314312de058a02c98a71fb06ed84ed8f82762ae6777\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/noncoding_interpretation/st",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/noncoding_interpretation/stage_10_noncoding_interpreted.tsv\", \"sha256\": \"fe77c84d691055fdf60b570d795df1a0aebd5f5312537d898858cf57ab122f5f\", \"size_bytes\": 3128"
+        },
+        {
+          "assertion_registration_id": "5fecbfcbefe2259a8aefebbf729bf3d5b5449032d08d40dc96d57afede0d5457",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "84507b68a8be465789b95bae30568cb5a48d3b2fcdc734bcbdc8b6a11acabfba",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"84507b68a8be465789b95bae30568cb5a48d3b2fcdc734bcbdc8b6a11acabfba\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/coding_interpretation/stage",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/coding_interpretation/stage_09_coding_interpreted.tsv\", \"sha256\": \"ed7a7f836fc354eb406daf6d58e1ced9bef90e1b6b5c3735aaed6a3e58ec25ba\", \"size_bytes\": 11249450}"
+        },
+        {
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "85ea0394559ba4ed9d4d9d8201411c2273c508a2b14d7610d0917f307dd96cab",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"85ea0394559ba4ed9d4d9d8201411c2273c508a2b14d7610d0917f307dd96cab\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/normalization/stage_08_vdb_",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_vdb_ready_variants.tsv\", \"sha256\": \"50b77ec9f906e79eeae3fa9e687fdea8d2c0b2912c2fda741ecb8675d44f91dd\", \"size_bytes\": 248357863}"
+        },
+        {
+          "assertion_registration_id": "a4ce5c1bb4fd316533fe8729f0c0bac7b8cfb570b76ef93f22fd714c93dc6775",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "5e1150208dd7f4062be6b6dfd707ffcc2931db52ada5e0ae62ec4a9b8f93ec5c",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "producer_family": "VAP",
+          "assertion_type": "validation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"5e1150208dd7f4062be6b6dfd707ffcc2931db52ada5e0ae62ec4a9b8f93ec5c\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/validation/stage_12_validat",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/validation/stage_12_validation_candidates.tsv\", \"sha256\": \"d5de9ae09634ec269506413560ff470dee21dc656e6ac912767e8643649f215d\", \"size_bytes\": 434113994}"
+        },
+        {
+          "assertion_registration_id": "af22359ce68d20552803c94fc66ec8e471fbb4046809ef96cdb5ad874cc19ac5",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "c78454bf29b69f13f8d88fc861650dcee2e4ace3b569762d72f493af80c66158",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"c78454bf29b69f13f8d88fc861650dcee2e4ace3b569762d72f493af80c66158\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/routing/noncoding_candidate",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/noncoding_candidates.tsv\", \"sha256\": \"53cdbc01b2a2ef24da859453561d186a2b80f205193ab04d4b9a1aa4f155bf64\", \"size_bytes\": 239736675}"
+        },
+        {
+          "assertion_registration_id": "b3a16309ebb767d227d7b1933e342022128b941138ee5da64966a7c4a99a8b9a",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "f119cdfbb0970211cb7dd75b0952b514832487edf5f09b25b001b7a52ca83f1e",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"f119cdfbb0970211cb7dd75b0952b514832487edf5f09b25b001b7a52ca83f1e\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/routing/splice_region_candi",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/splice_region_candidates.tsv\", \"sha256\": \"5795375426f33b9444263a2d9f028d34f97926162b4e132b9cb329002615571d\", \"size_bytes\": 1067690}"
+        },
+        {
+          "assertion_registration_id": "c92eb1c57955adeea0855953fa874b3c2fcd663d8f6e387a34e4ddc31bce24e8",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "0877fedb5fbb637bafe9e1e7efc50615c87dad1650c543de187a1fa271290e35",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"0877fedb5fbb637bafe9e1e7efc50615c87dad1650c543de187a1fa271290e35\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/routing/coding_candidates.t",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/coding_candidates.tsv\", \"sha256\": \"b02b102c2115841a2f83709c282e462f893783430239fb1eb2f9d55e408d5618\", \"size_bytes\": 7726925}"
+        },
+        {
+          "assertion_registration_id": "d0c5ccde678cbdcfa7a39085d2e8e4788c5fdb5b9f6fbc1ff575442b89fb1d8d",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "e827550bef5b9eceadc6fe1a5ad1b1ebf97ab0c9d9a65d13cef4210cc7d26427",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_prioritization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"e827550bef5b9eceadc6fe1a5ad1b1ebf97ab0c9d9a65d13cef4210cc7d26427\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/prioritization/stage_11_pri",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/prioritization/stage_11_prioritized_variants.tsv\", \"sha256\": \"9d00d1d7fc32bbc649877bd92b7f5b792398eb23a707d26e8fcbafc4d36a7032\", \"size_bytes\": 400737008}"
+        },
+        {
+          "assertion_registration_id": "d58ae26a52488ede227913d547926c3318cea18b2b97af634e0a8952f4c6f30d",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "329e32849af3b270aed627f95fae71ea86f77f792da48e224d5e5bb688f39eba",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_observation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"329e32849af3b270aed627f95fae71ea86f77f792da48e224d5e5bb688f39eba\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/observation/ERR10619300_run",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/observation/ERR10619300_run_2026_05_27_172531.annotated_variants.tsv\", \"sha256\": \"d0e078c164b56630bf1ae4bc90fc7c181806589e4f8e11d3e60de3d04d03b136\", \"size_byt"
+        },
+        {
+          "assertion_registration_id": "e684af977a956c32cf4c806f581712618591bd137df7d892059a6ad8e9da8216",
+          "package_id": "07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094",
+          "artifact_id": "8e3a08a30049cd0a9fb396571681974bfcaa5108d9371af882d98eba923f5263",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"8e3a08a30049cd0a9fb396571681974bfcaa5108d9371af882d98eba923f5263\", \"package_id\": \"07a6d4b08ea25b060f3200d9f469c17026432c333025ffba923de9fce7b78094\", \"relative_path\": \"entities/normalization/stage_08_sele",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_selected_transcript_consequences.tsv\", \"sha256\": \"50b77ec9f906e79eeae3fa9e687fdea8d2c0b2912c2fda741ecb8675d44f91dd\", \"size_bytes\": 2483"
+        }
+      ],
+      "sample_identities": [
+        {
+          "source_identity_id": "00000065967ba602c0e7433fd66e146f2c606885f77e8cf384fb56df04e4e68a",
+          "assertion_registration_id": "af22359ce68d20552803c94fc66ec8e471fbb4046809ef96cdb5ad874cc19ac5",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:331213",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000000ce869f4fe57711a23ac294f25c544583baa8e80fa595a30a8f995b6c63",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "LRRC4B",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "LRRC4B",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:342817",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000001d3a5d35a35838b9f8b5078851d96d5e15191af4a5ed13fb5d7b8bf6063",
+          "assertion_registration_id": "af22359ce68d20552803c94fc66ec8e471fbb4046809ef96cdb5ad874cc19ac5",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000164946",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000164946",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:658367",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000231fad7dcbf467b05592087db0b053a9af77ebe7210096d422847050bc3",
+          "assertion_registration_id": "41477a08c4122f0577663bd1f9960a7b10a5737fc0467fff3faee3269faed1f3",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "7:157079948:T:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "7:157079948:T:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:623338",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000003efbdaa0eefc0e1b87ed9c40a03824830cc01eb603ca41a4221c941bee9",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000306154",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000306154",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:582349",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000954a457b46caa772f91ad6280acc0da368ac9c5ddfe49ada6a3555949e7",
+          "assertion_registration_id": "a4ce5c1bb4fd316533fe8729f0c0bac7b8cfb570b76ef93f22fd714c93dc6775",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "2:105214337:A:G",
+          "source_namespace": "vap_variant_id",
+          "source_label": "2:105214337:A:G",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:382577",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000a74d6c0a5398fa0ab02ac13c58bfbce89dda3401f2ea2d3166b4b61164b",
+          "assertion_registration_id": "d58ae26a52488ede227913d547926c3318cea18b2b97af634e0a8952f4c6f30d",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "UNC79",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "UNC79",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:207886",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000aeec9f70b20a87009c3cafc90e14961c8d6f90ef752c04042743142fbbf",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:221240",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000bf2c1c3610ffea156b30c7478b7a06263b40d0525dbcce8477e7a8fe361",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "SH2D4B",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "SH2D4B",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:83503",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000db06f303bf72f8bb643a781bdbf31fdb518abc34a87e546f048784f8812",
+          "assertion_registration_id": "a4ce5c1bb4fd316533fe8729f0c0bac7b8cfb570b76ef93f22fd714c93dc6775",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "18:70119251:T:A",
+          "source_namespace": "vap_variant_id",
+          "source_label": "18:70119251:T:A",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:326807",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000ed3208e0f1eded5956088d38c7deef19aecb9509a6adf7e3b85bb430d71",
+          "assertion_registration_id": "af22359ce68d20552803c94fc66ec8e471fbb4046809ef96cdb5ad874cc19ac5",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "2:85239762:A:G",
+          "source_namespace": "vap_variant_id",
+          "source_label": "2:85239762:A:G",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:352523",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000010a9ae247ac6ef1f6a5882e91caa25fe27c4e75316982d96777e162bf5d6",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000304497",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000304497",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:495473",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00001129f6e72bd8947e5c54ef42e77910798341c3294d2c1f8ac288a46afebd",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000290523",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000290523",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:423062",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000012bbb1808baf09fd1b990c1c93c81ad474cf45b64daffacf1f6659344772",
+          "assertion_registration_id": "af22359ce68d20552803c94fc66ec8e471fbb4046809ef96cdb5ad874cc19ac5",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "HDLBP",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "HDLBP",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:384461",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00001365427ebd3b8403b84286b6af3255fd12174f0fd021c34c55abe089663c",
+          "assertion_registration_id": "af22359ce68d20552803c94fc66ec8e471fbb4046809ef96cdb5ad874cc19ac5",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000074603",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000074603",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:218203",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000013ae747a9b7c731fb78aba2f816b9c315770b0609f5f09d287624bc42e28",
+          "assertion_registration_id": "41477a08c4122f0577663bd1f9960a7b10a5737fc0467fff3faee3269faed1f3",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ZNF350",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "ZNF350",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:329879",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000013cde196687ded9a4becc677497af5956e84c33e23fd19457f949811a676",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:427725",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000143128a3c8dd5709c37273dd77d3fd48ec5bc2b519a401fdbdbfab27dafb",
+          "assertion_registration_id": "41477a08c4122f0577663bd1f9960a7b10a5737fc0467fff3faee3269faed1f3",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "12:70425425:A:G",
+          "source_namespace": "vap_variant_id",
+          "source_label": "12:70425425:A:G",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:147649",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00001808ec9704e3445e117ecd8052ef5bff396e0cd27de3345cbab97cc21ddf",
+          "assertion_registration_id": "86f00ad2329fbc02990afa47fd3806a01ab182cd7b16e29cb5a2eb5d46ad5fe6",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "REEP2",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "REEP2",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:556188",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000181aedf5711db8da34856dbf3dd211f8c163d2f6038a84149512562f3745",
+          "assertion_registration_id": "af22359ce68d20552803c94fc66ec8e471fbb4046809ef96cdb5ad874cc19ac5",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:246229",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        }
+      ],
+      "invariants": [
+        {
+          "name": "required_tables_present",
+          "passed": true,
+          "detail": "all required tables present"
+        },
+        {
+          "name": "single_tep_package",
+          "passed": true,
+          "detail": "tep_packages=1"
+        },
+        {
+          "name": "artifacts_registered",
+          "passed": true,
+          "detail": "artifacts=16"
+        },
+        {
+          "name": "assertions_registered",
+          "passed": true,
+          "detail": "assertion_registrations=10"
+        },
+        {
+          "name": "source_identities_registered",
+          "passed": true,
+          "detail": "source_identities=15467317"
+        },
+        {
+          "name": "assertion_package_artifact_refs_present",
+          "passed": true,
+          "detail": "assertion rows missing package/artifact refs=0"
+        },
+        {
+          "name": "all_assertions_registered_status",
+          "passed": true,
+          "detail": "non-registered assertion rows=0"
+        },
+        {
+          "name": "source_identity_assertion_refs_resolve",
+          "passed": true,
+          "detail": "source identities with missing assertion refs=0"
+        },
+        {
+          "name": "producer_family_present",
+          "passed": true,
+          "detail": "distinct producer_family count=1"
+        },
+        {
+          "name": "source_namespaces_present",
+          "passed": true,
+          "detail": "distinct source_namespace count=4"
+        }
+      ],
+      "passed_all_invariants": true
+    },
+    {
+      "label": "vap_q1_ERR10619212",
+      "db_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q1_ERR10619212/vdb.sqlite",
+      "tables": [
+        "artifacts",
+        "assertion_registrations",
+        "schema_metadata",
+        "source_identities",
+        "tep_packages"
+      ],
+      "missing_tables": [],
+      "counts": {
+        "artifacts": 16,
+        "assertion_registrations": 10,
+        "schema_metadata": 1,
+        "source_identities": 19017490,
+        "tep_packages": 1
+      },
+      "package_rows": [
+        {
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "package_path": "/root/dev/portfolio_projects/variant_annotation_pipeline/results/run_2026_05_30_214724/tep/vap_tep_ERR10619212_run_2026_05_30_214724_v1",
+          "package_exists": 1,
+          "artifact_count": 16,
+          "manifest_count": 3
+        }
+      ],
+      "artifact_breakdown": [
+        {
+          "is_manifest": 0,
+          "n": 13,
+          "total_size_bytes": 2554104088
+        },
+        {
+          "is_manifest": 1,
+          "n": 3,
+          "total_size_bytes": 98747
+        }
+      ],
+      "assertion_breakdown": [
+        {
+          "producer_family": "VAP",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "assertion_type": "variant_normalization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 2
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "assertion_type": "variant_observation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "assertion_type": "variant_prioritization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "assertion_type": "candidate_routing",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 3
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "assertion_type": "validation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        }
+      ],
+      "identity_breakdown": [
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_ensembl_gene_id",
+          "extraction_method": "vap_row_column:gene_id",
+          "n": 6339160
+        },
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_gene_symbol",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "n": 6339160
+        },
+        {
+          "identity_kind": "sample",
+          "participant_role": "sample",
+          "source_namespace": "vap_sample_id",
+          "extraction_method": "vap_package_path",
+          "n": 10
+        },
+        {
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_namespace": "vap_variant_id",
+          "extraction_method": "vap_row_column:variant_id",
+          "n": 6339160
+        }
+      ],
+      "sample_assertions": [
+        {
+          "assertion_registration_id": "26424ec263c1efc0e86f36c7e442a629bb6437d921e72b972c5097a8fd387b25",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "86a11b40da54e3e2cb3140e08b208ab2622841e2b299bd2c61f26ec89d8d7113",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"86a11b40da54e3e2cb3140e08b208ab2622841e2b299bd2c61f26ec89d8d7113\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/normalization/stage_08_vdb_",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_vdb_ready_variants.tsv\", \"sha256\": \"f74ec65a3a8474370f47f254446436a19ede03371f76cb22bfd63b060dbc4c7b\", \"size_bytes\": 305461910}"
+        },
+        {
+          "assertion_registration_id": "480a2121b7f0425e9783e5d30deca8c3cf913f8d39d5d5b636aae97322d50340",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "1b66fc5adc67a0d7376c701d8c5f7f3b23da7c0623f6bdcc68574b2fd7b749e9",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"1b66fc5adc67a0d7376c701d8c5f7f3b23da7c0623f6bdcc68574b2fd7b749e9\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/routing/splice_region_candi",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/splice_region_candidates.tsv\", \"sha256\": \"8dd0d072058edc0edeb4159e08517b414b31301e53157a64f8d4e0454496f516\", \"size_bytes\": 1145969}"
+        },
+        {
+          "assertion_registration_id": "49314e9337d60b387b0dab55f4fbaea10bde2a480632139fc89e1e88834cb4b3",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "604e270855fd95f90625fffe419cd9ffd65773b20acea7692963e906f7d7c568",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"604e270855fd95f90625fffe419cd9ffd65773b20acea7692963e906f7d7c568\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/normalization/stage_08_sele",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_selected_transcript_consequences.tsv\", \"sha256\": \"f74ec65a3a8474370f47f254446436a19ede03371f76cb22bfd63b060dbc4c7b\", \"size_bytes\": 3054"
+        },
+        {
+          "assertion_registration_id": "8165c60c68841844dcfcb6371f6afcc38e9b0bad787ab3be49e5c281e7b9cf3e",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "09f29e199013cd3ac57414810a04e00cfb86d2f32602740f21be0a18aaa75643",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "producer_family": "VAP",
+          "assertion_type": "validation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"09f29e199013cd3ac57414810a04e00cfb86d2f32602740f21be0a18aaa75643\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/validation/stage_12_validat",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/validation/stage_12_validation_candidates.tsv\", \"sha256\": \"1196355baeaf666289a02d08dba97f72d76fc5ed00c5b160ef0117709633d8cb\", \"size_bytes\": 533746545}"
+        },
+        {
+          "assertion_registration_id": "8abe8b5f2892db328fd47d3c043f25c18dffcdd2c273be5e3f07f462552cf384",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "4ac2eec2bfad5561dadb81384ed2c99b6b84b81c18114ae52bc71f7b9ac40690",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"4ac2eec2bfad5561dadb81384ed2c99b6b84b81c18114ae52bc71f7b9ac40690\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/noncoding_interpretation/st",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/noncoding_interpretation/stage_10_noncoding_interpreted.tsv\", \"sha256\": \"2f739ae7129fbb3c8b46f7c917a58dbf58250567a33bbe796d6203fd9db07094\", \"size_bytes\": 3871"
+        },
+        {
+          "assertion_registration_id": "b319c81db89a5d4ea4f7bc450527f1ea74c058bd11174665a30872f41c457b75",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "e6765d8a4b5d2a6fbdfed626c3a03c3344bb6c1521f5f0ed0f57656dc6ed6d99",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_observation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"e6765d8a4b5d2a6fbdfed626c3a03c3344bb6c1521f5f0ed0f57656dc6ed6d99\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/observation/ERR10619212_run",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/observation/ERR10619212_run_2026_05_30_214724.annotated_variants.tsv\", \"sha256\": \"87f2281204778ef5cd90b239c11a7505bd56f51f5670034595cf1fe9df2eda33\", \"size_byt"
+        },
+        {
+          "assertion_registration_id": "e2e218bf501ee115a7fe83b1b41dac94268155d5c59a5ab018fb593b20dbdb60",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "99cdc44cefb71cfbb388b16a242feee5b1cd33c6a9bd4724fe814acf7c1690b9",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"99cdc44cefb71cfbb388b16a242feee5b1cd33c6a9bd4724fe814acf7c1690b9\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/routing/noncoding_candidate",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/noncoding_candidates.tsv\", \"sha256\": \"45a596ad3602c36f0628ac1941f1ecf4cae0e3a1e5f581e3b7a3bb3d59b63b58\", \"size_bytes\": 296602907}"
+        },
+        {
+          "assertion_registration_id": "e92e7b8de248ac248b3193c4e2de8530631fd211d632b7c238159fcda9e96668",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "60f011f24b5bbbbd1fb965c8e3ebf473e0b6e5f7255dd9e4aa94bee7516d74cc",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"60f011f24b5bbbbd1fb965c8e3ebf473e0b6e5f7255dd9e4aa94bee7516d74cc\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/coding_interpretation/stage",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/coding_interpretation/stage_09_coding_interpreted.tsv\", \"sha256\": \"f8ba583972f61bf82bd32156e54cbdf81b1f29ba9c70897c8a6649ec73be4559\", \"size_bytes\": 11558524}"
+        },
+        {
+          "assertion_registration_id": "f75e9be2d136e2cef23114fc55736d8313025b0dba3cc8b6dfd83e96a226ff6d",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "8f41fbd3ecc18005bb33a0ccbe59df6895862e2293570eb4878faec6bced238f",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"8f41fbd3ecc18005bb33a0ccbe59df6895862e2293570eb4878faec6bced238f\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/routing/coding_candidates.t",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/coding_candidates.tsv\", \"sha256\": \"0d504249e33d052c23ccc04127a3bda6dbd97e135e0dab0f1ddf72cab160eb92\", \"size_bytes\": 7903722}"
+        },
+        {
+          "assertion_registration_id": "ff69f82548a53438b765e820b88fbbff611ba0a231499ff2d0014ffbbd5de14c",
+          "package_id": "7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c",
+          "artifact_id": "c9eeb3ae7dea56d836a6456561c106416c134589cace31e98df664eea3fdcf4a",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_prioritization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"c9eeb3ae7dea56d836a6456561c106416c134589cace31e98df664eea3fdcf4a\", \"package_id\": \"7bb895825b56f5e9e355e731cf097a30dbe8ea66c1485d691cc6911b4bab481c\", \"relative_path\": \"entities/prioritization/stage_11_pri",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/prioritization/stage_11_prioritized_variants.tsv\", \"sha256\": \"1dd5edd7f94e7075b30b0f4311f71a2decc9756ffb3d1c006428117cd596b104\", \"size_bytes\": 492710834}"
+        }
+      ],
+      "sample_identities": [
+        {
+          "source_identity_id": "000000b0014addea97b1a8a59a3a5e7084f7f3d789e50034cae15f83784a940c",
+          "assertion_registration_id": "8abe8b5f2892db328fd47d3c043f25c18dffcdd2c273be5e3f07f462552cf384",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:370108",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000014fd3c1209a90a792bdcef8541036244ba0ac6bc09c24379ffdb1617087",
+          "assertion_registration_id": "26424ec263c1efc0e86f36c7e442a629bb6437d921e72b972c5097a8fd387b25",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ATP2C2",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "ATP2C2",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:322304",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000016c96e71bc4f8708e65972540e0b5a7706614fb35f1df0dbc8aca46fe04",
+          "assertion_registration_id": "b319c81db89a5d4ea4f7bc450527f1ea74c058bd11174665a30872f41c457b75",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "2:77941232:T:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "2:77941232:T:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:449330",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000002c357b598b229ce65b7ef332fb109d3bfe5f3c04e491f3dfa4890afb127",
+          "assertion_registration_id": "b319c81db89a5d4ea4f7bc450527f1ea74c058bd11174665a30872f41c457b75",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "5:125268619:T:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "5:125268619:T:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:683687",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000003cfcbd8d18ca7debb2a73896e01def463b32135fd98e4df98c9258f8034",
+          "assertion_registration_id": "8165c60c68841844dcfcb6371f6afcc38e9b0bad787ab3be49e5c281e7b9cf3e",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000258567",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000258567",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:893809",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000004445eea32eb9d34d29f07693361a165703fed2542d9601e951fdfc3c593",
+          "assertion_registration_id": "ff69f82548a53438b765e820b88fbbff611ba0a231499ff2d0014ffbbd5de14c",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "7:101290254:C:A",
+          "source_namespace": "vap_variant_id",
+          "source_label": "7:101290254:C:A",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:786000",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000004676143dc79b75bf6557a407fad3a0bb222c19b8c02d8727d08750d751d",
+          "assertion_registration_id": "49314e9337d60b387b0dab55f4fbaea10bde2a480632139fc89e1e88834cb4b3",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:777440",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000068ff92f5edff1cb4793020472edd7caf7a30ca2cf5cc70336b0b38fc4fc",
+          "assertion_registration_id": "49314e9337d60b387b0dab55f4fbaea10bde2a480632139fc89e1e88834cb4b3",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "18:10693409:A:G",
+          "source_namespace": "vap_variant_id",
+          "source_label": "18:10693409:A:G",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:369821",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000006937b393f094cbe0f5dc5b5392a644a35e4c4a2ea3319229de7e33e43d4",
+          "assertion_registration_id": "26424ec263c1efc0e86f36c7e442a629bb6437d921e72b972c5097a8fd387b25",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "5:179109077:T:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "5:179109077:T:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:698615",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000726712cbfd3fccd99feb73a05e54e1cf6fb6f920b0ec0db7c481615a371",
+          "assertion_registration_id": "26424ec263c1efc0e86f36c7e442a629bb6437d921e72b972c5097a8fd387b25",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000188107",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000188107",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:725594",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000835564d68b62bdea36471cbdf6e4b703ab37b7ad947b1434dc6bcb6f687",
+          "assertion_registration_id": "ff69f82548a53438b765e820b88fbbff611ba0a231499ff2d0014ffbbd5de14c",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000307923",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000307923",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:719228",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000088fdd7b5917b98927376afead5a1bebc5002cdf1d212dd4362599e2ccd0",
+          "assertion_registration_id": "ff69f82548a53438b765e820b88fbbff611ba0a231499ff2d0014ffbbd5de14c",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:686387",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000af51149aa586a8121f4033658ddb7df4453db70c47e602014fb2eaca2d1",
+          "assertion_registration_id": "49314e9337d60b387b0dab55f4fbaea10bde2a480632139fc89e1e88834cb4b3",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "22:23670819:CCTT:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "22:23670819:CCTT:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:539173",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000b210027964cd5f95fe92651f51f9cabeed85624fe8c8351197092b15095",
+          "assertion_registration_id": "49314e9337d60b387b0dab55f4fbaea10bde2a480632139fc89e1e88834cb4b3",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "11:24854157:G:T",
+          "source_namespace": "vap_variant_id",
+          "source_label": "11:24854157:G:T",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:130074",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000b6d017ad590a3bd1cf6e8f832c2d3325372dfd8139883b9bcff94484721",
+          "assertion_registration_id": "b319c81db89a5d4ea4f7bc450527f1ea74c058bd11174665a30872f41c457b75",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "KCNQ5",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "KCNQ5",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:726871",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000bdff437695e3cada5ba73494394c6eac3f113e229bbe90d7e3750b47e25",
+          "assertion_registration_id": "b319c81db89a5d4ea4f7bc450527f1ea74c058bd11174665a30872f41c457b75",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "18:78226028:G:A",
+          "source_namespace": "vap_variant_id",
+          "source_label": "18:78226028:G:A",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:385314",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000c078a11c871748bd3fdd3c56b1254443c5cf077736c174feabde10ed8de",
+          "assertion_registration_id": "b319c81db89a5d4ea4f7bc450527f1ea74c058bd11174665a30872f41c457b75",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000139330",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000139330",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:190795",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000d596ab92f2da9d92c3035189f223ec42656e61b0e7eaf5a75fd1a61b2b5",
+          "assertion_registration_id": "8abe8b5f2892db328fd47d3c043f25c18dffcdd2c273be5e3f07f462552cf384",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "4:165047606:G:A",
+          "source_namespace": "vap_variant_id",
+          "source_label": "4:165047606:G:A",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:627051",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000e35420b6e3f2076eb057262c57444fa06bf04ab3342d002b5cee15df701",
+          "assertion_registration_id": "8165c60c68841844dcfcb6371f6afcc38e9b0bad787ab3be49e5c281e7b9cf3e",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:543269",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000ff9aa2fb887f2f821980a15c752937c9833225b43d765d5c72c24b67655",
+          "assertion_registration_id": "e2e218bf501ee115a7fe83b1b41dac94268155d5c59a5ab018fb593b20dbdb60",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ELK3",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "ELK3",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:186233",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        }
+      ],
+      "invariants": [
+        {
+          "name": "required_tables_present",
+          "passed": true,
+          "detail": "all required tables present"
+        },
+        {
+          "name": "single_tep_package",
+          "passed": true,
+          "detail": "tep_packages=1"
+        },
+        {
+          "name": "artifacts_registered",
+          "passed": true,
+          "detail": "artifacts=16"
+        },
+        {
+          "name": "assertions_registered",
+          "passed": true,
+          "detail": "assertion_registrations=10"
+        },
+        {
+          "name": "source_identities_registered",
+          "passed": true,
+          "detail": "source_identities=19017490"
+        },
+        {
+          "name": "assertion_package_artifact_refs_present",
+          "passed": true,
+          "detail": "assertion rows missing package/artifact refs=0"
+        },
+        {
+          "name": "all_assertions_registered_status",
+          "passed": true,
+          "detail": "non-registered assertion rows=0"
+        },
+        {
+          "name": "source_identity_assertion_refs_resolve",
+          "passed": true,
+          "detail": "source identities with missing assertion refs=0"
+        },
+        {
+          "name": "producer_family_present",
+          "passed": true,
+          "detail": "distinct producer_family count=1"
+        },
+        {
+          "name": "source_namespaces_present",
+          "passed": true,
+          "detail": "distinct source_namespace count=4"
+        }
+      ],
+      "passed_all_invariants": true
+    },
+    {
+      "label": "vap_q3_ERR10619225",
+      "db_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q3_ERR10619225/vdb.sqlite",
+      "tables": [
+        "artifacts",
+        "assertion_registrations",
+        "schema_metadata",
+        "source_identities",
+        "tep_packages"
+      ],
+      "missing_tables": [],
+      "counts": {
+        "artifacts": 16,
+        "assertion_registrations": 10,
+        "schema_metadata": 1,
+        "source_identities": 15911968,
+        "tep_packages": 1
+      },
+      "package_rows": [
+        {
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "package_path": "/root/dev/portfolio_projects/variant_annotation_pipeline/results/run_2026_05_31_091242/tep/vap_tep_ERR10619225_run_2026_05_31_091242_v1",
+          "package_exists": 1,
+          "artifact_count": 16,
+          "manifest_count": 3
+        }
+      ],
+      "artifact_breakdown": [
+        {
+          "is_manifest": 0,
+          "n": 13,
+          "total_size_bytes": 2137631278
+        },
+        {
+          "is_manifest": 1,
+          "n": 3,
+          "total_size_bytes": 98747
+        }
+      ],
+      "assertion_breakdown": [
+        {
+          "producer_family": "VAP",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "assertion_type": "variant_interpretation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "assertion_type": "variant_normalization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 2
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "assertion_type": "variant_observation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "assertion_type": "variant_prioritization",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "assertion_type": "candidate_routing",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 3
+        },
+        {
+          "producer_family": "VAP",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "assertion_type": "validation",
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "n": 1
+        }
+      ],
+      "identity_breakdown": [
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_ensembl_gene_id",
+          "extraction_method": "vap_row_column:gene_id",
+          "n": 5303986
+        },
+        {
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_namespace": "vap_gene_symbol",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "n": 5303986
+        },
+        {
+          "identity_kind": "sample",
+          "participant_role": "sample",
+          "source_namespace": "vap_sample_id",
+          "extraction_method": "vap_package_path",
+          "n": 10
+        },
+        {
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_namespace": "vap_variant_id",
+          "extraction_method": "vap_row_column:variant_id",
+          "n": 5303986
+        }
+      ],
+      "sample_assertions": [
+        {
+          "assertion_registration_id": "1abb4d7ce65e4cf6f1bfaf0597d6874c7f2e1881bd9ea0f6842be5b6f90129d0",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "3d43c2737723b95318d7ee59d4f7591842696597ccf0590d94c9d71a6303a53d",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"3d43c2737723b95318d7ee59d4f7591842696597ccf0590d94c9d71a6303a53d\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/normalization/stage_08_sele",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_selected_transcript_consequences.tsv\", \"sha256\": \"d9f78881e86344548fade1c33d558f18a5e50eb25d9fb64195a5c3d39829299a\", \"size_bytes\": 2556"
+        },
+        {
+          "assertion_registration_id": "49c9bc64aa004d5dcf1757674b34ed962dc8afdf628929728efd61c732cd513e",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "30df4055efd616b9061df505e8a7db5a0dcce6174e7c0450c49a70341208346c",
+          "surface_role": "validation_candidates",
+          "evidence_domain": "validation",
+          "producer_family": "VAP",
+          "assertion_type": "validation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"30df4055efd616b9061df505e8a7db5a0dcce6174e7c0450c49a70341208346c\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/validation/stage_12_validat",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/validation/stage_12_validation_candidates.tsv\", \"sha256\": \"c671ff8e31981dbd6050631708d5563a5ca54f0e6dbbf4cf371f8602d1c2b148\", \"size_bytes\": 446742832}"
+        },
+        {
+          "assertion_registration_id": "58c35f979a9bd5d231eaf3d5b901b09d8a42d2f90dad8ecb1388dd3891a07b34",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "3e0eb0845bd6295d8fa4e68b5a9e5d66bbe46f5c357ee2ce47024870cdf810f9",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"3e0eb0845bd6295d8fa4e68b5a9e5d66bbe46f5c357ee2ce47024870cdf810f9\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/routing/noncoding_candidate",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/noncoding_candidates.tsv\", \"sha256\": \"b650e4ed3f4325bd53f5afae42c2ce6cdf22449acc09dd1fbe675cec16df6962\", \"size_bytes\": 246554978}"
+        },
+        {
+          "assertion_registration_id": "70858da6ffb936e7c901c981570ea14fb7cc9221ee001c58ecd058099bc5a0db",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "501ac32df12577f79a2b8b075de702d36ff24bff0b902dbca94b7db29f9fc26a",
+          "surface_role": "coding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"501ac32df12577f79a2b8b075de702d36ff24bff0b902dbca94b7db29f9fc26a\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/coding_interpretation/stage",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/coding_interpretation/stage_09_coding_interpreted.tsv\", \"sha256\": \"57ce9a47feba679b823c2ded121abf91eb020124254b1ac57cbff96f41de9031\", \"size_bytes\": 11835473}"
+        },
+        {
+          "assertion_registration_id": "7ee7c115dcba52970b553273765799cd6bfc33a5a24e4b84e4a9149b5af4fa13",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "6e89e0365071e1368882853cf4ff1a5a1e31f23639f7174caa7aad0ce2fdf886",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"6e89e0365071e1368882853cf4ff1a5a1e31f23639f7174caa7aad0ce2fdf886\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/routing/coding_candidates.t",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/coding_candidates.tsv\", \"sha256\": \"5411cfcc69df9329d8fced50893e0e0f3bf638a58887c46fcf74326e2f2d57b0\", \"size_bytes\": 8141452}"
+        },
+        {
+          "assertion_registration_id": "94e40ee00afb8be6a1702749b9e2738bbc89d0aeccded46847d46bd0dcdc0047",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "51f64db7c032f813ec77c2dc87070bd6997eb8f5d2ef8389c2beaaebfce67d77",
+          "surface_role": "normalized_variants",
+          "evidence_domain": "variant_normalization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_normalization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"51f64db7c032f813ec77c2dc87070bd6997eb8f5d2ef8389c2beaaebfce67d77\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/normalization/stage_08_vdb_",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/normalization/stage_08_vdb_ready_variants.tsv\", \"sha256\": \"d9f78881e86344548fade1c33d558f18a5e50eb25d9fb64195a5c3d39829299a\", \"size_bytes\": 255624040}"
+        },
+        {
+          "assertion_registration_id": "b2b02a4f001b7762b98e2c6d5df20c939f2d830298e399a29833acbd999dca8b",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "5d3984093d2a5789d4c75c5e7d76419e9365533199ae418399385317c21ace56",
+          "surface_role": "prioritized_variants",
+          "evidence_domain": "variant_prioritization",
+          "producer_family": "VAP",
+          "assertion_type": "variant_prioritization",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"5d3984093d2a5789d4c75c5e7d76419e9365533199ae418399385317c21ace56\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/prioritization/stage_11_pri",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/prioritization/stage_11_prioritized_variants.tsv\", \"sha256\": \"447f508699f55bf71d1275838e006a9b8711a0dc17bb514dc842fa13ce55b2c4\", \"size_bytes\": 412438718}"
+        },
+        {
+          "assertion_registration_id": "db79fd9ab352ac21016cc8ea60dbd3cdedd46c704609368fb0cd79ecd3094efb",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "857abf7a346a21f8995c1de509e0019a47bd40bd673547883b262dd3190ed6b3",
+          "surface_role": "noncoding_interpretation",
+          "evidence_domain": "variant_interpretation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_interpretation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"857abf7a346a21f8995c1de509e0019a47bd40bd673547883b262dd3190ed6b3\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/noncoding_interpretation/st",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/noncoding_interpretation/stage_10_noncoding_interpreted.tsv\", \"sha256\": \"15e421cb4217242507ea9c679151b5cde87da52de7b66521e07348cc48c9e335\", \"size_bytes\": 3217"
+        },
+        {
+          "assertion_registration_id": "e3d41e96f669bb5f94bec232c344504d9d110df37c14fc0d3f4416a1e5cabf34",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "a613f54c1bb05a092cfe9bd4031cc05739ad2e7f0232a261198928f992555f4c",
+          "surface_role": "observations",
+          "evidence_domain": "variant_observation",
+          "producer_family": "VAP",
+          "assertion_type": "variant_observation",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"a613f54c1bb05a092cfe9bd4031cc05739ad2e7f0232a261198928f992555f4c\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/observation/ERR10619225_run",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/observation/ERR10619225_run_2026_05_31_091242.annotated_variants.tsv\", \"sha256\": \"5f84a843d197d3f4d89b41f8ffbd42f1a2b652de0c62f8274e66044c634801d8\", \"size_byt"
+        },
+        {
+          "assertion_registration_id": "fb7e1ce6bf67cccc2d48a8fb0962096858df4a6d11507b9ecfa8fc6357a82bc1",
+          "package_id": "785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468",
+          "artifact_id": "e875c1c9f86942123f4c2d54d3f853d763097145aac2b7d8b96216fd96610138",
+          "surface_role": "routing_candidates",
+          "evidence_domain": "candidate_routing",
+          "producer_family": "VAP",
+          "assertion_type": "candidate_routing",
+          "source_record_ref": null,
+          "authority_context": "producer_emitted",
+          "uncertainty_context": "source_asserted",
+          "registration_status": "registered",
+          "participant_summary_preview": "{}",
+          "support_ref_preview": "{\"artifact_id\": \"e875c1c9f86942123f4c2d54d3f853d763097145aac2b7d8b96216fd96610138\", \"package_id\": \"785fbb3b04fe6ea6116d2d108657efbd0ea49f79f48ab26d3ecc365c16228468\", \"relative_path\": \"entities/routing/splice_region_candi",
+          "payload_preview": "{\"registration_level\": \"artifact\", \"relative_path\": \"entities/routing/splice_region_candidates.tsv\", \"sha256\": \"747355e472624110d4f4c76bc0b8774d962b15141c415098da60ac9c16e00920\", \"size_bytes\": 1117805}"
+        }
+      ],
+      "sample_identities": [
+        {
+          "source_identity_id": "000000270bb9036cd5355008c717d7e11c8627cce7761a5a71ce0d66c769a7f8",
+          "assertion_registration_id": "b2b02a4f001b7762b98e2c6d5df20c939f2d830298e399a29833acbd999dca8b",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:334826",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000006b3ca32cac932315fa72e332d4056c50dd293dd65252763a336db6a329",
+          "assertion_registration_id": "db79fd9ab352ac21016cc8ea60dbd3cdedd46c704609368fb0cd79ecd3094efb",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "EXOC2",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "EXOC2",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:563198",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000026cd0543a66ecab952ecd9190dc12ec35bd0c8ee0168981a2c261690a4f",
+          "assertion_registration_id": "94e40ee00afb8be6a1702749b9e2738bbc89d0aeccded46847d46bd0dcdc0047",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "LDHAP3",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "LDHAP3",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:371915",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000003443eff4ec0215d1dbfb487a2a4f2f3148ce16d0ae765f2124d6910eb2c",
+          "assertion_registration_id": "b2b02a4f001b7762b98e2c6d5df20c939f2d830298e399a29833acbd999dca8b",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "SDK1",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "SDK1",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:632863",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000004f721248c32aea56f4d38e5bda98c4c23a546d1a469f253c4550134999c",
+          "assertion_registration_id": "94e40ee00afb8be6a1702749b9e2738bbc89d0aeccded46847d46bd0dcdc0047",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "EYA2",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "EYA2",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:428763",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000067cabd97deab41cde29f068188f7b20bf720059c456e8e38f87f45f2234",
+          "assertion_registration_id": "94e40ee00afb8be6a1702749b9e2738bbc89d0aeccded46847d46bd0dcdc0047",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "TMPRSS11B",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "TMPRSS11B",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:523402",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000007284214529ec6a68691ed692487c37d4c8c1d513192f904d9ccab512bfc",
+          "assertion_registration_id": "b2b02a4f001b7762b98e2c6d5df20c939f2d830298e399a29833acbd999dca8b",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "12:130080850:A:G",
+          "source_namespace": "vap_variant_id",
+          "source_label": "12:130080850:A:G",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:193886",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000074bd4c1c537f6bd91463ab11b58ef927c992a181d6cfa7196f08856fbb8",
+          "assertion_registration_id": "94e40ee00afb8be6a1702749b9e2738bbc89d0aeccded46847d46bd0dcdc0047",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ZNF200",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "ZNF200",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:248480",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000075a7d97a64cf4ed6524fb6f1920dd5946a16112a2233501ef4994d9876b",
+          "assertion_registration_id": "e3d41e96f669bb5f94bec232c344504d9d110df37c14fc0d3f4416a1e5cabf34",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000138138",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000138138",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:87823",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000007efd83a5eb19bfaf9ac90e5af1be30eed207d49e24051bf263991f2285c",
+          "assertion_registration_id": "49c9bc64aa004d5dcf1757674b34ed962dc8afdf628929728efd61c732cd513e",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000198018",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000198018",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:115622",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000a1f5198b59d5469623278a4e7834b8cbf2775d977552b34494d4bf8cb53",
+          "assertion_registration_id": "b2b02a4f001b7762b98e2c6d5df20c939f2d830298e399a29833acbd999dca8b",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "5:109067227:TTTG:T",
+          "source_namespace": "vap_variant_id",
+          "source_label": "5:109067227:TTTG:T",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:575223",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000ac6e704d4aeb63280bff15ac40cc635540581248751ddd009fa6037358e",
+          "assertion_registration_id": "b2b02a4f001b7762b98e2c6d5df20c939f2d830298e399a29833acbd999dca8b",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000224976",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000224976",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:196337",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000aea6e3a50132db4ede907af4abcd728719e7608d49443c71fe01150c836",
+          "assertion_registration_id": "94e40ee00afb8be6a1702749b9e2738bbc89d0aeccded46847d46bd0dcdc0047",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:721412",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000af66b6d89007bb9def9c004d5d36607783b77e34ea6c3d8ab808a436ebd",
+          "assertion_registration_id": "e3d41e96f669bb5f94bec232c344504d9d110df37c14fc0d3f4416a1e5cabf34",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "NA",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "NA",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:504289",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000bf681e36d8933616922b58fccf85e9774a1852da37a3f7d3c316f7bb95a",
+          "assertion_registration_id": "db79fd9ab352ac21016cc8ea60dbd3cdedd46c704609368fb0cd79ecd3094efb",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ENSG00000229985",
+          "source_namespace": "vap_ensembl_gene_id",
+          "source_label": "ENSG00000229985",
+          "extraction_method": "vap_row_column:gene_id",
+          "source_record_ref": "row:12701",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000df407cf2fef6ab8ced265eedc9eca3ebc03707d37052c06cce4a0025def",
+          "assertion_registration_id": "1abb4d7ce65e4cf6f1bfaf0597d6874c7f2e1881bd9ea0f6842be5b6f90129d0",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "14:105910775:G:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "14:105910775:G:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:220353",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000ef59587f63c35978fc2f9ec65ff68f3b79429f2b2544309013fe144a8e3",
+          "assertion_registration_id": "db79fd9ab352ac21016cc8ea60dbd3cdedd46c704609368fb0cd79ecd3094efb",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "EFCAB3",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "EFCAB3",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:286712",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "00000f7a56539f62ca3d405f737fcaaea3acea8a4e97442213a178e70c92a237",
+          "assertion_registration_id": "1abb4d7ce65e4cf6f1bfaf0597d6874c7f2e1881bd9ea0f6842be5b6f90129d0",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "ZBTB7B",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "ZBTB7B",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:39300",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "000011d4aafa486eff8f5d68113ed9ab5d21054c1265ff47b5eec6aaf2196cde",
+          "assertion_registration_id": "b2b02a4f001b7762b98e2c6d5df20c939f2d830298e399a29833acbd999dca8b",
+          "identity_kind": "gene",
+          "participant_role": "gene",
+          "source_value": "DUX4L18",
+          "source_namespace": "vap_gene_symbol",
+          "source_label": "DUX4L18",
+          "extraction_method": "vap_row_column:gene_symbol",
+          "source_record_ref": "row:747740",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        },
+        {
+          "source_identity_id": "0000127429ffd7adf7dc0188da46e41c4326abc5e01e1e2e83f40abe7b183e30",
+          "assertion_registration_id": "49c9bc64aa004d5dcf1757674b34ed962dc8afdf628929728efd61c732cd513e",
+          "identity_kind": "variant",
+          "participant_role": "variant",
+          "source_value": "9:104242274:T:C",
+          "source_namespace": "vap_variant_id",
+          "source_label": "9:104242274:T:C",
+          "extraction_method": "vap_row_column:variant_id",
+          "source_record_ref": "row:724494",
+          "payload_preview": "{\"source\": \"extracted_participant\"}"
+        }
+      ],
+      "invariants": [
+        {
+          "name": "required_tables_present",
+          "passed": true,
+          "detail": "all required tables present"
+        },
+        {
+          "name": "single_tep_package",
+          "passed": true,
+          "detail": "tep_packages=1"
+        },
+        {
+          "name": "artifacts_registered",
+          "passed": true,
+          "detail": "artifacts=16"
+        },
+        {
+          "name": "assertions_registered",
+          "passed": true,
+          "detail": "assertion_registrations=10"
+        },
+        {
+          "name": "source_identities_registered",
+          "passed": true,
+          "detail": "source_identities=15911968"
+        },
+        {
+          "name": "assertion_package_artifact_refs_present",
+          "passed": true,
+          "detail": "assertion rows missing package/artifact refs=0"
+        },
+        {
+          "name": "all_assertions_registered_status",
+          "passed": true,
+          "detail": "non-registered assertion rows=0"
+        },
+        {
+          "name": "source_identity_assertion_refs_resolve",
+          "passed": true,
+          "detail": "source identities with missing assertion refs=0"
+        },
+        {
+          "name": "producer_family_present",
+          "passed": true,
+          "detail": "distinct producer_family count=1"
+        },
+        {
+          "name": "source_namespaces_present",
+          "passed": true,
+          "detail": "distinct source_namespace count=4"
+        }
+      ],
+      "passed_all_invariants": true
+    }
+  ]
+}
