@@ -1,262 +1,187 @@
 # Evidence Persistence Philosophy
 
+This document is part of the architectural epoch: **Truth Layer**
+
+| Epoch | Epoch Identity    | Epoch Purpose |
+| ----- | ----------------- | ------------- |
+| I     | **Truth Layer**       | **What is truth? What must be preserved? What are the limits of knowledge? How does information flow?** |
+| II    | Evidence Geometry | Once assertions exist, how do they organize into biological knowledge? |
+| III   | Discovery Layer   | How do preserved evidence topologies become discoverable? |
+| IV    | Projection Layer  | How does one truth generate many useful views without duplication? |
+| V     | Rationale Layer   | Why do we do this? |
+
+---
+
+## Epoch I: Truth Layer
+
+```text
+Truth Layer Philosophy
+        ↓
+Scientific Evidence Preservation Principles
+        ↓
+Evidence Persistence Philosophy <-THIS DOC
+        ↓
+Epistemic Boundaries
+        ↓
+Knowledge Flow Philosophy
+```
+
+See also:
+- [Truth Layer Philosophy](./truth_layer_philosophy.md)
+- [Scientific Evidence Preservation Principles](./scientific_evidence_preservation_principles.md)
+- [Evidence Persistence Philosophy](./evidence_persistence_philosophy.md)
+- [Epistemic Boundaries](./epistemic_boundaries)
+- [Knowledge Flow Philosophy](./knowledge_flow_philosophy.md)
+
+---
+
 ## Purpose
 
-The purpose of VDB is not storage.
+The Truth Layer Philosophy defines what truth means within VDB.
 
-The purpose of VDB is preservation.
+The Scientific Evidence Preservation Principles define what scientific information must never be lost.
 
-While storage systems focus on retaining data, VDB focuses on retaining meaning.
+This document defines how those principles shape the persistence architecture of VDB.
 
-The distinction is critical.
+Persistence is not the purpose of VDB.
 
-A stored artifact may remain accessible while losing the semantic context necessary for future interpretation.
-
-VDB therefore exists to preserve biological evidence in a form that remains traceable, explainable, interoperable, and useful for future discovery.
-
-This document defines the philosophical foundation governing evidence persistence within VDB.
+Persistence is the mechanism by which preserved scientific evidence remains reconstructable, interpretable, and useful across decades of scientific progress.
 
 ---
 
-## The Central Question
+# The Mission of Persistence
 
-Every persistence system must answer a fundamental question:
+VDB does not persist data merely because it was generated.
 
-```text
-What is worth preserving?
-```
+VDB persists evidence because scientific understanding evolves.
 
-VDB answers this question differently than conventional data warehouses.
+The persistence layer exists to ensure that preserved assertions remain available for future organization, discovery, reinterpretation, and reasoning without requiring the original producer to regenerate them.
 
-Rather than preserving only final conclusions, summaries, or convenience-oriented views, VDB seeks to preserve evidence structures that enable future biological reasoning.
-
-The goal is not simply to remember what was concluded.
-
-The goal is to preserve why those conclusions were possible.
+Persistence therefore serves science rather than storage.
 
 ---
 
-## Preservation Over Compression
+# Persistence is Stewardship
 
-VDB adopts preservation as its primary architectural principle.
-
-Compression is useful.
-
-Summarization is useful.
-
-Derived views are useful.
-
-However, these products should emerge from preserved evidence rather than replace preserved evidence.
-
-The ecosystem therefore rejects irreversible semantic reduction when that reduction would prevent future reinterpretation.
-
-Persistence should preserve optionality.
-
----
-
-## Future Biological Questions
-
-Biological interpretation evolves.
-
-Scientific knowledge evolves.
-
-Clinical knowledge evolves.
-
-Ontology systems evolve.
-
-Evidence sources evolve.
-
-Questions that cannot be asked today may become important tomorrow.
-
-Persistence decisions should therefore optimize for future inquiry rather than present convenience.
-
-A persistence strategy succeeds when future investigators can ask new questions without requiring reconstruction of lost evidence.
-
----
-
-## Evidence as a Renewable Resource
-
-Evidence should be viewed as a renewable scientific resource.
-
-The same evidence may support multiple interpretations over time.
+Producer repositories remain authoritative for evidence generation.
 
 Examples include:
 
-```text
-Variant reinterpretation
+* VAP for observational evidence
+* GSC for phenotype-scoped semantic priors
+* RSP for transcriptomic evidence
+* future repositories for additional evidence modalities
 
-Gene-disease reassociation
+VDB does not replace producer authority.
 
-Ontology refinement
+VDB acts as the long-term steward of preserved scientific assertions.
 
-Phenotype expansion
-
-Functional reclassification
-
-Clinical guideline revision
-```
-
-Evidence persistence should preserve the possibility of reinterpretation.
-
-The goal is not to preserve a single interpretation.
-
-The goal is to preserve interpretability.
+Stewardship requires preserving evidence exactly as necessary for future investigators to understand what producers originally asserted.
 
 ---
 
-## Semantic Preservation
+# Persistence Preserves Evidence, Not Representations
 
-Biological meaning is not limited to individual values.
+Scientific evidence is the preserved substrate.
 
-Meaning also exists within relationships.
+Representations are computational views over that substrate.
+
+Examples of representations include:
+
+* relational tables
+* query surfaces
+* property graphs
+* RDF projections
+* hypergraphs
+* simplicial complexes
+* visualization layers
+* future mathematical representations
+
+Representations may evolve.
+
+Persistence must preserve the underlying evidence independently of how that evidence is represented.
+
+Representations are replaceable.
+
+Evidence is not.
+
+---
+
+# Persistence is Non-Destructive
+
+Persistence should never reduce scientific meaning.
+
+Convenience-oriented summaries, optimized query structures, indexes, caches, projections, and derived products are valuable.
+
+However, these should emerge from preserved evidence rather than replace preserved evidence.
+
+Scientific meaning must remain recoverable regardless of how many derived representations are constructed.
+
+Persistence therefore favors preservation over irreversible reduction.
+
+---
+
+# Persistence is Append-Only
+
+Scientific understanding changes.
+
+Scientific history should not.
+
+New observations augment the preserved record.
+
+They do not rewrite previous assertions.
+
+Corrections, reinterpretations, updated annotations, and future discoveries become additional evidence rather than replacements for historical evidence.
+
+Append-only persistence protects the continuity of the scientific record.
+
+---
+
+# Persistence Preserves Historical State
+
+Scientific interpretation is inseparable from historical context.
+
+Accordingly, persistence must preserve the historical state of evidence where available.
 
 Examples include:
 
-```text
-Variant ↔ Transcript
+* historical releases
+* historical annotations
+* historical ontology mappings
+* historical namespace brokerage
+* historical semantic overlays
+* historical execution context
 
-Variant ↔ Gene
+Historical evidence enables reproducibility and longitudinal scientific analysis.
 
-Gene ↔ Phenotype
-
-Sample ↔ Variant
-
-Release ↔ Semantic Prior
-```
-
-VDB therefore preserves semantic structures rather than isolated facts.
-
-Relationships are first-class evidence.
+Persistence should therefore preserve both evidence and its historical environment.
 
 ---
 
-## Provenance Preservation
+# Persistence Preserves Multiplicity
 
-Evidence without provenance becomes difficult to trust.
+Biology rarely admits a single representation.
 
-Every persisted entity should remain traceable to its origin.
-
-This includes:
-
-* source repository
-* source package identity
-* source artifact identity
-* release identity
-* execution identity
-* transport identity
-* namespace-resolution history
-
-The objective is reconstructability.
-
-Future investigators should be able to understand how evidence arrived in its persisted state.
-
----
-
-## Multiplicity Preservation
-
-Biological evidence frequently exhibits multiplicity.
+Evidence frequently exists as multiple simultaneously valid observations.
 
 Examples include:
 
-```text
-Multiple transcripts
+* transcript multiplicity
+* annotation multiplicity
+* phenotype multiplicity
+* namespace multiplicity
+* evidence-source multiplicity
+* semantic interpretation multiplicity
 
-Multiple annotations
+Persistence should preserve multiplicity rather than collapsing it into artificial singularity.
 
-Multiple releases
-
-Multiple evidence sources
-
-Multiple ontology mappings
-
-Multiple interpretations
-```
-
-Multiplicity should remain visible.
-
-Persistence should not force biological complexity into artificial singularity.
-
-When multiple valid representations exist, those representations should remain detectable.
+Multiplicity is often scientifically meaningful.
 
 ---
 
-## Identity Preservation
+# Persistence Preserves Repository Independence
 
-Identity carries biological meaning.
-
-Source identities therefore possess enduring value.
-
-Examples include:
-
-```text
-Variant identifiers
-
-Gene identifiers
-
-Transcript identifiers
-
-Phenotype identifiers
-
-Release identifiers
-```
-
-Identity normalization should not erase source identities.
-
-Canonical identities support interoperability, but source identities remain part of the evidence record.
-
-Preservation requires both.
-
----
-
-## Overlay Preservation
-
-Not all evidence originates from observations.
-
-Some evidence originates from curated biological knowledge.
-
-Examples include:
-
-```text
-GSC semantic priors
-
-Phenotype-scoped knowledge
-
-Release-scoped consensus products
-```
-
-These artifacts should not be reduced to binary annotations or membership flags.
-
-Their provenance, release history, semantic channels, and scoring context remain meaningful.
-
-VDB therefore treats overlays as first-class evidence.
-
----
-
-## Noncoding Preservation
-
-Historically, many systems prioritized coding variation while reducing noncoding observations to secondary status.
-
-VDB rejects this distinction.
-
-Noncoding evidence is evidence.
-
-Persistence decisions should preserve:
-
-* regulatory observations
-* intronic observations
-* intergenic observations
-* untranslated-region observations
-* future functional annotations
-
-The architecture intentionally avoids assumptions that future biological relevance will be restricted to currently favored evidence classes.
-
----
-
-## Repository Independence
-
-Evidence persistence should remain independent of repository structure.
-
-Repository ownership should not determine persistence organization.
+Repository organization should not dictate persistence organization.
 
 Likewise:
 
@@ -274,130 +199,158 @@ Identity Space
 Persistence Domain
 ```
 
-Evidence should be organized according to semantic meaning rather than implementation history.
+Persistence should organize evidence according to preserved scientific semantics rather than repository implementation details.
 
-This principle enables long-term interoperability.
+This allows producer ecosystems to evolve independently while maintaining long-term interoperability.
 
 ---
 
-## Persistence as Stewardship
+# Persistence Enables Deterministic Reconstruction
 
-VDB acts as a steward rather than an owner.
-
-Producer repositories remain authoritative for evidence generation.
+The persistence layer should preserve sufficient information to deterministically reconstruct derived structures.
 
 Examples include:
 
-```text
-VAP
-    Observations
+* assertion projections
+* participant projections
+* evidence topology
+* convergence geometry
+* evidence convergence surfaces
+* future discovery overlays
 
-GSC
-    Semantic Priors
+If derived representations are discarded, they should be reproducible from preserved evidence without loss of scientific meaning.
 
-Future RSP
-    Functional Evidence
-```
-
-VDB preserves, organizes, and exposes evidence.
-
-It does not replace producer authority.
-
-Stewardship therefore becomes the appropriate persistence model.
+Persistence therefore protects regeneration as well as storage.
 
 ---
 
-## Persistence and Discovery
+# Persistence Enables Multiple Mathematical Frameworks
 
-Persistence is not an archival activity.
+The persistence substrate should remain independent of downstream analytical methods.
 
-Persistence exists to support discovery.
+Future reasoning engines may operate using:
 
-The value of preserved evidence emerges when future users can:
+* relational methods
+* graph algorithms
+* hypergraphs
+* topological data analysis
+* tensor methods
+* probabilistic graphical models
+* machine learning
+* mathematical frameworks that do not yet exist
 
-* query it
-* reinterpret it
-* compare it
-* aggregate it
-* enrich it
-* reason over it
+Persistence should preserve scientific evidence rather than optimize exclusively for one computational paradigm.
 
-Persistence should therefore maximize future discoverability.
-
----
-
-## Historical Reproducibility
-
-Scientific conclusions should remain reproducible.
-
-This requires preservation of historical context.
-
-Examples include:
-
-```text
-Historical releases
-
-Historical overlays
-
-Historical provenance
-
-Historical ontology mappings
-
-Historical namespace resolutions
-```
-
-A persistence system that preserves only the latest state cannot fully support historical reproducibility.
-
-VDB therefore values historical continuity.
+Future mathematics should evolve without requiring redesign of the preserved evidence substrate.
 
 ---
 
-## Persistence and Future-Proofing
+# Persistence Exists for Discovery
 
-Future-proofing is not prediction.
+Persistence is not archival.
 
-Future-proofing is preservation.
+Persistence exists because preserved evidence should remain discoverable.
 
-VDB does not attempt to predict future scientific discoveries.
+The persistence layer enables future investigators to:
 
-Instead, it seeks to preserve sufficient evidence richness that future discoveries can be supported when they occur.
+* revisit historical evidence
+* compare independent evidence streams
+* construct evidence topology
+* reveal convergence geometry
+* expose discovery surfaces
+* evaluate future hypotheses
 
-Preservation therefore becomes the primary mechanism of future-proofing.
+Discovery therefore becomes the primary beneficiary of persistence.
 
 ---
 
-## The Persistence Mission
+# Persistence Protects Future Optionality
 
-The mission of VDB can be summarized as follows:
+Future-proofing is achieved through preservation rather than prediction.
+
+The persistence layer should retain sufficient evidence richness that future scientific questions remain answerable.
+
+VDB does not attempt to predict future paradigms.
+
+It preserves the evidentiary substrate from which future paradigms may emerge.
+
+Future optionality is therefore an architectural objective rather than an implementation detail.
+
+---
+
+# Persistence Supports Unidirectional Knowledge Flow
+
+Persistence occupies a specific position within the VDB architecture.
 
 ```text
-Preserve meaning.
-
-Preserve provenance.
-
-Preserve multiplicity.
-
-Preserve identity.
-
-Preserve interpretability.
-
-Preserve discoverability.
-
-Preserve future utility.
+Observation
+        ↓
+Producer Assertion
+        ↓
+Evidence Preservation
+        ↓
+Evidence Persistence
+        ↓
+Assertion Projection
+        ↓
+Evidence Topology
+        ↓
+Convergence Geometry
+        ↓
+Evidence Convergence Surfaces
+        ↓
+Statistical Reasoning
+        ↓
+Biological Interpretation
 ```
 
-These principles collectively define the philosophy of evidence persistence within VDB.
+Persistence records preserved assertions.
+
+It does not perform reasoning.
+
+It does not alter historical observations.
+
+It serves as the stable substrate upon which organization, discovery, and downstream interpretation are constructed.
 
 ---
 
-## Summary
+# Architectural Consequences
 
-VDB is not designed to function as a conventional warehouse.
+The persistence architecture of VDB therefore exhibits several defining properties.
 
-It is designed to function as a semantic persistence system.
+It is:
 
-Its purpose is not merely to store information, but to preserve biological evidence in a form that remains interpretable, reproducible, interoperable, and useful for future discovery.
+* evidence-centric
+* append-only
+* provenance-preserving
+* historically reproducible
+* multiplicity-preserving
+* repository-independent
+* deterministic
+* representation-independent
+* discovery-oriented
+* future-compatible
 
-Persistence succeeds when future biological questions remain answerable.
+These characteristics distinguish semantic persistence from conventional data storage.
 
-That objective governs every architectural persistence decision within VDB.
+---
+
+# Summary
+
+Persistence is the architectural realization of preservation.
+
+Its purpose is not simply to retain information.
+
+Its purpose is to preserve a scientifically faithful, reconstructable, and future-compatible evidentiary substrate.
+
+Representations may evolve.
+
+Reasoning methods may evolve.
+
+Scientific paradigms may evolve.
+
+The preserved evidence should remain capable of supporting all of them.
+
+Persistence therefore becomes more than storage.
+
+It becomes the long-term stewardship of the scientific record.
