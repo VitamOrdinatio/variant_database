@@ -1,0 +1,145 @@
+{
+  "authority_boundary": "This validation run proves local Phase 4.1 Registration Unit declaration, read-only inspection, inventory emission, readiness evaluation, and non-mutation behavior against the declared input manifest. It does not certify biological evidence and does not replace MARK full-corpus smoketesting.",
+  "inspection": {
+    "inspection_count": 6,
+    "inspection_status": "passed"
+  },
+  "inventory": {
+    "artifact_status": "passed",
+    "json_path": "results/validation/phase4_registration_units/registration_unit_inventory.json",
+    "row_count": 6,
+    "tsv_path": "results/validation/phase4_registration_units/registration_unit_inventory.tsv"
+  },
+  "manifest_path": "tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/manifests/registration_unit_input_manifest.tsv",
+  "non_mutation": {
+    "after": {
+      "ru_gsc_epilepsy": {
+        "exists": true,
+        "mtime_ns": 1782748522000000000,
+        "registration_unit_id": "ru_gsc_epilepsy",
+        "registration_unit_label": "gsc_epilepsy",
+        "sidecars": [],
+        "size_bytes": 151552,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_epilepsy/vdb.sqlite"
+      },
+      "ru_gsc_mitochondrial_disease": {
+        "exists": true,
+        "mtime_ns": 1782748523000000000,
+        "registration_unit_id": "ru_gsc_mitochondrial_disease",
+        "registration_unit_label": "gsc_mitochondrial_disease",
+        "sidecars": [],
+        "size_bytes": 147456,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_mitochondrial_disease/vdb.sqlite"
+      },
+      "ru_vap_hg002": {
+        "exists": true,
+        "mtime_ns": 1782749308000000000,
+        "registration_unit_id": "ru_vap_hg002",
+        "registration_unit_label": "vap_hg002",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_hg002/vdb.sqlite"
+      },
+      "ru_vap_median_ERR10619300": {
+        "exists": true,
+        "mtime_ns": 1782749435000000000,
+        "registration_unit_id": "ru_vap_median_ERR10619300",
+        "registration_unit_label": "vap_median_ERR10619300",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_median_ERR10619300/vdb.sqlite"
+      },
+      "ru_vap_q1_ERR10619212": {
+        "exists": true,
+        "mtime_ns": 1782749592000000000,
+        "registration_unit_id": "ru_vap_q1_ERR10619212",
+        "registration_unit_label": "vap_q1_ERR10619212",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q1_ERR10619212/vdb.sqlite"
+      },
+      "ru_vap_q3_ERR10619225": {
+        "exists": true,
+        "mtime_ns": 1782749724000000000,
+        "registration_unit_id": "ru_vap_q3_ERR10619225",
+        "registration_unit_label": "vap_q3_ERR10619225",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q3_ERR10619225/vdb.sqlite"
+      }
+    },
+    "before": {
+      "ru_gsc_epilepsy": {
+        "exists": true,
+        "mtime_ns": 1782748522000000000,
+        "registration_unit_id": "ru_gsc_epilepsy",
+        "registration_unit_label": "gsc_epilepsy",
+        "sidecars": [],
+        "size_bytes": 151552,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_epilepsy/vdb.sqlite"
+      },
+      "ru_gsc_mitochondrial_disease": {
+        "exists": true,
+        "mtime_ns": 1782748523000000000,
+        "registration_unit_id": "ru_gsc_mitochondrial_disease",
+        "registration_unit_label": "gsc_mitochondrial_disease",
+        "sidecars": [],
+        "size_bytes": 147456,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_mitochondrial_disease/vdb.sqlite"
+      },
+      "ru_vap_hg002": {
+        "exists": true,
+        "mtime_ns": 1782749308000000000,
+        "registration_unit_id": "ru_vap_hg002",
+        "registration_unit_label": "vap_hg002",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_hg002/vdb.sqlite"
+      },
+      "ru_vap_median_ERR10619300": {
+        "exists": true,
+        "mtime_ns": 1782749435000000000,
+        "registration_unit_id": "ru_vap_median_ERR10619300",
+        "registration_unit_label": "vap_median_ERR10619300",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_median_ERR10619300/vdb.sqlite"
+      },
+      "ru_vap_q1_ERR10619212": {
+        "exists": true,
+        "mtime_ns": 1782749592000000000,
+        "registration_unit_id": "ru_vap_q1_ERR10619212",
+        "registration_unit_label": "vap_q1_ERR10619212",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q1_ERR10619212/vdb.sqlite"
+      },
+      "ru_vap_q3_ERR10619225": {
+        "exists": true,
+        "mtime_ns": 1782749724000000000,
+        "registration_unit_id": "ru_vap_q3_ERR10619225",
+        "registration_unit_label": "vap_q3_ERR10619225",
+        "sidecars": [],
+        "size_bytes": 167936,
+        "sqlite_path": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture/registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q3_ERR10619225/vdb.sqlite"
+      }
+    },
+    "mutation_details": [],
+    "non_mutation_status": "passed",
+    "sidecar_details": [],
+    "sidecar_status": "passed"
+  },
+  "output_dir": "results/validation/phase4_registration_units",
+  "readiness": {
+    "artifact_status": "passed",
+    "not_ready_count": 0,
+    "readiness_json_path": "results/validation/phase4_registration_units/registration_unit_readiness.json",
+    "readiness_tsv_path": "results/validation/phase4_registration_units/registration_unit_readiness.tsv",
+    "ready_count": 6,
+    "row_count": 6,
+    "validation_summary_json_path": "results/validation/phase4_registration_units/registration_unit_validation_summary.json"
+  },
+  "record_count": 6,
+  "validation_run_schema_version": "phase4_registration_unit_validation_run_v1",
+  "validation_status": "passed"
+}

@@ -18,17 +18,17 @@ This document is a validation governance control register.
 
 # Current Verdict
 
-Phase 4 validation governance is partially present.
+Phase 4 validation governance is partially present and actively maturing.
 
-Global validation doctrine, schema validation, ingestion validation, namespace validation, lifecycle validation, Phase 3 registration certification documentation, Phase 4 satellite-plan coherence review, and Phase 4 validation backlog governance are present.
+Global validation doctrine, schema validation, ingestion validation, namespace validation, lifecycle validation, Phase 3 registration certification documentation, Phase 4 satellite-plan coherence review, Phase 4 validation backlog governance, and Phase 4.1 Registration Unit validation governance are present.
 
-Layer-specific Phase 4 validation documents remain pending by implementation layer.
+Phase 4.1 Registration Unit local validation receipts are present for the lightweight golden-fixture path.
 
-Phase 4 validation receipts remain pending by execution layer.
+Layer-specific validation documents after Phase 4.1 remain pending by implementation layer.
 
-Phase 4.1 Registration Unit local implementation evidence is now present for the lightweight golden-fixture path.
+Phase 4 validation receipts after Phase 4.1 remain pending by execution layer.
 
-The implemented Phase 4.1 local validation chain is:
+The completed Phase 4.1 local validation chain is:
 
 ```text
 Registration Unit input manifest
@@ -44,7 +44,7 @@ validation run summary
 non-mutation verification
 ```
 
-Current local implementation evidence:
+Current Phase 4.1 local validation evidence:
 
 ```text
 96 pytest tests passing
@@ -53,22 +53,31 @@ Phase 4.1 read-only SQLite inspection implemented
 Phase 4.1 inventory artifact emission implemented
 Phase 4.1 readiness artifact emission implemented
 Phase 4.1 validation orchestration implemented
-local golden-fixture non-mutation checks passing
+Phase 4.1 validation governance document present
+Phase 4.1 local validation receipt directory present
+local golden-fixture validation_status passed
+six Registration Units declared
+six Registration Units inspected
+six Registration Units marked ready
+zero Registration Units marked not_ready
+non_mutation_status passed
+sidecar_status passed
 ```
 
 Current verdict:
 
 ```text
 PASS FOR PHASE 4.0 VALIDATION BACKLOG GOVERNANCE,
-WITH PHASE 4.1 LOCAL IMPLEMENTATION EVIDENCE PRESENT AND FORMAL
-REGISTRATION UNIT VALIDATION GOVERNANCE / RECEIPTS STILL PENDING.
+WITH PHASE 4.1 LOCAL REGISTRATION UNIT VALIDATION COMPLETE FOR THE
+LIGHTWEIGHT GOLDEN-FIXTURE PATH AND MARK FULL-CORPUS SMOKETESTING
+REMAINING AS A FUTURE CERTIFICATION-STRENGTH TARGET.
 ```
 
 This is not a claim that full Phase 4 validation is complete.
 
-This is not a claim that Phase 4.1 is certification-complete.
-
 This is not a claim that MARK full-corpus smoketesting has been completed.
+
+This is not a claim that Phase 4.8 certification is complete.
 
 The correct interpretation is:
 
@@ -76,15 +85,17 @@ The correct interpretation is:
 Phase 4.1 local Registration Unit validation mechanics now exist and pass
 against the lightweight golden fixture.
 
-Formal Phase 4.1 validation governance remains pending until
-docs/validation/registration_unit_validation.md exists.
+Formal Phase 4.1 validation governance is present at
+docs/validation/registration_unit_validation.md.
 
-Formal Phase 4.1 validation receipts remain pending until
-results/validation/phase4_registration_units/ contains the generated receipt
-family for the Registration Unit validation run.
+Formal Phase 4.1 local validation receipts are present at
+results/validation/phase4_registration_units/.
 
 MARK full-corpus smoketest remains a later certification-strength validation
 target.
+
+Phase 4.2 and later validation documents and receipts remain staged by
+implementation layer.
 ```
 
 ---
@@ -206,17 +217,19 @@ The following validation governance documents are currently present.
 | `docs/validation/namespace_resolution_validation.md`               | required          | completed                 | receipt_not_applicable | non_blocking_for_phase4_0        | Existing namespace-resolution validation governance.                                                         |
 | `docs/validation/vdb_end_to_end_lifecycle_walkthrough.md`          | required          | completed                 | receipt_not_applicable | non_blocking_for_phase4_0        | Existing lifecycle walkthrough. May later be refreshed after Phase 4 implementation.                         |
 | `docs/validation/phase3_registration_certification.md`             | required          | completed                 | receipt_present        | non_blocking_for_phase4_0        | Documents Phase 3 registration certification and is supported by tracked validation receipts.                |
+| `docs/validation/registration_unit_validation.md`                  | required          | completed                 | receipt_present        | non_blocking_for_phase4_0        | Defines Phase 4.1 Registration Unit validation for manifest loading, read-only inspection, inventory emission, readiness evaluation, validation summary emission, determinism, and non-mutation. Supported by local Phase 4.1 validation receipts. |
 | `docs/validation/phase4_satellite_plan_system_coherence_review.md` | required          | completed_pending_refresh | receipt_not_applicable | required_before_phase4_0_closure | Should be refreshed to reflect completed Registration Unit, Corpus Generation, and Projection Layer schemas. |
 
 ---
 
 # Existing Validation Receipts
 
-The following validation receipt family is currently present and git-tracked.
+The following validation receipt families are currently present and git-tracked.
 
-| Receipt Path                                            | Receipt Status  | Supports                                               | Blocking Status           | Notes                                                                                                                             |
-| ------------------------------------------------------- | --------------- | ------------------------------------------------------ | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `results/validation/phase3_registration_certification/` | receipt_present | `docs/validation/phase3_registration_certification.md` | non_blocking_for_phase4_0 | Contains Phase 3 registration certification receipts, including JSON, Markdown, DB summary TSV, and identity summary TSV outputs. |
+| Receipt Path                                            | Receipt Status  | Supports                                               | Blocking Status           | Notes                                                                                                                                       |
+| ------------------------------------------------------- | --------------- | ------------------------------------------------------ | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `results/validation/phase3_registration_certification/` | receipt_present | `docs/validation/phase3_registration_certification.md` | non_blocking_for_phase4_0 | Contains Phase 3 registration certification receipts, including JSON, Markdown, DB summary TSV, and identity summary TSV outputs.           |
+| `results/validation/phase4_registration_units/`         | receipt_present | `docs/validation/registration_unit_validation.md`      | non_blocking_for_phase4_0 | Contains Phase 4.1 local Registration Unit validation receipts for the lightweight golden-fixture path. Does not replace MARK smoketesting. |
 
 Current tracked Phase 3 receipt files include:
 
@@ -228,9 +241,24 @@ results/validation/phase3_registration_certification/vdb_phase3_registration_eff
 results/validation/phase3_registration_certification/vdb_phase3_registration_efficacy_2026_06_27_124320.md
 ```
 
-These receipts support Phase 3 certification evidence for Registration Unit readiness and Phase 4 input trust.
+Current tracked Phase 4.1 Registration Unit receipt files include:
 
-They do not replace Phase 4 layer-specific validation.
+```text
+results/validation/phase4_registration_units/registration_unit_inventory.json
+results/validation/phase4_registration_units/registration_unit_inventory.tsv
+results/validation/phase4_registration_units/registration_unit_readiness.json
+results/validation/phase4_registration_units/registration_unit_readiness.tsv
+results/validation/phase4_registration_units/registration_unit_validation_run_summary.json
+results/validation/phase4_registration_units/registration_unit_validation_summary.json
+```
+
+The Phase 3 receipts support Phase 3 certification evidence for Registration Unit readiness and Phase 4 input trust.
+
+The Phase 4.1 receipts support local Registration Unit validation closure for the lightweight golden-fixture path.
+
+Neither receipt family replaces later Phase 4 layer-specific validation.
+
+The Phase 4.1 local Registration Unit receipts do not replace MARK full-corpus smoketesting.
 
 ---
 
@@ -244,7 +272,7 @@ Each document becomes required before the corresponding implementation layer can
 
 | Planned Document                                             | Requirement Class | Document Status  | Receipt Status            | Blocking Status                     | Purpose                                                                                                                                                                                                                        |
 | ------------------------------------------------------------ | ----------------- | ---------------- | ------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `docs/validation/registration_unit_validation.md`            | required          | planned_required | receipt_pending_execution | required_before_phase4_1_completion | Defines validation for read-only Registration Unit declaration, inspection, inventory, readiness, non-mutation, status visibility, and Corpus Generation handoff.                                                              |
+| `docs/validation/registration_unit_validation.md`            | required          | completed        | receipt_present            | required_before_phase4_1_completion | Defines validation for read-only Registration Unit declaration, inspection, inventory, readiness, non-mutation, status visibility, and Corpus Generation handoff. Local lightweight-fixture validation receipts are present. MARK full-corpus smoketesting remains a future certification-strength target. |
 | `docs/validation/corpus_generation_validation.md`            | required          | planned_required | receipt_pending_execution | required_before_phase4_2_completion | Defines validation for explicit Corpus Generation scope, selection policy, included/excluded Registration Units, deterministic manifests, and Assertion Record handoff.                                                        |
 | `docs/validation/assertion_record_validation.md`             | required          | planned_required | receipt_pending_execution | required_before_phase4_3_completion | Defines validation for corpus-indexed Assertion Record construction, producer claim preservation, source lineage, authority preservation, and non-interpretive claim indexing.                                                 |
 | `docs/validation/evidence_topology_validation.md`            | required          | planned_required | receipt_pending_execution | required_before_phase4_4_completion | Defines validation for topology derivation from Assertion Records without biological interpretation or source-authority transfer.                                                                                              |
@@ -327,20 +355,39 @@ SQLite source files are not modified
 SQLite sidecars are not created
 ```
 
-This evidence supports Phase 4.1 local implementation readiness.
+This evidence supports Phase 4.1 local Registration Unit validation closure for the lightweight golden-fixture path.
 
-This evidence does not close Phase 4.1 validation governance.
-
-This evidence does not replace formal validation receipts.
-
-This evidence does not replace MARK full-corpus smoketesting.
-
-Required before Phase 4.1 completion:
+Formal Phase 4.1 validation governance is now present:
 
 ```text
 docs/validation/registration_unit_validation.md
+````
+
+Formal Phase 4.1 local validation receipts are now present:
+
+```text
 results/validation/phase4_registration_units/
 ```
+
+The local receipt run reports:
+
+```text
+validation_status: passed
+record_count: 6
+inspection_count: 6
+inventory_row_count: 6
+readiness_row_count: 6
+ready_count: 6
+not_ready_count: 0
+non_mutation_status: passed
+sidecar_status: passed
+```
+
+This closes Phase 4.1 local Registration Unit validation for the lightweight golden-fixture path.
+
+This does not replace MARK full-corpus smoketesting.
+
+This does not complete Phase 4.8 certification.
 
 ---
 
@@ -361,13 +408,17 @@ They should be authored when sufficient implementation and validation evidence e
 
 # Future Phase 4 Validation Receipt Families
 
-The following future receipt directories are expected after corresponding builders and validators execute.
+The following receipt directories track Phase 4 validation evidence by layer.
 
-They are not required before execution.
+Receipt directories become required only when the corresponding builder, validator, or certification process executes.
+
+Phase 4.1 Registration Unit local validation receipts are now present for the lightweight golden-fixture path.
+
+Later Phase 4 receipt directories remain pending by execution layer.
 
 | Future Receipt Path                                        | Receipt Status                   | Blocking Status                        | Becomes Required When                                       |
 | ---------------------------------------------------------- | -------------------------------- | -------------------------------------- | ----------------------------------------------------------- |
-| `results/validation/phase4_registration_units/`            | receipt_required_after_execution | required_before_phase4_1_completion    | Registration Unit inventory builder and validator execute.  |
+| `results/validation/phase4_registration_units/`            | receipt_present | non_blocking_for_phase4_0    | Present for Phase 4.1 local lightweight-fixture Registration Unit validation. MARK full-corpus smoketesting remains future certification-strength validation  |
 | `results/validation/phase4_corpus_generation/`             | receipt_required_after_execution | required_before_phase4_2_completion    | Corpus Generation builder and validator execute.            |
 | `results/validation/phase4_assertion_records/`             | receipt_required_after_execution | required_before_phase4_3_completion    | Assertion Record builder and validator execute.             |
 | `results/validation/phase4_evidence_topology/`             | receipt_required_after_execution | required_before_phase4_4_completion    | Evidence Topology builder and validator execute.            |
@@ -518,12 +569,34 @@ A Phase 4 implementation layer should not be considered complete until its corre
 
 ## Phase 4.1 Registration Units
 
-Required before completion:
+Local lightweight-fixture validation completion artifacts are present:
 
 ```text
 docs/validation/registration_unit_validation.md
 results/validation/phase4_registration_units/
 ```
+
+Current local validation status:
+
+```text
+passed
+```
+
+Current local validation evidence:
+
+```text
+six Registration Units declared
+six Registration Units inspected
+six Registration Units marked ready
+zero Registration Units marked not_ready
+inventory artifacts emitted
+readiness artifacts emitted
+validation summaries emitted
+non_mutation_status passed
+sidecar_status passed
+```
+
+MARK full-corpus Registration Unit smoketesting remains a future certification-strength validation target.
 
 ## Phase 4.2 Corpus Generation
 
@@ -628,31 +701,27 @@ Phase 4 validation must not claim biological correctness unless a future layer-s
 Recommended immediate actions:
 
 ```text
-1. Draft docs/validation/registration_unit_validation.md.
+1. Refresh docs/validation/README.md.
 
-2. Execute the Phase 4.1 Registration Unit validator into a formal receipt
-   directory under results/validation/phase4_registration_units/.
+2. Refresh docs/validation/NAMESPACE.md.
 
-3. Track generated Phase 4.1 Registration Unit validation receipts if they
-   support governance, reproducibility, or certification readiness.
+3. Refresh results/validation/README.md.
 
-4. Refresh docs/validation/README.md.
-
-5. Refresh docs/validation/NAMESPACE.md.
-
-6. Refresh results/validation/README.md.
-
-7. Refresh docs/validation/phase4_satellite_plan_system_coherence_review.md
+4. Refresh docs/validation/phase4_satellite_plan_system_coherence_review.md
    to reflect completed Registration Unit, Corpus Generation, and Projection
-   Layer schemas, plus the implemented Phase 4.1 local validation chain.
+   Layer schemas, plus the completed Phase 4.1 local validation chain.
 
-8. Preserve MARK full-corpus Registration Unit smoketesting as a later
+5. Preserve MARK full-corpus Registration Unit smoketesting as a later
    certification-strength validation target.
 
-9. Draft docs/validation/corpus_generation_validation.md before completing
+6. Draft docs/validation/corpus_generation_validation.md before completing
    Phase 4.2 Corpus Generation implementation.
 
-10. Continue drafting layer-specific validation documents in phase order.
+7. Generate results/validation/phase4_corpus_generation/ receipts after
+   Phase 4.2 Corpus Generation validation executes.
+
+8. Continue drafting layer-specific validation documents and generating
+   validation receipts in phase order.
 ```
 
 These actions support orderly Phase 4 execution.
@@ -669,9 +738,21 @@ The Phase 4 validation backlog records the current validation governance state.
 
 Existing validation governance and Phase 3 registration certification receipts are present.
 
-Layer-specific Phase 4 validation documents remain pending by implementation phase.
+Phase 4.1 Registration Unit validation governance is present.
 
-Phase 4 validation receipts remain pending execution.
+Phase 4.1 local Registration Unit validation receipts are present for the lightweight golden-fixture path.
+
+Phase 4.1 local Registration Unit validation status:
+
+```text
+passed
+```
+
+Layer-specific Phase 4 validation documents after Phase 4.1 remain pending by implementation phase.
+
+Phase 4 validation receipts after Phase 4.1 remain pending by execution layer.
+
+MARK full-corpus Registration Unit smoketesting remains a future certification-strength validation target.
 
 Current validation backlog verdict:
 
@@ -679,7 +760,13 @@ Current validation backlog verdict:
 PASS FOR PHASE 4.0 VALIDATION BACKLOG GOVERNANCE
 ```
 
-with the following closure condition:
+Current Phase 4.1 local Registration Unit validation verdict:
+
+```text
+PASS FOR LIGHTWEIGHT GOLDEN-FIXTURE REGISTRATION UNIT VALIDATION
+```
+
+with the following Phase 4.0 validation governance closure condition:
 
 ```text
 Refresh docs/validation/README.md, docs/validation/NAMESPACE.md,

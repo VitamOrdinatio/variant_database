@@ -1,0 +1,18 @@
+{
+  "not_ready_count": 0,
+  "not_ready_registration_units": [],
+  "readiness_schema_version": "phase4_registration_unit_readiness_v1",
+  "ready_count": 6,
+  "row_count": 6,
+  "validation_gates": {
+    "expected_read_mode": "read_only",
+    "inspection_status": "passed",
+    "integrity_check_status": "ok",
+    "open_status": "passed",
+    "query_only_status": "enabled",
+    "registration_backend": "sqlite",
+    "required_row_counts": "positive",
+    "required_table_status": "passed"
+  },
+  "validation_status": "passed"
+}
