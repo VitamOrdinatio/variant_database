@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from vdb.phase4.registration_units.manifest import (
+from variant_database.phase4.registration_units.manifest import (
     RegistrationUnitManifestError,
     load_registration_unit_manifest,
 )
