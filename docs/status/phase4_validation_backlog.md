@@ -20,20 +20,72 @@ This document is a validation governance control register.
 
 Phase 4 validation governance is partially present.
 
-Global validation doctrine, schema validation, ingestion validation, namespace validation, lifecycle validation, Phase 3 registration certification documentation, and Phase 4 satellite-plan coherence review are present.
+Global validation doctrine, schema validation, ingestion validation, namespace validation, lifecycle validation, Phase 3 registration certification documentation, Phase 4 satellite-plan coherence review, and Phase 4 validation backlog governance are present.
 
 Layer-specific Phase 4 validation documents remain pending by implementation layer.
 
 Phase 4 validation receipts remain pending by execution layer.
 
+Phase 4.1 Registration Unit local implementation evidence is now present for the lightweight golden-fixture path.
+
+The implemented Phase 4.1 local validation chain is:
+
+```text
+Registration Unit input manifest
+        ↓
+read-only Registration Unit inspection
+        ↓
+deterministic Registration Unit inventory artifacts
+        ↓
+Registration Unit readiness and validation artifacts
+        ↓
+validation run summary
+        ↓
+non-mutation verification
+```
+
+Current local implementation evidence:
+
+```text
+96 pytest tests passing
+Phase 4.1 manifest handling implemented
+Phase 4.1 read-only SQLite inspection implemented
+Phase 4.1 inventory artifact emission implemented
+Phase 4.1 readiness artifact emission implemented
+Phase 4.1 validation orchestration implemented
+local golden-fixture non-mutation checks passing
+```
+
 Current verdict:
 
 ```text
 PASS FOR PHASE 4.0 VALIDATION BACKLOG GOVERNANCE,
-WITH LAYER-SPECIFIC VALIDATION DOCUMENTS PENDING BY IMPLEMENTATION PHASE.
+WITH PHASE 4.1 LOCAL IMPLEMENTATION EVIDENCE PRESENT AND FORMAL
+REGISTRATION UNIT VALIDATION GOVERNANCE / RECEIPTS STILL PENDING.
 ```
 
 This is not a claim that full Phase 4 validation is complete.
+
+This is not a claim that Phase 4.1 is certification-complete.
+
+This is not a claim that MARK full-corpus smoketesting has been completed.
+
+The correct interpretation is:
+
+```text
+Phase 4.1 local Registration Unit validation mechanics now exist and pass
+against the lightweight golden fixture.
+
+Formal Phase 4.1 validation governance remains pending until
+docs/validation/registration_unit_validation.md exists.
+
+Formal Phase 4.1 validation receipts remain pending until
+results/validation/phase4_registration_units/ contains the generated receipt
+family for the Registration Unit validation run.
+
+MARK full-corpus smoketest remains a later certification-strength validation
+target.
+```
 
 ---
 
@@ -205,6 +257,90 @@ Each document becomes required before the corresponding implementation layer can
 Layer-specific validation documents should be drafted before their corresponding implementation layer is considered complete.
 
 They do not all need to be completed before Phase 4.0 governance closure.
+
+---
+
+# Phase 4.1 Local Implementation Evidence
+
+Phase 4.1 Registration Unit local implementation evidence is now present for the lightweight golden-fixture path.
+
+Implemented modules:
+
+```text
+src/variant_database/phase4/registration_units/manifest.py
+src/variant_database/phase4/registration_units/inspection.py
+src/variant_database/phase4/registration_units/inventory.py
+src/variant_database/phase4/registration_units/readiness.py
+src/variant_database/phase4/registration_units/validation.py
+```
+
+Implemented test files:
+
+```text
+tests/phase4/test_registration_unit_manifest.py
+tests/phase4/test_registration_unit_inspection.py
+tests/phase4/test_registration_unit_inventory.py
+tests/phase4/test_registration_unit_readiness.py
+tests/phase4/test_registration_unit_validation.py
+```
+
+Current local test status:
+
+```text
+96 passed
+```
+
+The implemented local validation chain is:
+
+```text
+manifest loading
+        ↓
+path resolution
+        ↓
+read-only SQLite inspection
+        ↓
+deterministic inventory artifact emission
+        ↓
+readiness artifact emission
+        ↓
+validation run summary emission
+        ↓
+SQLite mtime and sidecar non-mutation checks
+```
+
+The local validation chain currently verifies:
+
+```text
+Registration Unit manifest records load deterministically
+declared Registration Unit paths resolve deterministically
+declared SQLite files exist before inspection
+SQLite files open read-only
+SQLite query_only mode is enabled
+required Registration Unit tables are present
+required table columns are present
+required table row counts are positive
+SQLite integrity checks pass
+inventory TSV and JSON artifacts emit deterministically
+readiness TSV and JSON artifacts emit deterministically
+validation summary JSON emits deterministically
+SQLite source files are not modified
+SQLite sidecars are not created
+```
+
+This evidence supports Phase 4.1 local implementation readiness.
+
+This evidence does not close Phase 4.1 validation governance.
+
+This evidence does not replace formal validation receipts.
+
+This evidence does not replace MARK full-corpus smoketesting.
+
+Required before Phase 4.1 completion:
+
+```text
+docs/validation/registration_unit_validation.md
+results/validation/phase4_registration_units/
+```
 
 ---
 
@@ -492,30 +628,38 @@ Phase 4 validation must not claim biological correctness unless a future layer-s
 Recommended immediate actions:
 
 ```text
-1. Create docs/status/phase4_validation_backlog.md.
+1. Draft docs/validation/registration_unit_validation.md.
 
-2. Refresh docs/validation/README.md.
+2. Execute the Phase 4.1 Registration Unit validator into a formal receipt
+   directory under results/validation/phase4_registration_units/.
 
-3. Refresh docs/validation/NAMESPACE.md.
+3. Track generated Phase 4.1 Registration Unit validation receipts if they
+   support governance, reproducibility, or certification readiness.
 
-4. Refresh results/validation/README.md.
+4. Refresh docs/validation/README.md.
 
-5. Refresh docs/validation/phase4_satellite_plan_system_coherence_review.md
+5. Refresh docs/validation/NAMESPACE.md.
+
+6. Refresh results/validation/README.md.
+
+7. Refresh docs/validation/phase4_satellite_plan_system_coherence_review.md
    to reflect completed Registration Unit, Corpus Generation, and Projection
-   Layer schemas.
+   Layer schemas, plus the implemented Phase 4.1 local validation chain.
 
-6. Draft docs/validation/registration_unit_validation.md before completing
-   Phase 4.1 Registration Unit implementation.
+8. Preserve MARK full-corpus Registration Unit smoketesting as a later
+   certification-strength validation target.
 
-7. Draft docs/validation/corpus_generation_validation.md before completing
+9. Draft docs/validation/corpus_generation_validation.md before completing
    Phase 4.2 Corpus Generation implementation.
 
-8. Continue drafting layer-specific validation documents in phase order.
+10. Continue drafting layer-specific validation documents in phase order.
 ```
 
 These actions support orderly Phase 4 execution.
 
 They do not imply that full Phase 4 validation is complete.
+
+They do not imply that local lightweight-fixture validation replaces MARK full-corpus validation.
 
 ---
 
