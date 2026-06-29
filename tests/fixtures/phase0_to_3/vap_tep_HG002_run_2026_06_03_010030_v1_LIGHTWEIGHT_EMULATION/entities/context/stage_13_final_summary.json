@@ -1,0 +1,127 @@
+{
+  "annotation_sources_present": [
+    "VEP"
+  ],
+  "annotation_versions_present": [
+    "# ENSEMBL VARIANT EFFECT PREDICTOR #"
+  ],
+  "artifact_manifest_path": "results/run_2026_06_03_010030/processed/stage_13_artifact_manifest.json",
+  "counts_by_priority_rank": {
+    "2": 113363,
+    "3": 3369755,
+    "4": 1153466
+  },
+  "counts_by_priority_tier": {
+    "tier_2_moderate_candidate": 113363,
+    "tier_3_low_support_or_common": 3369755,
+    "tier_4_uninterpretable_or_qc_limited": 1153466
+  },
+  "counts_by_source_interpretation_label": {
+    "coding_common_or_low_support": 25169,
+    "coding_uninterpretable": 1196,
+    "lof_or_missense_rare": 1121,
+    "noncoding_common_or_low_support": 3344586,
+    "noncoding_uninterpretable": 1152270,
+    "regulatory_or_transcript_rare": 112242
+  },
+  "counts_by_suggested_validation_method": {
+    "IGV": 113363,
+    "none": 4523221
+  },
+  "counts_by_validation_priority": {
+    "low": 4523221,
+    "medium": 113363
+  },
+  "counts_by_validation_required": {
+    "False": 4523221,
+    "True": 113363
+  },
+  "counts_by_variant_origin": {
+    "coding": 27486,
+    "noncoding": 4609098
+  },
+  "gene_id_count_unique": 50231,
+  "high_priority_candidate_count": 0,
+  "low_priority_candidate_count": 3369755,
+  "moderate_priority_candidate_count": 113363,
+  "prioritized_variant_count": 4636584,
+  "qc_status_by_stage": {
+    "stage_08": {
+      "input_rows": null,
+      "output_rows": null,
+      "status": "not_collected"
+    },
+    "stage_09": {
+      "input_rows": null,
+      "output_rows": null,
+      "status": "not_collected"
+    },
+    "stage_10": {
+      "input_rows": null,
+      "output_rows": null,
+      "status": "not_collected"
+    },
+    "stage_11": {
+      "input_rows": 4636584,
+      "output_rows": 4636584,
+      "status": "success"
+    },
+    "stage_12": {
+      "input_rows": 4636584,
+      "output_rows": 4636584,
+      "status": "success"
+    }
+  },
+  "run_id": "run_2026_06_03_010030",
+  "run_report_path": "results/run_2026_06_03_010030/processed/stage_13_run_report.md",
+  "sample_id": "HG002",
+  "source_pipeline": "variant_annotation_pipeline",
+  "stage": "stage_13_write_summary",
+  "status": "success",
+  "top_gene_variant_counts": [
+    {
+      "gene_id": "NA",
+      "variant_count": "1107793"
+    },
+    {
+      "gene_id": "ENSG00000183117",
+      "variant_count": "8781"
+    },
+    {
+      "gene_id": "ENSG00000078328",
+      "variant_count": "7094"
+    },
+    {
+      "gene_id": "ENSG00000153707",
+      "variant_count": "4738"
+    },
+    {
+      "gene_id": "ENSG00000174469",
+      "variant_count": "4577"
+    },
+    {
+      "gene_id": "ENSG00000168702",
+      "variant_count": "3963"
+    },
+    {
+      "gene_id": "ENSG00000185053",
+      "variant_count": "3473"
+    },
+    {
+      "gene_id": "ENSG00000188107",
+      "variant_count": "3452"
+    },
+    {
+      "gene_id": "ENSG00000150275",
+      "variant_count": "3371"
+    },
+    {
+      "gene_id": "ENSG00000186153",
+      "variant_count": "3249"
+    }
+  ],
+  "total_variants_processed": 4636584,
+  "uninterpretable_count": 1153466,
+  "validation_candidate_count": 4636584,
+  "validation_required_count": 113363
+}

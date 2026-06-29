@@ -1,0 +1,477 @@
+{
+  "artifact_count": 47,
+  "artifacts": [
+    {
+      "artifact_name": "stage_11_prioritized_variants",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:28:24.113975",
+      "path": "results/run_2026_06_03_010030/processed/stage_11_prioritized_variants.tsv",
+      "required": true,
+      "size_bytes": 2488077748,
+      "stage": "stage_11"
+    },
+    {
+      "artifact_name": "stage_11_summary_json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:28:24.304974",
+      "path": "results/run_2026_06_03_010030/processed/stage_11_summary.json",
+      "required": true,
+      "size_bytes": 3391,
+      "stage": "stage_11"
+    },
+    {
+      "artifact_name": "stage_11_gene_variant_counts",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:28:24.254974",
+      "path": "results/run_2026_06_03_010030/processed/stage_11_gene_variant_counts.tsv",
+      "required": true,
+      "size_bytes": 998494,
+      "stage": "stage_11"
+    },
+    {
+      "artifact_name": "stage_12_validation_candidates",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:31:27.149284",
+      "path": "results/run_2026_06_03_010030/processed/stage_12_validation_candidates.tsv",
+      "required": true,
+      "size_bytes": 2701088532,
+      "stage": "stage_12"
+    },
+    {
+      "artifact_name": "stage_12_summary_json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:31:27.149284",
+      "path": "results/run_2026_06_03_010030/processed/stage_12_summary.json",
+      "required": true,
+      "size_bytes": 1297,
+      "stage": "stage_12"
+    },
+    {
+      "artifact_name": "stage_13_final_summary",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:32:00.823157",
+      "path": "results/run_2026_06_03_010030/processed/stage_13_final_summary.json",
+      "required": true,
+      "size_bytes": 3146,
+      "stage": "stage_13"
+    },
+    {
+      "artifact_name": "stage_13_artifact_manifest",
+      "exists": false,
+      "file_type": "json",
+      "modified_timestamp": null,
+      "path": "results/run_2026_06_03_010030/processed/stage_13_artifact_manifest.json",
+      "required": true,
+      "size_bytes": 0,
+      "stage": "stage_13"
+    },
+    {
+      "artifact_name": "stage_13_run_report",
+      "exists": true,
+      "file_type": "markdown",
+      "modified_timestamp": "2026-06-03T20:32:00.824157",
+      "path": "results/run_2026_06_03_010030/processed/stage_13_run_report.md",
+      "required": true,
+      "size_bytes": 2399,
+      "stage": "stage_13"
+    },
+    {
+      "artifact_name": "stage_01_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-02T21:00:30.674726",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_01_summary.json",
+      "required": false,
+      "size_bytes": 265,
+      "stage": "stage_01"
+    },
+    {
+      "artifact_name": "stage_02_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T05:50:22.882505",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_02_summary.json",
+      "required": false,
+      "size_bytes": 270,
+      "stage": "stage_02"
+    },
+    {
+      "artifact_name": "stage_03_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T06:09:02.327207",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_03_summary.json",
+      "required": false,
+      "size_bytes": 270,
+      "stage": "stage_03"
+    },
+    {
+      "artifact_name": "stage_04_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T06:12:12.812476",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_04_summary.json",
+      "required": false,
+      "size_bytes": 274,
+      "stage": "stage_04"
+    },
+    {
+      "artifact_name": "stage_05_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T18:22:13.735595",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_05_summary.json",
+      "required": false,
+      "size_bytes": 273,
+      "stage": "stage_05"
+    },
+    {
+      "artifact_name": "stage_06_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T18:23:15.325363",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_06_summary.json",
+      "required": false,
+      "size_bytes": 270,
+      "stage": "stage_06"
+    },
+    {
+      "artifact_name": "stage_07_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:06:40.584904",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_07_summary.json",
+      "required": false,
+      "size_bytes": 276,
+      "stage": "stage_07"
+    },
+    {
+      "artifact_name": "stage_08_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:16:43.732622",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_08_summary.json",
+      "required": false,
+      "size_bytes": 278,
+      "stage": "stage_08"
+    },
+    {
+      "artifact_name": "stage_09_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:17:45.722388",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_09_summary.json",
+      "required": false,
+      "size_bytes": 272,
+      "stage": "stage_09"
+    },
+    {
+      "artifact_name": "stage_10_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:20:46.506704",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_10_summary.json",
+      "required": false,
+      "size_bytes": 277,
+      "stage": "stage_10"
+    },
+    {
+      "artifact_name": "stage_11_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:28:24.310974",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_11_summary.json",
+      "required": false,
+      "size_bytes": 277,
+      "stage": "stage_11"
+    },
+    {
+      "artifact_name": "stage_12_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:31:27.153284",
+      "path": "results/run_2026_06_03_010030/metadata/stage_summaries/stage_12_summary.json",
+      "required": false,
+      "size_bytes": 275,
+      "stage": "stage_12"
+    },
+    {
+      "artifact_name": "stage_08_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:16:37.761645",
+      "path": "results/run_2026_06_03_010030/processed/stage_08_summary.json",
+      "required": false,
+      "size_bytes": 2885,
+      "stage": "stage_08"
+    },
+    {
+      "artifact_name": "stage_09_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:17:45.712388",
+      "path": "results/run_2026_06_03_010030/processed/stage_09_summary.json",
+      "required": false,
+      "size_bytes": 2343,
+      "stage": "stage_09"
+    },
+    {
+      "artifact_name": "stage_10_summary.json",
+      "exists": true,
+      "file_type": "json",
+      "modified_timestamp": "2026-06-03T20:20:44.312712",
+      "path": "results/run_2026_06_03_010030/processed/stage_10_summary.json",
+      "required": false,
+      "size_bytes": 2466,
+      "stage": "stage_10"
+    },
+    {
+      "artifact_name": "stage_resource_snapshots.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.819157",
+      "path": "results/run_2026_06_03_010030/metadata/stage_resource_snapshots.tsv",
+      "required": false,
+      "size_bytes": 3972,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "figure_f3a_flow.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.797157",
+      "path": "results/run_2026_06_03_010030/metrics/figure_f3a_flow.tsv",
+      "required": false,
+      "size_bytes": 2606,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "figure_f3a_flow_v2.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.802157",
+      "path": "results/run_2026_06_03_010030/metrics/figure_f3a_flow_v2.tsv",
+      "required": false,
+      "size_bytes": 2023,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "figure_f3b_semantic_branching.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.806157",
+      "path": "results/run_2026_06_03_010030/metrics/figure_f3b_semantic_branching.tsv",
+      "required": false,
+      "size_bytes": 2619,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "figure_f4a_coding_semantic_composition.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.810157",
+      "path": "results/run_2026_06_03_010030/metrics/figure_f4a_coding_semantic_composition.tsv",
+      "required": false,
+      "size_bytes": 69621,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "figure_f4a_coding_semantic_composition_collapsed.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.813157",
+      "path": "results/run_2026_06_03_010030/metrics/figure_f4a_coding_semantic_composition_collapsed.tsv",
+      "required": false,
+      "size_bytes": 20467,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "figure_f4b_noncoding_semantic_composition.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.815157",
+      "path": "results/run_2026_06_03_010030/metrics/figure_f4b_noncoding_semantic_composition.tsv",
+      "required": false,
+      "size_bytes": 43116,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "figure_f4b_noncoding_semantic_composition_collapsed.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.817157",
+      "path": "results/run_2026_06_03_010030/metrics/figure_f4b_noncoding_semantic_composition_collapsed.tsv",
+      "required": false,
+      "size_bytes": 13510,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "stage_metrics_long.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:32:00.788157",
+      "path": "results/run_2026_06_03_010030/metrics/stage_metrics_long.tsv",
+      "required": false,
+      "size_bytes": 304148,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "HG002_run_2026_06_03_010030.annotated_variants.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:06:37.702914",
+      "path": "results/run_2026_06_03_010030/processed/HG002_run_2026_06_03_010030.annotated_variants.tsv",
+      "required": false,
+      "size_bytes": 1053663787,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "coding_candidates.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:15:27.841909",
+      "path": "results/run_2026_06_03_010030/processed/coding_candidates.tsv",
+      "required": false,
+      "size_bytes": 7654401,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "noncoding_candidates.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:15:27.841909",
+      "path": "results/run_2026_06_03_010030/processed/noncoding_candidates.tsv",
+      "required": false,
+      "size_bytes": 1523731924,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "qc_flagged.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:15:27.840909",
+      "path": "results/run_2026_06_03_010030/processed/qc_flagged.tsv",
+      "required": false,
+      "size_bytes": 14643614,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "splice_region_candidates.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:15:27.841909",
+      "path": "results/run_2026_06_03_010030/processed/splice_region_candidates.tsv",
+      "required": false,
+      "size_bytes": 1357199,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "stage_08_rdgp_gene_evidence_seed.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:16:37.761645",
+      "path": "results/run_2026_06_03_010030/processed/stage_08_rdgp_gene_evidence_seed.tsv",
+      "required": false,
+      "size_bytes": 60237527,
+      "stage": "stage_08"
+    },
+    {
+      "artifact_name": "stage_08_selected_transcript_consequences.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:15:27.841909",
+      "path": "results/run_2026_06_03_010030/processed/stage_08_selected_transcript_consequences.tsv",
+      "required": false,
+      "size_bytes": 1532561623,
+      "stage": "stage_08"
+    },
+    {
+      "artifact_name": "stage_08_variant_summary.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:16:35.339654",
+      "path": "results/run_2026_06_03_010030/processed/stage_08_variant_summary.tsv",
+      "required": false,
+      "size_bytes": 1155807098,
+      "stage": "stage_08"
+    },
+    {
+      "artifact_name": "stage_08_vdb_ready_variants.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:15:27.841909",
+      "path": "results/run_2026_06_03_010030/processed/stage_08_vdb_ready_variants.tsv",
+      "required": false,
+      "size_bytes": 1532561623,
+      "stage": "stage_08"
+    },
+    {
+      "artifact_name": "stage_09_coding_interpreted.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:17:45.712388",
+      "path": "results/run_2026_06_03_010030/processed/stage_09_coding_interpreted.tsv",
+      "required": false,
+      "size_bytes": 11562281,
+      "stage": "stage_09"
+    },
+    {
+      "artifact_name": "stage_10_noncoding_interpreted.tsv",
+      "exists": true,
+      "file_type": "tsv",
+      "modified_timestamp": "2026-06-03T20:20:44.311712",
+      "path": "results/run_2026_06_03_010030/processed/stage_10_noncoding_interpreted.tsv",
+      "required": false,
+      "size_bytes": 2001072770,
+      "stage": "stage_10"
+    },
+    {
+      "artifact_name": "HG002_run_2026_06_03_010030.normalized_variants.vcf",
+      "exists": true,
+      "file_type": "vcf",
+      "modified_timestamp": "2026-06-03T18:23:10.158383",
+      "path": "results/run_2026_06_03_010030/interim/HG002_run_2026_06_03_010030.normalized_variants.vcf",
+      "required": false,
+      "size_bytes": 931362291,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "HG002_run_2026_06_03_010030.raw_variants.vcf",
+      "exists": true,
+      "file_type": "vcf",
+      "modified_timestamp": "2026-06-03T18:22:09.475611",
+      "path": "results/run_2026_06_03_010030/interim/HG002_run_2026_06_03_010030.raw_variants.vcf",
+      "required": false,
+      "size_bytes": 931352435,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "HG002_run_2026_06_03_010030.annotated_variants.vcf",
+      "exists": true,
+      "file_type": "vcf",
+      "modified_timestamp": "2026-06-03T20:04:43.198348",
+      "path": "results/run_2026_06_03_010030/processed/HG002_run_2026_06_03_010030.annotated_variants.vcf",
+      "required": false,
+      "size_bytes": 1923830294,
+      "stage": "unknown"
+    },
+    {
+      "artifact_name": "pipeline.log",
+      "exists": true,
+      "file_type": "text",
+      "modified_timestamp": "2026-06-03T20:32:00.823157",
+      "path": "results/run_2026_06_03_010030/logs/pipeline.log",
+      "required": false,
+      "size_bytes": 6740907,
+      "stage": "unknown"
+    }
+  ],
+  "stage": "stage_13_write_summary",
+  "status": "success"
+}
