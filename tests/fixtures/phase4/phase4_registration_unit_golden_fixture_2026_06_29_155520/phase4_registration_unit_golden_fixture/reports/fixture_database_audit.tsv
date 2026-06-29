@@ -1,0 +1,7 @@
+registration_unit_label	output_database_relative_path	output_database_exists	output_database_size_bytes	open_status	required_table_status	schema_metadata_row_count	tep_packages_row_count	artifacts_row_count	assertion_registrations_row_count	source_identities_row_count	foreign_key_check_status_if_applicable	integrity_check_status	audit_status
+gsc_epilepsy	registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_epilepsy/vdb.sqlite	True	151552	passed	passed	1	1	9	6	273	passed	ok	passed
+gsc_mitochondrial_disease	registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_mitochondrial_disease/vdb.sqlite	True	147456	passed	passed	1	1	9	6	254	passed	ok	passed
+vap_hg002	registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_hg002/vdb.sqlite	True	167936	passed	passed	1	1	16	10	281	passed	ok	passed
+vap_median_ERR10619300	registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_median_ERR10619300/vdb.sqlite	True	167936	passed	passed	1	1	16	10	281	passed	ok	passed
+vap_q1_ERR10619212	registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q1_ERR10619212/vdb.sqlite	True	167936	passed	passed	1	1	16	10	281	passed	ok	passed
+vap_q3_ERR10619225	registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q3_ERR10619225/vdb.sqlite	True	167936	passed	passed	1	1	16	10	281	passed	ok	passed

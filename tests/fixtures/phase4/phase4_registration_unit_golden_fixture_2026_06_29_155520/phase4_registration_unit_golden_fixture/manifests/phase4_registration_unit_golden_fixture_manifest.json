@@ -1,0 +1,114 @@
+{
+  "archive_path": "/root/Desktop/phase4_registration_unit_golden_fixture_2026_06_29_155520.tgz",
+  "authority_statement": "This fixture is a compressed, real-row-derived development substrate. It is not biological truth, clinical truth, Phase 4 certification, or a substitute for MARK full-corpus smoketesting.",
+  "compressed_tables": [
+    "source_identities"
+  ],
+  "created_at_utc": "2026-06-29T15:55:20.492122+00:00",
+  "fixture_id": "phase4_registration_unit_golden_fixture",
+  "fixture_version": "v1",
+  "full_copy_tables": [
+    "schema_metadata",
+    "tep_packages",
+    "artifacts",
+    "assertion_registrations"
+  ],
+  "lineage_artifact_paths": {
+    "copied_table_lineage": "lineage/copied_table_lineage.tsv",
+    "selected_source_identity_lineage": "lineage/selected_source_identity_lineage.tsv"
+  },
+  "output_database_paths": {
+    "gsc_epilepsy": "registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_epilepsy/vdb.sqlite",
+    "gsc_mitochondrial_disease": "registration_units/mark_phase3_canonical_6sqlite_lightweight/gsc_mitochondrial_disease/vdb.sqlite",
+    "vap_hg002": "registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_hg002/vdb.sqlite",
+    "vap_median_ERR10619300": "registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_median_ERR10619300/vdb.sqlite",
+    "vap_q1_ERR10619212": "registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q1_ERR10619212/vdb.sqlite",
+    "vap_q3_ERR10619225": "registration_units/mark_phase3_canonical_6sqlite_lightweight/vap_q3_ERR10619225/vdb.sqlite"
+  },
+  "output_database_sha256": {
+    "gsc_epilepsy": "36b9b0760f990dafda63f2a1bb9a6cb46a07aebdcebab009bf4e07883fbb12e6",
+    "gsc_mitochondrial_disease": "51bda3290689e437a821b7b0c8297c464d40cb1df76d8c2de141057c71d880a0",
+    "vap_hg002": "962c18a4124e26fe877d0c4a3853f865dfa40604ef79373884b511ec7352c084",
+    "vap_median_ERR10619300": "da555de48466652f587404ce3965c78dee2159f0541dbec6cfc62cf41dce7f39",
+    "vap_q1_ERR10619212": "5340fb2591b6de76718c3980cb6495d2e367d498af4f3b3f73e680546b4d3cb3",
+    "vap_q3_ERR10619225": "60eefb83f64df96af01e9419c963340644daa7046b8fcb8a5cb1b05b0127cde6"
+  },
+  "output_database_sizes": {
+    "gsc_epilepsy": 151552,
+    "gsc_mitochondrial_disease": 147456,
+    "vap_hg002": 167936,
+    "vap_median_ERR10619300": 167936,
+    "vap_q1_ERR10619212": 167936,
+    "vap_q3_ERR10619225": 167936
+  },
+  "output_registration_units": [
+    "gsc_epilepsy",
+    "gsc_mitochondrial_disease",
+    "vap_hg002",
+    "vap_median_ERR10619300",
+    "vap_q1_ERR10619212",
+    "vap_q3_ERR10619225"
+  ],
+  "output_root": "/root/Desktop/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture",
+  "prime_directive": "Read MARK-resident VDB SQLite sources; write only to /root/Desktop; do not mutate MARK repositories or source SQLite files.",
+  "priority_seed_policy": {
+    "ensembl_gene_ids": [
+      "ENSG00000140521",
+      "ENSG00000107815",
+      "ENSG00000144285",
+      "ENSG00000100150"
+    ],
+    "gene_symbols": [
+      "POLG",
+      "TWNK",
+      "SCN1A",
+      "DEPDC5"
+    ],
+    "no_synthesis": true,
+    "variant_fragments": [
+      "15:89333596:T:TTGC",
+      "89333596"
+    ]
+  },
+  "script_path": "scripts/mark/create_phase3_lightweight_emulation.py",
+  "script_version": "1.0.0",
+  "source_corpus_root": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical",
+  "source_database_paths": {
+    "gsc_epilepsy": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite",
+    "gsc_mitochondrial_disease": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite",
+    "vap_hg002": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite",
+    "vap_median_ERR10619300": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_median_ERR10619300/vdb.sqlite",
+    "vap_q1_ERR10619212": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q1_ERR10619212/vdb.sqlite",
+    "vap_q3_ERR10619225": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q3_ERR10619225/vdb.sqlite"
+  },
+  "source_database_sizes": {
+    "gsc_epilepsy": 32964608,
+    "gsc_mitochondrial_disease": 31768576,
+    "vap_hg002": 34979893248,
+    "vap_median_ERR10619300": 5551849472,
+    "vap_q1_ERR10619212": 6827704320,
+    "vap_q3_ERR10619225": 5711228928
+  },
+  "source_identity_selection_policy": {
+    "deterministic": true,
+    "max_fallback_rows": 100,
+    "max_non_null_source_record_ref_rows": 20,
+    "max_null_source_record_ref_rows": 20,
+    "max_priority_seed_rows": 100,
+    "max_rows_per_assertion_registration": 10,
+    "max_rows_per_extraction_method": 20,
+    "max_rows_per_identity_kind": 20,
+    "max_rows_per_participant_role": 20,
+    "max_rows_per_source_namespace": 20,
+    "row_order": "ORDER BY rowid"
+  },
+  "source_registration_units": [
+    "gsc_epilepsy",
+    "gsc_mitochondrial_disease",
+    "vap_hg002",
+    "vap_median_ERR10619300",
+    "vap_q1_ERR10619212",
+    "vap_q3_ERR10619225"
+  ],
+  "source_vdb_repo_root": "/root/dev/portfolio_projects/variant_database"
+}
