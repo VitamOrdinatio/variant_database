@@ -24,7 +24,7 @@ These documents define important retrieval, overlay, RDGP-facing, and reconstruc
 
 Current verdict:
 
-```text id="6nqx0g"
+```text
 PASS FOR PHASE 4.0 QUERY/PROJECTION BACKLOG GOVERNANCE,
 WITH QUERY SURFACE MODERNIZATION DEFERRED UNTIL UPSTREAM PHASE 4
 DERIVED LAYERS AND PROJECTION MECHANICS EXIST.
@@ -38,7 +38,7 @@ This is not a claim that existing query documents are obsolete.
 
 The correct interpretation is:
 
-```text id="hsfqq0"
+```text
 Current query documents are retained as conceptual anchors.
 
 Projection Layer schema now provides future projection metadata and
@@ -54,7 +54,7 @@ Phase 4 structures become real.
 
 VDB distinguishes Query Surfaces from Projection Views.
 
-```text id="u8osfn"
+```text
 Query Surface
     governed access pathway or interface over VDB records
 
@@ -70,7 +70,7 @@ A Projection View may be used as a query response, export, report, dashboard pay
 
 However:
 
-```text id="9c1l9f"
+```text
 Query Surface governance is not the same thing as Projection Layer metadata.
 
 Projection View materialization is not the same thing as Query Surface policy.
@@ -88,7 +88,7 @@ This backlog tracks both query-surface modernization and projection-facing query
 
 The current Phase 4 architecture establishes the following authority chain:
 
-```text id="qbp1y3"
+```text
 Registration Units preserve custody.
 
 Corpus Generations declare scope.
@@ -110,7 +110,7 @@ Query and projection specifications should be modernized against this chain.
 
 Existing query documents should be reconciled with the following newer Phase 4 terms:
 
-```text id="rhm72t"
+```text
 Registration Unit
 Corpus Generation
 Assertion Record
@@ -123,7 +123,7 @@ Query Surface
 
 The older concepts of:
 
-```text id="iue86p"
+```text
 evidence object
 evidence state
 overlay
@@ -143,7 +143,7 @@ remain useful, but they must be mapped carefully onto the Phase 4 preservation a
 
 Allowed values:
 
-```text id="mq1gep"
+```text
 completed
 completed_pre_phase4_review_required
 planned_required
@@ -158,7 +158,7 @@ superseded
 
 Allowed values:
 
-```text id="bft9u2"
+```text
 not_applicable
 projection_schema_present
 projection_profile_pending
@@ -171,7 +171,7 @@ deferred_until_layer_exists
 
 Allowed values:
 
-```text id="is8hoi"
+```text
 required
 conditional
 optional
@@ -183,7 +183,7 @@ future
 
 Allowed values:
 
-```text id="7nwfip"
+```text
 non_blocking_for_phase4_0
 required_before_phase4_0_closure
 required_before_phase4_2_completion
@@ -221,7 +221,7 @@ They should not be treated as complete Phase 4 implementation specifications wit
 
 They should be treated as:
 
-```text id="3mgs53"
+```text
 conceptual anchors
 consumer-intent documents
 pre-Phase 4 query-surface doctrine
@@ -234,13 +234,13 @@ modernization inputs
 
 Projection governance is now represented by:
 
-```text id="tr9aru"
+```text
 docs/implementation/schemas/projection_layer_schema.md
 ```
 
 The Projection Layer schema defines:
 
-```text id="lg0xsr"
+```text
 Projection Build records
 Projection View records
 source record records
@@ -299,7 +299,7 @@ The Projection Layer schema now adds the representation-governance model require
 
 The RDGP-facing backlog items are:
 
-```text id="kl4v17"
+```text
 modernize rdgp_surface_query.md against Phase 4 terminology
 define rdgp_consumer_projection_query.md
 decide whether RDGP-facing output is primarily a query response, Projection View,
@@ -316,7 +316,7 @@ avoid RDGP reasoning inside VDB
 
 RDGP-facing query/projection specifications should not be finalized before:
 
-```text id="bedii5"
+```text
 Evidence Convergence Surface mechanics exist
 Projection Layer mechanics exist
 RDGP consumer requirements are stable
@@ -336,7 +336,7 @@ The evidence reconstruction query remains essential.
 
 It should eventually be modernized to reconstruct through the complete Phase 4 chain:
 
-```text id="d0zjz7"
+```text
 Projection View
         ↓
 Evidence Convergence Surface
@@ -358,7 +358,7 @@ producer TEP
 
 The modernization should preserve older reconstruction domains where still relevant:
 
-```text id="cgtzbn"
+```text
 evidence reconstruction
 state reconstruction
 provenance reconstruction
@@ -381,7 +381,7 @@ The overlay attachment query should be reconciled with Phase 4 derived evidence 
 
 Modernization should clarify whether an overlay relationship is represented through:
 
-```text id="pin0b3"
+```text
 Assertion Record relationships
 Evidence Topology relationships
 Convergence Geometry structure
@@ -393,7 +393,7 @@ future returned reasoning assertion linkage
 
 The overlay query should continue to preserve:
 
-```text id="jetjye"
+```text
 attachment status
 attachment basis
 attachment provenance
@@ -414,7 +414,7 @@ The sample-gene evidence query should be reconciled with Assertion Records, Evid
 
 Modernization should clarify whether sample-gene evidence retrieval is implemented as:
 
-```text id="k2ramo"
+```text
 direct Assertion Record query
 Evidence Topology-derived query
 Evidence Convergence Surface query
@@ -424,7 +424,7 @@ RDGP-facing consumer projection input
 
 The query should continue to preserve:
 
-```text id="cep3eg"
+```text
 sample identity
 gene identity
 namespace resolution status
@@ -451,7 +451,7 @@ The following query directory index files require review.
 
 At minimum, the query README and NAMESPACE should include the existing query documents:
 
-```text id="f6ludm"
+```text
 sample_gene_evidence_query.md
 overlay_attachment_query.md
 rdgp_surface_query.md
@@ -460,7 +460,7 @@ evidence_reconstruction_query.md
 
 As future query documents are authored, the README and NAMESPACE should be updated to include:
 
-```text id="ll8b4j"
+```text
 corpus_generation_manifest_query.md
 assertion_record_index_query.md
 evidence_topology_query.md
@@ -480,7 +480,7 @@ They support query document discovery.
 
 Phase 4.0 query/projection backlog closure is satisfied when:
 
-```text id="p99l02"
+```text
 phase4_query_projection_backlog.md exists
 existing query documents are inventoried
 existing query documents are marked completed_pre_phase4_review_required
@@ -497,7 +497,7 @@ no known query/projection obligation remains untracked
 
 Phase 4.0 query/projection backlog closure does not require:
 
-```text id="mq5aox"
+```text
 Phase 4 query implementation
 Projection Layer implementation
 final RDGP-facing projection payload
@@ -518,7 +518,7 @@ The following gates describe when future query/projection documents become requi
 
 Required before completion when Corpus Generation queryability is part of the layer deliverable:
 
-```text id="b11o9m"
+```text
 docs/implementation/queries/corpus_generation_manifest_query.md
 ```
 
@@ -526,7 +526,7 @@ docs/implementation/queries/corpus_generation_manifest_query.md
 
 Required before completion:
 
-```text id="h0ue5i"
+```text
 docs/implementation/queries/assertion_record_index_query.md
 ```
 
@@ -534,7 +534,7 @@ docs/implementation/queries/assertion_record_index_query.md
 
 Required before completion:
 
-```text id="g65jvr"
+```text
 docs/implementation/queries/evidence_topology_query.md
 ```
 
@@ -542,7 +542,7 @@ docs/implementation/queries/evidence_topology_query.md
 
 Required before completion:
 
-```text id="dopaqa"
+```text
 docs/implementation/queries/convergence_geometry_query.md
 ```
 
@@ -550,7 +550,7 @@ docs/implementation/queries/convergence_geometry_query.md
 
 Required before completion:
 
-```text id="xwlwwu"
+```text
 docs/implementation/queries/evidence_convergence_surface_query.md
 ```
 
@@ -558,7 +558,7 @@ docs/implementation/queries/evidence_convergence_surface_query.md
 
 Required before completion:
 
-```text id="bju39p"
+```text
 docs/implementation/queries/projection_manifest_query.md
 ```
 
@@ -566,7 +566,7 @@ docs/implementation/queries/projection_manifest_query.md
 
 Required before RDGP-facing certification:
 
-```text id="vmgh7x"
+```text
 docs/implementation/queries/rdgp_consumer_projection_query.md
 ```
 
@@ -578,7 +578,7 @@ The existing `rdgp_surface_query.md` should be reviewed and reconciled before Ph
 
 This backlog must not collapse:
 
-```text id="fp2g2e"
+```text
 query backlog into query specification
 query surface into Projection View
 Projection View into Query Surface
@@ -610,7 +610,7 @@ RDGP-facing query/projection outputs must prepare evidence, not reason over evid
 
 Recommended immediate actions:
 
-```text id="pjykql"
+```text
 1. Create docs/status/phase4_query_projection_backlog.md.
 
 2. Refresh docs/implementation/queries/README.md.
@@ -657,13 +657,13 @@ Future query documents should be drafted in layer order as upstream Phase 4 stru
 
 Current query/projection backlog verdict:
 
-```text id="w3c2a6"
+```text
 PASS FOR PHASE 4.0 QUERY/PROJECTION BACKLOG GOVERNANCE
 ```
 
 with the following closure condition:
 
-```text id="59d3gs"
+```text
 Refresh docs/implementation/queries/README.md and
 docs/implementation/queries/NAMESPACE.md before declaring Phase 4.0
 query/projection governance fully closed.
