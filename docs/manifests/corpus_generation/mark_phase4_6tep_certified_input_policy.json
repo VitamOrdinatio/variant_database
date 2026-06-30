@@ -1,0 +1,49 @@
+{
+  "selection_policy_id": "mark_phase4_6tep_certified_input_policy",
+  "selection_policy_version": "v1",
+  "selection_policy_description": "Select the six certified Phase 3 MARK Registration Units representing two GSC semantic evidence packages and four VAP variant evidence packages for initial Phase 4 multi-producer benchmark derivation.",
+  "corpus_generation_id": "mark_phase4_corpus_6tep_v1",
+  "corpus_generation_label": "MARK Phase 4 6-TEP Benchmark Corpus v1",
+  "corpus_generation_purpose": "initial certified multi-producer Phase 4 benchmark corpus",
+  "corpus_generation_version": "v1",
+  "required_registration_unit_validation_status": "passed",
+  "required_registration_unit_certification_status": "certified",
+  "required_registration_unit_readiness_status": "ready",
+  "required_backend": "sqlite",
+  "producer_families_in_scope": [
+    "GSC",
+    "VAP"
+  ],
+  "expected_registration_unit_count": 6,
+  "expected_producer_family_counts": {
+    "GSC": 2,
+    "VAP": 4
+  },
+  "expected_registration_unit_labels": [
+    "gsc_epilepsy",
+    "gsc_mitochondrial_disease",
+    "vap_hg002",
+    "vap_median_ERR10619300",
+    "vap_q1_ERR10619212",
+    "vap_q3_ERR10619225"
+  ],
+  "phase4_1_validation_receipt_reference": "results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/",
+  "registration_unit_inventory_reference": "results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_inventory.tsv",
+  "registration_unit_readiness_reference": "results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_readiness.tsv",
+  "failure_behavior": {
+    "missing_expected_registration_unit": "fail",
+    "unreadable_registration_unit": "fail",
+    "unexpected_producer_family": "fail",
+    "unexpected_backend": "fail",
+    "unexpected_readiness_status": "fail",
+    "unexpected_validation_status": "fail",
+    "unexpected_certification_status": "fail"
+  },
+  "authority_boundary": {
+    "declares_scope": true,
+    "interprets_evidence": false,
+    "creates_assertion_records": false,
+    "derives_topology": false,
+    "certifies_corpus_generation": false
+  }
+}
