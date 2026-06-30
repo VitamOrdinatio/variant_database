@@ -9,6 +9,8 @@ results/validation/*
 !results/validation/phase3_registration_certification/**
 !results/validation/phase4_registration_units/
 !results/validation/phase4_registration_units/**
+!results/validation/phase4_corpus_generation/
+!results/validation/phase4_corpus_generation/**
 
 
 # Local machine configs:

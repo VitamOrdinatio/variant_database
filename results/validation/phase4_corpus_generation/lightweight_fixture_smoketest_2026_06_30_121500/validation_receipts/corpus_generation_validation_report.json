@@ -1,0 +1,743 @@
+{
+  "checks": [
+    {
+      "check_id": "artifact_presence__copied_selection_manifest",
+      "expected": "file exists",
+      "message": "Required artifact exists: copied_selection_manifest",
+      "observed": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/inputs/corpus_generation_selection_manifest.tsv",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_nonempty__copied_selection_manifest",
+      "expected": "non-empty file",
+      "message": "Required artifact is non-empty: copied_selection_manifest",
+      "observed": "1967",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_presence__corpus_generation_manifest_tsv",
+      "expected": "file exists",
+      "message": "Required artifact exists: corpus_generation_manifest_tsv",
+      "observed": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_manifest.tsv",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_nonempty__corpus_generation_manifest_tsv",
+      "expected": "non-empty file",
+      "message": "Required artifact is non-empty: corpus_generation_manifest_tsv",
+      "observed": "3549",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_presence__corpus_generation_manifest_json",
+      "expected": "file exists",
+      "message": "Required artifact exists: corpus_generation_manifest_json",
+      "observed": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_manifest.json",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_nonempty__corpus_generation_manifest_json",
+      "expected": "non-empty file",
+      "message": "Required artifact is non-empty: corpus_generation_manifest_json",
+      "observed": "10454",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_presence__corpus_generation_report_md",
+      "expected": "file exists",
+      "message": "Required artifact exists: corpus_generation_report_md",
+      "observed": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_report.md",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_nonempty__corpus_generation_report_md",
+      "expected": "non-empty file",
+      "message": "Required artifact is non-empty: corpus_generation_report_md",
+      "observed": "2512",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_presence__downstream_assertion_record_input_manifest_tsv",
+      "expected": "file exists",
+      "message": "Required artifact exists: downstream_assertion_record_input_manifest_tsv",
+      "observed": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/downstream_assertion_record_input_manifest.tsv",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "artifact_nonempty__downstream_assertion_record_input_manifest_tsv",
+      "expected": "non-empty file",
+      "message": "Required artifact is non-empty: downstream_assertion_record_input_manifest_tsv",
+      "observed": "1437",
+      "status": "passed",
+      "validation_group": "artifact_presence"
+    },
+    {
+      "check_id": "corpus_manifest_header",
+      "expected": "[\"corpus_generation_id\", \"corpus_generation_label\", \"corpus_generation_purpose\", \"corpus_generation_version\", \"selection_policy_id\", \"selection_policy_version\", \"membership_record_type\", \"registration_unit_id\", \"registration_unit_label\", \"registration_unit_reference\", \"registration_unit_path\", \"registration_unit_sqlite_path\", \"registration_unit_inventory_record_reference\", \"registration_unit_readiness_record_reference\", \"phase4_1_validation_receipt_reference\", \"producer_family\", \"source_package_id\", \"registration_backend\", \"registration_unit_validation_status\", \"registration_unit_certification_status\", \"registration_unit_readiness_status\", \"corpus_generation_validation_status\", \"corpus_generation_certification_status\", \"inclusion_status\", \"inclusion_rationale\", \"exclusion_status\", \"exclusion_rationale\", \"artifact_count\", \"assertion_registration_count\", \"source_identity_count\", \"namespace_count\", \"evidence_domain_count\", \"builder_name\", \"builder_version\", \"build_timestamp\", \"manifest_schema_version\", \"notes\"]",
+      "message": "Corpus Generation manifest TSV uses canonical columns.",
+      "observed": "[\"corpus_generation_id\", \"corpus_generation_label\", \"corpus_generation_purpose\", \"corpus_generation_version\", \"selection_policy_id\", \"selection_policy_version\", \"membership_record_type\", \"registration_unit_id\", \"registration_unit_label\", \"registration_unit_reference\", \"registration_unit_path\", \"registration_unit_sqlite_path\", \"registration_unit_inventory_record_reference\", \"registration_unit_readiness_record_reference\", \"phase4_1_validation_receipt_reference\", \"producer_family\", \"source_package_id\", \"registration_backend\", \"registration_unit_validation_status\", \"registration_unit_certification_status\", \"registration_unit_readiness_status\", \"corpus_generation_validation_status\", \"corpus_generation_certification_status\", \"inclusion_status\", \"inclusion_rationale\", \"exclusion_status\", \"exclusion_rationale\", \"artifact_count\", \"assertion_registration_count\", \"source_identity_count\", \"namespace_count\", \"evidence_domain_count\", \"builder_name\", \"builder_version\", \"build_timestamp\", \"manifest_schema_version\", \"notes\"]",
+      "status": "passed",
+      "validation_group": "artifact_shape"
+    },
+    {
+      "check_id": "downstream_manifest_header",
+      "expected": "[\"corpus_generation_id\", \"registration_unit_id\", \"registration_unit_label\", \"registration_unit_reference\", \"registration_unit_path\", \"registration_unit_sqlite_path\", \"registration_unit_inventory_record_reference\", \"registration_unit_readiness_record_reference\", \"phase4_1_validation_receipt_reference\", \"producer_family\", \"source_package_id\", \"registration_backend\", \"assertion_registration_count\", \"source_identity_count\", \"registration_unit_validation_status\", \"registration_unit_certification_status\", \"registration_unit_readiness_status\", \"inclusion_status\", \"inclusion_rationale\"]",
+      "message": "Downstream Assertion Record input manifest TSV uses canonical columns.",
+      "observed": "[\"corpus_generation_id\", \"registration_unit_id\", \"registration_unit_label\", \"registration_unit_reference\", \"registration_unit_path\", \"registration_unit_sqlite_path\", \"registration_unit_inventory_record_reference\", \"registration_unit_readiness_record_reference\", \"phase4_1_validation_receipt_reference\", \"producer_family\", \"source_package_id\", \"registration_backend\", \"assertion_registration_count\", \"source_identity_count\", \"registration_unit_validation_status\", \"registration_unit_certification_status\", \"registration_unit_readiness_status\", \"inclusion_status\", \"inclusion_rationale\"]",
+      "status": "passed",
+      "validation_group": "artifact_shape"
+    },
+    {
+      "check_id": "manifest_json_top_level_keys",
+      "expected": "[\"artifacts\", \"build_metadata\", \"corpus_generation_identity\", \"excluded_registration_units\", \"included_registration_units\", \"phase4_1_receipts\", \"selection_manifest\", \"selection_policy\", \"summaries\"]",
+      "message": "Corpus Generation manifest JSON contains required top-level keys.",
+      "observed": "[\"artifacts\", \"build_metadata\", \"corpus_generation_identity\", \"excluded_registration_units\", \"included_registration_units\", \"phase4_1_receipts\", \"selection_manifest\", \"selection_policy\", \"summaries\"]",
+      "status": "passed",
+      "validation_group": "artifact_shape"
+    },
+    {
+      "check_id": "copied_selection_manifest_matches_source",
+      "expected": "byte-equivalent text",
+      "message": "Copied input selection manifest matches governed source manifest.",
+      "observed": "matched",
+      "status": "passed",
+      "validation_group": "artifact_shape"
+    },
+    {
+      "check_id": "identity_coherence",
+      "expected": "lightweight_phase4_2_corpus_v1",
+      "message": "Policy, selection manifest, emitted TSVs, downstream manifest, and JSON identity agree.",
+      "observed": "[\"lightweight_phase4_2_corpus_v1\"]",
+      "status": "passed",
+      "validation_group": "identity"
+    },
+    {
+      "check_id": "output_directory_identity",
+      "expected": "lightweight_phase4_2_corpus_v1",
+      "message": "Output directory name matches corpus_generation_id.",
+      "observed": "lightweight_phase4_2_corpus_v1",
+      "status": "passed",
+      "validation_group": "identity"
+    },
+    {
+      "check_id": "scope_row_count",
+      "expected": "3",
+      "message": "Emitted corpus manifest preserves selection-manifest row count.",
+      "observed": "3",
+      "status": "passed",
+      "validation_group": "scope_preservation"
+    },
+    {
+      "check_id": "scope_row_order",
+      "expected": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\", \"vap_deferred_lightweight_fixture\"]",
+      "message": "Emitted corpus manifest preserves selection-manifest row order.",
+      "observed": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\", \"vap_deferred_lightweight_fixture\"]",
+      "status": "passed",
+      "validation_group": "scope_preservation"
+    },
+    {
+      "check_id": "included_scope_labels",
+      "expected": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\"]",
+      "message": "Emitted included Registration Unit labels match selected included labels.",
+      "observed": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\"]",
+      "status": "passed",
+      "validation_group": "scope_preservation"
+    },
+    {
+      "check_id": "policy_expected_labels",
+      "expected": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\"]",
+      "message": "Policy expected Registration Unit labels match selected included labels.",
+      "observed": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\"]",
+      "status": "passed",
+      "validation_group": "scope_preservation"
+    },
+    {
+      "check_id": "downstream_included_only",
+      "expected": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\"]",
+      "message": "Downstream Assertion Record input manifest contains included rows only.",
+      "observed": "[\"gsc_lightweight_fixture\", \"vap_lightweight_fixture\"]",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "producer_family_distribution",
+      "expected": "{\"GSC\": 1, \"VAP\": 1}",
+      "message": "Producer family distribution matches policy.",
+      "observed": "{\"GSC\": 1, \"VAP\": 1}",
+      "status": "passed",
+      "validation_group": "scope_preservation"
+    },
+    {
+      "check_id": "receipt_inventory_row_exists__gsc_lightweight_fixture",
+      "expected": "inventory row exists",
+      "message": "Phase 4.1 inventory row exists for included Registration Unit: gsc_lightweight_fixture",
+      "observed": "found",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_readiness_row_exists__gsc_lightweight_fixture",
+      "expected": "readiness row exists",
+      "message": "Phase 4.1 readiness row exists for included Registration Unit: gsc_lightweight_fixture",
+      "observed": "found",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__registration_unit_id",
+      "expected": "ru_gsc_lightweight_fixture",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.registration_unit_id",
+      "observed": "ru_gsc_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__producer_family",
+      "expected": "GSC",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.producer_family",
+      "observed": "GSC",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__registration_backend",
+      "expected": "sqlite",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.registration_backend",
+      "observed": "sqlite",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__artifact_count",
+      "expected": "9",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.artifact_count",
+      "observed": "9",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__assertion_registration_count",
+      "expected": "6",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.assertion_registration_count",
+      "observed": "6",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__source_identity_count",
+      "expected": "100",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.source_identity_count",
+      "observed": "100",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__registration_unit_validation_status",
+      "expected": "passed",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.registration_unit_validation_status",
+      "observed": "passed",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__gsc_lightweight_fixture__registration_unit_readiness_status",
+      "expected": "ready",
+      "message": "Emitted field matches Phase 4.1 receipt: gsc_lightweight_fixture.registration_unit_readiness_status",
+      "observed": "ready",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_inventory_row_exists__vap_lightweight_fixture",
+      "expected": "inventory row exists",
+      "message": "Phase 4.1 inventory row exists for included Registration Unit: vap_lightweight_fixture",
+      "observed": "found",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_readiness_row_exists__vap_lightweight_fixture",
+      "expected": "readiness row exists",
+      "message": "Phase 4.1 readiness row exists for included Registration Unit: vap_lightweight_fixture",
+      "observed": "found",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__registration_unit_id",
+      "expected": "ru_vap_lightweight_fixture",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.registration_unit_id",
+      "observed": "ru_vap_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__producer_family",
+      "expected": "VAP",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.producer_family",
+      "observed": "VAP",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__registration_backend",
+      "expected": "sqlite",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.registration_backend",
+      "observed": "sqlite",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__artifact_count",
+      "expected": "16",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.artifact_count",
+      "observed": "16",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__assertion_registration_count",
+      "expected": "10",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.assertion_registration_count",
+      "observed": "10",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__source_identity_count",
+      "expected": "200",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.source_identity_count",
+      "observed": "200",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__registration_unit_validation_status",
+      "expected": "passed",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.registration_unit_validation_status",
+      "observed": "passed",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "receipt_enrichment__vap_lightweight_fixture__registration_unit_readiness_status",
+      "expected": "ready",
+      "message": "Emitted field matches Phase 4.1 receipt: vap_lightweight_fixture.registration_unit_readiness_status",
+      "observed": "ready",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "summary_artifact_count_total",
+      "expected": "25",
+      "message": "Manifest JSON summary matches emitted included-row total: artifact_count_total",
+      "observed": "25",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "summary_assertion_registration_count_total",
+      "expected": "16",
+      "message": "Manifest JSON summary matches emitted included-row total: assertion_registration_count_total",
+      "observed": "16",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "summary_source_identity_count_total",
+      "expected": "300",
+      "message": "Manifest JSON summary matches emitted included-row total: source_identity_count_total",
+      "observed": "300",
+      "status": "passed",
+      "validation_group": "phase4_1_enrichment"
+    },
+    {
+      "check_id": "downstream_projection_source__gsc_lightweight_fixture",
+      "expected": "included corpus row exists",
+      "message": "Downstream row has included Corpus Generation source row: gsc_lightweight_fixture",
+      "observed": "found",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__corpus_generation_id",
+      "expected": "lightweight_phase4_2_corpus_v1",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.corpus_generation_id",
+      "observed": "lightweight_phase4_2_corpus_v1",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_id",
+      "expected": "ru_gsc_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_id",
+      "observed": "ru_gsc_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_label",
+      "expected": "gsc_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_label",
+      "observed": "gsc_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_reference",
+      "expected": "gsc_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_reference",
+      "observed": "gsc_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_path",
+      "expected": "lightweight_fixture/registration/gsc_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_path",
+      "observed": "lightweight_fixture/registration/gsc_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_sqlite_path",
+      "expected": "lightweight_fixture/registration/gsc_lightweight_fixture/vdb.sqlite",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_sqlite_path",
+      "observed": "lightweight_fixture/registration/gsc_lightweight_fixture/vdb.sqlite",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_inventory_record_reference",
+      "expected": "phase4_1_receipts/registration_unit_inventory.tsv",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_inventory_record_reference",
+      "observed": "phase4_1_receipts/registration_unit_inventory.tsv",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_readiness_record_reference",
+      "expected": "phase4_1_receipts/registration_unit_readiness.tsv",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_readiness_record_reference",
+      "observed": "phase4_1_receipts/registration_unit_readiness.tsv",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__phase4_1_validation_receipt_reference",
+      "expected": "phase4_1_receipts/",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.phase4_1_validation_receipt_reference",
+      "observed": "phase4_1_receipts/",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__producer_family",
+      "expected": "GSC",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.producer_family",
+      "observed": "GSC",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__source_package_id",
+      "expected": "not_reported",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.source_package_id",
+      "observed": "not_reported",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_backend",
+      "expected": "sqlite",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_backend",
+      "observed": "sqlite",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__assertion_registration_count",
+      "expected": "6",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.assertion_registration_count",
+      "observed": "6",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__source_identity_count",
+      "expected": "100",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.source_identity_count",
+      "observed": "100",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_validation_status",
+      "expected": "passed",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_validation_status",
+      "observed": "passed",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_certification_status",
+      "expected": "certified",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_certification_status",
+      "observed": "certified",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__registration_unit_readiness_status",
+      "expected": "ready",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.registration_unit_readiness_status",
+      "observed": "ready",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__inclusion_status",
+      "expected": "included",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.inclusion_status",
+      "observed": "included",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__gsc_lightweight_fixture__inclusion_rationale",
+      "expected": "lightweight golden fixture included input",
+      "message": "Downstream field is projected from Corpus Generation row: gsc_lightweight_fixture.inclusion_rationale",
+      "observed": "lightweight golden fixture included input",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection_source__vap_lightweight_fixture",
+      "expected": "included corpus row exists",
+      "message": "Downstream row has included Corpus Generation source row: vap_lightweight_fixture",
+      "observed": "found",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__corpus_generation_id",
+      "expected": "lightweight_phase4_2_corpus_v1",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.corpus_generation_id",
+      "observed": "lightweight_phase4_2_corpus_v1",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_id",
+      "expected": "ru_vap_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_id",
+      "observed": "ru_vap_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_label",
+      "expected": "vap_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_label",
+      "observed": "vap_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_reference",
+      "expected": "vap_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_reference",
+      "observed": "vap_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_path",
+      "expected": "lightweight_fixture/registration/vap_lightweight_fixture",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_path",
+      "observed": "lightweight_fixture/registration/vap_lightweight_fixture",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_sqlite_path",
+      "expected": "lightweight_fixture/registration/vap_lightweight_fixture/vdb.sqlite",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_sqlite_path",
+      "observed": "lightweight_fixture/registration/vap_lightweight_fixture/vdb.sqlite",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_inventory_record_reference",
+      "expected": "phase4_1_receipts/registration_unit_inventory.tsv",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_inventory_record_reference",
+      "observed": "phase4_1_receipts/registration_unit_inventory.tsv",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_readiness_record_reference",
+      "expected": "phase4_1_receipts/registration_unit_readiness.tsv",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_readiness_record_reference",
+      "observed": "phase4_1_receipts/registration_unit_readiness.tsv",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__phase4_1_validation_receipt_reference",
+      "expected": "phase4_1_receipts/",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.phase4_1_validation_receipt_reference",
+      "observed": "phase4_1_receipts/",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__producer_family",
+      "expected": "VAP",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.producer_family",
+      "observed": "VAP",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__source_package_id",
+      "expected": "not_reported",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.source_package_id",
+      "observed": "not_reported",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_backend",
+      "expected": "sqlite",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_backend",
+      "observed": "sqlite",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__assertion_registration_count",
+      "expected": "10",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.assertion_registration_count",
+      "observed": "10",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__source_identity_count",
+      "expected": "200",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.source_identity_count",
+      "observed": "200",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_validation_status",
+      "expected": "passed",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_validation_status",
+      "observed": "passed",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_certification_status",
+      "expected": "certified",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_certification_status",
+      "observed": "certified",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__registration_unit_readiness_status",
+      "expected": "ready",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.registration_unit_readiness_status",
+      "observed": "ready",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__inclusion_status",
+      "expected": "included",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.inclusion_status",
+      "observed": "included",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "downstream_projection__vap_lightweight_fixture__inclusion_rationale",
+      "expected": "lightweight golden fixture included input",
+      "message": "Downstream field is projected from Corpus Generation row: vap_lightweight_fixture.inclusion_rationale",
+      "observed": "lightweight golden fixture included input",
+      "status": "passed",
+      "validation_group": "downstream_boundary"
+    },
+    {
+      "check_id": "anti_self_validation_tsv",
+      "expected": "[\"not_evaluated\"]",
+      "message": "Build artifacts do not self-validate.",
+      "observed": "[\"not_evaluated\"]",
+      "status": "passed",
+      "validation_group": "authority_boundary"
+    },
+    {
+      "check_id": "anti_self_certification_tsv",
+      "expected": "[\"not_available\"]",
+      "message": "Build artifacts do not self-certify.",
+      "observed": "[\"not_available\"]",
+      "status": "passed",
+      "validation_group": "authority_boundary"
+    },
+    {
+      "check_id": "anti_self_validation_json",
+      "expected": "not_evaluated",
+      "message": "Manifest JSON does not self-validate.",
+      "observed": "not_evaluated",
+      "status": "passed",
+      "validation_group": "authority_boundary"
+    },
+    {
+      "check_id": "anti_self_certification_json",
+      "expected": "not_available",
+      "message": "Manifest JSON does not self-certify.",
+      "observed": "not_available",
+      "status": "passed",
+      "validation_group": "authority_boundary"
+    },
+    {
+      "check_id": "no_layer_leakage_directories",
+      "expected": "[]",
+      "message": "Corpus Generation build directory does not contain downstream layer directories.",
+      "observed": "[]",
+      "status": "passed",
+      "validation_group": "authority_boundary"
+    }
+  ],
+  "inputs": {
+    "corpus_generation_dir": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1",
+    "policy_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/inputs/lightweight_phase4_2_selection_policy.json",
+    "registration_unit_inventory_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/phase4_1_receipts/registration_unit_inventory.tsv",
+    "registration_unit_readiness_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/phase4_1_receipts/registration_unit_readiness.tsv",
+    "selection_manifest_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/inputs/lightweight_phase4_2_selection_manifest.tsv"
+  },
+  "summary": {
+    "failed_check_count": 0,
+    "passed_check_count": 90,
+    "total_check_count": 90
+  },
+  "validation_identity": {
+    "corpus_generation_id": "lightweight_phase4_2_corpus_v1",
+    "validation_status": "passed",
+    "validation_timestamp": "2026-06-30T12:15:00Z",
+    "validator_name": "variant_database.phase4.corpus_generation.validation",
+    "validator_version": "0.1.0"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "artifacts": {
+    "corpus_generation_manifest_json": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_manifest.json",
+    "corpus_generation_manifest_tsv": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_manifest.tsv",
+    "corpus_generation_report_md": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_report.md",
+    "downstream_assertion_record_input_manifest_tsv": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/downstream_assertion_record_input_manifest.tsv"
+  },
+  "build_metadata": {
+    "build_timestamp": "2026-06-30T12:10:00Z",
+    "builder_name": "variant_database.phase4.corpus_generation.artifacts",
+    "builder_version": "0.1.0",
+    "manifest_schema_version": "corpus_generation_schema_v1"
+  },
+  "corpus_generation_identity": {
+    "corpus_generation_certification_status": "not_available",
+    "corpus_generation_id": "lightweight_phase4_2_corpus_v1",
+    "corpus_generation_label": "Lightweight Phase 4.2 Corpus Generation Fixture v1",
+    "corpus_generation_purpose": "local golden fixture smoketest for Phase 4.2 Corpus Generation",
+    "corpus_generation_validation_status": "not_evaluated",
+    "corpus_generation_version": "v1"
+  },
+  "excluded_registration_units": [
+    {
+      "artifact_count": "not_reported",
+      "assertion_registration_count": "not_reported",
+      "build_timestamp": "2026-06-30T12:10:00Z",
+      "builder_name": "variant_database.phase4.corpus_generation.artifacts",
+      "builder_version": "0.1.0",
+      "corpus_generation_certification_status": "not_available",
+      "corpus_generation_id": "lightweight_phase4_2_corpus_v1",
+      "corpus_generation_label": "Lightweight Phase 4.2 Corpus Generation Fixture v1",
+      "corpus_generation_purpose": "local golden fixture smoketest for Phase 4.2 Corpus Generation",
+      "corpus_generation_validation_status": "not_evaluated",
+      "corpus_generation_version": "v1",
+      "evidence_domain_count": "not_reported",
+      "exclusion_rationale": "lightweight golden fixture deferred control",
+      "exclusion_status": "deferred",
+      "inclusion_rationale": "",
+      "inclusion_status": "",
+      "manifest_schema_version": "corpus_generation_schema_v1",
+      "membership_record_type": "excluded_registration_unit",
+      "namespace_count": "not_reported",
+      "notes": "vap_deferred_lightweight_fixture lightweight fixture row",
+      "phase4_1_validation_receipt_reference": "phase4_1_receipts/",
+      "producer_family": "VAP",
+      "registration_backend": "sqlite",
+      "registration_unit_certification_status": "certified",
+      "registration_unit_id": "not_reported",
+      "registration_unit_inventory_record_reference": "phase4_1_receipts/registration_unit_inventory.tsv",
+      "registration_unit_label": "vap_deferred_lightweight_fixture",
+      "registration_unit_path": "lightweight_fixture/registration/vap_deferred_lightweight_fixture",
+      "registration_unit_readiness_record_reference": "phase4_1_receipts/registration_unit_readiness.tsv",
+      "registration_unit_readiness_status": "ready",
+      "registration_unit_reference": "vap_deferred_lightweight_fixture",
+      "registration_unit_sqlite_path": "lightweight_fixture/registration/vap_deferred_lightweight_fixture/vdb.sqlite",
+      "registration_unit_validation_status": "passed",
+      "selection_policy_id": "lightweight_phase4_2_golden_fixture_policy",
+      "selection_policy_version": "v1",
+      "source_identity_count": "not_reported",
+      "source_package_id": "not_reported"
+    }
+  ],
+  "included_registration_units": [
+    {
+      "artifact_count": "9",
+      "assertion_registration_count": "6",
+      "build_timestamp": "2026-06-30T12:10:00Z",
+      "builder_name": "variant_database.phase4.corpus_generation.artifacts",
+      "builder_version": "0.1.0",
+      "corpus_generation_certification_status": "not_available",
+      "corpus_generation_id": "lightweight_phase4_2_corpus_v1",
+      "corpus_generation_label": "Lightweight Phase 4.2 Corpus Generation Fixture v1",
+      "corpus_generation_purpose": "local golden fixture smoketest for Phase 4.2 Corpus Generation",
+      "corpus_generation_validation_status": "not_evaluated",
+      "corpus_generation_version": "v1",
+      "evidence_domain_count": "not_reported",
+      "exclusion_rationale": "",
+      "exclusion_status": "",
+      "inclusion_rationale": "lightweight golden fixture included input",
+      "inclusion_status": "included",
+      "manifest_schema_version": "corpus_generation_schema_v1",
+      "membership_record_type": "included_registration_unit",
+      "namespace_count": "not_reported",
+      "notes": "gsc_lightweight_fixture lightweight fixture row",
+      "phase4_1_validation_receipt_reference": "phase4_1_receipts/",
+      "producer_family": "GSC",
+      "registration_backend": "sqlite",
+      "registration_unit_certification_status": "certified",
+      "registration_unit_id": "ru_gsc_lightweight_fixture",
+      "registration_unit_inventory_record_reference": "phase4_1_receipts/registration_unit_inventory.tsv",
+      "registration_unit_label": "gsc_lightweight_fixture",
+      "registration_unit_path": "lightweight_fixture/registration/gsc_lightweight_fixture",
+      "registration_unit_readiness_record_reference": "phase4_1_receipts/registration_unit_readiness.tsv",
+      "registration_unit_readiness_status": "ready",
+      "registration_unit_reference": "gsc_lightweight_fixture",
+      "registration_unit_sqlite_path": "lightweight_fixture/registration/gsc_lightweight_fixture/vdb.sqlite",
+      "registration_unit_validation_status": "passed",
+      "selection_policy_id": "lightweight_phase4_2_golden_fixture_policy",
+      "selection_policy_version": "v1",
+      "source_identity_count": "100",
+      "source_package_id": "not_reported"
+    },
+    {
+      "artifact_count": "16",
+      "assertion_registration_count": "10",
+      "build_timestamp": "2026-06-30T12:10:00Z",
+      "builder_name": "variant_database.phase4.corpus_generation.artifacts",
+      "builder_version": "0.1.0",
+      "corpus_generation_certification_status": "not_available",
+      "corpus_generation_id": "lightweight_phase4_2_corpus_v1",
+      "corpus_generation_label": "Lightweight Phase 4.2 Corpus Generation Fixture v1",
+      "corpus_generation_purpose": "local golden fixture smoketest for Phase 4.2 Corpus Generation",
+      "corpus_generation_validation_status": "not_evaluated",
+      "corpus_generation_version": "v1",
+      "evidence_domain_count": "not_reported",
+      "exclusion_rationale": "",
+      "exclusion_status": "",
+      "inclusion_rationale": "lightweight golden fixture included input",
+      "inclusion_status": "included",
+      "manifest_schema_version": "corpus_generation_schema_v1",
+      "membership_record_type": "included_registration_unit",
+      "namespace_count": "not_reported",
+      "notes": "vap_lightweight_fixture lightweight fixture row",
+      "phase4_1_validation_receipt_reference": "phase4_1_receipts/",
+      "producer_family": "VAP",
+      "registration_backend": "sqlite",
+      "registration_unit_certification_status": "certified",
+      "registration_unit_id": "ru_vap_lightweight_fixture",
+      "registration_unit_inventory_record_reference": "phase4_1_receipts/registration_unit_inventory.tsv",
+      "registration_unit_label": "vap_lightweight_fixture",
+      "registration_unit_path": "lightweight_fixture/registration/vap_lightweight_fixture",
+      "registration_unit_readiness_record_reference": "phase4_1_receipts/registration_unit_readiness.tsv",
+      "registration_unit_readiness_status": "ready",
+      "registration_unit_reference": "vap_lightweight_fixture",
+      "registration_unit_sqlite_path": "lightweight_fixture/registration/vap_lightweight_fixture/vdb.sqlite",
+      "registration_unit_validation_status": "passed",
+      "selection_policy_id": "lightweight_phase4_2_golden_fixture_policy",
+      "selection_policy_version": "v1",
+      "source_identity_count": "200",
+      "source_package_id": "not_reported"
+    }
+  ],
+  "phase4_1_receipts": {
+    "registration_unit_inventory_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/phase4_1_receipts/registration_unit_inventory.tsv",
+    "registration_unit_readiness_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/phase4_1_receipts/registration_unit_readiness.tsv"
+  },
+  "selection_manifest": {
+    "copied_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/inputs/corpus_generation_selection_manifest.tsv",
+    "record_count": 3,
+    "sha256": "8dcd7335b058dd6697cdfe7bafd5d79a0a92971ca9284e634226dfe84f271b81",
+    "source_path": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/inputs/lightweight_phase4_2_selection_manifest.tsv"
+  },
+  "selection_policy": {
+    "required_registration_unit_certification_status": "certified",
+    "required_registration_unit_readiness_status": "ready",
+    "required_registration_unit_validation_status": "passed",
+    "selection_policy_description": "Select a two-unit lightweight golden Corpus Generation fixture with one deferred control row for Phase 4.2 smoketesting.",
+    "selection_policy_id": "lightweight_phase4_2_golden_fixture_policy",
+    "selection_policy_version": "v1"
+  },
+  "summaries": {
+    "artifact_count_total": 25,
+    "assertion_registration_count_total": 16,
+    "downstream_assertion_record_input_count": 2,
+    "excluded_registration_unit_count": 1,
+    "included_registration_unit_count": 2,
+    "producer_family_distribution": {
+      "GSC": 1,
+      "VAP": 1
+    },
+    "registration_unit_certification_status_distribution": {
+      "certified": 2
+    },
+    "registration_unit_readiness_status_distribution": {
+      "ready": 2
+    },
+    "registration_unit_validation_status_distribution": {
+      "passed": 2
+    },
+    "source_identity_count_total": 300
+  }
+}

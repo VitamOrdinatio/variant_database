@@ -1,0 +1,5 @@
+Phase 4.2 lightweight Corpus Generation smoketest completed.
+smoketest_status: passed
+validation_status: passed
+summary_status: passed
+receipt_dir: results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500

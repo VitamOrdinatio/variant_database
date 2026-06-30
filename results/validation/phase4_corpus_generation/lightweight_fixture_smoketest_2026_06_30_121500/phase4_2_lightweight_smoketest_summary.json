@@ -1,0 +1,56 @@
+{
+  "artifacts": {
+    "corpus_generation_manifest_json": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_manifest.json",
+    "corpus_generation_manifest_tsv": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/corpus_generation_manifest.tsv",
+    "downstream_assertion_record_input_manifest": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1/downstream_assertion_record_input_manifest.tsv",
+    "receipt_dir": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500",
+    "scratch_corpus_generation_dir": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/scratch_corpus_generation/lightweight_phase4_2_corpus_v1",
+    "validation_report_json": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/validation_receipts/corpus_generation_validation_report.json",
+    "validation_report_tsv": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/validation_receipts/corpus_generation_validation_report.tsv",
+    "validation_summary_json": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/validation_receipts/corpus_generation_validation_summary.json",
+    "validation_summary_tsv": "results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/validation_receipts/corpus_generation_validation_summary.tsv"
+  },
+  "authority_boundary": {
+    "certifies_corpus_generation": false,
+    "creates_assertion_records": false,
+    "derives_topology": false,
+    "interprets_evidence": false,
+    "mutates_registration_units": false,
+    "opens_sqlite": false,
+    "uses_mark_data": false
+  },
+  "expected_summary": {
+    "artifact_count_total": 25,
+    "assertion_registration_count_total": 16,
+    "downstream_assertion_record_input_count": 2,
+    "excluded_registration_unit_count": 1,
+    "included_registration_unit_count": 2,
+    "source_identity_count_total": 300
+  },
+  "observed_summary": {
+    "artifact_count_total": 25,
+    "assertion_registration_count_total": 16,
+    "downstream_assertion_record_input_count": 2,
+    "excluded_registration_unit_count": 1,
+    "failed_check_count": 0,
+    "included_registration_unit_count": 2,
+    "passed_check_count": 90,
+    "source_identity_count_total": 300,
+    "total_check_count": 90,
+    "validation_status": "passed"
+  },
+  "smoketest_identity": {
+    "build_timestamp": "2026-06-30T12:10:00Z",
+    "corpus_generation_id": "lightweight_phase4_2_corpus_v1",
+    "smoketest_id": "phase4_2_lightweight_corpus_generation_smoketest",
+    "smoketest_status": "passed",
+    "summary_status": "passed",
+    "validation_status": "passed",
+    "validation_timestamp": "2026-06-30T12:15:00Z"
+  },
+  "validation_layer": {
+    "layer": "Layer 2",
+    "name": "Lightweight Golden Fixture Smoketest",
+    "purpose": "Prove that Phase 4.2 Corpus Generation artifact flow works on a small controlled substrate through the real emitter and validator."
+  }
+}
