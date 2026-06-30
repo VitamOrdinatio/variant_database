@@ -1,5 +1,17 @@
 # Corpus Generation Schema
 
+**Status:** ACTIVE PHASE 4.2 IMPLEMENTATION SCHEMA
+
+**Phase:** IV.2 — Corpus Generation
+
+**Validation Pair:** `docs/validation/corpus_generation_validation.md`
+
+**Primary Build Output Family:** `results/phase4/corpus_generations/`
+
+**Primary Validation Receipt Family:** `results/validation/phase4_corpus_generation/`
+
+---
+
 ## Purpose
 
 This document defines the Phase 4 Corpus Generation schema for the Variant Database (VDB).
@@ -98,7 +110,17 @@ Corpus Generation construction must not become source truth.
 
 # Governed Artifacts
 
-This schema governs the following Phase 4 Corpus Generation artifacts:
+This schema governs Phase 4.2 Corpus Generation build artifacts and names the corresponding validation receipt family.
+
+Corpus Generation build artifacts live outside selected Registration Units.
+
+Corpus Generation validation receipts live under `results/validation/`.
+
+Build artifacts and validation receipts must not be collapsed.
+
+## Build Artifacts
+
+This schema governs the following Phase 4.2 build artifacts:
 
 ```text
 corpus_generation_selection_manifest.tsv
@@ -106,20 +128,17 @@ corpus_generation_selection_manifest.json when policy-enabled
 corpus_generation_manifest.tsv
 corpus_generation_manifest.json
 corpus_generation_report.md
-corpus_generation_validation_report.json
-corpus_generation_validation_report.tsv
 downstream_assertion_record_input_manifest.tsv
 ```
 
-Recommended output location:
+Recommended build output location:
 
 ```text
 results/phase4/corpus_generations/<corpus_generation_id>/
+    inputs/corpus_generation_selection_manifest.tsv
     corpus_generation_manifest.tsv
     corpus_generation_manifest.json
     corpus_generation_report.md
-    corpus_generation_validation_report.json
-    corpus_generation_validation_report.tsv
     downstream_assertion_record_input_manifest.tsv
 ```
 
@@ -127,15 +146,42 @@ For the initial MARK benchmark Corpus Generation:
 
 ```text
 results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/
+    inputs/corpus_generation_selection_manifest.tsv
     corpus_generation_manifest.tsv
     corpus_generation_manifest.json
     corpus_generation_report.md
-    corpus_generation_validation_report.json
-    corpus_generation_validation_report.tsv
     downstream_assertion_record_input_manifest.tsv
 ```
 
-These outputs are Corpus Generation artifacts.
+## Validation Receipts
+
+The corresponding validation receipt family is:
+
+```text
+results/validation/phase4_corpus_generation/
+```
+
+Expected validation receipt artifacts may include:
+
+```text
+corpus_generation_validation_run_summary.json
+corpus_generation_validation_summary.json
+corpus_generation_manifest_validation.tsv
+corpus_generation_membership_validation.tsv
+corpus_generation_exclusion_validation.tsv
+corpus_generation_non_mutation_summary.json
+corpus_generation_determinism_summary.json
+```
+
+Validation receipts record what was proven during validation execution.
+
+They do not replace Corpus Generation build artifacts.
+
+They do not replace Registration Units.
+
+## Artifact Boundary
+
+Corpus Generation outputs are scope-declaration artifacts.
 
 They do not replace Registration Units.
 
@@ -208,34 +254,65 @@ It is not sufficient by itself to define a validated Corpus Generation.
 
 It does not replace Registration Unit metadata.
 
-It must be validated against Registration Unit readiness inventory records or Registration Unit metadata before Corpus Generation construction becomes authoritative.
+It must be validated against Registration Unit readiness inventory records, Registration Unit metadata, and Phase 4.1 validation receipt evidence before Corpus Generation construction becomes authoritative.
 
 ## Required Selection Manifest Fields
 
-| Field                           |    Required | Description                                                     |
-| ------------------------------- | ----------: | --------------------------------------------------------------- |
-| `corpus_generation_id`          |         yes | Stable identifier for the intended Corpus Generation.           |
-| `registration_unit_label`       |         yes | Human-readable label for the candidate Registration Unit.       |
-| `registration_unit_reference`   | recommended | Backend-neutral reference to the candidate Registration Unit.   |
-| `registration_unit_path`        | conditional | Filesystem path when the Registration Unit is path-backed.      |
-| `expected_registration_unit_id` |    optional | Expected stable Registration Unit identifier when known.        |
-| `expected_producer_family`      | recommended | Expected producer family.                                       |
-| `expected_certification_status` | recommended | Expected Registration Unit certification status.                |
-| `expected_readiness_status`     | recommended | Expected Registration Unit readiness status when available.     |
-| `expected_backend`              | recommended | Expected Registration Unit backend representation.              |
-| `inclusion_status`              |         yes | Intended inclusion status under the selection policy.           |
-| `inclusion_rationale`           | conditional | Required when the candidate is intended for inclusion.          |
-| `exclusion_status`              | conditional | Required when the candidate is explicitly excluded or deferred. |
-| `exclusion_rationale`           | conditional | Required when exclusion affects scope interpretation.           |
-| `notes`                         |    optional | Operator or builder notes.                                      |
+| Field                                      |    Required | Description                                                                 |
+| ------------------------------------------ | ----------: | --------------------------------------------------------------------------- |
+| `corpus_generation_id`                     |         yes | Stable identifier for the intended Corpus Generation.                       |
+| `registration_unit_label`                  |         yes | Human-readable label for the candidate Registration Unit.                   |
+| `registration_unit_reference`              | recommended | Backend-neutral reference to the candidate Registration Unit.               |
+| `registration_unit_path`                   | conditional | Registration Unit directory or stable path-backed Registration Unit root.   |
+| `registration_unit_sqlite_path`            | conditional | SQLite file path when the Registration Unit backend is `sqlite`.            |
+| `expected_registration_unit_id`            |    optional | Expected stable Registration Unit identifier when known.                    |
+| `expected_producer_family`                 | recommended | Expected producer family.                                                   |
+| `expected_registration_unit_validation_status` | recommended | Expected Registration Unit validation status.                          |
+| `expected_registration_unit_certification_status` | recommended | Expected Registration Unit certification status.                    |
+| `expected_registration_unit_readiness_status` | recommended | Expected Registration Unit readiness status when available.             |
+| `expected_backend`                         | recommended | Expected Registration Unit backend representation.                          |
+| `registration_unit_inventory_record_reference` | recommended | Reference to the Phase 4.1 inventory record used as input evidence.    |
+| `registration_unit_readiness_record_reference` | recommended | Reference to the Phase 4.1 readiness record used as input evidence.    |
+| `phase4_1_validation_receipt_reference`    | recommended | Reference to the Phase 4.1 validation receipt set supporting readiness.      |
+| `inclusion_status`                         |         yes | Intended inclusion status under the selection policy.                       |
+| `inclusion_rationale`                      | conditional | Required when the candidate is intended for inclusion.                      |
+| `exclusion_status`                         | conditional | Required when the candidate is explicitly excluded or deferred.             |
+| `exclusion_rationale`                      | conditional | Required when exclusion affects scope interpretation.                       |
+| `notes`                                    |    optional | Operator or builder notes.                                                  |
+
+## Path Field Rule
+
+`registration_unit_path` and `registration_unit_sqlite_path` must not be collapsed.
+
+For a SQLite-backed Registration Unit:
+
+```text
+registration_unit_path
+    Path to the Registration Unit directory or stable Registration Unit root.
+
+registration_unit_sqlite_path
+    Path to the backing SQLite file.
+```
+
+For the MARK canonical Registration Units, this means:
+
+```text
+registration_unit_path:
+    results/registration/mark_phase3_canonical/gsc_epilepsy
+
+registration_unit_sqlite_path:
+    results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite
+```
+
+This distinction prevents Registration Unit directory paths and backing SQLite file paths from being combined ambiguously.
 
 ## Selection Manifest Example
 
 ```text
-corpus_generation_id	registration_unit_label	registration_unit_path	expected_producer_family	expected_certification_status	expected_backend	inclusion_status	inclusion_rationale	notes
-mark_phase4_corpus_6tep_v1	gsc_epilepsy	results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite	GSC	certified	sqlite	included	certified Phase 3 benchmark input	GSC epilepsy semantic evidence
-mark_phase4_corpus_6tep_v1	gsc_mitochondrial_disease	results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite	GSC	certified	sqlite	included	certified Phase 3 benchmark input	GSC mitochondrial semantic evidence
-mark_phase4_corpus_6tep_v1	vap_hg002	results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite	VAP	certified	sqlite	included	certified Phase 3 benchmark input	HG002 reference specimen
+corpus_generation_id	registration_unit_label	registration_unit_path	registration_unit_sqlite_path	expected_producer_family	expected_registration_unit_validation_status	expected_registration_unit_certification_status	expected_registration_unit_readiness_status	expected_backend	inclusion_status	inclusion_rationale	notes
+mark_phase4_corpus_6tep_v1	gsc_epilepsy	results/registration/mark_phase3_canonical/gsc_epilepsy	results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite	GSC	passed	certified	ready	sqlite	included	certified Phase 3 benchmark input	GSC epilepsy semantic evidence
+mark_phase4_corpus_6tep_v1	gsc_mitochondrial_disease	results/registration/mark_phase3_canonical/gsc_mitochondrial_disease	results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite	GSC	passed	certified	ready	sqlite	included	certified Phase 3 benchmark input	GSC mitochondrial semantic evidence
+mark_phase4_corpus_6tep_v1	vap_hg002	results/registration/mark_phase3_canonical/vap_hg002	results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite	VAP	passed	certified	ready	sqlite	included	certified Phase 3 benchmark input	HG002 reference specimen
 ```
 
 ## Selection Manifest Rules
@@ -248,7 +325,7 @@ A folder listing is not a Corpus Generation.
 
 Fields prefixed with `expected_` are validation expectations.
 
-They must not override inspected Registration Unit metadata.
+They must not override inspected Registration Unit metadata or Phase 4.1 readiness evidence.
 
 ---
 
@@ -258,20 +335,20 @@ Every Corpus Generation must have a stable identity.
 
 ## Required Identity Fields
 
-| Field                       |    Required | Description                                            |
-| --------------------------- | ----------: | ------------------------------------------------------ |
-| `corpus_generation_id`      |         yes | Stable Corpus Generation identifier.                   |
-| `corpus_generation_label`   | recommended | Human-readable label.                                  |
-| `corpus_generation_purpose` |         yes | Declared purpose of the Corpus Generation.             |
-| `corpus_generation_version` | recommended | Corpus Generation version when applicable.             |
-| `selection_policy_id`       |         yes | Selection policy identifier.                           |
-| `selection_policy_version`  | recommended | Selection policy version when applicable.              |
-| `builder_name`              |         yes | Name of builder that emitted the Corpus Generation.    |
-| `builder_version`           | recommended | Builder version when available.                        |
-| `build_timestamp`           |         yes | Timestamp of Corpus Generation construction.           |
-| `manifest_schema_version`   | recommended | Corpus Generation schema version.                      |
-| `validation_status`         |         yes | Corpus Generation validation status.                   |
-| `certification_status`      | recommended | Corpus Generation certification status when available. |
+| Field                                      |    Required | Description                                             |
+| ------------------------------------------ | ----------: | ------------------------------------------------------- |
+| `corpus_generation_id`                     |         yes | Stable Corpus Generation identifier.                    |
+| `corpus_generation_label`                  | recommended | Human-readable label.                                   |
+| `corpus_generation_purpose`                |         yes | Declared purpose of the Corpus Generation.              |
+| `corpus_generation_version`                | recommended | Corpus Generation version when applicable.              |
+| `selection_policy_id`                      |         yes | Selection policy identifier.                            |
+| `selection_policy_version`                 | recommended | Selection policy version when applicable.               |
+| `builder_name`                             |         yes | Name of builder that emitted the Corpus Generation.     |
+| `builder_version`                          | recommended | Builder version when available.                         |
+| `build_timestamp`                          |         yes | Timestamp of Corpus Generation construction.            |
+| `manifest_schema_version`                  | recommended | Corpus Generation schema version.                       |
+| `corpus_generation_validation_status`      |         yes | Corpus Generation validation status.                    |
+| `corpus_generation_certification_status`   | recommended | Corpus Generation certification status when available.  |
 
 ## Initial MARK Benchmark Identity
 
@@ -280,7 +357,7 @@ Recommended initial identity:
 ```text
 corpus_generation_id: mark_phase4_corpus_6tep_v1
 corpus_generation_label: MARK Phase 4 6-TEP Benchmark Corpus v1
-corpus_generation_purpose: initial certified multi-producer Phase 4 heavy smoketest corpus
+corpus_generation_purpose: initial certified multi-producer Phase 4 benchmark corpus
 corpus_generation_version: v1
 selection_policy_id: mark_phase4_6tep_certified_input_policy
 selection_policy_version: v1
@@ -289,6 +366,10 @@ selection_policy_version: v1
 Human-readable labels may support inspection.
 
 Labels must not replace stable Corpus Generation identity.
+
+Corpus Generation validation status and Registration Unit validation status must remain distinct.
+
+Corpus Generation certification status and Registration Unit certification status must remain distinct.
 
 ---
 
@@ -334,43 +415,48 @@ Policy evolution that changes Corpus Generation reconstruction must be versioned
 
 The Corpus Generation manifest is the validated declared evidence scope.
 
-It must preserve the exact selected Registration Unit set, relevant exclusions, selection policy, summary counts, validation visibility, certification visibility, and downstream handoff references.
+It must preserve the exact selected Registration Unit set, relevant exclusions, selection policy, summary counts, validation visibility, certification visibility, readiness visibility, Phase 4.1 receipt provenance, and downstream handoff references.
 
 ## Required Manifest Fields
 
-| Field                          |    Required | Description                                                                           |
-| ------------------------------ | ----------: | ------------------------------------------------------------------------------------- |
-| `corpus_generation_id`         |         yes | Stable Corpus Generation identifier.                                                  |
-| `corpus_generation_label`      | recommended | Human-readable label.                                                                 |
-| `corpus_generation_purpose`    |         yes | Declared Corpus Generation purpose.                                                   |
-| `corpus_generation_version`    | recommended | Corpus Generation version.                                                            |
-| `selection_policy_id`          |         yes | Selection policy identifier.                                                          |
-| `selection_policy_version`     | recommended | Selection policy version.                                                             |
-| `membership_record_type`       |         yes | Record type, such as `included_registration_unit` or `excluded_registration_unit`.    |
-| `registration_unit_id`         | conditional | Required for included units; explicit unresolved state allowed for failed candidates. |
-| `registration_unit_label`      |         yes | Human-readable Registration Unit label or candidate label.                            |
-| `registration_unit_reference`  | recommended | Backend-neutral Registration Unit reference.                                          |
-| `registration_unit_inventory_record_reference` | recommended | Reference to the Registration Unit inventory record used during Corpus Generation construction. |
-| `registration_unit_path`       | conditional | Filesystem path when path-backed.                                                     |
-| `producer_family`              | recommended | Producer family or explicit unresolved state.                                         |
-| `source_package_id`            | recommended | Source package identifier or explicit unresolved state.                               |
-| `registration_backend`         | recommended | Registration Unit backend representation.                                             |
-| `validation_status`            | recommended | Registration Unit validation status.                                                  |
-| `certification_status`         | recommended | Registration Unit certification status.                                               |
-| `readiness_status`             | recommended | Registration Unit readiness status from Phase 4.1 when available.                     |
-| `inclusion_status`             | conditional | Inclusion status for included units.                                                  |
-| `inclusion_rationale`          | conditional | Inclusion rationale for included units.                                               |
-| `exclusion_status`             | conditional | Exclusion status for excluded or deferred candidates.                                 |
-| `exclusion_rationale`          | conditional | Exclusion rationale when applicable.                                                  |
-| `artifact_count`               | recommended | Registered artifact count or explicit unresolved state.                               |
-| `assertion_registration_count` | recommended | Assertion registration count or explicit unresolved state.                            |
-| `source_identity_count`        | recommended | Source identity count or explicit unresolved state.                                   |
-| `namespace_count`              | recommended | Namespace count or explicit unresolved state.                                         |
-| `evidence_domain_count`        |    optional | Evidence domain count or explicit unresolved state.                                   |
-| `builder_name`                 |         yes | Builder name.                                                                         |
-| `builder_version`              | recommended | Builder version.                                                                      |
-| `build_timestamp`              |         yes | Build timestamp.                                                                      |
-| `manifest_schema_version`      | recommended | Corpus Generation schema version.                                                     |
+| Field                                      |    Required | Description                                                                                |
+| ------------------------------------------ | ----------: | ------------------------------------------------------------------------------------------ |
+| `corpus_generation_id`                     |         yes | Stable Corpus Generation identifier.                                                       |
+| `corpus_generation_label`                  | recommended | Human-readable label.                                                                      |
+| `corpus_generation_purpose`                |         yes | Declared Corpus Generation purpose.                                                        |
+| `corpus_generation_version`                | recommended | Corpus Generation version.                                                                 |
+| `selection_policy_id`                      |         yes | Selection policy identifier.                                                               |
+| `selection_policy_version`                 | recommended | Selection policy version.                                                                  |
+| `membership_record_type`                   |         yes | Record type, such as `included_registration_unit` or `excluded_registration_unit`.         |
+| `registration_unit_id`                     | conditional | Required for included units; explicit unresolved state allowed for failed candidates.       |
+| `registration_unit_label`                  |         yes | Human-readable Registration Unit label or candidate label.                                 |
+| `registration_unit_reference`              | recommended | Backend-neutral Registration Unit reference.                                               |
+| `registration_unit_path`                   | conditional | Registration Unit directory or stable path-backed Registration Unit root.                  |
+| `registration_unit_sqlite_path`            | conditional | SQLite file path when the Registration Unit backend is `sqlite`.                           |
+| `registration_unit_inventory_record_reference` | recommended | Reference to the Phase 4.1 inventory record used during construction.                |
+| `registration_unit_readiness_record_reference` | recommended | Reference to the Phase 4.1 readiness record used during construction.                |
+| `phase4_1_validation_receipt_reference`    | recommended | Reference to the Phase 4.1 validation receipt set supporting Registration Unit readiness.  |
+| `producer_family`                          | recommended | Producer family or explicit unresolved state.                                              |
+| `source_package_id`                        | recommended | Source package identifier or explicit unresolved state.                                    |
+| `registration_backend`                     | recommended | Registration Unit backend representation.                                                  |
+| `registration_unit_validation_status`      | recommended | Registration Unit validation status.                                                       |
+| `registration_unit_certification_status`   | recommended | Registration Unit certification status.                                                    |
+| `registration_unit_readiness_status`       | recommended | Registration Unit readiness status from Phase 4.1 when available.                          |
+| `corpus_generation_validation_status`      | recommended | Corpus Generation validation status.                                                       |
+| `corpus_generation_certification_status`   | recommended | Corpus Generation certification status when available.                                     |
+| `inclusion_status`                         | conditional | Inclusion status for included units.                                                       |
+| `inclusion_rationale`                      | conditional | Inclusion rationale for included units.                                                    |
+| `exclusion_status`                         | conditional | Exclusion status for excluded or deferred candidates.                                      |
+| `exclusion_rationale`                      | conditional | Exclusion rationale when applicable.                                                       |
+| `artifact_count`                           | recommended | Registered artifact count or explicit unresolved state.                                    |
+| `assertion_registration_count`             | recommended | Assertion registration count or explicit unresolved state.                                 |
+| `source_identity_count`                    | recommended | Source identity count or explicit unresolved state.                                        |
+| `namespace_count`                          | recommended | Namespace count or explicit unresolved state.                                              |
+| `evidence_domain_count`                    |    optional | Evidence domain count or explicit unresolved state.                                        |
+| `builder_name`                             |         yes | Builder name.                                                                              |
+| `builder_version`                          | recommended | Builder version.                                                                           |
+| `build_timestamp`                          |         yes | Build timestamp.                                                                           |
+| `manifest_schema_version`                  | recommended | Corpus Generation schema version.                                                          |
 
 ## Manifest Rules
 
@@ -379,6 +465,10 @@ The manifest must be deterministic under fixed inputs.
 The manifest must be sufficient to reconstruct the exact selected Registration Unit set.
 
 The manifest must preserve Registration Unit boundaries.
+
+The manifest must preserve Registration Unit directory paths and backing SQLite file paths distinctly.
+
+The manifest must preserve Phase 4.1 readiness and validation receipt provenance.
 
 The manifest must not replace Registration Units.
 
@@ -416,14 +506,17 @@ selection_policy_id
 registration_unit_id
 registration_unit_label
 registration_unit_reference
-registration_unit_inventory_record_reference
 registration_unit_path
+registration_unit_sqlite_path when backend is sqlite
+registration_unit_inventory_record_reference
+registration_unit_readiness_record_reference
+phase4_1_validation_receipt_reference
 producer_family
 source_package_id
 registration_backend
-validation_status
-certification_status
-readiness_status
+registration_unit_validation_status
+registration_unit_certification_status
+registration_unit_readiness_status
 inclusion_status
 inclusion_rationale
 artifact_count
@@ -437,9 +530,10 @@ For included Registration Units, the following fields are required or must be re
 ```text
 source_package_id
 registration_backend
-validation_status
-certification_status
-readiness_status
+registration_unit_validation_status
+registration_unit_certification_status
+registration_unit_readiness_status
+phase4_1_validation_receipt_reference
 ```
 
 These fields must not silently disappear from included membership records.
@@ -608,24 +702,27 @@ It must not contain derived Assertion Records unless explicitly produced by the 
 
 ## Required Fields
 
-| Field                          |    Required | Description                                                |
-| ------------------------------ | ----------: | ---------------------------------------------------------- |
-| `corpus_generation_id`         |         yes | Corpus Generation identifier.                              |
-| `registration_unit_id`         |         yes | Selected Registration Unit identifier.                     |
-| `registration_unit_label`      |         yes | Human-readable Registration Unit label.                    |
-| `registration_unit_reference`  | recommended | Backend-neutral Registration Unit reference.               |
-| `registration_unit_inventory_record_reference` | recommended | Reference to the Registration Unit inventory record used to validate this selected Registration Unit. |
-| `registration_unit_path`       | conditional | Registration Unit path when path-backed.                   |
-| `producer_family`              |         yes | Producer family.                                           |
-| `source_package_id`            | recommended | Source package identifier.                                 |
-| `registration_backend`         | recommended | Backend representation.                                    |
-| `assertion_registration_count` | recommended | Assertion registration count or explicit unresolved state. |
-| `source_identity_count`        | recommended | Source identity count or explicit unresolved state.        |
-| `validation_status`            | recommended | Registration Unit validation status.                       |
-| `certification_status`         | recommended | Registration Unit certification status.                    |
-| `readiness_status`             | recommended | Registration Unit readiness status.                        |
-| `inclusion_status`             |         yes | Inclusion status from Corpus Generation manifest.          |
-| `inclusion_rationale`          | recommended | Inclusion rationale.                                       |
+| Field                                      |    Required | Description                                                                       |
+| ------------------------------------------ | ----------: | --------------------------------------------------------------------------------- |
+| `corpus_generation_id`                     |         yes | Corpus Generation identifier.                                                     |
+| `registration_unit_id`                     |         yes | Selected Registration Unit identifier.                                            |
+| `registration_unit_label`                  |         yes | Human-readable Registration Unit label.                                           |
+| `registration_unit_reference`              | recommended | Backend-neutral Registration Unit reference.                                      |
+| `registration_unit_path`                   | conditional | Registration Unit directory or stable path-backed Registration Unit root.         |
+| `registration_unit_sqlite_path`            | conditional | SQLite file path when the Registration Unit backend is `sqlite`.                  |
+| `registration_unit_inventory_record_reference` | recommended | Reference to the Phase 4.1 inventory record used to validate this unit.     |
+| `registration_unit_readiness_record_reference` | recommended | Reference to the Phase 4.1 readiness record used to validate this unit.     |
+| `phase4_1_validation_receipt_reference`    | recommended | Reference to the Phase 4.1 validation receipt set supporting this selected unit.  |
+| `producer_family`                          |         yes | Producer family.                                                                  |
+| `source_package_id`                        | recommended | Source package identifier.                                                        |
+| `registration_backend`                     | recommended | Backend representation.                                                           |
+| `assertion_registration_count`             | recommended | Assertion registration count or explicit unresolved state.                        |
+| `source_identity_count`                    | recommended | Source identity count or explicit unresolved state.                               |
+| `registration_unit_validation_status`      | recommended | Registration Unit validation status.                                              |
+| `registration_unit_certification_status`   | recommended | Registration Unit certification status.                                           |
+| `registration_unit_readiness_status`       | recommended | Registration Unit readiness status.                                               |
+| `inclusion_status`                         |         yes | Inclusion status from Corpus Generation manifest.                                 |
+| `inclusion_rationale`                      | recommended | Inclusion rationale.                                                              |
 
 ## Handoff Rules
 
@@ -635,13 +732,17 @@ The downstream Assertion Record input manifest must preserve:
 Corpus Generation identity
 selected Registration Unit identities
 Registration Unit references
+Registration Unit directory paths
+Registration Unit backend paths when applicable
+Phase 4.1 readiness provenance
+Phase 4.1 validation receipt provenance
 producer-family context
 source package context
 assertion registration availability
 source identity availability
-validation status
-certification status
-readiness status
+Registration Unit validation status
+Registration Unit certification status
+Registration Unit readiness status
 ```
 
 The downstream Assertion Record input manifest enables Assertion Record indexing.
@@ -775,7 +876,27 @@ A value of `not_reported` means the domain count was not reported.
 
 # Validation Report Shape
 
-The Corpus Generation validation report records whether the declared Corpus Generation satisfies input, manifest, and anti-collapse requirements.
+The Corpus Generation validation report records whether the declared Corpus Generation satisfies input, manifest, non-mutation, determinism, and anti-collapse requirements.
+
+Validation build artifacts and validation receipts must remain distinct.
+
+The validation receipt family should be written under:
+
+```text
+results/validation/phase4_corpus_generation/
+```
+
+Expected validation receipt files may include:
+
+```text
+corpus_generation_validation_run_summary.json
+corpus_generation_validation_summary.json
+corpus_generation_manifest_validation.tsv
+corpus_generation_membership_validation.tsv
+corpus_generation_exclusion_validation.tsv
+corpus_generation_non_mutation_summary.json
+corpus_generation_determinism_summary.json
+```
 
 The validation report should include:
 
@@ -792,6 +913,8 @@ validation_policy_id
 validation_policy_version
 builder_name
 builder_version
+validator_name
+validator_version when available
 validation_timestamp
 overall_validation_status
 included_registration_unit_count
@@ -802,11 +925,15 @@ certification_status_summary
 readiness_status_summary
 validation_findings
 validation_limitations
+non_mutation_status
+sidecar_status
+determinism_status
+anti_collapse_status
 ```
 
 The TSV validation report may represent one validation finding per row.
 
-The JSON validation report may include nested findings grouped by Corpus Generation, Registration Unit membership, exclusion record, or validation tier.
+The JSON validation report may include nested findings grouped by Corpus Generation, Registration Unit membership, exclusion record, non-mutation check, determinism check, or validation tier.
 
 ## Validation Finding Fields
 
@@ -832,6 +959,10 @@ Allowed values:
 ```text
 input_validation
 manifest_validation
+membership_validation
+exclusion_validation
+non_mutation_validation
+determinism_validation
 anti_collapse_validation
 mark_benchmark_validation
 ```
@@ -1052,7 +1183,20 @@ Corpus Generation construction must not perform downstream derivation.
 
 # Initial MARK Benchmark Requirements
 
-The initial MARK Phase 4 benchmark Corpus Generation is expected to include six certified Phase 3 Registration Units:
+The initial MARK Phase 4 benchmark Corpus Generation is expected to include six certified Phase 3 Registration Units.
+
+Expected Registration Unit directory paths:
+
+```text
+results/registration/mark_phase3_canonical/gsc_epilepsy
+results/registration/mark_phase3_canonical/gsc_mitochondrial_disease
+results/registration/mark_phase3_canonical/vap_hg002
+results/registration/mark_phase3_canonical/vap_median_ERR10619300
+results/registration/mark_phase3_canonical/vap_q1_ERR10619212
+results/registration/mark_phase3_canonical/vap_q3_ERR10619225
+```
+
+Expected SQLite backend paths:
 
 ```text
 results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite
@@ -1071,15 +1215,24 @@ expected four VAP Registration Units are present
 expected two GSC Registration Units are present
 all expected Registration Units are readable
 all expected Registration Units expose validation status
-all expected Registration Units expose certification status
-all expected Registration Units are certified
+all expected Registration Units expose readiness status
+all expected Registration Units expose certification status when available
+all expected Registration Units preserve producer_family
 corpus_generation_id is stable
 selection policy is stable
 corpus manifest is deterministic
 downstream Assertion Record input manifest is deterministic
+Registration Units are not mutated
+SQLite sidecars are not created
 ```
 
 The initial benchmark Corpus Generation should fail validation if expected Registration Units are missing unless the validation policy explicitly declares failure-mode testing.
+
+The initial MARK benchmark Corpus Generation is a six-unit canonical benchmark corpus.
+
+It is not a claim that all available VAP SRA-derived TEPs have been registered into VDB Phase 3.
+
+It is not a claim that all available VAP SRA-derived TEPs are included in this Corpus Generation.
 
 ---
 
