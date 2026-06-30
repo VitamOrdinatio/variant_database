@@ -18,6 +18,11 @@ from variant_database.phase4.corpus_generation.manifest import (
     CorpusGenerationSelectionManifestRecord,
     load_corpus_generation_selection_manifest,
 )
+from variant_database.phase4.corpus_generation.validation import (
+    CorpusGenerationValidationCheck,
+    CorpusGenerationValidationResult,
+    validate_corpus_generation_artifact_set,
+)
 
 __all__ = [
     "ALLOWED_EXCLUSION_STATUSES",
@@ -32,6 +37,9 @@ __all__ = [
     "CorpusGenerationSelectionManifest",
     "CorpusGenerationSelectionManifestRecord",
     "CorpusGenerationSelectionPolicy",
+    "CorpusGenerationValidationCheck",
+    "CorpusGenerationValidationResult",
     "emit_corpus_generation_artifacts",
     "load_corpus_generation_selection_manifest",
+    "validate_corpus_generation_artifact_set",
 ]
