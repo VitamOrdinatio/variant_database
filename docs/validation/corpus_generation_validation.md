@@ -1,10 +1,16 @@
 # Corpus Generation Validation
 
-**Status:** PLANNED REQUIRED
+**Status:** IMPLEMENTED AND ACCEPTED
 
 **Phase:** IV.2 — Corpus Generation Scope Declaration Validation
 
-**Required Before:** Phase 4.2 Corpus Generation completion
+**Required Before:** Phase 4.3 Assertion Records
+
+**Closure Document:** `docs/validation/phase4_2_corpus_generation_certification.md`
+
+**Layer 2 Acceptance:** `docs/validation/phase4_2_corpus_generation_layer2_acceptance.md`
+
+**Layer 3 Acceptance:** `docs/validation/phase4_2_corpus_generation_layer3_acceptance.md`
 
 ---
 
@@ -25,6 +31,47 @@ Corpus Generation freezes scope before VDB derives evidence.
 A folder of Registration Units is not a Corpus Generation.
 
 A Corpus Generation must be declared, policy-backed, receipt-backed, and reconstructable.
+
+This specification has been exercised by the canonical six-unit MARK Phase 4 Corpus Generation and remains the validation basis for future Corpus Generations.
+
+---
+
+## Validation Outcome
+
+Phase 4.2 Corpus Generation has cleared VDB's three-layer validation strategy.
+
+Layer 1:
+
+```text
+pytest unit/integration validation
+140 passed
+```
+
+Layer 2:
+
+```text
+compressed real-row golden fixture smoketest
+accepted
+```
+
+Layer 3:
+
+```text
+MARK full-corpus real-world smoketest
+accepted
+```
+
+Canonical Corpus Generation:
+
+```text
+corpus_generation_id: mark_phase4_corpus_6tep_v1
+```
+
+Closure judgment:
+
+```text
+docs/validation/phase4_2_corpus_generation_certification.md
+```
 
 ---
 
@@ -156,6 +203,66 @@ selection_policy_version: v1
 ```
 
 If a different identifier is selected during implementation, the identifier must be explicit, stable, and documented.
+
+---
+
+## Current Certified Corpus Generation
+
+The canonical accepted Phase 4.2 Corpus Generation is:
+
+```text
+mark_phase4_corpus_6tep_v1
+```
+
+Accepted Registration Unit scope:
+
+```text
+gsc_epilepsy
+gsc_mitochondrial_disease
+vap_hg002
+vap_median_ERR10619300
+vap_q1_ERR10619212
+vap_q3_ERR10619225
+```
+
+Accepted producer distribution:
+
+```text
+GSC: 2
+VAP: 4
+```
+
+Accepted shared summary:
+
+```text
+included_registration_unit_count: 6
+excluded_registration_unit_count: 0
+downstream_assertion_record_input_count: 6
+artifact_count_total: 82
+assertion_registration_count_total: 52
+```
+
+Layer-specific source identity totals differ intentionally:
+
+```text
+Layer 2 compressed golden fixture:
+    source_identity_count_total: 1651
+
+Layer 3 MARK full corpus:
+    source_identity_count_total: 147941196
+```
+
+The accepted downstream handoff artifact is:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv
+```
+
+This file is the governed input substrate for Phase 4.3 Assertion Records.
+
+Phase 4.3 must consume the governed downstream input manifest.
+
+Phase 4.3 must not crawl Registration Unit folders opportunistically.
 
 ---
 
@@ -301,34 +408,44 @@ A Corpus Generation must not silently omit Registration Units when omission affe
 
 ---
 
-## Required Output Artifacts
+## Required Build Artifacts
 
-A valid Corpus Generation implementation must emit deterministic sidecar artifacts outside the selected Registration Units.
+A valid Corpus Generation implementation must emit deterministic build artifacts outside the selected Registration Units.
 
 Expected Phase 4.2 build outputs include:
 
 ```text
+inputs/corpus_generation_selection_manifest.tsv
 corpus_generation_manifest.tsv
 corpus_generation_manifest.json
 corpus_generation_report.md
-corpus_generation_validation_report.json
-corpus_generation_validation_report.tsv
 downstream_assertion_record_input_manifest.tsv
 ```
 
-Recommended initial build output directory:
+Canonical accepted build output directory:
 
 ```text
 results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/
 ```
 
-Corpus Generation output paths must not be confused with Registration Unit source paths.
+Corpus Generation build output paths must not be confused with Registration Unit source paths.
 
 Corpus Generation artifacts do not replace Registration Units.
 
 Corpus Generation artifacts do not create Assertion Records.
 
 Corpus Generation artifacts do not define topology, geometry, surfaces, projections, or biological interpretation.
+
+Build artifacts must not self-certify.
+
+The accepted build artifact family retains:
+
+```text
+corpus_generation_validation_status: not_evaluated
+corpus_generation_certification_status: not_available
+```
+
+External validation receipts judge emitted build artifacts after emission.
 
 ---
 
@@ -475,25 +592,61 @@ If sorted output is used, the sorting policy must be declared.
 
 ## Required Validation Receipts
 
-Corpus Generation validation receipts should be written under:
+Corpus Generation validation receipts are written under:
 
 ```text
 results/validation/phase4_corpus_generation/
 ```
 
-Expected receipt files may include:
+Implemented artifact-set validation receipts include:
 
 ```text
-corpus_generation_validation_run_summary.json
+corpus_generation_validation_report.json
+corpus_generation_validation_report.tsv
 corpus_generation_validation_summary.json
-corpus_generation_manifest_validation.tsv
-corpus_generation_membership_validation.tsv
-corpus_generation_exclusion_validation.tsv
-corpus_generation_non_mutation_summary.json
-corpus_generation_determinism_summary.json
+corpus_generation_validation_summary.tsv
 ```
 
-Receipt names may evolve during implementation.
+Layer-specific smoketest summary receipts include:
+
+```text
+phase4_2_lightweight_smoketest_summary.json
+phase4_2_lightweight_smoketest_summary.tsv
+phase4_2_golden_fixture_smoketest_summary.json
+phase4_2_golden_fixture_smoketest_summary.tsv
+phase4_2_mark_full_corpus_smoketest_summary.json
+phase4_2_mark_full_corpus_smoketest_summary.tsv
+```
+
+Accepted timestamped receipt directories include:
+
+```text
+lightweight_fixture_smoketest_2026_06_30_121500/
+golden_fixture_smoketest_2026_06_30_122500/
+mark_full_corpus_smoketest_2026_06_30_123500/
+```
+
+Acceptance-bearing receipts are:
+
+```text
+Layer 2:
+    results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/
+
+Layer 3:
+    results/validation/phase4_corpus_generation/mark_full_corpus_smoketest_2026_06_30_123500/
+```
+
+The synthetic lightweight receipt is retained as a supplemental operator-path regression check:
+
+```text
+results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/
+```
+
+Checksum-backed archives are stored under:
+
+```text
+results/validation/phase4_corpus_generation/receipt_archives/
+```
 
 Receipts must preserve enough information to reconstruct:
 
@@ -501,7 +654,6 @@ Receipts must preserve enough information to reconstruct:
 input selection manifest
 input readiness inventory
 selection policy
-validation policy
 builder identity
 validator identity
 build output location
@@ -515,15 +667,17 @@ non-mutation evidence
 anti-collapse evidence
 ```
 
-Empty future receipt directories should not be created before validation execution.
+Earlier planned receipt names may be reintroduced later if future validators require finer-grained decomposition.
+
+The implemented receipt family is authoritative for Phase 4.2 closure.
 
 ---
 
-## Initial Local Validation Target
+## Layer 1 And Layer 2 Validation Targets
 
-The initial local validation target should use small synthetic or fixture Registration Unit inputs.
+Layer 1 validates implementation behavior through pytest unit and integration tests.
 
-Local validation must prove:
+Layer 1 must prove:
 
 ```text
 selection manifest is required
@@ -543,15 +697,54 @@ Assertion Records are not created
 Topology is not derived
 ```
 
-Local validation may use lightweight fixtures.
+Layer 1 status for Phase 4.2 closure:
 
-Local validation does not replace MARK benchmark validation.
+```text
+140 passed
+```
+
+Layer 2 validates artifact flow through the sys76-local compressed real-row Phase 4 Registration Unit golden fixture.
+
+Layer 2 acceptance substrate:
+
+```text
+tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/
+```
+
+Layer 2 acceptance receipt:
+
+```text
+results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/
+```
+
+Layer 2 acceptance summary:
+
+```text
+smoketest_status: passed
+validation_status: passed
+summary_status: passed
+failed_check_count: 0
+
+included_registration_unit_count: 6
+excluded_registration_unit_count: 0
+downstream_assertion_record_input_count: 6
+artifact_count_total: 82
+assertion_registration_count_total: 52
+source_identity_count_total: 1651
+producer_family_distribution: {'GSC': 2, 'VAP': 4}
+```
+
+The synthetic lightweight smoketest is retained as a supplemental operator-path check.
+
+It is not the acceptance-bearing Layer 2 receipt.
+
+Local validation does not replace MARK full-corpus validation.
 
 ---
 
-## Initial MARK Benchmark Validation Target
+## Layer 3 MARK Full-Corpus Validation Target
 
-The initial MARK benchmark validation target is the six-unit canonical benchmark corpus.
+The MARK full-corpus validation target is the six-unit canonical benchmark corpus.
 
 Expected Corpus Generation identity:
 
@@ -570,7 +763,20 @@ vap_q1_ERR10619212
 vap_q3_ERR10619225
 ```
 
-Validation must confirm:
+Layer 3 acceptance receipt:
+
+```text
+results/validation/phase4_corpus_generation/mark_full_corpus_smoketest_2026_06_30_123500/
+```
+
+Layer 3 checksum-backed archive:
+
+```text
+results/validation/phase4_corpus_generation/receipt_archives/mark_full_corpus_smoketest_2026_06_30_123500.tgz
+results/validation/phase4_corpus_generation/receipt_archives/mark_full_corpus_smoketest_2026_06_30_123500.tgz.sha256
+```
+
+Layer 3 validation confirmed:
 
 ```text
 expected six Registration Units are present
@@ -585,6 +791,27 @@ corpus manifest is deterministic
 downstream Assertion Record input manifest is deterministic
 Registration Units are not mutated
 SQLite sidecars are not created
+compressed golden fixture paths are not used
+```
+
+Layer 3 acceptance summary:
+
+```text
+smoketest_status: passed
+validation_status: passed
+summary_status: passed
+boundary_status: passed
+
+included_registration_unit_count: 6
+excluded_registration_unit_count: 0
+downstream_assertion_record_input_count: 6
+artifact_count_total: 82
+assertion_registration_count_total: 52
+source_identity_count_total: 147941196
+producer_family_distribution: {'GSC': 2, 'VAP': 4}
+total_check_count: 210
+passed_check_count: 210
+failed_check_count: 0
 ```
 
 This benchmark Corpus Generation is not a claim that all available VAP SRA-derived TEPs have been registered or included.
@@ -692,13 +919,38 @@ Corpus Generation does not become source truth
 Corpus Generation does not create Assertion Records
 Corpus Generation does not derive topology
 anti-collapse safeguards pass
-local validation receipts exist
-MARK benchmark validation receipts exist
+Layer 1 validation passes
+Layer 2 golden fixture validation receipts exist
+Layer 3 MARK full-corpus validation receipts exist
+```
+
+For the canonical six-unit MARK Corpus Generation, these criteria have been satisfied and recorded in:
+
+```text
+docs/validation/phase4_2_corpus_generation_certification.md
 ```
 
 Phase 4.2 is not complete merely because a file list exists.
 
 Phase 4.2 is complete only when the declared Corpus Generation satisfies the Corpus Generation contract and can safely define the evidence universe for downstream Phase 4 derivation.
+
+Canonical Phase 4.2 completion status:
+
+```text
+PHASE 4.2 CORPUS GENERATION CERTIFIED FOR ARCHITECTURAL CLOSURE
+```
+
+Authorized next layer:
+
+```text
+Phase 4.3 — Assertion Records
+```
+
+Required Phase 4.3 input:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv
+```
 
 ---
 

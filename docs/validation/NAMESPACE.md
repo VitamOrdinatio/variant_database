@@ -87,15 +87,36 @@ registration_unit_validation.md
     Phase 4.1 Registration Unit validation governance.
 
 phase4_1_registration_unit_certification.md
-    Phase 4.1 Registration Unit certification seed for the MARK real-corpus
+    Phase 4.1 Registration Unit certification for the MARK real-corpus
     six-unit canonical benchmark smoketest.
+
+corpus_generation_validation.md
+    Phase 4.2 Corpus Generation validation governance.
+
+phase4_2_corpus_generation_layer2_acceptance.md
+    Phase 4.2 Layer 2 compressed real-row golden fixture acceptance evidence.
+
+phase4_2_corpus_generation_layer3_acceptance.md
+    Phase 4.2 Layer 3 MARK full-corpus acceptance evidence.
+
+phase4_2_corpus_generation_certification.md
+    Phase 4.2 Corpus Generation architectural closure certification.
 ```
 
-## Planned Phase 4 Layer Validation Documents
+## Phase 4 Layer Validation Documents
 
 ```text
 corpus_generation_validation.md
-    Planned Phase 4.2 Corpus Generation validation governance.
+    Implemented and accepted Phase 4.2 Corpus Generation validation governance.
+
+phase4_2_corpus_generation_layer2_acceptance.md
+    Accepted Phase 4.2 Layer 2 golden fixture validation receipt interpretation.
+
+phase4_2_corpus_generation_layer3_acceptance.md
+    Accepted Phase 4.2 Layer 3 MARK full-corpus validation receipt interpretation.
+
+phase4_2_corpus_generation_certification.md
+    Certified Phase 4.2 architectural closure judgment.
 
 assertion_record_validation.md
     Planned Phase 4.3 Assertion Record validation governance.
@@ -135,7 +156,7 @@ Governance document:
 registration_unit_validation.md
 ```
 
-Certification seed document:
+Certification document:
 
 ```text
 phase4_1_registration_unit_certification.md
@@ -180,6 +201,90 @@ This does not imply that all available VAP SRA-derived TEPs have been registered
 
 ---
 
+# Current Phase 4.2 Validation State
+
+Phase 4.2 Corpus Generation validation is complete for the six-unit canonical benchmark corpus.
+
+Governance document:
+
+```text
+corpus_generation_validation.md
+```
+
+Layer 2 acceptance document:
+
+```text
+phase4_2_corpus_generation_layer2_acceptance.md
+```
+
+Layer 3 acceptance document:
+
+```text
+phase4_2_corpus_generation_layer3_acceptance.md
+```
+
+Certification document:
+
+```text
+phase4_2_corpus_generation_certification.md
+```
+
+Receipt directory:
+
+```text
+results/validation/phase4_corpus_generation/
+```
+
+Canonical Corpus Generation:
+
+```text
+mark_phase4_corpus_6tep_v1
+```
+
+Current validation evidence includes:
+
+```text
+140 pytest tests passing
+Layer 2 golden fixture smoketest passed
+Layer 3 MARK full-corpus smoketest passed
+six Registration Units included
+zero Registration Units excluded
+82 artifacts represented
+52 assertion registrations represented
+147941196 MARK full-corpus source identities represented
+210 MARK full-corpus validation checks passed
+0 MARK full-corpus validation checks failed
+```
+
+The canonical Phase 4.2 Corpus Generation includes:
+
+```text
+gsc_epilepsy
+gsc_mitochondrial_disease
+vap_hg002
+vap_median_ERR10619300
+vap_q1_ERR10619212
+vap_q3_ERR10619225
+```
+
+The accepted downstream Phase 4.3 handoff artifact is:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv
+```
+
+This confirms governed Corpus Generation declaration, deterministic build artifact emission, included-only downstream handoff behavior, artifact-set validation, receipt preservation, and authority-boundary preservation across Layer 1, Layer 2, and Layer 3 validation.
+
+This does not complete Phase 4.8 certification.
+
+This does not certify biological correctness.
+
+This does not create Assertion Records, derive Evidence Topology, compute Convergence Geometry, emit Evidence Convergence Surfaces, emit Projection Layer outputs, or perform RDGP reasoning.
+
+This does not imply that all available VAP SRA-derived TEPs have been registered into VDB Phase 3 or included in the canonical Phase 4.2 Corpus Generation.
+
+---
+
 # Validation Receipts
 
 Validation receipts live under:
@@ -198,6 +303,28 @@ results/validation/phase4_registration_units/
     Phase 4.1 Registration Unit validation receipts, including local
     lightweight-fixture receipts, MARK real-corpus six-unit benchmark receipts,
     and portable MARK receipt archives.
+
+results/validation/phase4_corpus_generation/
+    Phase 4.2 Corpus Generation validation receipts, including supplemental
+    synthetic operator-path receipts, Layer 2 compressed real-row golden fixture
+    acceptance receipts, Layer 3 MARK full-corpus acceptance receipts, and
+    portable receipt archives.
+```
+
+Current Phase 4.2 Corpus Generation receipt evidence includes:
+
+```text
+results/validation/phase4_corpus_generation/lightweight_fixture_smoketest_2026_06_30_121500/
+    Supplemental synthetic operator-path Phase 4.2 validation receipts.
+
+results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/
+    Layer 2 compressed real-row golden fixture acceptance receipts.
+
+results/validation/phase4_corpus_generation/mark_full_corpus_smoketest_2026_06_30_123500/
+    Layer 3 MARK full-corpus Phase 4.2 acceptance receipts.
+
+results/validation/phase4_corpus_generation/receipt_archives/
+    Portable Phase 4.2 receipt archives and SHA256 checksums.
 ```
 
 Receipt files record what was proven during validation execution.
