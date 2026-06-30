@@ -14,6 +14,36 @@ The corresponding risk is that malformed upstream artifacts become malformed dow
 
 This document defines the three-layer validation strategy used to prevent artifact errors from propagating through the Phase 4 stack.
 
+## Relationship to the Emergent Capability Principle
+
+This strategy is the validation counterpart to the Emergent Capability Principle.
+
+The Emergent Capability Principle states that VDB should construct deterministic architectural layers whose composition naturally produces higher-order capabilities.
+
+The Three-Layer Validation Strategy exists because that design choice creates a specific systems risk:
+
+```text
+incorrect artifact substrate
+    ↓
+incorrect emergent capability
+```
+
+Therefore, each Phase 4 layer must validate both:
+
+```text
+the local implementation contract
+
+and
+
+the artifact substrate being passed forward
+```
+
+See:
+
+```text
+docs/architecture/emergent_capability_principle.md
+```
+
 ## Architectural Context
 
 VDB Phase 4 follows this layer sequence:

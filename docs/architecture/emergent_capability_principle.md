@@ -327,6 +327,36 @@ This principle aligns with VDB's broader preservation doctrine.
 
 ---
 
+# Validation Guardrail
+
+The Emergent Capability Principle requires a corresponding validation strategy.
+
+Because higher-order VDB behavior emerges from lower-order artifacts, malformed upstream artifacts can become malformed downstream premises.
+
+The principal risk is therefore not only implementation failure.
+
+The principal risk is apparently valid downstream behavior operating on incorrect first principles.
+
+For this reason, emergent capability development must be paired with the repository's three-layer validation strategy:
+
+```text
+Layer 1 — unit and integration tests
+
+Layer 2 — lightweight golden fixture smoketest
+
+Layer 3 — MARK real-world data smoketest
+```
+
+This guardrail ensures that VDB validates not only code behavior, but also the artifact substrates that carry meaning from one architectural layer to the next.
+
+See:
+
+```text
+docs/architecture/three_layer_validation_strategy.md
+```
+
+---
+
 # Relationship To Other Architectural Principles
 
 The Emergent Capability Principle complements several other VDB architectural doctrines.
