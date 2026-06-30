@@ -1,0 +1,75 @@
+{
+  "artifacts": {
+    "corpus_generation_manifest_json": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/scratch_corpus_generation/phase4_2_golden_fixture_corpus_v1/corpus_generation_manifest.json",
+    "corpus_generation_manifest_tsv": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/scratch_corpus_generation/phase4_2_golden_fixture_corpus_v1/corpus_generation_manifest.tsv",
+    "downstream_assertion_record_input_manifest": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/scratch_corpus_generation/phase4_2_golden_fixture_corpus_v1/downstream_assertion_record_input_manifest.tsv",
+    "receipt_dir": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500",
+    "scratch_corpus_generation_dir": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/scratch_corpus_generation/phase4_2_golden_fixture_corpus_v1",
+    "validation_report_json": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/validation_receipts/corpus_generation_validation_report.json",
+    "validation_report_tsv": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/validation_receipts/corpus_generation_validation_report.tsv",
+    "validation_summary_json": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/validation_receipts/corpus_generation_validation_summary.json",
+    "validation_summary_tsv": "results/validation/phase4_corpus_generation/golden_fixture_smoketest_2026_06_30_122500/validation_receipts/corpus_generation_validation_summary.tsv"
+  },
+  "authority_boundary": {
+    "certifies_corpus_generation": false,
+    "creates_assertion_records": false,
+    "derives_topology": false,
+    "interprets_evidence": false,
+    "mutates_registration_units": false,
+    "opens_fixture_sqlite_read_only": true,
+    "uses_compressed_real_row_fixture": true,
+    "uses_mark_full_corpus_data": false
+  },
+  "expected_summary": {
+    "artifact_count_total": 82,
+    "assertion_registration_count_total": 52,
+    "downstream_assertion_record_input_count": 6,
+    "excluded_registration_unit_count": 0,
+    "included_registration_unit_count": 6,
+    "source_identity_count_total": 1651
+  },
+  "fixture": {
+    "fixture_root": "tests/fixtures/phase4/phase4_registration_unit_golden_fixture_2026_06_29_155520/phase4_registration_unit_golden_fixture",
+    "registration_unit_count": 6,
+    "registration_unit_labels": [
+      "gsc_epilepsy",
+      "gsc_mitochondrial_disease",
+      "vap_hg002",
+      "vap_median_ERR10619300",
+      "vap_q1_ERR10619212",
+      "vap_q3_ERR10619225"
+    ]
+  },
+  "observed_summary": {
+    "artifact_count_total": 82,
+    "assertion_registration_count_total": 52,
+    "corpus_generation_certification_status": "not_available",
+    "corpus_generation_validation_status": "not_evaluated",
+    "downstream_assertion_record_input_count": 6,
+    "excluded_registration_unit_count": 0,
+    "failed_check_count": 0,
+    "included_registration_unit_count": 6,
+    "passed_check_count": 210,
+    "producer_family_distribution": {
+      "GSC": 2,
+      "VAP": 4
+    },
+    "source_identity_count_total": 1651,
+    "total_check_count": 210,
+    "validation_status": "passed"
+  },
+  "smoketest_identity": {
+    "build_timestamp": "2026-06-30T12:20:00Z",
+    "corpus_generation_id": "phase4_2_golden_fixture_corpus_v1",
+    "smoketest_id": "phase4_2_golden_fixture_corpus_generation_smoketest",
+    "smoketest_status": "passed",
+    "summary_status": "passed",
+    "validation_status": "passed",
+    "validation_timestamp": "2026-06-30T12:25:00Z"
+  },
+  "validation_layer": {
+    "layer": "Layer 2",
+    "name": "Compressed Real-World Golden Fixture Smoketest",
+    "purpose": "Validate Phase 4.2 Corpus Generation artifact flow against the MARK-derived compressed real-row Registration Unit golden fixture."
+  }
+}
