@@ -42,9 +42,11 @@ import json
 import sys
 import tarfile
 import time
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
 
 MANIFEST_COLUMNS = [
     "manifest_schema_version",
@@ -60,142 +62,120 @@ MANIFEST_COLUMNS = [
     "notes",
 ]
 
-EXPECTED_REGISTRATION_UNITS = [
-    {
-    "manifest_schema_version": "v1",
-    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy",
-    "registration_unit_label": "gsc_epilepsy",
-    "producer_family": "GSC",
-    "validation_layer": "validation_layer_3_mark_full_corpus",
-    "source_role": "mark_phase3_canonical_full_corpus",
-    "registration_backend": "sqlite",
-    "registration_unit_path": (
-    "results/registration/mark_phase3_canonical/gsc_epilepsy"
-    ),
-    "sqlite_path": (
-    "results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite"
-    ),
-    "expected_read_mode": "read_only",
-    "notes": "Real MARK Phase 3 canonical GSC epilepsy Registration Unit.",
-    },
-    {
-    "manifest_schema_version": "v1",
-    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease",
-    "registration_unit_label": "gsc_mitochondrial_disease",
-    "producer_family": "GSC",
-    "validation_layer": "validation_layer_3_mark_full_corpus",
-    "source_role": "mark_phase3_canonical_full_corpus",
-    "registration_backend": "sqlite",
-    "registration_unit_path": (
-    "results/registration/mark_phase3_canonical/"
-    "gsc_mitochondrial_disease"
-    ),
-    "sqlite_path": (
-    "results/registration/mark_phase3_canonical/"
-    "gsc_mitochondrial_disease/vdb.sqlite"
-    ),
-    "expected_read_mode": "read_only",
-    "notes": (
-    "Real MARK Phase 3 canonical GSC mitochondrial disease "
-    "Registration Unit."
-    ),
-    },
-    {
-    "manifest_schema_version": "v1",
-    "registration_unit_id": "mark_phase3_canonical_vap_hg002",
-    "registration_unit_label": "vap_hg002",
-    "producer_family": "VAP",
-    "validation_layer": "validation_layer_3_mark_full_corpus",
-    "source_role": "mark_phase3_canonical_full_corpus",
-    "registration_backend": "sqlite",
-    "registration_unit_path": (
-    "results/registration/mark_phase3_canonical/vap_hg002"
-    ),
-    "sqlite_path": (
-    "results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite"
-    ),
-    "expected_read_mode": "read_only",
-    "notes": "Real MARK Phase 3 canonical VAP HG002 Registration Unit.",
-    },
-    {
-    "manifest_schema_version": "v1",
-    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300",
-    "registration_unit_label": "vap_median_ERR10619300",
-    "producer_family": "VAP",
-    "validation_layer": "validation_layer_3_mark_full_corpus",
-    "source_role": "mark_phase3_canonical_full_corpus",
-    "registration_backend": "sqlite",
-    "registration_unit_path": (
-    "results/registration/mark_phase3_canonical/"
-    "vap_median_ERR10619300"
-    ),
-    "sqlite_path": (
-    "results/registration/mark_phase3_canonical/"
-    "vap_median_ERR10619300/vdb.sqlite"
-    ),
-    "expected_read_mode": "read_only",
-    "notes": (
-    "Real MARK Phase 3 canonical VAP median-depth ERR10619300 "
-    "Registration Unit."
-    ),
-    },
-    {
-    "manifest_schema_version": "v1",
-    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212",
-    "registration_unit_label": "vap_q1_ERR10619212",
-    "producer_family": "VAP",
-    "validation_layer": "validation_layer_3_mark_full_corpus",
-    "source_role": "mark_phase3_canonical_full_corpus",
-    "registration_backend": "sqlite",
-    "registration_unit_path": (
-    "results/registration/mark_phase3_canonical/vap_q1_ERR10619212"
-    ),
-    "sqlite_path": (
-    "results/registration/mark_phase3_canonical/"
-    "vap_q1_ERR10619212/vdb.sqlite"
-    ),
-    "expected_read_mode": "read_only",
-    "notes": (
-    "Real MARK Phase 3 canonical VAP q1-depth ERR10619212 "
-    "Registration Unit."
-    ),
-    },
-    {
-    "manifest_schema_version": "v1",
-    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225",
-    "registration_unit_label": "vap_q3_ERR10619225",
-    "producer_family": "VAP",
-    "validation_layer": "validation_layer_3_mark_full_corpus",
-    "source_role": "mark_phase3_canonical_full_corpus",
-    "registration_backend": "sqlite",
-    "registration_unit_path": (
-    "results/registration/mark_phase3_canonical/vap_q3_ERR10619225"
-    ),
-    "sqlite_path": (
-    "results/registration/mark_phase3_canonical/"
-    "vap_q3_ERR10619225/vdb.sqlite"
-    ),
-    "expected_read_mode": "read_only",
-    "notes": (
-    "Real MARK Phase 3 canonical VAP q3-depth ERR10619225 "
-    "Registration Unit."
-    ),
-    },
-]
-
+VALIDATION_LAYER = "validation_layer_3_mark_full_corpus"
+SOURCE_ROLE = "mark_phase3_canonical_full_corpus"
+REGISTRATION_BACKEND = "sqlite"
+EXPECTED_READ_MODE = "read_only"
+SQLITE_FILENAME = "vdb.sqlite"
 SIDECAR_SUFFIXES = ("-wal", "-shm", "-journal")
 
 
+@dataclass(frozen=True)
+class ExpectedRegistrationUnit:
+    """Expected real MARK Phase 3 canonical Registration Unit."""
+
+    registration_unit_id: str
+    registration_unit_label: str
+    producer_family: str
+    registration_unit_path: str
+    notes: str
+
+    @property
+    def sqlite_path(self) -> str:
+        """sqlite_path is intentionally relative to registration_unit_path."""
+        return SQLITE_FILENAME
+
+    def as_manifest_row(self) -> dict[str, str]:
+        return {
+            "manifest_schema_version": "v1",
+            "registration_unit_id": self.registration_unit_id,
+            "registration_unit_label": self.registration_unit_label,
+            "producer_family": self.producer_family,
+            "validation_layer": VALIDATION_LAYER,
+            "source_role": SOURCE_ROLE,
+            "registration_backend": REGISTRATION_BACKEND,
+            "registration_unit_path": self.registration_unit_path,
+            "sqlite_path": self.sqlite_path,
+            "expected_read_mode": EXPECTED_READ_MODE,
+            "notes": self.notes,
+        }
+
+
+EXPECTED_REGISTRATION_UNITS = [
+    ExpectedRegistrationUnit(
+        registration_unit_id="mark_phase3_canonical_gsc_epilepsy",
+        registration_unit_label="gsc_epilepsy",
+        producer_family="GSC",
+        registration_unit_path="results/registration/mark_phase3_canonical/gsc_epilepsy",
+        notes="Real MARK Phase 3 canonical GSC epilepsy Registration Unit.",
+    ),
+    ExpectedRegistrationUnit(
+        registration_unit_id="mark_phase3_canonical_gsc_mitochondrial_disease",
+        registration_unit_label="gsc_mitochondrial_disease",
+        producer_family="GSC",
+        registration_unit_path=(
+            "results/registration/mark_phase3_canonical/"
+            "gsc_mitochondrial_disease"
+        ),
+        notes=(
+            "Real MARK Phase 3 canonical GSC mitochondrial disease "
+            "Registration Unit."
+        ),
+    ),
+    ExpectedRegistrationUnit(
+        registration_unit_id="mark_phase3_canonical_vap_hg002",
+        registration_unit_label="vap_hg002",
+        producer_family="VAP",
+        registration_unit_path="results/registration/mark_phase3_canonical/vap_hg002",
+        notes="Real MARK Phase 3 canonical VAP HG002 Registration Unit.",
+    ),
+    ExpectedRegistrationUnit(
+        registration_unit_id="mark_phase3_canonical_vap_median_ERR10619300",
+        registration_unit_label="vap_median_ERR10619300",
+        producer_family="VAP",
+        registration_unit_path=(
+            "results/registration/mark_phase3_canonical/"
+            "vap_median_ERR10619300"
+        ),
+        notes=(
+            "Real MARK Phase 3 canonical VAP median-depth ERR10619300 "
+            "Registration Unit."
+        ),
+    ),
+    ExpectedRegistrationUnit(
+        registration_unit_id="mark_phase3_canonical_vap_q1_ERR10619212",
+        registration_unit_label="vap_q1_ERR10619212",
+        producer_family="VAP",
+        registration_unit_path=(
+            "results/registration/mark_phase3_canonical/vap_q1_ERR10619212"
+        ),
+        notes=(
+            "Real MARK Phase 3 canonical VAP q1-depth ERR10619212 "
+            "Registration Unit."
+        ),
+    ),
+    ExpectedRegistrationUnit(
+        registration_unit_id="mark_phase3_canonical_vap_q3_ERR10619225",
+        registration_unit_label="vap_q3_ERR10619225",
+        producer_family="VAP",
+        registration_unit_path=(
+            "results/registration/mark_phase3_canonical/vap_q3_ERR10619225"
+        ),
+        notes=(
+            "Real MARK Phase 3 canonical VAP q3-depth ERR10619225 "
+            "Registration Unit."
+        ),
+    ),
+]
+
+
 class TeeLogger:
-
     """Write each message to stdout and to a log file."""
-
 
     def __init__(self, log_path: Path) -> None:
         self.log_path = log_path
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
         self.log_path.write_text("", encoding="utf-8")
-
 
     def log(self, message: str = "") -> None:
         print(message, flush=True)
@@ -203,13 +183,12 @@ class TeeLogger:
             handle.write(f"{message}\n")
 
 
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-    description=(
-        "Run Phase 4.1 Registration Unit smoketest against the real MARK "
-        "canonical Phase 3 Registration Units."
-        )   
+        description=(
+            "Run Phase 4.1 Registration Unit smoketest against the real MARK "
+            "canonical Phase 3 Registration Units."
+        )
     )
     parser.add_argument(
         "--repo-root",
@@ -239,7 +218,15 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Do not create a .tgz archive and .sha256 file after the run.",
     )
-    
+    parser.add_argument(
+        "--overwrite",
+        action="store_true",
+        help=(
+            "Allow writing into an existing run directory. Default behavior is "
+            "to fail if the timestamped run directory already exists."
+        ),
+    )
+
     return parser.parse_args()
 
 
@@ -252,6 +239,11 @@ def main() -> int:
 
     run_ts = args.run_ts or datetime.now(timezone.utc).strftime("%Y_%m_%d_%H%M%S")
     run_dir = output_parent / f"mark_full_corpus_smoketest_{run_ts}"
+
+    if run_dir.exists() and not args.overwrite:
+        print(f"ERROR: run directory already exists: {run_dir}", flush=True)
+        print("Use --overwrite only if you intentionally want to reuse it.", flush=True)
+        return 2
 
     input_dir = run_dir / "inputs"
     log_dir = run_dir / "logs"
@@ -372,14 +364,6 @@ def main() -> int:
     logger.log("## Emitted files")
     log_file_listing(run_dir, logger)
 
-    if not args.no_package:
-        logger.log()
-        logger.log("## Packaging receipt directory")
-        archive_path = create_tgz_archive(run_dir)
-        sha256_path = write_sha256_file(archive_path)
-        logger.log(f"archive: {archive_path}")
-        logger.log(f"sha256: {sha256_path}")
-
     elapsed_seconds = time.perf_counter() - start_time
     logger.log()
     logger.log(f"elapsed_seconds: {elapsed_seconds:.2f}")
@@ -394,6 +378,14 @@ def main() -> int:
         logger.log("ERROR: sidecars were created during smoketest.")
         return 1
 
+    if not args.no_package:
+        logger.log()
+        logger.log("## Packaging receipt directory")
+        archive_path = create_tgz_archive(run_dir)
+        sha256_path = write_sha256_file(archive_path)
+        logger.log(f"archive: {archive_path}")
+        logger.log(f"sha256: {sha256_path}")
+
     logger.log()
     logger.log("MARK Phase 4.1 Registration Unit smoketest completed successfully.")
     return 0
@@ -402,13 +394,12 @@ def main() -> int:
 def preflight_expected_sqlite_files(
     repo_root: Path,
     logger: TeeLogger,
-    ) -> list[Path]:
+) -> list[Path]:
     missing_paths: list[Path] = []
 
-
-    for row in EXPECTED_REGISTRATION_UNITS:
-        registration_unit_path = repo_root / row["registration_unit_path"]
-        sqlite_path = repo_root / row["sqlite_path"]
+    for unit in EXPECTED_REGISTRATION_UNITS:
+        registration_unit_path = repo_root / unit.registration_unit_path
+        sqlite_path = registration_unit_path / unit.sqlite_path
 
         if not registration_unit_path.is_dir():
             missing_paths.append(registration_unit_path)
@@ -426,7 +417,6 @@ def preflight_expected_sqlite_files(
 def write_manifest(manifest_path: Path) -> None:
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
 
-
     with manifest_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(
             handle,
@@ -436,16 +426,15 @@ def write_manifest(manifest_path: Path) -> None:
             extrasaction="raise",
         )
         writer.writeheader()
-        for row in EXPECTED_REGISTRATION_UNITS:
-            writer.writerow(row)
+        for unit in EXPECTED_REGISTRATION_UNITS:
+            writer.writerow(unit.as_manifest_row())
 
 
 def find_sqlite_sidecars(real_root: Path) -> list[Path]:
     sidecars: list[Path] = []
 
-
     for suffix in SIDECAR_SUFFIXES:
-        sidecars.extend(real_root.glob(f"**/vdb.sqlite{suffix}"))
+        sidecars.extend(real_root.glob(f"**/{SQLITE_FILENAME}{suffix}"))
 
     return sorted(path.resolve() for path in sidecars)
 
@@ -509,6 +498,7 @@ def write_sha256_file(path: Path) -> Path:
     sha256_path = Path(f"{path}.sha256")
     sha256_path.write_text(f"{digest}  {path.name}\n", encoding="utf-8")
     return sha256_path
+
 
 def sha256sum(path: Path) -> str:
     hasher = hashlib.sha256()
