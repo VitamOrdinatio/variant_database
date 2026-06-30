@@ -1,0 +1,2 @@
+corpus_generation_id	validation_status	validation_timestamp	validator_name	validator_version	total_check_count	passed_check_count	failed_check_count
+mark_phase4_corpus_6tep_v1	passed	2026-06-30T12:35:00Z	variant_database.phase4.corpus_generation.validation	0.1.0	210	210	0

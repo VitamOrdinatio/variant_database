@@ -1,0 +1,51 @@
+{
+  "authority_boundary": {
+    "certifies_corpus_generation": false,
+    "creates_assertion_records": false,
+    "declares_scope": true,
+    "derives_topology": false,
+    "interprets_evidence": false,
+    "mutates_registration_units": false,
+    "opens_sqlite_read_only": true,
+    "uses_compressed_golden_fixture": false,
+    "uses_mark_full_corpus_data": true
+  },
+  "corpus_generation_id": "mark_phase4_corpus_6tep_v1",
+  "corpus_generation_label": "MARK Phase 4 6-TEP Benchmark Corpus v1",
+  "corpus_generation_purpose": "Layer 3 MARK full-corpus validation for Phase 4.2 Corpus Generation artifact flow",
+  "corpus_generation_version": "v1",
+  "expected_producer_family_counts": {
+    "GSC": 2,
+    "VAP": 4
+  },
+  "expected_registration_unit_count": 6,
+  "expected_registration_unit_labels": [
+    "gsc_epilepsy",
+    "gsc_mitochondrial_disease",
+    "vap_hg002",
+    "vap_median_ERR10619300",
+    "vap_q1_ERR10619212",
+    "vap_q3_ERR10619225"
+  ],
+  "expected_summary": {
+    "artifact_count_total": 82,
+    "assertion_registration_count_total": 52,
+    "downstream_assertion_record_input_count": 6,
+    "excluded_registration_unit_count": 0,
+    "included_registration_unit_count": 6,
+    "source_identity_count_total": 147941196
+  },
+  "producer_families_in_scope": [
+    "GSC",
+    "VAP"
+  ],
+  "registration_unit_inventory_reference": "phase4_1_receipts/registration_unit_inventory.tsv",
+  "registration_unit_readiness_reference": "phase4_1_receipts/registration_unit_readiness.tsv",
+  "required_backend": "sqlite",
+  "required_registration_unit_certification_status": "certified",
+  "required_registration_unit_readiness_status": "ready",
+  "required_registration_unit_validation_status": "passed",
+  "selection_policy_description": "Select the six certified MARK Phase 3 canonical Registration Units for Phase 4.2 Corpus Generation Layer 3 full-corpus validation.",
+  "selection_policy_id": "mark_phase4_6tep_certified_input_policy",
+  "selection_policy_version": "v1"
+}
