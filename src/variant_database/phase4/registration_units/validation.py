@@ -379,11 +379,11 @@ def _write_validation_run_summary_json(
             },
         },
         "authority_boundary": (
-            "This validation run proves local Phase 4.1 Registration Unit "
-            "declaration, read-only inspection, inventory emission, readiness "
-            "evaluation, and non-mutation behavior against the declared input "
-            "manifest. It does not certify biological evidence and does not "
-            "replace MARK full-corpus smoketesting."
+            "This validation run proves Phase 4.1 Registration Unit declaration, "
+            "read-only inspection, inventory emission, readiness evaluation, and "
+            "non-mutation behavior against the declared input manifest. It does not "
+            "certify biological evidence, does not construct Corpus Generations, and "
+            "does not replace full Phase 4 certification."
         ),
     }
 

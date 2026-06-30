@@ -1,0 +1,145 @@
+{
+  "authority_boundary": "This validation run proves local Phase 4.1 Registration Unit declaration, read-only inspection, inventory emission, readiness evaluation, and non-mutation behavior against the declared input manifest. It does not certify biological evidence and does not replace MARK full-corpus smoketesting.",
+  "inspection": {
+    "inspection_count": 6,
+    "inspection_status": "passed"
+  },
+  "inventory": {
+    "artifact_status": "passed",
+    "json_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_inventory.json",
+    "row_count": 6,
+    "tsv_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_inventory.tsv"
+  },
+  "manifest_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/inputs/registration_unit_input_manifest.tsv",
+  "non_mutation": {
+    "after": {
+      "mark_phase3_canonical_gsc_epilepsy": {
+        "exists": true,
+        "mtime_ns": 1782462737712536038,
+        "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy",
+        "registration_unit_label": "gsc_epilepsy",
+        "sidecars": [],
+        "size_bytes": 32964608,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite"
+      },
+      "mark_phase3_canonical_gsc_mitochondrial_disease": {
+        "exists": true,
+        "mtime_ns": 1782462741469521861,
+        "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease",
+        "registration_unit_label": "gsc_mitochondrial_disease",
+        "sidecars": [],
+        "size_bytes": 31768576,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_hg002": {
+        "exists": true,
+        "mtime_ns": 1782458414432916188,
+        "registration_unit_id": "mark_phase3_canonical_vap_hg002",
+        "registration_unit_label": "vap_hg002",
+        "sidecars": [],
+        "size_bytes": 34979893248,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_median_ERR10619300": {
+        "exists": true,
+        "mtime_ns": 1782461566122961891,
+        "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300",
+        "registration_unit_label": "vap_median_ERR10619300",
+        "sidecars": [],
+        "size_bytes": 5551849472,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_median_ERR10619300/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_q1_ERR10619212": {
+        "exists": true,
+        "mtime_ns": 1782460591167651124,
+        "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212",
+        "registration_unit_label": "vap_q1_ERR10619212",
+        "sidecars": [],
+        "size_bytes": 6827704320,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q1_ERR10619212/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_q3_ERR10619225": {
+        "exists": true,
+        "mtime_ns": 1782462559411209302,
+        "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225",
+        "registration_unit_label": "vap_q3_ERR10619225",
+        "sidecars": [],
+        "size_bytes": 5711228928,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q3_ERR10619225/vdb.sqlite"
+      }
+    },
+    "before": {
+      "mark_phase3_canonical_gsc_epilepsy": {
+        "exists": true,
+        "mtime_ns": 1782462737712536038,
+        "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy",
+        "registration_unit_label": "gsc_epilepsy",
+        "sidecars": [],
+        "size_bytes": 32964608,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite"
+      },
+      "mark_phase3_canonical_gsc_mitochondrial_disease": {
+        "exists": true,
+        "mtime_ns": 1782462741469521861,
+        "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease",
+        "registration_unit_label": "gsc_mitochondrial_disease",
+        "sidecars": [],
+        "size_bytes": 31768576,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_hg002": {
+        "exists": true,
+        "mtime_ns": 1782458414432916188,
+        "registration_unit_id": "mark_phase3_canonical_vap_hg002",
+        "registration_unit_label": "vap_hg002",
+        "sidecars": [],
+        "size_bytes": 34979893248,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_median_ERR10619300": {
+        "exists": true,
+        "mtime_ns": 1782461566122961891,
+        "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300",
+        "registration_unit_label": "vap_median_ERR10619300",
+        "sidecars": [],
+        "size_bytes": 5551849472,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_median_ERR10619300/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_q1_ERR10619212": {
+        "exists": true,
+        "mtime_ns": 1782460591167651124,
+        "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212",
+        "registration_unit_label": "vap_q1_ERR10619212",
+        "sidecars": [],
+        "size_bytes": 6827704320,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q1_ERR10619212/vdb.sqlite"
+      },
+      "mark_phase3_canonical_vap_q3_ERR10619225": {
+        "exists": true,
+        "mtime_ns": 1782462559411209302,
+        "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225",
+        "registration_unit_label": "vap_q3_ERR10619225",
+        "sidecars": [],
+        "size_bytes": 5711228928,
+        "sqlite_path": "/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q3_ERR10619225/vdb.sqlite"
+      }
+    },
+    "mutation_details": [],
+    "non_mutation_status": "passed",
+    "sidecar_details": [],
+    "sidecar_status": "passed"
+  },
+  "output_dir": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739",
+  "readiness": {
+    "artifact_status": "passed",
+    "not_ready_count": 0,
+    "readiness_json_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_readiness.json",
+    "readiness_tsv_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_readiness.tsv",
+    "ready_count": 6,
+    "row_count": 6,
+    "validation_summary_json_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_validation_summary.json"
+  },
+  "record_count": 6,
+  "validation_run_schema_version": "phase4_registration_unit_validation_run_v1",
+  "validation_status": "passed"
+}

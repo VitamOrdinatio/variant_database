@@ -1,0 +1,82 @@
+# Phase 4.1 MARK Registration Unit Smoketest
+
+repo_root: /root/dev/portfolio_projects/variant_database
+real_root: /root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical
+run_dir: /root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739
+run_ts_utc: 2026_06_30_052739
+log_path: /root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/logs/mark_phase4_1_smoketest.log
+
+## Preflight: expected SQLite files
+/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite	32964608 bytes
+/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite	31768576 bytes
+/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite	34979893248 bytes
+/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_median_ERR10619300/vdb.sqlite	5551849472 bytes
+/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q1_ERR10619212/vdb.sqlite	6827704320 bytes
+/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q3_ERR10619225/vdb.sqlite	5711228928 bytes
+
+## Preflight: existing SQLite sidecars
+preexisting_sidecars: none
+
+## Writing MARK full-corpus Registration Unit manifest
+manifest_path: /root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/inputs/registration_unit_input_manifest.tsv
+
+## Running validator
+NOTE: this may be read-heavy because the real VAP SQLite files are large.
+
+## Validation result
+validation_status: passed
+record_count: 6
+inspection_count: 6
+inventory_row_count: 6
+readiness_row_count: 6
+ready_count: 6
+not_ready_count: 0
+inspection_status: passed
+inventory_artifact_status: passed
+readiness_artifact_status: passed
+non_mutation_status: passed
+sidecar_status: passed
+summary: /root/dev/portfolio_projects/variant_database/results/validation/phase4_registration_units/mark_full_corpus_smoketest_2026_06_30_052739/registration_unit_validation_run_summary.json
+
+## Summary JSON extract
+{
+  "inspection": {
+    "inspection_count": 6,
+    "inspection_status": "passed"
+  },
+  "inventory": {
+    "artifact_status": "passed",
+    "row_count": 6
+  },
+  "non_mutation": {
+    "mutation_details": [],
+    "non_mutation_status": "passed",
+    "sidecar_details": [],
+    "sidecar_status": "passed"
+  },
+  "readiness": {
+    "artifact_status": "passed",
+    "not_ready_count": 0,
+    "ready_count": 6,
+    "row_count": 6
+  },
+  "record_count": 6,
+  "validation_status": "passed"
+}
+
+## Postflight: SQLite sidecars
+postflight_sidecars: none
+
+## Emitted files
+inputs/registration_unit_input_manifest.tsv	1955 bytes
+logs/mark_phase4_1_smoketest.log	2958 bytes
+registration_unit_inventory.json	7002 bytes
+registration_unit_inventory.tsv	3208 bytes
+registration_unit_readiness.json	5662 bytes
+registration_unit_readiness.tsv	1914 bytes
+registration_unit_validation_run_summary.json	7769 bytes
+registration_unit_validation_summary.json	526 bytes
+
+elapsed_seconds: 888.55
+
+## Packaging receipt directory
