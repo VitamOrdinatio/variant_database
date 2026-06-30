@@ -11,7 +11,8 @@ results/validation/*
 !results/validation/phase4_registration_units/**
 !results/validation/phase4_corpus_generation/
 !results/validation/phase4_corpus_generation/**
-
+!results/phase4/
+!results/phase4/**
 
 # Local machine configs:
 config/config.sys76.local.yaml

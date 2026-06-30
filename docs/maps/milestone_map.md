@@ -13,13 +13,43 @@ Provide a structured, persistent, queryable database for storing and integrating
 
 VDB serves as the authoritative source of genomic evidence that enables downstream systems (e.g., RDGP) to perform reproducible, interpretable analysis.
 
+VDB also preserves producer TEP-derived evidence packages and constructs governed Phase 4 evidence structures for downstream derivation, exposure, and consumer-facing projection.
+
+---
+
+## Current Architecture Status
+
+This milestone map began as a v1 relational evidence-store roadmap.
+
+VDB has since matured into a TEP-preserving evidence architecture.
+
+The current architecture preserves producer evidence through:
+
+```text
+Registration Units
+Corpus Generations
+Assertion Records
+Evidence Topology
+Convergence Geometry
+Evidence Convergence Surfaces
+Projection Views
+```
+
+The original normalized relational model remains a foundational substrate, especially for VAP-derived variant evidence, but it is no longer the complete architectural description of VDB.
+
+This update is a lightweight LANE-respecting refresh. It preserves the original map while making the current Phase 3/Phase 4 architecture visible.
+
 ---
 
 ## Layer Ecosystem
-1. evidence providers (VAP, GSC, future RSP)
-2. authoritative evidence layer (VDB)
-3. interface contract layer (vdb_rdgp_interface)
-4. reasoning layer (RDGP)
+
+1. producer evidence providers: VAP, GSC, future RSP
+2. TEP transport and Registration Unit preservation
+3. Corpus Generation scope declaration
+4. Assertion Record preservation
+5. Evidence Topology, Convergence Geometry, and Evidence Convergence Surface governance
+6. Projection View and consumer interface layer
+7. downstream reasoning layer: RDGP
 
 ---
 
@@ -29,7 +59,38 @@ VDB serves as the authoritative source of genomic evidence that enables downstre
 - "gene-level evidence": aggregated variant and contextual information associated with a gene for a given sample
 - "authoritative evidence layer": the system of record from which downstream analytical systems retrieve genomic evidence
 
+---
+
+## Modern Phase 4 Doctrine
+
+Current VDB Phase 4 doctrine:
+
+```text
+Registration Units preserve custody.
+Corpus Generations declare scope.
+Assertion Records preserve scientific claims.
+Evidence Topology derives organization.
+Convergence Geometry characterizes organization.
+Evidence Convergence Surfaces govern exposure.
+Projection Views represent governed evidence.
+RDGP reasons.
+```
+
+This doctrine extends the original relational-data model without discarding it.
+
+The older v1 relational model remains important for normalized evidence storage, inspection, provenance, namespace brokerage, and consumer queries.
+
+The modern Phase 4 architecture adds governed evidence preservation, scope declaration, derivation boundaries, and projection governance.
+
+---
+
 ## Core Data Model (v1)
+
+The following v1 data model is foundational.
+
+It describes the original normalized relational evidence substrate, especially for VAP-derived variant evidence.
+
+It should be interpreted as a substrate layer, not as the complete modern VDB architecture.
 
 VDB implements a normalized relational schema centered on variant-level evidence.
 
@@ -367,6 +428,31 @@ Downstream systems must be able to retrieve from VDB:
 
 ## Milestones
 
+The original M1–M8 milestones describe the foundational relational, namespace, ingestion, query, provenance, edge-case, and integration substrate.
+
+They remain useful as historical and foundational milestones.
+
+They are now extended by the modern Phase 3/Phase 4 TEP preservation and evidence-derivation architecture.
+
+Current active frontier:
+
+```text
+Phase 3:
+    TEP package registration and Registration Unit substrate preparation
+
+Phase 4.1:
+    Registration Unit preservation and readiness validation
+
+Phase 4.2:
+    Corpus Generation scope declaration and validation
+
+Phase 4.3+:
+    Assertion Records, Evidence Topology, Convergence Geometry,
+    Evidence Convergence Surfaces, and Projection Views
+```
+
+
+
 ### M1 — Core Schema (Data Model Exists)
 
 Define and implement core tables:
@@ -581,6 +667,264 @@ For RDGP integration, VDB should ensure:
 
 Goal:
 VDB acts as the stable, central evidence layer for downstream systems such as GSC, RSP, and RDGP.
+
+---
+
+## Modern Phase 3 / Phase 4 Milestones
+
+The following milestones extend the original M1–M8 roadmap.
+
+They reflect the current architecture in which VDB preserves producer TEP-derived evidence and derives governed internal evidence structures.
+
+### M9 — TEP Package Registration
+
+Register producer TEP-derived evidence packages into the VDB Phase 3 registration substrate.
+
+Requirements:
+
+- preserve package identity
+- preserve artifact identity
+- preserve assertion registration identity
+- preserve source identity
+- preserve namespace identity
+- preserve producer-family identity
+- preserve referential integrity
+- emit certification-reviewable registration receipts
+
+Current status:
+
+```text
+implemented and certified for the canonical Phase 3 benchmark substrate
+```
+
+Goal:
+Producer evidence can enter VDB as preserved, queryable, provenance-retaining registration substrate rather than as flattened rows.
+
+---
+
+### M10 — Registration Unit Preservation
+
+Declare and validate Registration Units as Phase 4.1 candidate evidence-custody units.
+
+Requirements:
+
+- inspect registered evidence stores read-only
+- preserve Registration Unit identity
+- emit deterministic inventory artifacts
+- emit readiness artifacts
+- verify non-mutation behavior
+- verify SQLite sidecar absence
+- preserve Phase 3 certification visibility
+
+Current status:
+
+```text
+implemented and validated for the six-unit canonical benchmark corpus
+```
+
+Supporting evidence:
+
+```text
+docs/validation/registration_unit_validation.md
+docs/validation/phase4_1_registration_unit_certification.md
+results/validation/phase4_registration_units/
+```
+
+Goal:
+VDB can safely identify which registered evidence units are ready to participate in downstream Phase 4 derivation.
+
+---
+
+### M11 — Corpus Generation Scope Declaration
+
+Declare a deterministic Corpus Generation over selected Registration Units.
+
+Requirements:
+
+- declare Corpus Generation identity
+- declare selection policy
+- preserve included Registration Unit boundaries
+- preserve excluded/deferred scope when relevant
+- emit deterministic Corpus Generation manifests
+- emit deterministic downstream Assertion Record input manifest
+- validate artifact set externally
+- preserve authority boundaries
+
+Current status:
+
+```text
+implemented and validated for mark_phase4_corpus_6tep_v1
+```
+
+Supporting evidence:
+
+```text
+docs/implementation/schemas/corpus_generation_schema.md
+docs/validation/corpus_generation_validation.md
+docs/validation/phase4_2_corpus_generation_certification.md
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/
+results/validation/phase4_corpus_generation/
+```
+
+Critical Phase 4.3 handoff:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv
+```
+
+Goal:
+VDB can freeze a governed evidence universe before deriving Assertion Records, topology, geometry, surfaces, or projections.
+
+---
+
+### M12 — Assertion Record Indexing
+
+Index scientific claims from the selected Corpus Generation without interpreting them.
+
+Requirements:
+
+- consume the governed downstream Assertion Record input manifest
+- preserve Corpus Generation identity
+- preserve Registration Unit identity
+- preserve producer claim identity
+- preserve source lineage
+- preserve assertion semantics
+- avoid biological confidence scoring
+- avoid topology derivation inside the Assertion Record layer
+
+Current status:
+
+```text
+next active implementation frontier
+```
+
+Goal:
+VDB can preserve scientific claims as corpus-indexed Assertion Records without collapsing them into downstream biological interpretation.
+
+---
+
+### M13 — Evidence Topology Derivation
+
+Derive organization over Assertion Records.
+
+Requirements:
+
+- consume Assertion Records
+- derive relationships without transferring source authority
+- preserve lineage to Corpus Generation and Registration Units
+- distinguish topology from confidence, interpretation, and reasoning
+- avoid geometry or surface exposure decisions inside the topology layer
+
+Current status:
+
+```text
+planned
+```
+
+Goal:
+VDB can organize preserved claims into evidence topology while keeping source authority and biological interpretation separate.
+
+---
+
+### M14 — Convergence Geometry Characterization
+
+Characterize organization over topology.
+
+Requirements:
+
+- consume Evidence Topology
+- characterize convergence structure
+- preserve derivation lineage
+- avoid treating geometry as biological truth
+- avoid consumer exposure decisions inside geometry construction
+
+Current status:
+
+```text
+planned
+```
+
+Goal:
+VDB can characterize convergence patterns without collapsing structural characterization into confidence or reasoning.
+
+---
+
+### M15 — Evidence Convergence Surface Governance
+
+Govern which topology/geometry-derived structures are eligible for consumer exposure.
+
+Requirements:
+
+- declare surface identity
+- preserve eligibility basis
+- preserve disclosure basis
+- preserve withholding rationale
+- preserve generation and currency
+- emit downstream projection input manifests
+
+Current status:
+
+```text
+planned
+```
+
+Goal:
+VDB can control evidence exposure through governed surfaces rather than exposing internal structures opportunistically.
+
+---
+
+### M16 — Projection View / Consumer Surface Materialization
+
+Materialize governed consumer-facing projections.
+
+Requirements:
+
+- declare Projection Build identity
+- declare Projection View identity
+- declare source surfaces
+- preserve field maps
+- preserve transformations and omissions
+- preserve lossiness
+- preserve authority labels
+- preserve reconstruction path
+- support RDGP-facing and future consumer-facing query surfaces
+
+Current status:
+
+```text
+planned
+```
+
+Goal:
+VDB can expose governed evidence to downstream consumers without making consumers reconstruct internal storage, topology, or geometry directly.
+
+---
+
+## Transport And Projection Clarification
+
+Producer TEPs transport upstream evidence into VDB.
+
+VDB preserves producer evidence and may later emit governed downstream projection artifacts.
+
+A VDB Projection View is not the same thing as a producer TEP.
+
+A VDB projection package may become a transport artifact in the future, but it should be treated as a governed consumer projection, not as raw producer evidence.
+
+Convergence Geometry is an internal derived characterization layer unless and until a governed projection explicitly exposes it.
+
+This corrects the older informal idea that VDB should simply emit TEPs containing convergence geometries.
+
+Modern VDB doctrine is stricter:
+
+```text
+Producer TEPs enter VDB.
+
+VDB preserves custody, declares scope, preserves claims, derives organization,
+characterizes convergence, governs exposure, and materializes projections.
+
+RDGP reasons.
+```
+
 
 ---
 

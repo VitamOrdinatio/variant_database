@@ -10,6 +10,16 @@
 
 **Primary Validation Receipt Family:** `results/validation/phase4_corpus_generation/`
 
+**Implementation Status:** IMPLEMENTED AND VALIDATED
+
+**Canonical Corpus Generation:** `mark_phase4_corpus_6tep_v1`
+
+**Closure Document:** `docs/validation/phase4_2_corpus_generation_certification.md`
+
+**Layer 2 Acceptance:** `docs/validation/phase4_2_corpus_generation_layer2_acceptance.md`
+
+**Layer 3 Acceptance:** `docs/validation/phase4_2_corpus_generation_layer3_acceptance.md`
+
 ---
 
 ## Purpose
@@ -37,6 +47,55 @@ It does not emit Projection Views that replace the Corpus Generation.
 It does not perform downstream reasoning.
 
 ---
+
+# Implementation And Validation Status
+
+Phase 4.2 Corpus Generation has been implemented and validated for the canonical six-unit MARK benchmark corpus.
+
+Layer 1 validation status:
+
+```text
+140 pytest tests passed
+```
+
+Layer 2 validation status:
+
+```text
+compressed real-row golden fixture accepted
+source_identity_count_total: 1651
+```
+
+Layer 3 validation status:
+
+```text
+MARK full corpus accepted
+source_identity_count_total: 147941196
+total_check_count: 210
+passed_check_count: 210
+failed_check_count: 0
+```
+
+Canonical build artifact family:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/
+```
+
+Critical downstream Phase 4.3 handoff artifact:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv
+```
+
+Phase 4.2 validation closure is recorded in:
+
+```text
+docs/validation/phase4_2_corpus_generation_certification.md
+```
+
+Phase 4.2 closure is architectural and schema-scoped.
+
+It does not certify biological correctness, clinical interpretation, RDGP reasoning, Assertion Record correctness, Evidence Topology correctness, Convergence Geometry correctness, Evidence Convergence Surface correctness, Projection Layer correctness, or full Phase 4.8 certification.
 
 # Schema Role
 
@@ -123,8 +182,7 @@ Build artifacts and validation receipts must not be collapsed.
 This schema governs the following Phase 4.2 build artifacts:
 
 ```text
-corpus_generation_selection_manifest.tsv
-corpus_generation_selection_manifest.json when policy-enabled
+inputs/corpus_generation_selection_manifest.tsv
 corpus_generation_manifest.tsv
 corpus_generation_manifest.json
 corpus_generation_report.md
@@ -153,6 +211,10 @@ results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/
     downstream_assertion_record_input_manifest.tsv
 ```
 
+The selection policy declaration used by the canonical implementation is retained with the declaration fixtures and validation receipts.
+
+It is not a replacement for the canonical emitted Corpus Generation manifest.
+
 ## Validation Receipts
 
 The corresponding validation receipt family is:
@@ -161,16 +223,29 @@ The corresponding validation receipt family is:
 results/validation/phase4_corpus_generation/
 ```
 
-Expected validation receipt artifacts may include:
+Implemented validation receipt artifacts include:
 
 ```text
-corpus_generation_validation_run_summary.json
+corpus_generation_validation_report.json
+corpus_generation_validation_report.tsv
 corpus_generation_validation_summary.json
-corpus_generation_manifest_validation.tsv
-corpus_generation_membership_validation.tsv
-corpus_generation_exclusion_validation.tsv
-corpus_generation_non_mutation_summary.json
-corpus_generation_determinism_summary.json
+corpus_generation_validation_summary.tsv
+```
+
+Implemented timestamped validation receipt directories include:
+
+```text
+mark_phase4_corpus_6tep_v1_validation_2026_06_30_120500/
+lightweight_fixture_smoketest_2026_06_30_121500/
+golden_fixture_smoketest_2026_06_30_122500/
+mark_full_corpus_smoketest_2026_06_30_123500/
+receipt_archives/
+```
+
+Receipt-family documentation is present at:
+
+```text
+results/validation/phase4_corpus_generation/README.md
 ```
 
 Validation receipts record what was proven during validation execution.
@@ -178,6 +253,8 @@ Validation receipts record what was proven during validation execution.
 They do not replace Corpus Generation build artifacts.
 
 They do not replace Registration Units.
+
+Future validators may emit additional decomposed receipts when needed.
 
 ## Artifact Boundary
 
@@ -197,12 +274,18 @@ They do not define topology, geometry, surfaces, projections, or biological inte
 
 TSV files provide compact, operator-readable tabular records.
 
-The canonical TSV artifacts for this schema are:
+The canonical TSV build artifacts for this schema are:
 
 ```text
 corpus_generation_manifest.tsv
-corpus_generation_validation_report.tsv
 downstream_assertion_record_input_manifest.tsv
+```
+
+The canonical TSV validation receipt artifacts for this schema are:
+
+```text
+corpus_generation_validation_report.tsv
+corpus_generation_validation_summary.tsv
 ```
 
 `corpus_generation_manifest.tsv` should be row-oriented by Registration Unit membership or exclusion record.
@@ -213,11 +296,17 @@ Each row may repeat Corpus Generation identity fields to preserve standalone row
 
 JSON files provide richer machine-readable records.
 
-The canonical JSON artifacts for this schema are:
+The canonical JSON build artifact for this schema is:
 
 ```text
 corpus_generation_manifest.json
+```
+
+The canonical JSON validation receipt artifacts for this schema are:
+
+```text
 corpus_generation_validation_report.json
+corpus_generation_validation_summary.json
 ```
 
 The JSON representation may include nested Corpus Generation identity, selection policy, included Registration Units, excluded Registration Units, summaries, validation metadata, downstream handoff references, and reconstruction metadata.
@@ -226,11 +315,13 @@ The JSON representation may include nested Corpus Generation identity, selection
 
 Markdown reports provide human-readable inspection summaries.
 
-The canonical Markdown artifact for this schema is:
+The canonical Markdown build artifact for this schema is:
 
 ```text
 corpus_generation_report.md
 ```
+
+Markdown validation and certification documents live under `docs/validation/` and are not substitutes for machine-readable validation receipts.
 
 ## JSONL
 
@@ -886,11 +977,18 @@ The validation receipt family should be written under:
 results/validation/phase4_corpus_generation/
 ```
 
-Expected validation receipt files may include:
+Implemented validation receipt files include:
 
 ```text
-corpus_generation_validation_run_summary.json
+corpus_generation_validation_report.json
+corpus_generation_validation_report.tsv
 corpus_generation_validation_summary.json
+corpus_generation_validation_summary.tsv
+```
+
+Future validators may emit additional decomposed receipts when needed, including:
+
+```text
 corpus_generation_manifest_validation.tsv
 corpus_generation_membership_validation.tsv
 corpus_generation_exclusion_validation.tsv
@@ -1181,6 +1279,70 @@ Corpus Generation construction must not perform downstream derivation.
 
 ---
 
+# Current Canonical Implementation
+
+The current canonical Phase 4.2 Corpus Generation is:
+
+```text
+mark_phase4_corpus_6tep_v1
+```
+
+Canonical build artifact family:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/
+```
+
+Canonical included Registration Units:
+
+```text
+gsc_epilepsy
+gsc_mitochondrial_disease
+vap_hg002
+vap_median_ERR10619300
+vap_q1_ERR10619212
+vap_q3_ERR10619225
+```
+
+Producer-family distribution:
+
+```text
+GSC: 2
+VAP: 4
+```
+
+Accepted shared summary:
+
+```text
+included_registration_unit_count: 6
+excluded_registration_unit_count: 0
+downstream_assertion_record_input_count: 6
+artifact_count_total: 82
+assertion_registration_count_total: 52
+```
+
+Layer-specific source identity totals differ intentionally:
+
+```text
+Layer 2 compressed golden fixture:
+    source_identity_count_total: 1651
+
+Layer 3 MARK full corpus:
+    source_identity_count_total: 147941196
+```
+
+Canonical downstream Phase 4.3 handoff artifact:
+
+```text
+results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv
+```
+
+Phase 4.2 schema completion has been demonstrated for this canonical corpus.
+
+Future corpora require their own declarations, build artifacts, validation receipts, and certification decisions.
+
+---
+
 # Initial MARK Benchmark Requirements
 
 The initial MARK Phase 4 benchmark Corpus Generation is expected to include six certified Phase 3 Registration Units.
@@ -1310,6 +1472,17 @@ preserve anti-collapse safeguards
 This schema is not satisfied merely because a file list exists.
 
 It is satisfied only when the declared Corpus Generation is reconstructable, deterministic, policy-explicit, Registration Unit-preserving, validation-aware, and safe to use as the evidence universe for downstream Phase 4 derivation.
+
+For the canonical six-unit MARK Corpus Generation, these criteria have been satisfied and recorded in:
+
+```text
+docs/validation/phase4_2_corpus_generation_certification.md
+```
+
+This does not imply that future expanded corpora automatically satisfy the schema.
+
+Each future Corpus Generation requires its own explicit declaration, validation receipt set, and certification decision.
+
 
 ---
 
