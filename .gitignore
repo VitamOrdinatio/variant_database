@@ -7,6 +7,9 @@ results/*
 results/validation/*
 !results/validation/phase3_registration_certification/
 !results/validation/phase3_registration_certification/**
+!results/validation/phase4_registration_units/
+!results/validation/phase4_registration_units/**
+
 
 # Local machine configs:
 config/config.sys76.local.yaml

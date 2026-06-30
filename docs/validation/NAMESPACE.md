@@ -85,6 +85,10 @@ phase4_satellite_plan_system_coherence_review.md
 
 registration_unit_validation.md
     Phase 4.1 Registration Unit validation governance.
+
+phase4_1_registration_unit_certification.md
+    Phase 4.1 Registration Unit certification seed for the MARK real-corpus
+    six-unit canonical benchmark smoketest.
 ```
 
 ## Planned Phase 4 Layer Validation Documents
@@ -123,12 +127,18 @@ phase4_smoketest_certification.md
 
 # Current Phase 4.1 Validation State
 
-Phase 4.1 local Registration Unit validation is complete for the lightweight golden-fixture path.
+Phase 4.1 Registration Unit validation is complete for the six-unit canonical benchmark corpus.
 
 Governance document:
 
 ```text
 registration_unit_validation.md
+```
+
+Certification seed document:
+
+```text
+phase4_1_registration_unit_certification.md
 ```
 
 Receipt directory:
@@ -137,17 +147,62 @@ Receipt directory:
 results/validation/phase4_registration_units/
 ```
 
-Current local validation verdict:
+Current validation evidence includes:
 
 ```text
-passed
+local lightweight-fixture validation_status passed
+MARK real-corpus validation_status passed
+six Registration Units declared
+six Registration Units inspected
+six Registration Units marked ready
+zero Registration Units marked not_ready
+non_mutation_status passed
+sidecar_status passed
+MARK full-corpus receipt archive SHA256 verified
 ```
 
-This confirms local Registration Unit declaration, read-only inspection, deterministic inventory emission, readiness evaluation, validation summary emission, and non-mutation behavior for the lightweight fixture.
+The MARK real-corpus smoketest validated the following six canonical Phase 3 Registration Units:
 
-This does not replace MARK full-corpus smoketesting.
+```text
+gsc_epilepsy
+gsc_mitochondrial_disease
+vap_hg002
+vap_median_ERR10619300
+vap_q1_ERR10619212
+vap_q3_ERR10619225
+```
+
+This confirms Registration Unit declaration, read-only inspection, deterministic inventory emission, readiness evaluation, validation summary emission, and non-mutation behavior for both the lightweight fixture path and the MARK six-unit canonical benchmark path.
 
 This does not complete Phase 4.8 certification.
+
+This does not imply that all available VAP SRA-derived TEPs have been registered into VDB Phase 3 or included in Phase 4.1 validation.
+
+---
+
+# Validation Receipts
+
+Validation receipts live under:
+
+```text
+results/validation/
+```
+
+Current tracked validation receipt families include:
+
+```text
+results/validation/phase3_registration_certification/
+    Phase 3 registration certification receipts.
+
+results/validation/phase4_registration_units/
+    Phase 4.1 Registration Unit validation receipts, including local
+    lightweight-fixture receipts, MARK real-corpus six-unit benchmark receipts,
+    and portable MARK receipt archives.
+```
+
+Receipt files record what was proven during validation execution.
+
+Receipt files do not define validation doctrine.
 
 ---
 
