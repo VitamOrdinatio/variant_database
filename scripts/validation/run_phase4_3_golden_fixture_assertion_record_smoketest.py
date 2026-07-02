@@ -759,6 +759,164 @@ def _validate_source_identity_not_applicable(fixture: Path, run_dir: Path) -> tu
     ]
 
 
+
+def _validate_preservation_hardening(run_dir: Path) -> tuple[list[dict[str, Any]], list[Check]]:
+    """Validate Phase 4.3 preservation hardening invariants.
+
+    These checks encode the MARK input-substrate recon findings. They ensure that
+    Layer 2 fails if the builder regresses to header-only participants, orphaned
+    source identity references, ambiguous preservation/resolver status, or
+    under-specified lineage.
+    """
+    rows: list[dict[str, Any]] = []
+    checks: list[Check] = []
+
+    index_rows = _read_tsv(run_dir / "assertion_record_index.tsv")
+    participant_rows = _read_tsv(run_dir / "assertion_record_participants.tsv")
+    set_rows = _read_tsv(run_dir / "assertion_record_source_identity_sets.tsv")
+    summary_rows = _read_tsv(run_dir / "assertion_record_source_identity_summary.tsv")
+    lineage_rows = _read_tsv(run_dir / "assertion_record_lineage.tsv")
+
+    set_ids = {row.get("source_identity_set_id", "") for row in set_rows if row.get("source_identity_set_id", "")}
+    participant_set_ids = {
+        row.get("source_identity_set_id", "") for row in participant_rows if row.get("source_identity_set_id", "")
+    }
+    summary_set_ids = {
+        row.get("source_identity_set_id", "") for row in summary_rows if row.get("source_identity_set_id", "")
+    }
+
+    participant_failures = 0
+    if set_rows and not participant_rows:
+        participant_failures += 1
+    if participant_rows and len(participant_set_ids) != len(participant_rows):
+        participant_failures += 1
+    participant_sources = {row.get("participant_source", "") for row in participant_rows}
+    if participant_rows and participant_sources != {"source_identity_set_reference"}:
+        participant_failures += 1
+    rows.append(
+        {
+            "check_name": "participant_bridge_populated_from_source_identity_sets",
+            "expected": "participant rows > 0 when source identity sets exist; all participants use source_identity_set_reference",
+            "observed": (
+                f"participants={len(participant_rows)}; source_identity_sets={len(set_rows)}; "
+                f"participant_sources={','.join(sorted(participant_sources))}"
+            ),
+            "status": "passed" if participant_failures == 0 else "failed",
+            "detail": "",
+        }
+    )
+    checks.append(
+        Check(
+            "participant_bridge_populated_from_source_identity_sets",
+            "passed" if participant_failures == 0 else "failed",
+            f"participant rows: {len(participant_rows)}; source identity set rows: {len(set_rows)}",
+        )
+    )
+
+    participant_missing = sorted(participant_set_ids - set_ids)
+    summary_missing = sorted(summary_set_ids - set_ids)
+    join_failures = len(participant_missing) + len(summary_missing)
+    if set_rows and len(summary_set_ids) != len(summary_rows):
+        join_failures += 1
+    rows.append(
+        {
+            "check_name": "source_identity_set_id_join_integrity",
+            "expected": "participant and summary source_identity_set_id values join to assertion_record_source_identity_sets.tsv",
+            "observed": (
+                f"participant_missing={len(participant_missing)}; summary_missing={len(summary_missing)}; "
+                f"set_ids={len(set_ids)}; participant_set_ids={len(participant_set_ids)}; summary_set_ids={len(summary_set_ids)}"
+            ),
+            "status": "passed" if join_failures == 0 and set_ids else "failed",
+            "detail": ";".join(participant_missing[:5] + summary_missing[:5]),
+        }
+    )
+    checks.append(
+        Check(
+            "source_identity_set_id_join_integrity",
+            "passed" if join_failures == 0 and set_ids else "failed",
+            f"participant missing joins: {len(participant_missing)}; summary missing joins: {len(summary_missing)}",
+        )
+    )
+
+    preservation_values = [row.get("preservation_status", "") for row in index_rows]
+    resolver_values = [row.get("resolver_status", "") for row in index_rows]
+    validation_values = [row.get("validation_status", "") for row in index_rows]
+    expected_resolver_values = {"supported", "indexed_with_note", "deferred", "unsupported"}
+    status_failures = 0
+    if not index_rows:
+        status_failures += 1
+    if any(value != "preserved" for value in preservation_values):
+        status_failures += 1
+    if any(value not in expected_resolver_values for value in resolver_values):
+        status_failures += 1
+    if any(not value for value in validation_values):
+        status_failures += 1
+    rows.append(
+        {
+            "check_name": "preservation_and_resolver_status_are_explicit",
+            "expected": "all indexed records preservation_status=preserved and resolver_status is explicit",
+            "observed": (
+                f"index_rows={len(index_rows)}; preserved={preservation_values.count('preserved')}; "
+                f"resolver_values={','.join(sorted(set(resolver_values)))}"
+            ),
+            "status": "passed" if status_failures == 0 else "failed",
+            "detail": "",
+        }
+    )
+    checks.append(
+        Check(
+            "preservation_and_resolver_status_are_explicit",
+            "passed" if status_failures == 0 else "failed",
+            f"preserved {preservation_values.count('preserved')} of {len(index_rows)} records; resolver statuses: {sorted(set(resolver_values))}",
+        )
+    )
+
+    required_lineage_columns = [
+        "source_artifact_relative_path",
+        "source_artifact_sha256",
+        "source_artifact_size_bytes",
+        "source_record_ref_status",
+        "lineage_completeness_status",
+    ]
+    lineage_failures = 0
+    missing_columns: list[str] = []
+    if lineage_rows:
+        missing_columns = [col for col in required_lineage_columns if col not in lineage_rows[0]]
+    else:
+        lineage_failures += 1
+    if missing_columns:
+        lineage_failures += len(missing_columns)
+    for row in lineage_rows:
+        for col in required_lineage_columns:
+            if not row.get(col, ""):
+                lineage_failures += 1
+                break
+    lineage_status_values = {row.get("lineage_completeness_status", "") for row in lineage_rows}
+    row_ref_status_values = {row.get("source_record_ref_status", "") for row in lineage_rows}
+    rows.append(
+        {
+            "check_name": "artifact_level_lineage_is_explicit",
+            "expected": "artifact provenance fields and explicit source_record_ref/lineage statuses are present for every lineage row",
+            "observed": (
+                f"lineage_rows={len(lineage_rows)}; missing_columns={','.join(missing_columns)}; "
+                f"lineage_statuses={','.join(sorted(lineage_status_values))}; "
+                f"source_record_ref_statuses={','.join(sorted(row_ref_status_values))}"
+            ),
+            "status": "passed" if lineage_failures == 0 else "failed",
+            "detail": "",
+        }
+    )
+    checks.append(
+        Check(
+            "artifact_level_lineage_is_explicit",
+            "passed" if lineage_failures == 0 else "failed",
+            f"lineage rows: {len(lineage_rows)}; lineage failures: {lineage_failures}",
+        )
+    )
+
+    return rows, checks
+
+
 def _validate_anti_flattening(fixture: Path, run_dir: Path) -> tuple[list[dict[str, Any]], list[Check]]:
     rows: list[dict[str, Any]] = []
     checks: list[Check] = []
@@ -1104,6 +1262,14 @@ def run(args: argparse.Namespace) -> int:
             "observed_source_identity_set_status",
             "status",
         ],
+    )
+
+    preservation_rows, preservation_checks = _validate_preservation_hardening(run_a)
+    checks.extend(preservation_checks)
+    _write_tsv(
+        receipt_dir / "preservation_hardening_report.tsv",
+        preservation_rows,
+        ["check_name", "expected", "observed", "status", "detail"],
     )
 
     anti_rows, anti_checks = _validate_anti_flattening(fixture, run_a)
