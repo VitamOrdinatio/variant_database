@@ -14,6 +14,7 @@ retrieval bundle.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import csv
 import hashlib
 import json
@@ -48,6 +49,16 @@ EXPECTED_VAP_ASSERTIONS = 40
 EXPECTED_GSC_ASSERTIONS = 12
 EXPECTED_SOURCE_IDENTITY_TOTAL = 147_941_196
 EXPECTED_SOURCE_IDENTITY_SET_GROUPS = 204
+EXPECTED_RESOLVER_STATUS_COUNTS = {
+    "supported": 26,
+    "indexed_with_note": 14,
+    "deferred": 12,
+}
+EXPECTED_SOURCE_IDENTITY_SET_STATUS_COUNTS = {
+    "required": 34,
+    "optional": 16,
+    "not_applicable": 2,
+}
 
 MANIFEST_PATH_COLUMNS = (
     "registration_unit_sqlite_path",
@@ -375,9 +386,11 @@ def load_output_tables(output_dir: Path) -> dict[str, list[dict[str, str]]]:
     tables: dict[str, list[dict[str, str]]] = {}
     for name in [
         "assertion_record_index.tsv",
+        "assertion_record_participants.tsv",
         "assertion_record_source_identity_sets.tsv",
         "assertion_record_source_identity_summary.tsv",
         "assertion_record_validation_report.tsv",
+        "assertion_record_lineage.tsv",
         "downstream_topology_input_manifest.tsv",
     ]:
         path = output_dir / name
@@ -520,6 +533,239 @@ def reconcile_source_identities(output_tables: dict[str, list[dict[str, str]]]) 
             }
         )
     return rows
+
+
+def _counter_text(counter: Counter[str]) -> str:
+    return ";".join(f"{key}={counter[key]}" for key in sorted(counter))
+
+
+def validate_preservation_hardening(output_tables: dict[str, list[dict[str, str]]]) -> list[dict[str, Any]]:
+    """Validate MARK-scale preservation hardening invariants.
+
+    These checks encode the Phase 4.3E recon findings. They deliberately fail if
+    Assertion Record output regresses to header-only participants, orphaned
+    source identity references, ambiguous preservation/resolver status, or
+    under-specified lineage.
+    """
+    index_rows = output_tables["assertion_record_index.tsv"]
+    participant_rows = output_tables["assertion_record_participants.tsv"]
+    set_rows = output_tables["assertion_record_source_identity_sets.tsv"]
+    summary_rows = output_tables["assertion_record_source_identity_summary.tsv"]
+    lineage_rows = output_tables["assertion_record_lineage.tsv"]
+
+    rows: list[dict[str, Any]] = []
+
+    set_ids = {row.get("source_identity_set_id", "") for row in set_rows if row.get("source_identity_set_id", "")}
+    participant_set_ids = {
+        row.get("source_identity_set_id", "") for row in participant_rows if row.get("source_identity_set_id", "")
+    }
+    summary_set_ids = {
+        row.get("source_identity_set_id", "") for row in summary_rows if row.get("source_identity_set_id", "")
+    }
+
+    participant_sources = Counter(row.get("participant_source", "") for row in participant_rows)
+    participant_failures = 0
+    participant_failure_details: list[str] = []
+    if len(participant_rows) != EXPECTED_SOURCE_IDENTITY_SET_GROUPS:
+        participant_failures += 1
+        participant_failure_details.append(f"participant_rows={len(participant_rows)}")
+    if set_rows and not participant_rows:
+        participant_failures += 1
+        participant_failure_details.append("source identity sets exist but participants are empty")
+    if participant_rows and len(participant_set_ids) != len(participant_rows):
+        participant_failures += 1
+        participant_failure_details.append("some participant rows lack source_identity_set_id")
+    if participant_rows and set(participant_sources) != {"source_identity_set_reference"}:
+        participant_failures += 1
+        participant_failure_details.append(f"participant_sources={_counter_text(participant_sources)}")
+    rows.append(
+        {
+            "check_name": "participant_bridge_populated_from_source_identity_sets",
+            "expected": (
+                f"{EXPECTED_SOURCE_IDENTITY_SET_GROUPS} participant rows; "
+                "all participants use source_identity_set_reference and carry source_identity_set_id"
+            ),
+            "observed": (
+                f"participants={len(participant_rows)}; source_identity_sets={len(set_rows)}; "
+                f"participant_sources={_counter_text(participant_sources)}"
+            ),
+            "status": "passed" if participant_failures == 0 else "failed",
+            "detail": "; ".join(participant_failure_details),
+        }
+    )
+
+    participant_missing = sorted(participant_set_ids - set_ids)
+    participant_unreferenced_sets = sorted(set_ids - participant_set_ids)
+    summary_missing = sorted(summary_set_ids - set_ids)
+    summary_unreferenced_sets = sorted(set_ids - summary_set_ids)
+    join_failures = 0
+    join_details: list[str] = []
+    if len(set_ids) != len(set_rows):
+        join_failures += 1
+        join_details.append("source identity set IDs are missing or non-unique")
+    if participant_missing:
+        join_failures += 1
+        join_details.append(f"participant_missing={len(participant_missing)}")
+    if participant_unreferenced_sets:
+        join_failures += 1
+        join_details.append(f"participant_unreferenced_sets={len(participant_unreferenced_sets)}")
+    if summary_missing:
+        join_failures += 1
+        join_details.append(f"summary_missing={len(summary_missing)}")
+    if summary_unreferenced_sets:
+        join_failures += 1
+        join_details.append(f"summary_unreferenced_sets={len(summary_unreferenced_sets)}")
+    rows.append(
+        {
+            "check_name": "source_identity_set_id_join_integrity",
+            "expected": "source_identity_set_id values are unique and join across source sets, participants, and summaries",
+            "observed": (
+                f"set_ids={len(set_ids)}; participant_set_ids={len(participant_set_ids)}; "
+                f"summary_set_ids={len(summary_set_ids)}"
+            ),
+            "status": "passed" if join_failures == 0 and bool(set_ids) else "failed",
+            "detail": "; ".join(join_details[:8]),
+        }
+    )
+
+    preservation_counts = Counter(row.get("preservation_status", "") for row in index_rows)
+    resolver_counts = Counter(row.get("resolver_status", "") for row in index_rows)
+    validation_counts = Counter(row.get("validation_status", "") for row in index_rows)
+    status_failures = 0
+    status_details: list[str] = []
+    if len(index_rows) != EXPECTED_ASSERTIONS:
+        status_failures += 1
+        status_details.append(f"index_rows={len(index_rows)}")
+    if preservation_counts != Counter({"preserved": EXPECTED_ASSERTIONS}):
+        status_failures += 1
+        status_details.append(f"preservation_counts={_counter_text(preservation_counts)}")
+    if resolver_counts != Counter(EXPECTED_RESOLVER_STATUS_COUNTS):
+        status_failures += 1
+        status_details.append(f"resolver_counts={_counter_text(resolver_counts)}")
+    if any(not value for value in validation_counts):
+        status_failures += 1
+        status_details.append(f"validation_counts={_counter_text(validation_counts)}")
+    rows.append(
+        {
+            "check_name": "preservation_and_resolver_status_are_explicit",
+            "expected": (
+                f"preservation_status=preserved for {EXPECTED_ASSERTIONS}; "
+                f"resolver counts={EXPECTED_RESOLVER_STATUS_COUNTS}"
+            ),
+            "observed": (
+                f"preservation_counts={_counter_text(preservation_counts)}; "
+                f"resolver_counts={_counter_text(resolver_counts)}"
+            ),
+            "status": "passed" if status_failures == 0 else "failed",
+            "detail": "; ".join(status_details),
+        }
+    )
+
+    required_lineage_columns = [
+        "source_artifact_relative_path",
+        "source_artifact_sha256",
+        "source_artifact_size_bytes",
+        "source_record_ref_status",
+        "lineage_completeness_status",
+    ]
+    lineage_status_counts = Counter(row.get("lineage_completeness_status", "") for row in lineage_rows)
+    row_ref_status_counts = Counter(row.get("source_record_ref_status", "") for row in lineage_rows)
+    missing_lineage_columns: list[str] = []
+    if lineage_rows:
+        missing_lineage_columns = [column for column in required_lineage_columns if column not in lineage_rows[0]]
+    else:
+        missing_lineage_columns = required_lineage_columns.copy()
+    lineage_failures = 0
+    lineage_details: list[str] = []
+    if len(lineage_rows) != EXPECTED_ASSERTIONS:
+        lineage_failures += 1
+        lineage_details.append(f"lineage_rows={len(lineage_rows)}")
+    if missing_lineage_columns:
+        lineage_failures += 1
+        lineage_details.append(f"missing_columns={','.join(missing_lineage_columns)}")
+    for column in required_lineage_columns:
+        if any(not row.get(column, "") for row in lineage_rows):
+            lineage_failures += 1
+            lineage_details.append(f"blank_{column}")
+            break
+    if lineage_status_counts != Counter({"artifact_level_lineage_present_row_ref_absent": EXPECTED_ASSERTIONS}):
+        lineage_failures += 1
+        lineage_details.append(f"lineage_status_counts={_counter_text(lineage_status_counts)}")
+    if row_ref_status_counts != Counter({"explicit_absence": EXPECTED_ASSERTIONS}):
+        lineage_failures += 1
+        lineage_details.append(f"row_ref_status_counts={_counter_text(row_ref_status_counts)}")
+    rows.append(
+        {
+            "check_name": "artifact_level_lineage_is_explicit",
+            "expected": (
+                "artifact-level provenance fields present; "
+                f"lineage_completeness_status=artifact_level_lineage_present_row_ref_absent for {EXPECTED_ASSERTIONS}; "
+                f"source_record_ref_status=explicit_absence for {EXPECTED_ASSERTIONS}"
+            ),
+            "observed": (
+                f"lineage_rows={len(lineage_rows)}; lineage_status_counts={_counter_text(lineage_status_counts)}; "
+                f"row_ref_status_counts={_counter_text(row_ref_status_counts)}"
+            ),
+            "status": "passed" if lineage_failures == 0 else "failed",
+            "detail": "; ".join(lineage_details),
+        }
+    )
+
+    source_obligation_counts = Counter(row.get("source_identity_set_status", "") for row in index_rows)
+    obligation_failures = 0
+    obligation_details: list[str] = []
+    if source_obligation_counts != Counter(EXPECTED_SOURCE_IDENTITY_SET_STATUS_COUNTS):
+        obligation_failures += 1
+        obligation_details.append(f"source_identity_set_status_counts={_counter_text(source_obligation_counts)}")
+    not_applicable_assertions = sorted(
+        {
+            row.get("producer_family", "") + ":" + row.get("assertion_type", "")
+            for row in index_rows
+            if row.get("source_identity_set_status", "") == "not_applicable"
+        }
+    )
+    if not_applicable_assertions != ["GSC:producer_contract_validation"]:
+        obligation_failures += 1
+        obligation_details.append(f"not_applicable_assertions={','.join(not_applicable_assertions)}")
+    rows.append(
+        {
+            "check_name": "source_identity_obligation_status_is_explicit",
+            "expected": f"source identity obligation counts={EXPECTED_SOURCE_IDENTITY_SET_STATUS_COUNTS}; not_applicable only GSC:producer_contract_validation",
+            "observed": f"source_identity_set_status_counts={_counter_text(source_obligation_counts)}; not_applicable={','.join(not_applicable_assertions)}",
+            "status": "passed" if obligation_failures == 0 else "failed",
+            "detail": "; ".join(obligation_details),
+        }
+    )
+
+    return rows
+
+
+def bundle_report_payload(
+    *,
+    bundle_path: Path,
+    sha_path: Path,
+    retrieval_mode: str,
+    include_build_output: bool,
+) -> dict[str, Any]:
+    """Return non-self-referential retrieval bundle metadata.
+
+    The authoritative archive checksum is the external .tgz.sha256 sidecar. The
+    receipt inside the archive must not claim a final checksum for the archive
+    that contains it.
+    """
+    return {
+        "bundle_path": str(bundle_path),
+        "bundle_sha256_path": str(sha_path),
+        "bundle_sha256_sidecar_name": sha_path.name,
+        "bundle_checksum_authority": "external_sidecar",
+        "internal_archive_sha256_claim": False,
+        "retrieval_mode": retrieval_mode,
+        "full_build_output_included_in_bundle": include_build_output,
+    }
+
+
+def bundle_report_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    return [{"key": key, "value": value} for key, value in sorted(payload.items())]
 
 
 def non_goal_report(output_dir: Path) -> list[dict[str, Any]]:
@@ -813,6 +1059,21 @@ def main() -> int:
             "passed" if source_rows and all(row["status"] == "passed" for row in source_rows) else "failed",
             f"checked {len(source_rows)} source identity set groups",
         )
+
+        preservation_rows = validate_preservation_hardening(output_tables)
+        write_tsv(
+            receipt_dir / "preservation_hardening_report.tsv",
+            preservation_rows,
+            ["check_name", "expected", "observed", "status", "detail"],
+        )
+        for row in preservation_rows:
+            add_check(
+                checks,
+                row["check_name"],
+                row["status"],
+                row["observed"],
+                row.get("detail", ""),
+            )
 
         validation_rows = output_tables["assertion_record_validation_report.tsv"]
         status_accounted = len(output_tables["assertion_record_index.tsv"])
