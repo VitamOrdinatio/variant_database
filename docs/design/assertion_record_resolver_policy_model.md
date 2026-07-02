@@ -124,6 +124,7 @@ assertion_id input tuple participation
 assertion_type mapping
 relationship mapping
 participant role mapping
+source identity set mapping
 evidence basis mapping
 context mapping
 authority context mapping
@@ -254,6 +255,8 @@ The resolver must emit or support:
 Assertion Record core records
 relationship records
 participant records
+source identity set reference records
+source identity summary records
 evidence basis records
 context records
 lineage records
@@ -302,6 +305,7 @@ deferred_assertion_registration_behavior
 assertion_type_mapping
 relationship_mapping
 participant_role_mapping
+source_identity_set_mapping
 evidence_basis_mapping
 context_mapping
 authority_context_mapping
@@ -364,6 +368,12 @@ The resolver must not assume all possible VAP output rows are assertion-bearing.
 
 The resolver must distinguish assertion-bearing rows from supporting metadata, source identities, artifact metadata, and validation receipts.
 
+VAP source identities are preservation-critical.
+
+They may include large variant identity collections, including non-annotated and predominantly noncoding variant identities.
+
+The VAP resolver must preserve these identities losslessly by reference when duplication is impractical.
+
 ## VAP Relationship Mapping
 
 Initial VAP relationship classes may include:
@@ -382,6 +392,40 @@ variant passed validation or quality criterion
 These relationship classes preserve VAP-emitted claims.
 
 They do not assert VDB biological belief.
+
+## VAP Source Identity Set Policy
+
+The VAP resolver must treat Registration Unit `source_identities` as a participant/evidence universe attached to VAP assertion registrations.
+
+VAP source identity sets must preserve:
+
+```text
+all source identities attached to each VAP assertion registration
+variant identities when present
+non-annotated variant identities when present
+predominantly noncoding variant identities when present
+sample identities when present
+gene or transcript identities when present
+source namespaces
+participant roles
+source labels
+source record references
+```
+
+The resolver may emit compact source identity set references rather than duplicating every source identity row.
+
+A compact reference is valid only when it is lossless and reconstructable from:
+
+```text
+registration_unit_id
+source_assertion_registration_id
+source_identity_table_reference
+source_identity_filter
+```
+
+The VAP resolver must not restrict Phase 4.3 preservation to annotated, interpreted, prioritized, or clinically labeled variants.
+
+Discovery-relevant non-annotated and noncoding variant identities must remain reconstructable for downstream topology and convergence analysis.
 
 ## VAP Participant Role Mapping
 
@@ -559,6 +603,12 @@ contract_validation_result
 
 The resolver must distinguish GSC scientific assertion rows from metadata, source identity records, package metadata, artifact metadata, and validation receipts.
 
+GSC source identities are preservation-critical.
+
+They may include phenotype, gene, source, semantic-channel, and evidence-source identities attached to GSC assertion registrations.
+
+The GSC resolver must preserve these identities losslessly by reference when duplication is impractical.
+
 ## GSC Relationship Mapping
 
 Initial GSC relationship classes may include:
@@ -574,6 +624,38 @@ producer output validates against declared contract
 These relationship classes preserve GSC-emitted claims.
 
 They do not assert VDB biological belief.
+
+## GSC Source Identity Set Policy
+
+The GSC resolver must treat Registration Unit `source_identities` as a participant/evidence universe attached to GSC assertion registrations.
+
+GSC source identity sets must preserve:
+
+```text
+all source identities attached to each GSC assertion registration
+phenotype identities when present
+gene identities when present
+source identities when present
+semantic channel identities when present
+evidence source identities when present
+source namespaces
+participant roles
+source labels
+source record references
+```
+
+The resolver may emit compact source identity set references rather than duplicating every source identity row.
+
+A compact reference is valid only when it is lossless and reconstructable from:
+
+```text
+registration_unit_id
+source_assertion_registration_id
+source_identity_table_reference
+source_identity_filter
+```
+
+The GSC resolver must not collapse phenotype-scoped semantic evidence into general gene truth.
 
 ## GSC Participant Role Mapping
 
@@ -884,6 +966,52 @@ promote producer claims to VDB belief
 
 ---
 
+# Source Identity Set Mapping Policy
+
+Resolver policies must preserve the source identity universe attached to each indexed Assertion Record.
+
+`source_identities` tables are not themselves Assertion Record indexes.
+
+They are preservation substrates that may contain participant, evidence, variant, gene, phenotype, source, namespace, and source-record identities attached to assertion registrations.
+
+Resolver policies must map source identity sets by reference when full duplication would be impractical.
+
+Required source identity set mapping decisions:
+
+```text
+which source_identity rows attach to each Assertion Record
+which source_identity filter reconstructs the set
+which identity_kind values are represented
+which participant_role values are represented
+which source_namespace values are represented
+which counts are emitted for validation and inspection
+whether variant identities are included
+whether non-annotated variant identities are included
+whether noncoding variant identities may be included
+whether the reference is lossless
+which limitations apply when references are incomplete
+```
+
+Source identity set mapping must not:
+
+```text
+discard non-annotated variants
+discard noncoding variants
+restrict preservation to annotated variants
+restrict preservation to prioritized variants
+collapse many source identities into one example participant
+materialize huge source identity sets unnecessarily when lossless references are available
+```
+
+The correct v1 pattern is:
+
+```text
+Assertion Records preserve producer claim containers.
+
+Source identity set references preserve the large participant/evidence universe
+attached to those claims.
+```
+
 # Evidence Basis Mapping Policy
 
 Resolver policies must preserve the evidence basis carrying or supporting the producer claim.
@@ -1187,6 +1315,8 @@ relationships are explicit
 evidence basis is reconstructable or explicitly absent
 context is reconstructable or explicitly absent
 lineage points back to Registration Units and Corpus Generation
+source identity set references preserve large participant/evidence collections losslessly
+non-annotated and noncoding VAP variant identities remain reconstructable when present
 payload references resolve or expose reconstruction limitations
 anti-collapse checks pass
 ```
@@ -1208,6 +1338,8 @@ which tables contain assertion registrations
 which columns exist in assertion registration tables
 which source artifact references are present
 which source identity references are present
+which source identity sets attach to each assertion registration
+whether source identity sets include non-annotated or noncoding VAP variant identities
 which producer assertion IDs are available
 which assertion registration types are present
 which assertion registration types are assertion-bearing
@@ -1247,6 +1379,9 @@ relationship collapse
 participant collapse
 participant role collapse
 source-native identity collapse
+source identity set collapse
+non-annotated variant identity loss
+noncoding variant identity loss
 evidence basis collapse
 context collapse
 authority collapse
@@ -1294,6 +1429,7 @@ fallback source assertion key policy is declared
 assertion type mapping is declared
 relationship mapping is declared
 participant role mapping is declared
+source identity set mapping is declared
 evidence basis mapping is declared
 context mapping is declared
 authority context mapping is declared

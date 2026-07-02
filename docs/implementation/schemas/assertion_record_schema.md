@@ -175,6 +175,8 @@ results/phase4/assertion_records/<corpus_generation_id>/
     assertion_record_index.tsv
     assertion_record_index.jsonl
     assertion_record_participants.tsv
+    assertion_record_source_identity_sets.tsv
+    assertion_record_source_identity_summary.tsv
     assertion_record_relationships.tsv
     assertion_record_evidence_basis.tsv
     assertion_record_context.tsv
@@ -193,6 +195,8 @@ results/phase4/assertion_records/mark_phase4_corpus_6tep_v1/
     assertion_record_index.tsv
     assertion_record_index.jsonl
     assertion_record_participants.tsv
+    assertion_record_source_identity_sets.tsv
+    assertion_record_source_identity_summary.tsv
     assertion_record_relationships.tsv
     assertion_record_evidence_basis.tsv
     assertion_record_context.tsv
@@ -221,6 +225,8 @@ assertion_record_index_identity
 assertion_record_index_manifest_record
 assertion_record
 assertion_record_participant
+assertion_record_source_identity_set
+assertion_record_source_identity_summary
 assertion_record_relationship
 assertion_record_evidence_basis
 assertion_record_context
@@ -238,7 +244,7 @@ Which Corpus Generation was indexed,
 which selected Registration Units were consumed,
 which producer assertion registrations were inspected,
 which producer claims were preserved,
-which participants were preserved,
+which participants and source identity sets were preserved,
 which relationships were preserved,
 which evidence basis and context were preserved,
 which lineage and reconstruction references were preserved,
@@ -418,6 +424,88 @@ producer_reference
 ```
 
 Producer identity must not be removed, replaced, or silently rewritten.
+
+---
+
+# Source Identity Set Reference Schema
+
+Source identity records can be extremely large.
+
+For the canonical six-unit MARK corpus, `source_identities` includes the large producer-native participant and evidence universe attached to assertion registrations, including VAP variant identities and other source-native evidence identities.
+
+Phase 4.3 must preserve this source identity universe losslessly.
+
+Phase 4.3 does not need to duplicate every `source_identities` row into `assertion_record_participants.tsv`.
+
+Instead, Phase 4.3 may preserve large source identity collections by lossless reference to Registration Unit `source_identities` rows.
+
+Canonical source identity set artifacts:
+
+```text
+assertion_record_source_identity_sets.tsv
+assertion_record_source_identity_summary.tsv
+```
+
+`assertion_record_source_identity_sets.tsv` preserves reconstructable references from Assertion Records to source identity collections.
+
+`assertion_record_source_identity_summary.tsv` preserves compact counts and distributions that support inspection, validation, and downstream planning.
+
+These artifacts are not replacements for Registration Unit `source_identities`.
+
+They are reconstruction maps.
+
+## Required Source Identity Set Fields
+
+| Field | Required | Description |
+| ----- | -------- | ----------- |
+| `assertion_id` | yes | Assertion Record identity. |
+| `assertion_record_index_id` | yes | Assertion Record Index identity. |
+| `corpus_generation_id` | yes | Corpus Generation identity. |
+| `registration_unit_id` | yes | Registration Unit identity. |
+| `source_assertion_registration_id` | yes | Source assertion registration identity or explicit unresolved state. |
+| `source_identity_set_id` | recommended | Stable source identity set reference identity. |
+| `source_identity_table_reference` | yes | Reference to the Registration Unit `source_identities` table. |
+| `source_identity_filter` | recommended | Reconstructable filter, such as `assertion_registration_id=<value>`. |
+| `identity_kind` | recommended | Identity kind when the set is partitioned. |
+| `participant_role` | recommended | Participant role when the set is partitioned. |
+| `source_namespace` | recommended | Source namespace when the set is partitioned. |
+| `source_identity_count` | recommended | Count of source identity rows represented by this set. |
+| `includes_variant_identities` | recommended | Whether this set includes variant identities when known. |
+| `includes_noncoding_variant_identities` | recommended | Whether this set may include noncoding variant identities when known. |
+| `lossiness_status` | yes | Lossiness status for the source identity set reference. |
+| `resolution_status` | yes | Resolution status for the source identity set reference. |
+| `validation_status` | yes | Validation status. |
+
+## Source Identity Summary Fields
+
+| Field | Required | Description |
+| ----- | -------- | ----------- |
+| `assertion_id` | yes | Assertion Record identity. |
+| `registration_unit_id` | yes | Registration Unit identity. |
+| `producer_family` | yes | Producer family. |
+| `assertion_type` | yes | Assertion type. |
+| `identity_kind` | recommended | Source identity kind. |
+| `participant_role` | recommended | Participant role. |
+| `source_namespace` | recommended | Source namespace. |
+| `source_identity_count` | recommended | Number of source identities in this partition. |
+| `example_source_values` | optional | Small inspection sample when allowed. |
+| `summary_status` | yes | Summary status. |
+
+## Source Identity Set Rules
+
+Source identity set references must be sufficient to reconstruct all source identities attached to an Assertion Record under the declared Corpus Generation.
+
+They must preserve non-annotated and predominantly noncoding variant identities when those identities exist in the selected Registration Units.
+
+They must not bias Phase 4.3 toward annotated, interpreted, prioritized, or clinically labeled variants.
+
+They must not collapse the source identity universe into one example participant.
+
+They must not require duplication of very large source identity tables when lossless reconstruction by reference is available.
+
+A source identity set may be represented compactly only when the reconstruction path is explicit and validation-visible.
+
+If a source identity set reference is lossy, incomplete, filtered, or unavailable, that status must be explicit.
 
 ---
 
@@ -743,6 +831,10 @@ It must not contain topology relationships unless explicitly produced by the Evi
 | `temporal_or_generation_context` | recommended | Temporal or generation context. |
 | `validation_status` | yes | Assertion Record validation status. |
 
+The downstream topology input manifest must include enough source identity set reference information for Evidence Topology to recover the full participant/evidence universe when needed.
+
+This includes non-annotated and predominantly noncoding variant identities preserved in Registration Unit `source_identities` tables.
+
 The downstream topology input manifest enables Evidence Topology derivation.
 
 It does not perform Evidence Topology derivation.
@@ -790,6 +882,8 @@ evidence_basis_table_reference
 context_table_reference
 lineage_table_reference
 payload_reference_table_reference
+source_identity_set_table_reference
+source_identity_summary_table_reference
 downstream_topology_input_manifest_reference
 validation_policy_id
 validation_policy_version
@@ -804,6 +898,8 @@ indexed_with_note_count
 unsupported_assertion_registration_count
 deferred_assertion_registration_count
 failed_assertion_registration_count
+source_identity_set_count
+source_identity_reference_total
 producer_resolver_coverage_summary
 duplicate_source_assertion_key_count
 unresolved_source_assertion_key_count
@@ -1011,7 +1107,8 @@ Recommended fixture scope:
 4 VAP Registration Unit slices
 assertion registration rows
 source artifact rows
-source identity rows needed for participant and evidence reconstruction
+source identity rows or source identity set references needed for participant and evidence reconstruction
+source identity summaries sufficient to prove non-annotated and noncoding identities are not discarded
 minimal package and registration metadata
 expected resolver output snapshots
 expected validation summary snapshots
@@ -1177,6 +1274,8 @@ The primary TSV build artifacts are:
 assertion_record_index_manifest.tsv
 assertion_record_index.tsv
 assertion_record_participants.tsv
+assertion_record_source_identity_sets.tsv
+assertion_record_source_identity_summary.tsv
 assertion_record_relationships.tsv
 assertion_record_evidence_basis.tsv
 assertion_record_context.tsv
@@ -1245,6 +1344,9 @@ assertion type collapse
 relationship collapse
 participant collapse
 participant role collapse
+source identity set collapse
+non-annotated variant identity loss
+noncoding variant identity loss
 evidence basis collapse
 context collapse
 provenance collapse
@@ -1293,6 +1395,8 @@ preserve producer identity
 preserve assertion type
 preserve relationships or relationship classes
 preserve role-bearing participants
+preserve source identity sets losslessly by reference when full duplication is impractical
+preserve non-annotated and noncoding source identities when present in selected Registration Units
 preserve evidence basis or explicit absence
 preserve context or explicit absence
 preserve provenance and lineage

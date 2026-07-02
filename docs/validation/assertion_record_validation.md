@@ -168,6 +168,8 @@ downstream Assertion Record input manifest
 Assertion Record Index manifest
 Assertion Record index
 Assertion Record participant table
+Assertion Record source identity set table
+Assertion Record source identity summary table
 Assertion Record relationship table
 Assertion Record evidence basis table
 Assertion Record context table
@@ -212,6 +214,8 @@ assertion_record_index_manifest.json
 assertion_record_index.tsv
 assertion_record_index.jsonl
 assertion_record_participants.tsv
+assertion_record_source_identity_sets.tsv
+assertion_record_source_identity_summary.tsv
 assertion_record_relationships.tsv
 assertion_record_evidence_basis.tsv
 assertion_record_context.tsv
@@ -289,6 +293,8 @@ corpus_generation_id
 assertion_record_index_manifest_reference
 assertion_record_index_reference
 participant_table_reference
+source_identity_set_table_reference
+source_identity_summary_table_reference
 relationship_table_reference
 evidence_basis_table_reference
 context_table_reference
@@ -308,6 +314,8 @@ indexed_with_note_count
 unsupported_assertion_registration_count
 deferred_assertion_registration_count
 failed_assertion_registration_count
+source_identity_set_count
+source_identity_reference_total
 not_applicable_assertion_registration_count
 not_evaluated_assertion_registration_count
 producer_resolver_coverage_summary
@@ -355,6 +363,7 @@ Allowed finding tiers:
 input_validation
 record_validation
 participant_validation
+source_identity_set_validation
 relationship_validation
 evidence_basis_validation
 context_validation
@@ -469,7 +478,8 @@ Recommended fixture scope:
 4 VAP Registration Unit slices
 assertion registration rows
 source artifact rows
-source identity rows needed for participant and evidence reconstruction
+source identity rows or source identity set references needed for participant and evidence reconstruction
+source identity summaries sufficient to prove non-annotated and noncoding identities are not discarded
 minimal package and registration metadata
 expected resolver output snapshots
 expected validation summary snapshots
@@ -491,6 +501,8 @@ unsupported assertion registrations are counted
 deferred assertion registrations are counted
 failed assertion registrations are counted
 participants are role-bearing
+source identity set references are lossless and reconstructable
+non-annotated and noncoding VAP variant identities remain reconstructable when present
 relationships are explicit
 evidence basis is reconstructable or explicitly absent
 context is reconstructable or explicitly absent
@@ -552,6 +564,8 @@ failed assertion registrations are reported
 producer resolver coverage is reported
 validation report is deterministic
 downstream_topology_input_manifest.tsv is emitted
+source identity set references are emitted for large source identity collections
+non-annotated and noncoding VAP variant identities remain reconstructable when present
 Registration Units are not mutated
 no topology authority is embedded
 no geometry authority is embedded
@@ -661,6 +675,42 @@ Producer-native participant identities must remain visible.
 Canonical identifiers may be attached separately through namespace governance.
 
 ---
+
+# Required Source Identity Set Validation
+
+Source identity set validation confirms that large producer-native participant and evidence universes remain losslessly reconstructable.
+
+Validation must check:
+
+```text
+source identity set table exists
+source identity summary table exists
+source identity set records reference valid assertion_id values
+assertion_record_index_id is preserved
+corpus_generation_id is preserved
+registration_unit_id is preserved
+source_assertion_registration_id is preserved or explicitly unresolved
+source_identity_table_reference is present
+source_identity_filter is present or explicitly unresolved
+source_identity_count is present or explicitly unresolved
+identity_kind distributions are summarized when available
+participant_role distributions are summarized when available
+source_namespace distributions are summarized when available
+variant identity presence is reported when available
+non-annotated variant identity preservation is reported when available
+noncoding variant identity preservation is reported when available
+lossiness_status is present
+resolution_status is present
+validation_status is present
+```
+
+Source identity set validation must not require full duplication of very large Registration Unit `source_identities` tables.
+
+It must require lossless reconstruction by reference when duplication is not performed.
+
+Validation must fail or report explicit limitation if Phase 4.3 output preserves only example participants while discarding the source identity universe.
+
+Validation must guard against annotated-only, prioritized-only, or coding-only flattening unless such filtering is explicitly declared by a downstream projection layer.
 
 # Required Relationship Validation
 
@@ -858,6 +908,8 @@ the builder should produce equivalent:
 Assertion Record identities
 source assertion keys
 participant records
+source identity set records
+source identity summary records
 relationship records
 evidence basis records
 context records
@@ -937,7 +989,9 @@ assertion_type is preserved
 producer_family is preserved
 relationship_or_relationship_class is preserved
 participant_reference_summary is visible or explicitly unresolved
+source_identity_set_reference is visible or explicitly unresolved when applicable
 source_identity_reference_summary is visible or explicitly unresolved when applicable
+source identity summaries preserve non-annotated and noncoding variant recoverability when applicable
 registration_unit_id is preserved
 uncertainty_context is visible or explicitly unresolved
 independence_context is visible or explicitly unresolved when applicable
@@ -963,6 +1017,9 @@ assertion type collapse
 relationship collapse
 participant collapse
 participant role collapse
+source identity set collapse
+non-annotated variant identity loss
+noncoding variant identity loss
 evidence basis collapse
 context collapse
 provenance collapse
@@ -1141,6 +1198,8 @@ assertion type is preserved
 relationship or relationship class is preserved
 participants are preserved when applicable
 participant roles are explicit when participants are present
+source identity sets are preserved losslessly by reference when full duplication is impractical
+non-annotated and noncoding source identities remain reconstructable when present in selected Registration Units
 evidence basis is preserved or explicitly absent
 context is preserved or explicitly absent
 provenance is reconstructable
