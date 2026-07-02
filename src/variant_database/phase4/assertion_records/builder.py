@@ -1,4 +1,4 @@
-"""Minimal Phase 4.3 Assertion Record builder for Layer 1 validation.
+"""Phase 4.3 Assertion Record builder.
 
 This module implements the Assertion Record layer only. It consumes governed
 Registration Unit substrate and emits Assertion Record artifacts. It deliberately
@@ -7,16 +7,19 @@ Evidence Convergence Surfaces, emit Projection Views, or perform RDGP reasoning.
 """
 from __future__ import annotations
 
-from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 import csv
+import hashlib
 import json
 import sqlite3
 from typing import Any, Iterable
 
 from .identity import make_assertion_id, make_source_assertion_key
-from .resolver_policy import resolve_assertion, source_identity_set_status as policy_source_identity_set_status
+from .resolver_policy import (
+    resolve_assertion,
+    source_identity_set_status as policy_source_identity_set_status,
+)
 
 ASSERTION_INDEX_COLUMNS = [
     "assertion_id",
@@ -29,6 +32,8 @@ ASSERTION_INDEX_COLUMNS = [
     "source_assertion_registration_id",
     "assertion_type",
     "relationship_class",
+    "preservation_status",
+    "resolver_status",
     "validation_status",
     "source_identity_set_status",
     "authority_context",
@@ -41,6 +46,11 @@ PARTICIPANT_COLUMNS = [
     "participant_role",
     "participant_value",
     "participant_source",
+    "source_identity_set_id",
+    "participant_identity_kind",
+    "participant_source_namespace",
+    "participant_count",
+    "participant_resolution_status",
 ]
 
 RELATIONSHIP_COLUMNS = [
@@ -75,7 +85,12 @@ LINEAGE_COLUMNS = [
     "registration_unit_id",
     "source_package_id",
     "source_artifact_id",
+    "source_artifact_relative_path",
+    "source_artifact_sha256",
+    "source_artifact_size_bytes",
     "source_record_ref",
+    "source_record_ref_status",
+    "lineage_completeness_status",
 ]
 
 PAYLOAD_REFERENCE_COLUMNS = [
@@ -87,6 +102,7 @@ PAYLOAD_REFERENCE_COLUMNS = [
 ]
 
 SOURCE_IDENTITY_SET_COLUMNS = [
+    "source_identity_set_id",
     "assertion_id",
     "source_assertion_registration_id",
     "source_identity_table_reference",
@@ -102,6 +118,7 @@ SOURCE_IDENTITY_SET_COLUMNS = [
 ]
 
 SOURCE_IDENTITY_SUMMARY_COLUMNS = [
+    "source_identity_set_id",
     "assertion_id",
     "source_assertion_registration_id",
     "registration_unit_id",
@@ -116,6 +133,8 @@ VALIDATION_COLUMNS = [
     "producer_family",
     "source_assertion_registration_id",
     "assertion_type",
+    "preservation_status",
+    "resolver_status",
     "validation_status",
     "source_identity_set_status",
     "message",
@@ -129,6 +148,8 @@ DOWNSTREAM_TOPOLOGY_COLUMNS = [
     "source_assertion_registration_id",
     "assertion_type",
     "relationship_class",
+    "preservation_status",
+    "resolver_status",
     "validation_status",
 ]
 
@@ -147,6 +168,12 @@ class BuildResult:
     assertion_count: int
     validation_count: int
     registration_unit_count: int
+
+
+def _stable_id(prefix: str, parts: Iterable[Any]) -> str:
+    payload = "\x1f".join("" if part is None else str(part) for part in parts)
+    digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    return f"{prefix}_{digest[:24]}"
 
 
 def _read_tsv(path: Path) -> list[dict[str, str]]:
@@ -194,11 +221,17 @@ def _parse_json_cell(value: str, *, default: Any) -> Any:
         return default
 
 
-def _resolve_registration_unit_path(row: dict[str, str]) -> Path:
+def _resolve_registration_unit_path(row: dict[str, str], *, manifest_path: Path) -> Path:
     for column in MANIFEST_PATH_COLUMNS:
         value = (row.get(column) or "").strip()
         if value:
-            return Path(value)
+            path = Path(value)
+            if not path.is_absolute():
+                candidate = (manifest_path.parent / path).resolve()
+                if candidate.exists():
+                    return candidate
+                return path
+            return path
     raise ValueError(
         "Downstream Assertion Record input manifest row lacks a Registration Unit SQLite path. "
         f"Checked columns: {', '.join(MANIFEST_PATH_COLUMNS)}"
@@ -223,11 +256,10 @@ def _table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
     return row is not None
 
 
-def _column_exists(conn: sqlite3.Connection, table_name: str, column_name: str) -> bool:
+def _table_columns(conn: sqlite3.Connection, table_name: str) -> list[str]:
     if not _table_exists(conn, table_name):
-        return False
-    rows = conn.execute(f"PRAGMA table_info({table_name})").fetchall()
-    return any(str(row[1]) == column_name for row in rows)
+        return []
+    return [str(row[1]) for row in conn.execute(f"PRAGMA table_info({table_name})").fetchall()]
 
 
 def _select_all(conn: sqlite3.Connection, table_name: str) -> list[dict[str, Any]]:
@@ -241,9 +273,13 @@ def _artifact_map(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return {str(row.get("artifact_id", "")): row for row in rows if row.get("artifact_id")}
 
 
-def _participant_rows(assertion_id: str, source_assertion_registration_id: str, participant_json: str) -> list[dict[str, str]]:
+def _participant_rows_from_summary(
+    assertion_id: str,
+    source_assertion_registration_id: str,
+    participant_json: str,
+) -> list[dict[str, Any]]:
     participant_summary = _parse_json_cell(participant_json, default={})
-    rows: list[dict[str, str]] = []
+    rows: list[dict[str, Any]] = []
     if not isinstance(participant_summary, dict):
         return rows
     for role, value in sorted(participant_summary.items(), key=lambda item: str(item[0])):
@@ -258,48 +294,83 @@ def _participant_rows(assertion_id: str, source_assertion_registration_id: str, 
                 "participant_role": str(role),
                 "participant_value": value_cell,
                 "participant_source": "participant_summary_json",
+                "source_identity_set_id": "",
+                "participant_identity_kind": "",
+                "participant_source_namespace": "",
+                "participant_count": "",
+                "participant_resolution_status": "resolved_from_participant_summary_json",
             }
         )
     return rows
 
 
-def _source_identity_count_increment(row: dict[str, Any], key: tuple[str, str, str, str]) -> int:
-    """Return the source identity contribution represented by a row.
+def _participant_row_from_source_identity_set(source_identity_set_row: dict[str, Any]) -> dict[str, Any]:
+    source_identity_set_id = str(source_identity_set_row["source_identity_set_id"])
+    return {
+        "assertion_id": source_identity_set_row["assertion_id"],
+        "source_assertion_registration_id": source_identity_set_row["source_assertion_registration_id"],
+        "participant_role": source_identity_set_row["participant_role"],
+        "participant_value": f"source_identity_set:{source_identity_set_id}",
+        "participant_source": "source_identity_set_reference",
+        "source_identity_set_id": source_identity_set_id,
+        "participant_identity_kind": source_identity_set_row["identity_kind"],
+        "participant_source_namespace": source_identity_set_row["source_namespace"],
+        "participant_count": source_identity_set_row["source_identity_count"],
+        "participant_resolution_status": "resolved_from_source_identity_set",
+    }
 
-    Full Registration Unit SQLite files normally contain one physical
-    source_identities row per source identity, so the fallback contribution is
-    one row. Compressed Layer 2 fixture materializations may instead include a
-    precomputed source_identity_count column on representative group rows. In
-    that case, the precomputed count is authoritative for the represented set
-    cardinality.
+
+def _source_identity_groups(conn: sqlite3.Connection) -> dict[tuple[str, str, str, str], int]:
+    """Aggregate source identity groups in SQLite, not Python.
+
+    Layer 2 compressed fixture materialization may provide one row per source
+    identity set candidate with source_identity_count representing the real set
+    cardinality. Full MARK Registration Units do not have that column, so they
+    use COUNT(*). This prevents loading full source_identities tables into Python
+    while preserving compressed and full-corpus behavior.
     """
-    raw_count = row.get("source_identity_count", "")
-    if raw_count is None or str(raw_count).strip() == "":
-        return 1
-    try:
-        increment = int(str(raw_count).strip())
-    except ValueError as exc:
-        raise ValueError(
-            f"Invalid source_identity_count for source identity group {key}: {raw_count!r}"
-        ) from exc
-    if increment < 0:
-        raise ValueError(
-            f"Invalid negative source_identity_count for source identity group {key}: {raw_count!r}"
-        )
-    return increment
+    if not _table_exists(conn, "source_identities"):
+        return {}
 
+    columns = set(_table_columns(conn, "source_identities"))
+    if "source_identity_count" in columns:
+        count_expr = """
+            SUM(
+                CASE
+                    WHEN source_identity_count IS NULL THEN 1
+                    WHEN TRIM(CAST(source_identity_count AS TEXT)) = '' THEN 1
+                    ELSE CAST(source_identity_count AS INTEGER)
+                END
+            )
+        """
+    else:
+        count_expr = "COUNT(*)"
 
-def _source_identity_groups(rows: list[dict[str, Any]]) -> dict[tuple[str, str, str, str], int]:
-    grouped: Counter[tuple[str, str, str, str]] = Counter()
+    sql = f"""
+        SELECT
+            assertion_registration_id,
+            identity_kind,
+            participant_role,
+            source_namespace,
+            {count_expr} AS source_identity_count
+        FROM source_identities
+        GROUP BY
+            assertion_registration_id,
+            identity_kind,
+            participant_role,
+            source_namespace
+    """
+    rows = conn.execute(sql).fetchall()
+    grouped: dict[tuple[str, str, str, str], int] = {}
     for row in rows:
         key = (
-            str(row.get("assertion_registration_id", "")),
-            str(row.get("identity_kind", "")),
-            str(row.get("participant_role", "")),
-            str(row.get("source_namespace", "")),
+            str(row["assertion_registration_id"] or ""),
+            str(row["identity_kind"] or ""),
+            str(row["participant_role"] or ""),
+            str(row["source_namespace"] or ""),
         )
-        grouped[key] += _source_identity_count_increment(row, key)
-    return dict(grouped)
+        grouped[key] = int(row["source_identity_count"] or 0)
+    return grouped
 
 
 def _source_identity_filter(
@@ -317,59 +388,38 @@ def _source_identity_filter(
     )
 
 
-def _source_identity_groups_from_db(conn: sqlite3.Connection) -> dict[tuple[str, str, str, str], int]:
-    """Aggregate source identity groups inside SQLite.
+def _source_identity_set_id(
+    *,
+    assertion_id: str,
+    source_assertion_registration_id: str,
+    identity_kind: str,
+    participant_role: str,
+    source_namespace: str,
+    source_identity_filter: str,
+) -> str:
+    return _stable_id(
+        "sis",
+        (
+            assertion_id,
+            source_assertion_registration_id,
+            identity_kind,
+            participant_role,
+            source_namespace,
+            source_identity_filter,
+        ),
+    )
 
-    Layer 3 MARK Registration Units may contain hundreds of millions of
-    source identity rows. This function therefore avoids loading the full
-    source_identities table into Python.
 
-    For Layer 2 compressed fixture materialization, a temporary
-    source_identities table may include a source_identity_count column, where
-    each row represents a larger source identity set. In that case, counts are
-    summed. For normal physical rows, counts fall back to COUNT(*).
-    """
-    if not _table_exists(conn, "source_identities"):
-        return {}
+def _source_record_ref_status(value: str) -> str:
+    return "present" if value else "explicit_absence"
 
-    has_precomputed_count = _column_exists(conn, "source_identities", "source_identity_count")
-    if has_precomputed_count:
-        count_expr = (
-            "SUM(CASE "
-            "WHEN source_identity_count IS NULL "
-            "OR TRIM(CAST(source_identity_count AS TEXT)) = '' "
-            "THEN 1 "
-            "ELSE CAST(source_identity_count AS INTEGER) "
-            "END)"
-        )
-    else:
-        count_expr = "COUNT(*)"
 
-    query = f"""
-        SELECT
-            COALESCE(assertion_registration_id, '') AS assertion_registration_id,
-            COALESCE(identity_kind, '') AS identity_kind,
-            COALESCE(participant_role, '') AS participant_role,
-            COALESCE(source_namespace, '') AS source_namespace,
-            {count_expr} AS source_identity_count
-        FROM source_identities
-        GROUP BY
-            COALESCE(assertion_registration_id, ''),
-            COALESCE(identity_kind, ''),
-            COALESCE(participant_role, ''),
-            COALESCE(source_namespace, '')
-    """
-
-    grouped: dict[tuple[str, str, str, str], int] = {}
-    for row in conn.execute(query):
-        key = (
-            str(row["assertion_registration_id"]),
-            str(row["identity_kind"]),
-            str(row["participant_role"]),
-            str(row["source_namespace"]),
-        )
-        grouped[key] = int(row["source_identity_count"] or 0)
-    return grouped
+def _lineage_completeness_status(*, source_record_ref: str, artifact: dict[str, Any]) -> str:
+    if source_record_ref:
+        return "row_level_source_record_ref_present"
+    if artifact:
+        return "artifact_level_lineage_present_row_ref_absent"
+    return "lineage_unresolved_row_ref_absent"
 
 
 def build_assertion_records_from_manifest(
@@ -378,7 +428,7 @@ def build_assertion_records_from_manifest(
     output_dir: str | Path,
     corpus_generation_id: str,
 ) -> BuildResult:
-    """Build minimal Assertion Record outputs from a governed manifest."""
+    """Build Assertion Record outputs from a governed manifest."""
     manifest = Path(manifest_path)
     output = Path(output_dir)
     corpus_generation_id = (corpus_generation_id or "").strip()
@@ -414,17 +464,16 @@ def build_assertion_records_from_manifest(
         if not producer_family:
             raise ValueError(f"manifest row for {registration_unit_id} missing producer_family")
 
-        ru_path = _resolve_registration_unit_path(manifest_row)
+        ru_path = _resolve_registration_unit_path(manifest_row, manifest_path=manifest)
         with _connect_read_only(ru_path) as conn:
             assertion_rows = _select_all(conn, "assertion_registrations")
-            source_identity_groups = _source_identity_groups_from_db(conn)
             artifact_rows = _select_all(conn, "artifacts")
+            source_groups = _source_identity_groups(conn)
 
         if not assertion_rows:
             raise ValueError(f"Registration Unit lacks assertion_registrations rows: {registration_unit_id}")
 
         artifacts = _artifact_map(artifact_rows)
-        source_groups = source_identity_groups
         assertion_id_by_source: dict[str, str] = {}
 
         for assertion in assertion_rows:
@@ -440,7 +489,9 @@ def build_assertion_records_from_manifest(
                 raise ValueError(f"assertion {source_assertion_registration_id} lacks producer_family")
 
             policy = resolve_assertion(assertion_producer, assertion_type)
-            validation_status = policy["resolution_status"]
+            resolver_status = policy["resolution_status"]
+            validation_status = resolver_status  # Backward-compatible alias until downstream schemas are fully migrated.
+            preservation_status = "preserved"
             relationship_class = policy["relationship_class"]
             source_identity_status = policy["source_identity_set_status"]
 
@@ -461,26 +512,29 @@ def build_assertion_records_from_manifest(
             )
             assertion_id_by_source[source_assertion_registration_id] = assertion_id
 
-            index_row = {
-                "assertion_id": assertion_id,
-                "source_assertion_key": source_key,
-                "corpus_generation_id": corpus_generation_id,
-                "registration_unit_id": registration_unit_id,
-                "producer_family": assertion_producer,
-                "source_package_id": source_package_id,
-                "source_artifact_id": source_artifact_id,
-                "source_assertion_registration_id": source_assertion_registration_id,
-                "assertion_type": assertion_type,
-                "relationship_class": relationship_class,
-                "validation_status": validation_status,
-                "source_identity_set_status": source_identity_status,
-                "authority_context": str(assertion.get("authority_context", "")),
-                "uncertainty_context": str(assertion.get("uncertainty_context", "")),
-            }
-            index_rows.append(index_row)
+            index_rows.append(
+                {
+                    "assertion_id": assertion_id,
+                    "source_assertion_key": source_key,
+                    "corpus_generation_id": corpus_generation_id,
+                    "registration_unit_id": registration_unit_id,
+                    "producer_family": assertion_producer,
+                    "source_package_id": source_package_id,
+                    "source_artifact_id": source_artifact_id,
+                    "source_assertion_registration_id": source_assertion_registration_id,
+                    "assertion_type": assertion_type,
+                    "relationship_class": relationship_class,
+                    "preservation_status": preservation_status,
+                    "resolver_status": resolver_status,
+                    "validation_status": validation_status,
+                    "source_identity_set_status": source_identity_status,
+                    "authority_context": str(assertion.get("authority_context", "")),
+                    "uncertainty_context": str(assertion.get("uncertainty_context", "")),
+                }
+            )
 
             participant_rows.extend(
-                _participant_rows(
+                _participant_rows_from_summary(
                     assertion_id,
                     source_assertion_registration_id,
                     str(assertion.get("participant_summary_json", "")),
@@ -515,6 +569,8 @@ def build_assertion_records_from_manifest(
                     "uncertainty_context": str(assertion.get("uncertainty_context", "")),
                 }
             )
+            artifact = artifacts.get(source_artifact_id, {})
+            source_record_ref = str(assertion.get("source_record_ref", "") or "")
             lineage_rows.append(
                 {
                     "assertion_id": assertion_id,
@@ -523,10 +579,17 @@ def build_assertion_records_from_manifest(
                     "registration_unit_id": registration_unit_id,
                     "source_package_id": source_package_id,
                     "source_artifact_id": source_artifact_id,
-                    "source_record_ref": str(assertion.get("source_record_ref", "")),
+                    "source_artifact_relative_path": str(artifact.get("relative_path", "")),
+                    "source_artifact_sha256": str(artifact.get("sha256", "")),
+                    "source_artifact_size_bytes": str(artifact.get("size_bytes", "")),
+                    "source_record_ref": source_record_ref,
+                    "source_record_ref_status": _source_record_ref_status(source_record_ref),
+                    "lineage_completeness_status": _lineage_completeness_status(
+                        source_record_ref=source_record_ref,
+                        artifact=artifact,
+                    ),
                 }
             )
-            artifact = artifacts.get(source_artifact_id, {})
             payload_rows.append(
                 {
                     "assertion_id": assertion_id,
@@ -542,6 +605,8 @@ def build_assertion_records_from_manifest(
                     "producer_family": assertion_producer,
                     "source_assertion_registration_id": source_assertion_registration_id,
                     "assertion_type": assertion_type,
+                    "preservation_status": preservation_status,
+                    "resolver_status": resolver_status,
                     "validation_status": validation_status,
                     "source_identity_set_status": source_identity_status,
                     "message": policy.get("note", ""),
@@ -556,6 +621,8 @@ def build_assertion_records_from_manifest(
                     "source_assertion_registration_id": source_assertion_registration_id,
                     "assertion_type": assertion_type,
                     "relationship_class": relationship_class,
+                    "preservation_status": preservation_status,
+                    "resolver_status": resolver_status,
                     "validation_status": validation_status,
                 }
             )
@@ -569,6 +636,8 @@ def build_assertion_records_from_manifest(
                         "producer_family": producer_family,
                         "source_assertion_registration_id": source_assertion_registration_id,
                         "assertion_type": "unknown",
+                        "preservation_status": "not_applicable",
+                        "resolver_status": "orphan_source_identity_group",
                         "validation_status": "orphan_source_identity_group",
                         "source_identity_set_status": "unresolved",
                         "message": "source_identity group did not resolve to an assertion registration",
@@ -581,24 +650,33 @@ def build_assertion_records_from_manifest(
                 participant_role=participant_role,
                 source_namespace=source_namespace,
             )
-            source_identity_set_rows.append(
-                {
-                    "assertion_id": assertion_id,
-                    "source_assertion_registration_id": source_assertion_registration_id,
-                    "source_identity_table_reference": f"{registration_unit_id}:source_identities",
-                    "source_identity_filter": filter_value,
-                    "identity_kind": identity_kind,
-                    "participant_role": participant_role,
-                    "source_namespace": source_namespace,
-                    "source_identity_count": count,
-                    "lossiness_status": "lossless_by_reference",
-                    "resolution_status": "resolved",
-                    "validation_status": "not_evaluated",
-                    "source_identity_set_status": "resolved",
-                }
+            source_identity_set_id = _source_identity_set_id(
+                assertion_id=assertion_id,
+                source_assertion_registration_id=source_assertion_registration_id,
+                identity_kind=identity_kind,
+                participant_role=participant_role,
+                source_namespace=source_namespace,
+                source_identity_filter=filter_value,
             )
+            set_row = {
+                "source_identity_set_id": source_identity_set_id,
+                "assertion_id": assertion_id,
+                "source_assertion_registration_id": source_assertion_registration_id,
+                "source_identity_table_reference": f"{registration_unit_id}:source_identities",
+                "source_identity_filter": filter_value,
+                "identity_kind": identity_kind,
+                "participant_role": participant_role,
+                "source_namespace": source_namespace,
+                "source_identity_count": count,
+                "lossiness_status": "lossless_by_reference",
+                "resolution_status": "resolved",
+                "validation_status": "not_evaluated",
+                "source_identity_set_status": "resolved",
+            }
+            source_identity_set_rows.append(set_row)
             source_identity_summary_rows.append(
                 {
+                    "source_identity_set_id": source_identity_set_id,
                     "assertion_id": assertion_id,
                     "source_assertion_registration_id": source_assertion_registration_id,
                     "registration_unit_id": registration_unit_id,
@@ -608,6 +686,7 @@ def build_assertion_records_from_manifest(
                     "source_identity_count": count,
                 }
             )
+            participant_rows.append(_participant_row_from_source_identity_set(set_row))
 
         # Explicitly account for source-identity-not-applicable assertion types that have no groups.
         grouped_assertions = {group[0] for group in source_groups}
@@ -625,6 +704,8 @@ def build_assertion_records_from_manifest(
                         "producer_family": assertion_producer,
                         "source_assertion_registration_id": source_assertion_registration_id,
                         "assertion_type": assertion_type,
+                        "preservation_status": "preserved",
+                        "resolver_status": "not_applicable_for_source_identity_sets",
                         "validation_status": "not_applicable_for_source_identity_sets",
                         "source_identity_set_status": "not_applicable",
                         "message": "artifact-level assertion without source identity set obligation",
@@ -633,7 +714,15 @@ def build_assertion_records_from_manifest(
 
     # Deterministic output ordering.
     index_rows.sort(key=lambda row: row["assertion_id"])
-    participant_rows.sort(key=lambda row: (row["assertion_id"], row["participant_role"], row["participant_value"]))
+    participant_rows.sort(
+        key=lambda row: (
+            row["assertion_id"],
+            row["participant_role"],
+            row.get("participant_identity_kind", ""),
+            row.get("participant_source_namespace", ""),
+            row["participant_value"],
+        )
+    )
     relationship_rows.sort(key=lambda row: row["assertion_id"])
     evidence_rows.sort(key=lambda row: row["assertion_id"])
     context_rows.sort(key=lambda row: row["assertion_id"])
@@ -681,8 +770,13 @@ def build_assertion_records_from_manifest(
             "corpus_generation_id": corpus_generation_id,
             "registration_unit_count": len(manifest_rows),
             "assertion_record_count": len(index_rows),
+            "participant_count": len(participant_rows),
             "source_identity_set_count": len(source_identity_set_rows),
             "validation_row_count": len(validation_rows),
+            "preservation_status_counts": _count_values(index_rows, "preservation_status"),
+            "resolver_status_counts": _count_values(index_rows, "resolver_status"),
+            "validation_status_counts": _count_values(index_rows, "validation_status"),
+            "lineage_completeness_status_counts": _count_values(lineage_rows, "lineage_completeness_status"),
             "non_goals": {
                 "derives_topology": False,
                 "characterizes_geometry": False,
@@ -700,6 +794,14 @@ def build_assertion_records_from_manifest(
         validation_count=len(validation_rows),
         registration_unit_count=len(manifest_rows),
     )
+
+
+def _count_values(rows: list[dict[str, Any]], column: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in rows:
+        value = str(row.get(column, ""))
+        counts[value] = counts.get(value, 0) + 1
+    return dict(sorted(counts.items()))
 
 
 def build_assertion_records(
