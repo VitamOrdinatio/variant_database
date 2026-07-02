@@ -256,6 +256,32 @@ def _participant_rows(assertion_id: str, source_assertion_registration_id: str, 
     return rows
 
 
+def _source_identity_count_increment(row: dict[str, Any], key: tuple[str, str, str, str]) -> int:
+    """Return the source identity contribution represented by a row.
+
+    Full Registration Unit SQLite files normally contain one physical
+    source_identities row per source identity, so the fallback contribution is
+    one row. Compressed Layer 2 fixture materializations may instead include a
+    precomputed source_identity_count column on representative group rows. In
+    that case, the precomputed count is authoritative for the represented set
+    cardinality.
+    """
+    raw_count = row.get("source_identity_count", "")
+    if raw_count is None or str(raw_count).strip() == "":
+        return 1
+    try:
+        increment = int(str(raw_count).strip())
+    except ValueError as exc:
+        raise ValueError(
+            f"Invalid source_identity_count for source identity group {key}: {raw_count!r}"
+        ) from exc
+    if increment < 0:
+        raise ValueError(
+            f"Invalid negative source_identity_count for source identity group {key}: {raw_count!r}"
+        )
+    return increment
+
+
 def _source_identity_groups(rows: list[dict[str, Any]]) -> dict[tuple[str, str, str, str], int]:
     grouped: Counter[tuple[str, str, str, str]] = Counter()
     for row in rows:
@@ -265,7 +291,7 @@ def _source_identity_groups(rows: list[dict[str, Any]]) -> dict[tuple[str, str, 
             str(row.get("participant_role", "")),
             str(row.get("source_namespace", "")),
         )
-        grouped[key] += 1
+        grouped[key] += _source_identity_count_increment(row, key)
     return dict(grouped)
 
 
