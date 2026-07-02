@@ -1,0 +1,10 @@
+{
+  "committed_fixture_target_recommended": "tests/fixtures/phase4/assertion_records/phase4_3_assertion_record_golden_fixture_2026_07_01_203720/",
+  "contract_id": "phase4_3_assertion_record_golden_fixture_contract",
+  "fixture_id": "phase4_3_assertion_record_golden_fixture_v1",
+  "fixture_name": "phase4_3_assertion_record_golden_fixture_2026_07_01_203720",
+  "generated_at_utc": "2026-07-02T00:15:00.301930+00:00",
+  "input_manifest": "/root/dev/portfolio_projects/variant_database/results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv",
+  "output_policy": "MARK writes candidate package to /root/Desktop; sys76 curates and commits",
+  "source_corpus_generation_id": "mark_phase4_corpus_6tep_v1"
+}

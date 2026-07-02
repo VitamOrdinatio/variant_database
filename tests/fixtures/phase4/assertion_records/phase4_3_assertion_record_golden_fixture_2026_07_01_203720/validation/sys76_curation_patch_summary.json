@@ -1,0 +1,12 @@
+{
+  "curation_timestamp_utc": "2026-07-02T03:59:54Z",
+  "extracted_root": "/tmp/phase4_3_fixture_curation_cy48092r/phase4_3_assertion_record_golden_fixture_2026_07_01_203720",
+  "file_manifest_entries_regenerated": 58,
+  "required_registration_unit_alias_warnings_patched": 6,
+  "source_identity_filter_files_patched": 7,
+  "source_identity_filter_rows_patched": 408,
+  "source_identity_not_applicable_assertions_added": 2,
+  "source_tgz": "/home/steelsparrow/Downloads/phase4_3_assertion_record_golden_fixture_2026_07_01_203720.tgz",
+  "source_tgz_sha256_expected": "48175792ec2120dc57172aad57efb8e0804c3e6b5ad5f1d9670a715a03ddacc0",
+  "source_tgz_sha256_observed": "48175792ec2120dc57172aad57efb8e0804c3e6b5ad5f1d9670a715a03ddacc0"
+}

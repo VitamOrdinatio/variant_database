@@ -1,0 +1,464 @@
+[
+  {
+    "check_name": "required_registration_unit_present",
+    "check_status": "warning",
+    "message": "Required canonical Registration Unit was not present in input manifest or could not be resolved by ID.",
+    "producer_family": "not_resolved",
+    "registration_unit_id": "gsc_epilepsy"
+  },
+  {
+    "check_name": "required_registration_unit_present",
+    "check_status": "warning",
+    "message": "Required canonical Registration Unit was not present in input manifest or could not be resolved by ID.",
+    "producer_family": "not_resolved",
+    "registration_unit_id": "gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "required_registration_unit_present",
+    "check_status": "warning",
+    "message": "Required canonical Registration Unit was not present in input manifest or could not be resolved by ID.",
+    "producer_family": "not_resolved",
+    "registration_unit_id": "vap_hg002"
+  },
+  {
+    "check_name": "required_registration_unit_present",
+    "check_status": "warning",
+    "message": "Required canonical Registration Unit was not present in input manifest or could not be resolved by ID.",
+    "producer_family": "not_resolved",
+    "registration_unit_id": "vap_median_ERR10619300"
+  },
+  {
+    "check_name": "required_registration_unit_present",
+    "check_status": "warning",
+    "message": "Required canonical Registration Unit was not present in input manifest or could not be resolved by ID.",
+    "producer_family": "not_resolved",
+    "registration_unit_id": "vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "required_registration_unit_present",
+    "check_status": "warning",
+    "message": "Required canonical Registration Unit was not present in input manifest or could not be resolved by ID.",
+    "producer_family": "not_resolved",
+    "registration_unit_id": "vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "sqlite_opened_read_only",
+    "check_status": "passed",
+    "message": "SQLite opened with mode=ro and PRAGMA query_only=ON",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "assertion_registrations_present",
+    "check_status": "passed",
+    "message": "6 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "artifacts_present",
+    "check_status": "passed",
+    "message": "9 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "tep_packages_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "schema_metadata_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "source_identities_present",
+    "check_status": "passed",
+    "message": "89138 total source identities",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "source_identity_summary_emitted",
+    "check_status": "passed",
+    "message": "22 summary rows",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "source_identity_set_candidates_emitted",
+    "check_status": "passed",
+    "message": "22 set candidate rows",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "source_identity_slice_emitted",
+    "check_status": "passed",
+    "message": "132 deterministic slice rows",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "registration_unit_not_mutated",
+    "check_status": "passed",
+    "message": "no new SQLite sidecars",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_epilepsy"
+  },
+  {
+    "check_name": "sqlite_opened_read_only",
+    "check_status": "passed",
+    "message": "SQLite opened with mode=ro and PRAGMA query_only=ON",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "assertion_registrations_present",
+    "check_status": "passed",
+    "message": "6 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "artifacts_present",
+    "check_status": "passed",
+    "message": "9 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "tep_packages_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "schema_metadata_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "source_identities_present",
+    "check_status": "passed",
+    "message": "85434 total source identities",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "source_identity_summary_emitted",
+    "check_status": "passed",
+    "message": "22 summary rows",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "source_identity_set_candidates_emitted",
+    "check_status": "passed",
+    "message": "22 set candidate rows",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "source_identity_slice_emitted",
+    "check_status": "passed",
+    "message": "132 deterministic slice rows",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "registration_unit_not_mutated",
+    "check_status": "passed",
+    "message": "no new SQLite sidecars",
+    "producer_family": "GSC",
+    "registration_unit_id": "mark_phase3_canonical_gsc_mitochondrial_disease"
+  },
+  {
+    "check_name": "sqlite_opened_read_only",
+    "check_status": "passed",
+    "message": "SQLite opened with mode=ro and PRAGMA query_only=ON",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "assertion_registrations_present",
+    "check_status": "passed",
+    "message": "10 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "artifacts_present",
+    "check_status": "passed",
+    "message": "16 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "tep_packages_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "schema_metadata_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "source_identities_present",
+    "check_status": "passed",
+    "message": "97369849 total source identities",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "source_identity_summary_emitted",
+    "check_status": "passed",
+    "message": "40 summary rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "source_identity_set_candidates_emitted",
+    "check_status": "passed",
+    "message": "40 set candidate rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "source_identity_slice_emitted",
+    "check_status": "passed",
+    "message": "190 deterministic slice rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "registration_unit_not_mutated",
+    "check_status": "passed",
+    "message": "no new SQLite sidecars",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_hg002"
+  },
+  {
+    "check_name": "sqlite_opened_read_only",
+    "check_status": "passed",
+    "message": "SQLite opened with mode=ro and PRAGMA query_only=ON",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "assertion_registrations_present",
+    "check_status": "passed",
+    "message": "10 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "artifacts_present",
+    "check_status": "passed",
+    "message": "16 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "tep_packages_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "schema_metadata_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "source_identities_present",
+    "check_status": "passed",
+    "message": "15467317 total source identities",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "source_identity_summary_emitted",
+    "check_status": "passed",
+    "message": "40 summary rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "source_identity_set_candidates_emitted",
+    "check_status": "passed",
+    "message": "40 set candidate rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "source_identity_slice_emitted",
+    "check_status": "passed",
+    "message": "190 deterministic slice rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "registration_unit_not_mutated",
+    "check_status": "passed",
+    "message": "no new SQLite sidecars",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_median_ERR10619300"
+  },
+  {
+    "check_name": "sqlite_opened_read_only",
+    "check_status": "passed",
+    "message": "SQLite opened with mode=ro and PRAGMA query_only=ON",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "assertion_registrations_present",
+    "check_status": "passed",
+    "message": "10 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "artifacts_present",
+    "check_status": "passed",
+    "message": "16 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "tep_packages_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "schema_metadata_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "source_identities_present",
+    "check_status": "passed",
+    "message": "19017490 total source identities",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "source_identity_summary_emitted",
+    "check_status": "passed",
+    "message": "40 summary rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "source_identity_set_candidates_emitted",
+    "check_status": "passed",
+    "message": "40 set candidate rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "source_identity_slice_emitted",
+    "check_status": "passed",
+    "message": "190 deterministic slice rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "registration_unit_not_mutated",
+    "check_status": "passed",
+    "message": "no new SQLite sidecars",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q1_ERR10619212"
+  },
+  {
+    "check_name": "sqlite_opened_read_only",
+    "check_status": "passed",
+    "message": "SQLite opened with mode=ro and PRAGMA query_only=ON",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "assertion_registrations_present",
+    "check_status": "passed",
+    "message": "10 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "artifacts_present",
+    "check_status": "passed",
+    "message": "16 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "tep_packages_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "schema_metadata_present",
+    "check_status": "passed",
+    "message": "1 rows extracted",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "source_identities_present",
+    "check_status": "passed",
+    "message": "15911968 total source identities",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "source_identity_summary_emitted",
+    "check_status": "passed",
+    "message": "40 summary rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "source_identity_set_candidates_emitted",
+    "check_status": "passed",
+    "message": "40 set candidate rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "source_identity_slice_emitted",
+    "check_status": "passed",
+    "message": "190 deterministic slice rows",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  },
+  {
+    "check_name": "registration_unit_not_mutated",
+    "check_status": "passed",
+    "message": "no new SQLite sidecars",
+    "producer_family": "VAP",
+    "registration_unit_id": "mark_phase3_canonical_vap_q3_ERR10619225"
+  }
+]
