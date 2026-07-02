@@ -15,6 +15,10 @@ assertion_type_reconciliation	passed	checked 12 producer/assertion_type groups w
 source_identity_set_reconciliation	passed	reconciled 204 expected source identity set groups with 0 failures	
 source_identity_set_outputs_present	passed	source identity set rows: 204; summary rows: 204	
 source_identity_not_applicable_reconciliation	passed	checked 2 not_applicable assertions with 0 failures	
+participant_bridge_populated_from_source_identity_sets	passed	participant rows: 204; source identity set rows: 204	
+source_identity_set_id_join_integrity	passed	participant missing joins: 0; summary missing joins: 0	
+preservation_and_resolver_status_are_explicit	passed	preserved 52 of 52 records; resolver statuses: ['deferred', 'indexed_with_note', 'supported']	
+artifact_level_lineage_is_explicit	passed	lineage rows: 52; lineage failures: 0	
 anti_flattening_checks	passed	anti-flattening failures: 0	
 deterministic_build_outputs	passed	compared 13 governed outputs with 0 failures	
 non_goal_boundary_preserved	passed	non-goal failures: 0	

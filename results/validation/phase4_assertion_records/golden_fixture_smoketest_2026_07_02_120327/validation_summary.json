@@ -97,6 +97,30 @@
       "status": "passed"
     },
     {
+      "check_name": "participant_bridge_populated_from_source_identity_sets",
+      "detail": "",
+      "message": "participant rows: 204; source identity set rows: 204",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_set_id_join_integrity",
+      "detail": "",
+      "message": "participant missing joins: 0; summary missing joins: 0",
+      "status": "passed"
+    },
+    {
+      "check_name": "preservation_and_resolver_status_are_explicit",
+      "detail": "",
+      "message": "preserved 52 of 52 records; resolver statuses: ['deferred', 'indexed_with_note', 'supported']",
+      "status": "passed"
+    },
+    {
+      "check_name": "artifact_level_lineage_is_explicit",
+      "detail": "",
+      "message": "lineage rows: 52; lineage failures: 0",
+      "status": "passed"
+    },
+    {
       "check_name": "anti_flattening_checks",
       "detail": "",
       "message": "anti-flattening failures: 0",
@@ -123,6 +147,6 @@
   ],
   "overall_status": "passed",
   "status_counts": {
-    "passed": 20
+    "passed": 24
   }
 }

@@ -1,0 +1,5 @@
+check_name	expected	observed	status	detail
+participant_bridge_populated_from_source_identity_sets	participant rows > 0 when source identity sets exist; all participants use source_identity_set_reference	participants=204; source_identity_sets=204; participant_sources=source_identity_set_reference	passed	
+source_identity_set_id_join_integrity	participant and summary source_identity_set_id values join to assertion_record_source_identity_sets.tsv	participant_missing=0; summary_missing=0; set_ids=204; participant_set_ids=204; summary_set_ids=204	passed	
+preservation_and_resolver_status_are_explicit	all indexed records preservation_status=preserved and resolver_status is explicit	index_rows=52; preserved=52; resolver_values=deferred,indexed_with_note,supported	passed	
+artifact_level_lineage_is_explicit	artifact provenance fields and explicit source_record_ref/lineage statuses are present for every lineage row	lineage_rows=52; missing_columns=; lineage_statuses=artifact_level_lineage_present_row_ref_absent; source_record_ref_statuses=explicit_absence	passed	

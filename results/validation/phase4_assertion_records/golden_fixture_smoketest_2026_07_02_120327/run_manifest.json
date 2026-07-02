@@ -6,7 +6,7 @@
   "layer": "Layer 2 compressed golden fixture validation",
   "output_root": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/validation/phase4_assertion_records",
   "phase": "Phase 4.3D",
-  "receipt_dir": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/validation/phase4_assertion_records/golden_fixture_smoketest_2026_07_02_021020",
+  "receipt_dir": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/validation/phase4_assertion_records/golden_fixture_smoketest_2026_07_02_120327",
   "script": "scripts/validation/run_phase4_3_golden_fixture_assertion_record_smoketest.py",
-  "timestamp": "2026_07_02_021020"
+  "timestamp": "2026_07_02_120327"
 }

@@ -1,0 +1,31 @@
+{
+  "assertion_record_count": 52,
+  "corpus_generation_id": "mark_phase4_corpus_6tep_v1",
+  "lineage_completeness_status_counts": {
+    "artifact_level_lineage_present_row_ref_absent": 52
+  },
+  "non_goals": {
+    "characterizes_geometry": false,
+    "constructs_surfaces": false,
+    "derives_topology": false,
+    "emits_projection_views": false,
+    "performs_rdgp_reasoning": false
+  },
+  "participant_count": 204,
+  "preservation_status_counts": {
+    "preserved": 52
+  },
+  "registration_unit_count": 6,
+  "resolver_status_counts": {
+    "deferred": 12,
+    "indexed_with_note": 14,
+    "supported": 26
+  },
+  "source_identity_set_count": 204,
+  "validation_row_count": 54,
+  "validation_status_counts": {
+    "deferred": 12,
+    "indexed_with_note": 14,
+    "supported": 26
+  }
+}
