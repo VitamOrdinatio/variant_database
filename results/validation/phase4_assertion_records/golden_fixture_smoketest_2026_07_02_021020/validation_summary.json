@@ -1,0 +1,128 @@
+{
+  "checks": [
+    {
+      "check_name": "fixture_directory_exists",
+      "detail": "",
+      "message": "fixture found: /home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/assertion_records/phase4_3_assertion_record_golden_fixture_2026_07_01_203720",
+      "status": "passed"
+    },
+    {
+      "check_name": "fixture_checksum_manifest_validates",
+      "detail": "",
+      "message": "validated 58 checksum entries with 0 failures",
+      "status": "passed"
+    },
+    {
+      "check_name": "fixture_required_paths_present",
+      "detail": "",
+      "message": "checked 9 required fixture paths with 0 missing",
+      "status": "passed"
+    },
+    {
+      "check_name": "six_registration_units_present",
+      "detail": "",
+      "message": "found 6 registration unit directories",
+      "status": "passed"
+    },
+    {
+      "check_name": "registration_unit_slice_files_present",
+      "detail": "",
+      "message": "required unit file missing count: 0",
+      "status": "passed"
+    },
+    {
+      "check_name": "partition_specific_source_identity_filters",
+      "detail": "",
+      "message": "checked 204 source identity set candidates with 0 failures",
+      "status": "passed"
+    },
+    {
+      "check_name": "required_registration_unit_alias_checks_passed",
+      "detail": "",
+      "message": "found 6 passed required_registration_unit_present rows",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_not_applicable_rows_present",
+      "detail": "",
+      "message": "found 2 source identity not_applicable rows",
+      "status": "passed"
+    },
+    {
+      "check_name": "temporary_registration_units_materialized",
+      "detail": "",
+      "message": "materialized 6 temporary Registration Units",
+      "status": "passed"
+    },
+    {
+      "check_name": "assertion_count_reconciliation",
+      "detail": "",
+      "message": "checked assertion count reconciliation with 0 failures",
+      "status": "passed"
+    },
+    {
+      "check_name": "no_silent_assertion_drops",
+      "detail": "",
+      "message": "accounted statuses in index: 52 of 52",
+      "status": "passed"
+    },
+    {
+      "check_name": "validation_report_nonempty",
+      "detail": "",
+      "message": "validation rows: 54",
+      "status": "passed"
+    },
+    {
+      "check_name": "assertion_type_reconciliation",
+      "detail": "",
+      "message": "checked 12 producer/assertion_type groups with 0 failures",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_set_reconciliation",
+      "detail": "",
+      "message": "reconciled 204 expected source identity set groups with 0 failures",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_set_outputs_present",
+      "detail": "",
+      "message": "source identity set rows: 204; summary rows: 204",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_not_applicable_reconciliation",
+      "detail": "",
+      "message": "checked 2 not_applicable assertions with 0 failures",
+      "status": "passed"
+    },
+    {
+      "check_name": "anti_flattening_checks",
+      "detail": "",
+      "message": "anti-flattening failures: 0",
+      "status": "passed"
+    },
+    {
+      "check_name": "deterministic_build_outputs",
+      "detail": "",
+      "message": "compared 13 governed outputs with 0 failures",
+      "status": "passed"
+    },
+    {
+      "check_name": "non_goal_boundary_preserved",
+      "detail": "",
+      "message": "non-goal failures: 0",
+      "status": "passed"
+    },
+    {
+      "check_name": "fixture_inputs_not_mutated",
+      "detail": "",
+      "message": "fixture hashes unchanged",
+      "status": "passed"
+    }
+  ],
+  "overall_status": "passed",
+  "status_counts": {
+    "passed": 20
+  }
+}

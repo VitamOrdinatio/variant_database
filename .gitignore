@@ -11,6 +11,8 @@ results/validation/*
 !results/validation/phase4_registration_units/**
 !results/validation/phase4_corpus_generation/
 !results/validation/phase4_corpus_generation/**
+!results/validation/phase4_assertion_records/
+!results/validation/phase4_assertion_records/**
 !results/phase4/
 !results/phase4/**
 

@@ -1,0 +1,6 @@
+check_name	expected_count	observed_count	status
+registration_units	6	6	passed
+assertion_registrations	52	52	passed
+VAP_assertions	40	40	passed
+GSC_assertions	12	12	passed
+no_silent_assertion_drops	52	52	passed

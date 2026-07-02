@@ -1,0 +1,12 @@
+{
+  "corpus_generation_id": "mark_phase4_corpus_6tep_v1",
+  "fixture": "/home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/assertion_records/phase4_3_assertion_record_golden_fixture_2026_07_01_203720",
+  "keep_workdir": false,
+  "keeps_run_a_and_run_b": true,
+  "layer": "Layer 2 compressed golden fixture validation",
+  "output_root": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/validation/phase4_assertion_records",
+  "phase": "Phase 4.3D",
+  "receipt_dir": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/validation/phase4_assertion_records/golden_fixture_smoketest_2026_07_02_021020",
+  "script": "scripts/validation/run_phase4_3_golden_fixture_assertion_record_smoketest.py",
+  "timestamp": "2026_07_02_021020"
+}

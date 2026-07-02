@@ -1,0 +1,19 @@
+path	status	matched_token
+assertion_record_context.tsv	passed	
+assertion_record_evidence_basis.tsv	passed	
+assertion_record_index.jsonl	passed	
+assertion_record_index.tsv	passed	
+assertion_record_lineage.tsv	passed	
+assertion_record_participants.tsv	passed	
+assertion_record_payload_references.tsv	passed	
+assertion_record_relationships.tsv	passed	
+assertion_record_source_identity_sets.tsv	passed	
+assertion_record_source_identity_summary.tsv	passed	
+assertion_record_validation_report.json	passed	
+assertion_record_validation_report.tsv	passed	
+downstream_topology_input_manifest.tsv	allowed_handoff_manifest	topology
+assertion_record_validation_report.json:characterizes_geometry	passed	False
+assertion_record_validation_report.json:constructs_surfaces	passed	False
+assertion_record_validation_report.json:derives_topology	passed	False
+assertion_record_validation_report.json:emits_projection_views	passed	False
+assertion_record_validation_report.json:performs_rdgp_reasoning	passed	False

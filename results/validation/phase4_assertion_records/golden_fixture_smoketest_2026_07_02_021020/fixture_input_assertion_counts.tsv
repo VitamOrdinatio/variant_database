@@ -1,0 +1,7 @@
+registration_unit_id	producer_family	input_assertion_registration_count
+mark_phase3_canonical_gsc_epilepsy	GSC	6
+mark_phase3_canonical_gsc_mitochondrial_disease	GSC	6
+mark_phase3_canonical_vap_hg002	VAP	10
+mark_phase3_canonical_vap_median_ERR10619300	VAP	10
+mark_phase3_canonical_vap_q1_ERR10619212	VAP	10
+mark_phase3_canonical_vap_q3_ERR10619225	VAP	10

@@ -1,0 +1,21 @@
+check_name	status	message	detail
+fixture_directory_exists	passed	fixture found: /home/steelsparrow/dev/portfolio_projects/variant_database/tests/fixtures/phase4/assertion_records/phase4_3_assertion_record_golden_fixture_2026_07_01_203720	
+fixture_checksum_manifest_validates	passed	validated 58 checksum entries with 0 failures	
+fixture_required_paths_present	passed	checked 9 required fixture paths with 0 missing	
+six_registration_units_present	passed	found 6 registration unit directories	
+registration_unit_slice_files_present	passed	required unit file missing count: 0	
+partition_specific_source_identity_filters	passed	checked 204 source identity set candidates with 0 failures	
+required_registration_unit_alias_checks_passed	passed	found 6 passed required_registration_unit_present rows	
+source_identity_not_applicable_rows_present	passed	found 2 source identity not_applicable rows	
+temporary_registration_units_materialized	passed	materialized 6 temporary Registration Units	
+assertion_count_reconciliation	passed	checked assertion count reconciliation with 0 failures	
+no_silent_assertion_drops	passed	accounted statuses in index: 52 of 52	
+validation_report_nonempty	passed	validation rows: 54	
+assertion_type_reconciliation	passed	checked 12 producer/assertion_type groups with 0 failures	
+source_identity_set_reconciliation	passed	reconciled 204 expected source identity set groups with 0 failures	
+source_identity_set_outputs_present	passed	source identity set rows: 204; summary rows: 204	
+source_identity_not_applicable_reconciliation	passed	checked 2 not_applicable assertions with 0 failures	
+anti_flattening_checks	passed	anti-flattening failures: 0	
+deterministic_build_outputs	passed	compared 13 governed outputs with 0 failures	
+non_goal_boundary_preserved	passed	non-goal failures: 0	
+fixture_inputs_not_mutated	passed	fixture hashes unchanged	

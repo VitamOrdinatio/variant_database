@@ -1,0 +1,13 @@
+producer_family	assertion_type	expected_count	observed_count	status
+GSC	aggregation_support	2	2	passed
+GSC	phenotype_gene_provenance	2	2	passed
+GSC	phenotype_gene_semantic_prior	2	2	passed
+GSC	producer_contract_validation	2	2	passed
+GSC	source_contribution_topology	2	2	passed
+GSC	source_gene_relationship	2	2	passed
+VAP	candidate_routing	12	12	passed
+VAP	validation	4	4	passed
+VAP	variant_interpretation	8	8	passed
+VAP	variant_normalization	8	8	passed
+VAP	variant_observation	4	4	passed
+VAP	variant_prioritization	4	4	passed
