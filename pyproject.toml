@@ -12,5 +12,8 @@ requires-python = ">=3.10"
 where = ["src"]
 
 [tool.pytest.ini_options]
+markers = [
+    "phase4_3_layer1: Phase 4.3 Assertion Record Layer 1 synthetic/local tests",
+]
 pythonpath = ["src"]
 testpaths = ["tests"]
