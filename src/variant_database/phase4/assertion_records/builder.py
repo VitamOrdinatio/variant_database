@@ -223,6 +223,13 @@ def _table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
     return row is not None
 
 
+def _column_exists(conn: sqlite3.Connection, table_name: str, column_name: str) -> bool:
+    if not _table_exists(conn, table_name):
+        return False
+    rows = conn.execute(f"PRAGMA table_info({table_name})").fetchall()
+    return any(str(row[1]) == column_name for row in rows)
+
+
 def _select_all(conn: sqlite3.Connection, table_name: str) -> list[dict[str, Any]]:
     if not _table_exists(conn, table_name):
         return []
@@ -310,6 +317,61 @@ def _source_identity_filter(
     )
 
 
+def _source_identity_groups_from_db(conn: sqlite3.Connection) -> dict[tuple[str, str, str, str], int]:
+    """Aggregate source identity groups inside SQLite.
+
+    Layer 3 MARK Registration Units may contain hundreds of millions of
+    source identity rows. This function therefore avoids loading the full
+    source_identities table into Python.
+
+    For Layer 2 compressed fixture materialization, a temporary
+    source_identities table may include a source_identity_count column, where
+    each row represents a larger source identity set. In that case, counts are
+    summed. For normal physical rows, counts fall back to COUNT(*).
+    """
+    if not _table_exists(conn, "source_identities"):
+        return {}
+
+    has_precomputed_count = _column_exists(conn, "source_identities", "source_identity_count")
+    if has_precomputed_count:
+        count_expr = (
+            "SUM(CASE "
+            "WHEN source_identity_count IS NULL "
+            "OR TRIM(CAST(source_identity_count AS TEXT)) = '' "
+            "THEN 1 "
+            "ELSE CAST(source_identity_count AS INTEGER) "
+            "END)"
+        )
+    else:
+        count_expr = "COUNT(*)"
+
+    query = f"""
+        SELECT
+            COALESCE(assertion_registration_id, '') AS assertion_registration_id,
+            COALESCE(identity_kind, '') AS identity_kind,
+            COALESCE(participant_role, '') AS participant_role,
+            COALESCE(source_namespace, '') AS source_namespace,
+            {count_expr} AS source_identity_count
+        FROM source_identities
+        GROUP BY
+            COALESCE(assertion_registration_id, ''),
+            COALESCE(identity_kind, ''),
+            COALESCE(participant_role, ''),
+            COALESCE(source_namespace, '')
+    """
+
+    grouped: dict[tuple[str, str, str, str], int] = {}
+    for row in conn.execute(query):
+        key = (
+            str(row["assertion_registration_id"]),
+            str(row["identity_kind"]),
+            str(row["participant_role"]),
+            str(row["source_namespace"]),
+        )
+        grouped[key] = int(row["source_identity_count"] or 0)
+    return grouped
+
+
 def build_assertion_records_from_manifest(
     *,
     manifest_path: str | Path,
@@ -355,14 +417,14 @@ def build_assertion_records_from_manifest(
         ru_path = _resolve_registration_unit_path(manifest_row)
         with _connect_read_only(ru_path) as conn:
             assertion_rows = _select_all(conn, "assertion_registrations")
-            source_identity_rows = _select_all(conn, "source_identities")
+            source_identity_groups = _source_identity_groups_from_db(conn)
             artifact_rows = _select_all(conn, "artifacts")
 
         if not assertion_rows:
             raise ValueError(f"Registration Unit lacks assertion_registrations rows: {registration_unit_id}")
 
         artifacts = _artifact_map(artifact_rows)
-        source_groups = _source_identity_groups(source_identity_rows)
+        source_groups = source_identity_groups
         assertion_id_by_source: dict[str, str] = {}
 
         for assertion in assertion_rows:
