@@ -1,0 +1,100 @@
+{
+  "archive_name": "phase4_3_mark_full_corpus_assertion_record_smoketest_2026_07_02_202002.tgz",
+  "archive_sha256": "ae909025d0c581262bdd25fce0c56630d4595395b945b43114c74139480cf6ff",
+  "checks": [
+    {
+      "check_name": "external_sha256_sidecar_matches_archive",
+      "detail": {
+        "sidecar_filename": "phase4_3_mark_full_corpus_assertion_record_smoketest_2026_07_02_202002.tgz"
+      },
+      "message": "actual=ae909025d0c581262bdd25fce0c56630d4595395b945b43114c74139480cf6ff; sidecar=ae909025d0c581262bdd25fce0c56630d4595395b945b43114c74139480cf6ff",
+      "status": "passed"
+    },
+    {
+      "check_name": "external_sha256_sidecar_names_archive",
+      "detail": "",
+      "message": "sidecar filename=phase4_3_mark_full_corpus_assertion_record_smoketest_2026_07_02_202002.tgz",
+      "status": "passed"
+    },
+    {
+      "check_name": "archive_contains_receipt_root",
+      "detail": "",
+      "message": "results/validation/phase4_assertion_records/mark_full_corpus_smoketest_2026_07_02_202002",
+      "status": "passed"
+    },
+    {
+      "check_name": "archive_contains_build_output_root",
+      "detail": "",
+      "message": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v1",
+      "status": "passed"
+    },
+    {
+      "check_name": "required_receipt_summary_files_copied",
+      "detail": [],
+      "message": "copied=21; required=21",
+      "status": "passed"
+    },
+    {
+      "check_name": "validation_summary_overall_passed",
+      "detail": "",
+      "message": "overall_status=passed",
+      "status": "passed"
+    },
+    {
+      "check_name": "validation_summary_has_zero_failed_checks",
+      "detail": "",
+      "message": "status_counts={'passed': 18}",
+      "status": "passed"
+    },
+    {
+      "check_name": "required_validation_checks_passed",
+      "detail": [],
+      "message": "required_checks=17",
+      "status": "passed"
+    },
+    {
+      "check_name": "expected_count_reconciliation_passed",
+      "detail": [],
+      "message": "expected_count_checks=9",
+      "status": "passed"
+    },
+    {
+      "check_name": "bundle_checksum_authority_is_external_sidecar",
+      "detail": "",
+      "message": "bundle_checksum_authority=external_sidecar",
+      "status": "passed"
+    },
+    {
+      "check_name": "bundle_report_has_no_internal_archive_sha256_claim",
+      "detail": "",
+      "message": "internal_archive_sha256_claim=False",
+      "status": "passed"
+    },
+    {
+      "check_name": "bundle_report_omits_self_referential_bundle_sha256",
+      "detail": "",
+      "message": "bundle_sha256 key absent",
+      "status": "passed"
+    },
+    {
+      "check_name": "runtime_metadata_is_explicit",
+      "detail": [],
+      "message": "duration_seconds=398.422; duration_minutes=6.64",
+      "status": "passed"
+    },
+    {
+      "check_name": "governed_build_output_row_counts_passed",
+      "detail": [],
+      "message": "governed_outputs_checked=9",
+      "status": "passed"
+    }
+  ],
+  "corpus_generation_id": "mark_phase4_corpus_6tep_v1",
+  "overall_status": "passed",
+  "receipt_timestamp": "2026_07_02_202002",
+  "sidecar_name": "phase4_3_mark_full_corpus_assertion_record_smoketest_2026_07_02_202002.tgz.sha256",
+  "status_counts": {
+    "passed": 14
+  },
+  "target_dir": "results/validation/phase4_assertion_records/mark_phase4_corpus_6tep_v1_validation_2026_07_02_202002"
+}

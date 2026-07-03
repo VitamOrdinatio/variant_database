@@ -1,0 +1,9 @@
+{
+  "bundle_checksum_authority": "external_sidecar",
+  "bundle_path": "/root/Desktop/phase4_3_mark_full_corpus_assertion_record_smoketest_2026_07_02_202002.tgz",
+  "bundle_sha256_path": "/root/Desktop/phase4_3_mark_full_corpus_assertion_record_smoketest_2026_07_02_202002.tgz.sha256",
+  "bundle_sha256_sidecar_name": "phase4_3_mark_full_corpus_assertion_record_smoketest_2026_07_02_202002.tgz.sha256",
+  "full_build_output_included_in_bundle": true,
+  "internal_archive_sha256_claim": false,
+  "retrieval_mode": "plan_a_full_output_bundle"
+}

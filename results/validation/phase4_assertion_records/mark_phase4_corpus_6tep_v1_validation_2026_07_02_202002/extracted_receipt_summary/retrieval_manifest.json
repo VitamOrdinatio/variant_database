@@ -1,0 +1,10 @@
+{
+  "build_output_path": "/root/dev/portfolio_projects/variant_database/results/phase4/assertion_records/mark_phase4_corpus_6tep_v1",
+  "build_output_size_bytes": 411065,
+  "full_build_output_included_in_bundle": true,
+  "max_bundle_bytes_for_full_output": 104857600,
+  "preview_manifest_rows": 0,
+  "retrieval_mode": "plan_a_full_output_bundle",
+  "validation_receipt_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_assertion_records/mark_full_corpus_smoketest_2026_07_02_202002",
+  "validation_receipt_size_bytes_before_bundle": 51902
+}

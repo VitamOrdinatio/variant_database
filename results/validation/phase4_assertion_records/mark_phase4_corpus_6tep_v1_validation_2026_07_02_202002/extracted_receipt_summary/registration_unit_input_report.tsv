@@ -1,0 +1,7 @@
+registration_unit_id	producer_family	sqlite_path	sqlite_size_bytes	has_assertion_registrations	has_source_identities	assertion_count
+mark_phase3_canonical_gsc_epilepsy	GSC	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_epilepsy/vdb.sqlite	32964608	True	True	6
+mark_phase3_canonical_gsc_mitochondrial_disease	GSC	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/gsc_mitochondrial_disease/vdb.sqlite	31768576	True	True	6
+mark_phase3_canonical_vap_hg002	VAP	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_hg002/vdb.sqlite	34979893248	True	True	10
+mark_phase3_canonical_vap_median_ERR10619300	VAP	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_median_ERR10619300/vdb.sqlite	5551849472	True	True	10
+mark_phase3_canonical_vap_q1_ERR10619212	VAP	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q1_ERR10619212/vdb.sqlite	6827704320	True	True	10
+mark_phase3_canonical_vap_q3_ERR10619225	VAP	/root/dev/portfolio_projects/variant_database/results/registration/mark_phase3_canonical/vap_q3_ERR10619225/vdb.sqlite	5711228928	True	True	10

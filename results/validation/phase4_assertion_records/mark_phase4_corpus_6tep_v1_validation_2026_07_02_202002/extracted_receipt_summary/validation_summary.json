@@ -1,0 +1,131 @@
+{
+  "build_output_path": "/root/dev/portfolio_projects/variant_database/results/phase4/assertion_records/mark_phase4_corpus_6tep_v1",
+  "checks": [
+    {
+      "check_name": "manifest_exists",
+      "detail": "",
+      "message": "manifest found: /root/dev/portfolio_projects/variant_database/results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv",
+      "status": "passed"
+    },
+    {
+      "check_name": "six_registration_units_declared",
+      "detail": "",
+      "message": "found 6 manifest rows",
+      "status": "passed"
+    },
+    {
+      "check_name": "required_registration_unit_tables_present",
+      "detail": [],
+      "message": "missing required table reports: 0",
+      "status": "passed"
+    },
+    {
+      "check_name": "builder_completed",
+      "detail": "",
+      "message": "builder emitted 52 Assertion Records",
+      "status": "passed"
+    },
+    {
+      "check_name": "governed_output_hash_manifest_created",
+      "detail": "",
+      "message": "single full-corpus build completed; --repeat-build not requested",
+      "status": "passed"
+    },
+    {
+      "check_name": "governed_outputs_present",
+      "detail": "",
+      "message": "checked 13 governed outputs",
+      "status": "passed"
+    },
+    {
+      "check_name": "count_reconciliation",
+      "detail": "",
+      "message": "checked 11 count invariants",
+      "status": "passed"
+    },
+    {
+      "check_name": "assertion_type_reconciliation",
+      "detail": "",
+      "message": "checked 36 assertion type groups",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_set_reconciliation",
+      "detail": "",
+      "message": "checked 204 source identity set groups",
+      "status": "passed"
+    },
+    {
+      "check_name": "participant_bridge_populated_from_source_identity_sets",
+      "detail": "",
+      "message": "participants=204; source_identity_sets=204; participant_sources=source_identity_set_reference=204",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_set_id_join_integrity",
+      "detail": "",
+      "message": "set_ids=204; participant_set_ids=204; summary_set_ids=204",
+      "status": "passed"
+    },
+    {
+      "check_name": "preservation_and_resolver_status_are_explicit",
+      "detail": "",
+      "message": "preservation_counts=preserved=52; resolver_counts=deferred=12;indexed_with_note=14;supported=26",
+      "status": "passed"
+    },
+    {
+      "check_name": "artifact_level_lineage_is_explicit",
+      "detail": "",
+      "message": "lineage_rows=52; lineage_status_counts=artifact_level_lineage_present_row_ref_absent=52; row_ref_status_counts=explicit_absence=52",
+      "status": "passed"
+    },
+    {
+      "check_name": "source_identity_obligation_status_is_explicit",
+      "detail": "",
+      "message": "source_identity_set_status_counts=not_applicable=2;optional=16;required=34; not_applicable=GSC:producer_contract_validation",
+      "status": "passed"
+    },
+    {
+      "check_name": "no_silent_assertion_drops",
+      "detail": "",
+      "message": "Assertion Record index contains 52 rows",
+      "status": "passed"
+    },
+    {
+      "check_name": "validation_report_assertion_aligned",
+      "detail": "",
+      "message": "index_rows=52; validation_rows=52; duplicate_keys=0",
+      "status": "passed"
+    },
+    {
+      "check_name": "non_goal_boundary_preserved",
+      "detail": "",
+      "message": "non-goal checks: 18",
+      "status": "passed"
+    },
+    {
+      "check_name": "prime_directive_input_files_not_mutated",
+      "detail": "",
+      "message": "input folders unchanged",
+      "status": "passed"
+    }
+  ],
+  "corpus_generation_id": "mark_phase4_corpus_6tep_v1",
+  "manifest_path": "/root/dev/portfolio_projects/variant_database/results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv",
+  "overall_status": "passed",
+  "receipt_path": "/root/dev/portfolio_projects/variant_database/results/validation/phase4_assertion_records/mark_full_corpus_smoketest_2026_07_02_202002",
+  "runtime": {
+    "completed_at_utc": "2026-07-03T00:26:41Z",
+    "duration_minutes": 6.64,
+    "duration_scope": "build_and_validation_before_retrieval_bundle_creation",
+    "duration_seconds": 398.422,
+    "layer": "Layer 3 MARK full-corpus validation",
+    "phase": "4.3E",
+    "started_at_utc": "2026-07-03T00:20:02Z",
+    "timestamp": "2026_07_02_202002"
+  },
+  "status_counts": {
+    "passed": 18
+  },
+  "timestamp": "2026_07_02_202002"
+}

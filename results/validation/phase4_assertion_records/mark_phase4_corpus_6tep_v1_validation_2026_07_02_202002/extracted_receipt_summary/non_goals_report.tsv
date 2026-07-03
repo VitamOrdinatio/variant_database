@@ -1,0 +1,19 @@
+relative_path	status	message
+assertion_record_context.tsv	passed	no prohibited output token detected
+assertion_record_evidence_basis.tsv	passed	no prohibited output token detected
+assertion_record_index.jsonl	passed	no prohibited output token detected
+assertion_record_index.tsv	passed	no prohibited output token detected
+assertion_record_lineage.tsv	passed	no prohibited output token detected
+assertion_record_participants.tsv	passed	no prohibited output token detected
+assertion_record_payload_references.tsv	passed	no prohibited output token detected
+assertion_record_relationships.tsv	passed	no prohibited output token detected
+assertion_record_source_identity_sets.tsv	passed	no prohibited output token detected
+assertion_record_source_identity_summary.tsv	passed	no prohibited output token detected
+assertion_record_validation_report.json	passed	no prohibited output token detected
+assertion_record_validation_report.tsv	passed	no prohibited output token detected
+downstream_topology_input_manifest.tsv	passed	no prohibited output token detected
+assertion_record_validation_report.json	passed	non_goals.characterizes_geometry=False
+assertion_record_validation_report.json	passed	non_goals.constructs_surfaces=False
+assertion_record_validation_report.json	passed	non_goals.derives_topology=False
+assertion_record_validation_report.json	passed	non_goals.emits_projection_views=False
+assertion_record_validation_report.json	passed	non_goals.performs_rdgp_reasoning=False

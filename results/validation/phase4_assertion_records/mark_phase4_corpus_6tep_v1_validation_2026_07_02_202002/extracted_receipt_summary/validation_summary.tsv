@@ -1,0 +1,19 @@
+check_name	status	message	detail
+manifest_exists	passed	manifest found: /root/dev/portfolio_projects/variant_database/results/phase4/corpus_generations/mark_phase4_corpus_6tep_v1/downstream_assertion_record_input_manifest.tsv	
+six_registration_units_declared	passed	found 6 manifest rows	
+required_registration_unit_tables_present	passed	missing required table reports: 0	[]
+builder_completed	passed	builder emitted 52 Assertion Records	
+governed_output_hash_manifest_created	passed	single full-corpus build completed; --repeat-build not requested	
+governed_outputs_present	passed	checked 13 governed outputs	
+count_reconciliation	passed	checked 11 count invariants	
+assertion_type_reconciliation	passed	checked 36 assertion type groups	
+source_identity_set_reconciliation	passed	checked 204 source identity set groups	
+participant_bridge_populated_from_source_identity_sets	passed	participants=204; source_identity_sets=204; participant_sources=source_identity_set_reference=204	
+source_identity_set_id_join_integrity	passed	set_ids=204; participant_set_ids=204; summary_set_ids=204	
+preservation_and_resolver_status_are_explicit	passed	preservation_counts=preserved=52; resolver_counts=deferred=12;indexed_with_note=14;supported=26	
+artifact_level_lineage_is_explicit	passed	lineage_rows=52; lineage_status_counts=artifact_level_lineage_present_row_ref_absent=52; row_ref_status_counts=explicit_absence=52	
+source_identity_obligation_status_is_explicit	passed	source_identity_set_status_counts=not_applicable=2;optional=16;required=34; not_applicable=GSC:producer_contract_validation	
+no_silent_assertion_drops	passed	Assertion Record index contains 52 rows	
+validation_report_assertion_aligned	passed	index_rows=52; validation_rows=52; duplicate_keys=0	
+non_goal_boundary_preserved	passed	non-goal checks: 18	
+prime_directive_input_files_not_mutated	passed	input folders unchanged	
