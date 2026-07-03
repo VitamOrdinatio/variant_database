@@ -331,9 +331,16 @@ def test_artifact_level_validation_assertion_has_not_applicable_source_identity_
         for participant in participants
         if participant["source_assertion_registration_id"] == "gsc_contract_validation_001"
     ]
-    assert any(
-        validation["source_assertion_registration_id"] == "gsc_contract_validation_001"
-        and validation["validation_status"] == "not_applicable_for_source_identity_sets"
-        and validation["source_identity_set_status"] == "not_applicable"
+    matching_validation_rows = [
+        validation
         for validation in validation_rows
-    )
+        if validation["source_assertion_registration_id"] == "gsc_contract_validation_001"
+    ]
+    assert len(matching_validation_rows) == 1
+    validation = matching_validation_rows[0]
+    assert validation["preservation_status"] == "preserved"
+    assert validation["resolver_status"] == "indexed_with_note"
+    assert validation["validation_status"] == "indexed_with_note"
+    assert validation["source_identity_set_status"] == "not_applicable"
+    assert validation["resolver_status"] != "not_applicable_for_source_identity_sets"
+    assert validation["validation_status"] != "not_applicable_for_source_identity_sets"

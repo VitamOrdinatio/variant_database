@@ -16,10 +16,7 @@ import sqlite3
 from typing import Any, Iterable
 
 from .identity import make_assertion_id, make_source_assertion_key
-from .resolver_policy import (
-    resolve_assertion,
-    source_identity_set_status as policy_source_identity_set_status,
-)
+from .resolver_policy import resolve_assertion
 
 ASSERTION_INDEX_COLUMNS = [
     "assertion_id",
@@ -688,29 +685,9 @@ def build_assertion_records_from_manifest(
             )
             participant_rows.append(_participant_row_from_source_identity_set(set_row))
 
-        # Explicitly account for source-identity-not-applicable assertion types that have no groups.
-        grouped_assertions = {group[0] for group in source_groups}
-        for assertion in assertion_rows:
-            source_assertion_registration_id = str(assertion.get("assertion_registration_id", ""))
-            assertion_type = str(assertion.get("assertion_type", ""))
-            assertion_producer = str(assertion.get("producer_family", producer_family) or producer_family).upper()
-            if source_assertion_registration_id in grouped_assertions:
-                continue
-            status = policy_source_identity_set_status(assertion_producer, assertion_type)
-            if status == "not_applicable":
-                validation_rows.append(
-                    {
-                        "registration_unit_id": registration_unit_id,
-                        "producer_family": assertion_producer,
-                        "source_assertion_registration_id": source_assertion_registration_id,
-                        "assertion_type": assertion_type,
-                        "preservation_status": "preserved",
-                        "resolver_status": "not_applicable_for_source_identity_sets",
-                        "validation_status": "not_applicable_for_source_identity_sets",
-                        "source_identity_set_status": "not_applicable",
-                        "message": "artifact-level assertion without source identity set obligation",
-                    }
-                )
+        # Source-identity-not-applicable assertions are already represented by their
+        # assertion-aligned validation row above. Do not emit a second row with
+        # source-identity obligation status in the resolver status column.
 
     # Deterministic output ordering.
     index_rows.sort(key=lambda row: row["assertion_id"])

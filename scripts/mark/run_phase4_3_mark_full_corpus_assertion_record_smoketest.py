@@ -23,8 +23,9 @@ from pathlib import Path
 import shutil
 import sqlite3
 import sys
+import time
 import tarfile
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Iterable
 
 REPO_ROOT = Path.cwd().resolve()
@@ -846,6 +847,78 @@ def summarize_checks(checks: list[dict[str, Any]]) -> dict[str, Any]:
     return {"overall_status": overall, "status_counts": counts, "checks": checks}
 
 
+
+
+def format_utc(value: datetime) -> str:
+    """Return a UTC timestamp suitable for receipt metadata."""
+    return value.astimezone(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def runtime_metadata_payload(
+    *,
+    started_at_utc: datetime,
+    completed_at_utc: datetime,
+    duration_seconds: float,
+    timestamp: str,
+    phase: str = "4.3E",
+    layer: str = "Layer 3 MARK full-corpus validation",
+) -> dict[str, Any]:
+    """Return explicit smoketest runtime metadata.
+
+    This measures the build and validation portion of the smoketest before
+    retrieval bundle creation. Bundle packaging has separate checksum metadata.
+    """
+    return {
+        "phase": phase,
+        "layer": layer,
+        "timestamp": timestamp,
+        "started_at_utc": format_utc(started_at_utc),
+        "completed_at_utc": format_utc(completed_at_utc),
+        "duration_seconds": round(float(duration_seconds), 3),
+        "duration_minutes": round(float(duration_seconds) / 60.0, 3),
+        "duration_scope": "build_and_validation_before_retrieval_bundle_creation",
+    }
+
+
+def runtime_metadata_rows(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    return [{"key": key, "value": value} for key, value in sorted(payload.items())]
+
+
+def validate_validation_report_cardinality(output_tables: dict[str, list[dict[str, str]]]) -> list[dict[str, Any]]:
+    """Validate that validation_report rows are assertion-aligned.
+
+    The validation report should not duplicate assertion rows to express source
+    identity obligation status. That status belongs in source_identity_set_status
+    on the assertion-aligned row.
+    """
+    index_rows = output_tables["assertion_record_index.tsv"]
+    validation_rows = output_tables["assertion_record_validation_report.tsv"]
+    index_count = len(index_rows)
+    validation_count = len(validation_rows)
+    status = "passed" if validation_count == index_count == EXPECTED_ASSERTIONS else "failed"
+    duplicate_keys: list[str] = []
+    seen: set[tuple[str, str, str]] = set()
+    for row in validation_rows:
+        key = (
+            row.get("registration_unit_id", ""),
+            row.get("source_assertion_registration_id", ""),
+            row.get("assertion_type", ""),
+        )
+        if key in seen:
+            duplicate_keys.append("|".join(key))
+        seen.add(key)
+    if duplicate_keys:
+        status = "failed"
+    return [
+        {
+            "check_name": "validation_report_assertion_aligned",
+            "expected": f"{EXPECTED_ASSERTIONS} assertion-aligned validation rows with no duplicate assertion keys",
+            "observed": f"index_rows={index_count}; validation_rows={validation_count}; duplicate_keys={len(duplicate_keys)}",
+            "status": status,
+            "detail": ";".join(duplicate_keys[:8]),
+        }
+    ]
+
 def make_bundle(
     *,
     timestamp: str,
@@ -893,6 +966,8 @@ def main() -> int:
     require_repo_root()
 
     timestamp = args.timestamp or datetime.now().strftime("%Y_%m_%d_%H%M%S")
+    started_at_utc = datetime.now(timezone.utc)
+    started_perf_counter = time.perf_counter()
     manifest_path = (REPO_ROOT / args.manifest).resolve() if not args.manifest.is_absolute() else args.manifest.resolve()
     build_output = (REPO_ROOT / args.build_output).resolve() if not args.build_output.is_absolute() else args.build_output.resolve()
     validation_root = (REPO_ROOT / args.validation_root).resolve() if not args.validation_root.is_absolute() else args.validation_root.resolve()
@@ -1083,12 +1158,14 @@ def main() -> int:
             "passed" if status_accounted == EXPECTED_ASSERTIONS else "failed",
             f"Assertion Record index contains {status_accounted} rows",
         )
-        add_check(
-            checks,
-            "validation_report_nonempty",
-            "passed" if len(validation_rows) > 0 else "failed",
-            f"validation rows: {len(validation_rows)}",
-        )
+        for row in validate_validation_report_cardinality(output_tables):
+            add_check(
+                checks,
+                row["check_name"],
+                row["status"],
+                row["observed"],
+                row.get("detail", ""),
+            )
 
         non_goal_rows = non_goal_report(build_output)
         write_tsv(receipt_dir / "non_goals_report.tsv", non_goal_rows, ["relative_path", "status", "message"])
@@ -1169,6 +1246,17 @@ def main() -> int:
             },
         )
 
+        completed_at_utc = datetime.now(timezone.utc)
+        duration_seconds = time.perf_counter() - started_perf_counter
+        runtime_payload = runtime_metadata_payload(
+            started_at_utc=started_at_utc,
+            completed_at_utc=completed_at_utc,
+            duration_seconds=duration_seconds,
+            timestamp=timestamp,
+        )
+        write_tsv(receipt_dir / "runtime_metadata.tsv", runtime_metadata_rows(runtime_payload), ["key", "value"])
+        write_json(receipt_dir / "runtime_metadata.json", runtime_payload)
+
         summary = summarize_checks(checks)
         write_tsv(receipt_dir / "validation_summary.tsv", checks, ["check_name", "status", "message", "detail"])
         write_json(
@@ -1180,6 +1268,7 @@ def main() -> int:
                 "build_output_path": str(build_output),
                 "receipt_path": str(receipt_dir),
                 "timestamp": timestamp,
+                "runtime": runtime_payload,
             },
         )
         write_json(
@@ -1197,6 +1286,7 @@ def main() -> int:
                 "expected_source_identity_total": EXPECTED_SOURCE_IDENTITY_TOTAL,
                 "repeat_build": args.repeat_build,
                 "retrieval_mode": retrieval_mode,
+                "runtime": runtime_payload,
             },
         )
         (receipt_dir / "README.md").write_text(
@@ -1210,27 +1300,18 @@ def main() -> int:
             encoding="utf-8",
         )
 
-        bundle_path, sha_path, bundle_sha = make_bundle(
-            timestamp=timestamp,
-            desktop_root=args.desktop_root,
-            receipt_dir=receipt_dir,
-            build_output=build_output,
+        anticipated_bundle_path = args.desktop_root / f"phase4_3_mark_full_corpus_assertion_record_smoketest_{timestamp}.tgz"
+        anticipated_sha_path = args.desktop_root / f"{anticipated_bundle_path.name}.sha256"
+        bundle_payload = bundle_report_payload(
+            bundle_path=anticipated_bundle_path,
+            sha_path=anticipated_sha_path,
             retrieval_mode=retrieval_mode,
             include_build_output=include_build_output,
         )
-        bundle_rows = [
-            {"key": "bundle_path", "value": str(bundle_path)},
-            {"key": "bundle_sha256_path", "value": str(sha_path)},
-            {"key": "bundle_sha256", "value": bundle_sha},
-        ]
-        write_tsv(receipt_dir / "bundle_report.tsv", bundle_rows, ["key", "value"])
-        write_json(
-            receipt_dir / "bundle_report.json",
-            {"bundle_path": str(bundle_path), "bundle_sha256_path": str(sha_path), "bundle_sha256": bundle_sha},
-        )
+        write_tsv(receipt_dir / "bundle_report.tsv", bundle_report_rows(bundle_payload), ["key", "value"])
+        write_json(receipt_dir / "bundle_report.json", bundle_payload)
 
-        # Recreate bundle once so bundle_report is included in the receipt inside the archive.
-        bundle_path, sha_path, bundle_sha = make_bundle(
+        bundle_path, sha_path, _bundle_sha = make_bundle(
             timestamp=timestamp,
             desktop_root=args.desktop_root,
             receipt_dir=receipt_dir,
@@ -1253,6 +1334,14 @@ def main() -> int:
         print(f"Bundle checksum: {sha_path}")
         return exit_code
     except Exception as exc:
+        error_at_utc = datetime.now(timezone.utc)
+        error_runtime_payload = runtime_metadata_payload(
+            started_at_utc=started_at_utc,
+            completed_at_utc=error_at_utc,
+            duration_seconds=time.perf_counter() - started_perf_counter,
+            timestamp=timestamp,
+        )
+        write_json(receipt_dir / "runtime_metadata.json", error_runtime_payload)
         write_json(
             receipt_dir / "operator_error.json",
             {
@@ -1260,6 +1349,7 @@ def main() -> int:
                 "error_type": type(exc).__name__,
                 "message": str(exc),
                 "receipt_path": str(receipt_dir),
+                "runtime": error_runtime_payload,
             },
         )
         print(f"Phase 4.3E MARK full-corpus smoketest OPERATOR ERROR: {exc}", file=sys.stderr)

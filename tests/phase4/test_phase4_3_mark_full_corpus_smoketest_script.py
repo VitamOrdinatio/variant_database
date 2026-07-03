@@ -4,6 +4,7 @@ import csv
 import importlib.util
 import json
 import tarfile
+from datetime import datetime, timezone
 from pathlib import Path
 from types import ModuleType
 
@@ -217,6 +218,72 @@ def test_preservation_hardening_requires_explicit_source_identity_obligation_sta
 
     assert statuses["source_identity_obligation_status_is_explicit"] == "failed"
 
+
+
+def test_validation_report_cardinality_fails_duplicate_validation_rows() -> None:
+    module = _load_script()
+    tables = _valid_tables()
+    validation_rows = []
+    for row in tables["assertion_record_index.tsv"]:
+        validation_rows.append(
+            {
+                "registration_unit_id": "test_ru",
+                "producer_family": row["producer_family"],
+                "source_assertion_registration_id": row["assertion_id"],
+                "assertion_type": row["assertion_type"],
+                "preservation_status": row["preservation_status"],
+                "resolver_status": row["resolver_status"],
+                "validation_status": row["validation_status"],
+                "source_identity_set_status": row["source_identity_set_status"],
+                "message": "assertion-aligned row",
+            }
+        )
+    validation_rows.append(
+        {
+            "registration_unit_id": "test_ru",
+            "producer_family": "GSC",
+            "source_assertion_registration_id": "assertion_050",
+            "assertion_type": "producer_contract_validation",
+            "preservation_status": "preserved",
+            "resolver_status": "not_applicable_for_source_identity_sets",
+            "validation_status": "not_applicable_for_source_identity_sets",
+            "source_identity_set_status": "not_applicable",
+            "message": "duplicate obligation row",
+        }
+    )
+    tables["assertion_record_validation_report.tsv"] = validation_rows
+
+    rows = module.validate_validation_report_cardinality(tables)
+
+    assert rows == [
+        {
+            "check_name": "validation_report_assertion_aligned",
+            "expected": "52 assertion-aligned validation rows with no duplicate assertion keys",
+            "observed": "index_rows=52; validation_rows=53; duplicate_keys=1",
+            "status": "failed",
+            "detail": "test_ru|assertion_050|producer_contract_validation",
+        }
+    ]
+
+
+def test_runtime_metadata_payload_records_explicit_duration() -> None:
+    module = _load_script()
+    payload = module.runtime_metadata_payload(
+        started_at_utc=datetime(2099, 1, 1, 0, 0, 0, tzinfo=timezone.utc),
+        completed_at_utc=datetime(2099, 1, 1, 0, 6, 36, tzinfo=timezone.utc),
+        duration_seconds=396.1234,
+        timestamp="2099_01_01_000000",
+    )
+
+    assert payload["started_at_utc"] == "2099-01-01T00:00:00Z"
+    assert payload["completed_at_utc"] == "2099-01-01T00:06:36Z"
+    assert payload["duration_seconds"] == 396.123
+    assert payload["duration_minutes"] == 6.602
+    assert payload["duration_scope"] == "build_and_validation_before_retrieval_bundle_creation"
+
+    rows = module.runtime_metadata_rows(payload)
+    keys = {row["key"] for row in rows}
+    assert {"started_at_utc", "completed_at_utc", "duration_seconds", "duration_minutes"}.issubset(keys)
 
 def test_bundle_report_declares_external_sidecar_checksum_authority(tmp_path: Path) -> None:
     module = _load_script()
