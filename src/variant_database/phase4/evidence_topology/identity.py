@@ -1,0 +1,1 @@
+"""Deterministic topology identity helpers."""
