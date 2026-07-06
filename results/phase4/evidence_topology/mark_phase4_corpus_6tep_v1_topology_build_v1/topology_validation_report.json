@@ -1,0 +1,354 @@
+{
+  "check_count": 43,
+  "checks": [
+    {
+      "check_id": "required_output_exists__topology_build_manifest.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_build_manifest.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_build_manifest.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_build_manifest.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_build_manifest.tsv",
+      "observed": "259",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_build_manifest.json",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_build_manifest.json",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_build_manifest.json",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_build_manifest.json",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_build_manifest.json",
+      "observed": "22",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_relationships.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_relationships.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_relationships.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_relationships.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_relationships.tsv",
+      "observed": "100801",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_relationships.jsonl",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_relationships.jsonl",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_relationships.jsonl",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_relationships.jsonl",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_relationships.jsonl",
+      "observed": "127960",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_relationship_members.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_relationship_members.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_relationship_members.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_relationship_members.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_relationship_members.tsv",
+      "observed": "428958",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_basis_components.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_basis_components.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_basis_components.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_basis_components.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_basis_components.tsv",
+      "observed": "353490",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_source_identity_expansion_index.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_source_identity_expansion_index.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_source_identity_expansion_index.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_source_identity_expansion_index.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_source_identity_expansion_index.tsv",
+      "observed": "283482",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_namespace_mediation.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_namespace_mediation.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_namespace_mediation.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_namespace_mediation.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_namespace_mediation.tsv",
+      "observed": "2865",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_metadata_relationships.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_metadata_relationships.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_metadata_relationships.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_metadata_relationships.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_metadata_relationships.tsv",
+      "observed": "100801",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_summary.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_summary.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_summary.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_summary.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_summary.tsv",
+      "observed": "4895",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_validation_report.json",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_validation_report.json",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_validation_report.json",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_validation_report.json",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_validation_report.json",
+      "observed": "19",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_validation_report.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_validation_report.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_validation_report.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_validation_report.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_validation_report.tsv",
+      "observed": "60",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__topology_build_report.md",
+      "expected": "file exists",
+      "message": "Required topology output exists: topology_build_report.md",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/topology_build_report.md",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__topology_build_report.md",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: topology_build_report.md",
+      "observed": "33",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_exists__downstream_geometry_input_manifest.tsv",
+      "expected": "file exists",
+      "message": "Required topology output exists: downstream_geometry_input_manifest.tsv",
+      "observed": "/home/steelsparrow/dev/portfolio_projects/variant_database/results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1/downstream_geometry_input_manifest.tsv",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "required_output_nonempty__downstream_geometry_input_manifest.tsv",
+      "expected": "non-empty file",
+      "message": "Required topology output is non-empty: downstream_geometry_input_manifest.tsv",
+      "observed": "24331",
+      "status": "passed",
+      "validation_group": "artifact_family"
+    },
+    {
+      "check_id": "relationships_nonempty",
+      "expected": ">0",
+      "message": "At least one topology relationship is emitted.",
+      "observed": "54",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "relationship_ids_unique",
+      "expected": "54",
+      "message": "Topology relationship IDs are unique.",
+      "observed": "54",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "member_ids_unique",
+      "expected": "1232",
+      "message": "Topology member IDs are unique.",
+      "observed": "1232",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "basis_component_ids_unique",
+      "expected": "892",
+      "message": "Topology basis component IDs are unique.",
+      "observed": "892",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "all_member_relationship_refs_valid",
+      "expected": "",
+      "message": "All member rows reference valid topology relationships.",
+      "observed": "",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "all_basis_relationship_refs_valid",
+      "expected": "",
+      "message": "All basis component rows reference valid topology relationships.",
+      "observed": "",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "every_relationship_has_member",
+      "expected": "",
+      "message": "Every topology relationship has at least one explicit member.",
+      "observed": "",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "every_relationship_has_basis",
+      "expected": "",
+      "message": "Every topology relationship has at least one explicit basis component.",
+      "observed": "",
+      "status": "passed",
+      "validation_group": "relationship_integrity"
+    },
+    {
+      "check_id": "enabled_families_accounted",
+      "expected": "assertion_type_membership;corpus_metadata_membership;preservation_status_membership;producer_family_membership;registration_unit_membership;relationship_class_membership;resolver_status_membership;source_identity_lossiness_status_membership;source_identity_resolution_status_membership;source_identity_set_role_namespace_membership;source_identity_set_status_membership;validation_status_membership",
+      "message": "Every enabled relationship family is executed or represented in emitted relationships.",
+      "observed": "assertion_type_membership;corpus_metadata_membership;preservation_status_membership;producer_family_membership;registration_unit_membership;relationship_class_membership;resolver_status_membership;source_identity_lossiness_status_membership;source_identity_resolution_status_membership;source_identity_set_role_namespace_membership;source_identity_set_status_membership;validation_status_membership",
+      "status": "passed",
+      "validation_group": "policy_execution"
+    },
+    {
+      "check_id": "source_identity_expansion_index_emitted",
+      "expected": ">0",
+      "message": "Source Identity Set expansion index rows are emitted when source identity set members are present.",
+      "observed": "816",
+      "status": "passed",
+      "validation_group": "source_identity_expansion"
+    },
+    {
+      "check_id": "source_identity_values_not_flattened",
+      "expected": "no expanded_source_identity_value",
+      "message": "Expansion index does not flatten individual source identity values.",
+      "observed": "absent",
+      "status": "passed",
+      "validation_group": "source_identity_expansion"
+    },
+    {
+      "check_id": "namespace_rows_emitted",
+      "expected": ">0",
+      "message": "Namespace mediation/status artifact rows are emitted when namespace-relevant relationships exist.",
+      "observed": "11",
+      "status": "passed",
+      "validation_group": "namespace_mediation"
+    },
+    {
+      "check_id": "canonical_namespace_matching_not_emitted_v1",
+      "expected": "0 canonical/mediated matches",
+      "message": "v1 namespace output does not emit canonical or namespace-mediated identity matches.",
+      "observed": "0",
+      "status": "passed",
+      "validation_group": "namespace_mediation"
+    },
+    {
+      "check_id": "downstream_geometry_manifest_has_no_geometry_features",
+      "expected": "no forbidden columns",
+      "message": "Downstream geometry input manifest contains no geometry feature columns.",
+      "observed": "",
+      "status": "passed",
+      "validation_group": "downstream_geometry_boundary"
+    },
+    {
+      "check_id": "downstream_geometry_rows_reference_relationships",
+      "expected": "valid relationship refs",
+      "message": "Downstream geometry rows reference valid topology relationships.",
+      "observed": "",
+      "status": "passed",
+      "validation_group": "downstream_geometry_boundary"
+    }
+  ],
+  "failed_check_count": 0,
+  "topology_build_id": "mark_phase4_corpus_6tep_v1_topology_build_v1",
+  "validation_status": "passed",
+  "validator_name": "variant_database.phase4.evidence_topology.outputs",
+  "validator_version": "0.1.0"
+}
