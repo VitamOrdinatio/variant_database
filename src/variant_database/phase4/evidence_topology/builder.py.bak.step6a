@@ -138,38 +138,3 @@ def _chain(
 ) -> Iterable[TopologyPolicyCheck | TopologyInputCheck]:
     for group in groups:
         yield from group
-
-
-def write_topology_outputs_for_build(
-    policy_path,
-    output_dir=None,
-    *,
-    repo_root=None,
-    build_timestamp_utc=None,
-):
-    """Build in-memory Evidence Topology rows and serialize artifacts.
-
-    This is a convenience wrapper for Step 6A+ execution. Tests may call
-    ``build_topology_rows`` and ``outputs.write_topology_outputs`` directly
-    when they need tighter control over output directories.
-    """
-    from pathlib import Path
-
-    from .outputs import write_topology_outputs
-
-    if repo_root is None:
-        repo_root = Path(".")
-
-    try:
-        build_result = build_topology_rows(policy_path=policy_path, repo_root=repo_root)
-    except TypeError:
-        build_result = build_topology_rows(policy_path, repo_root=repo_root)
-
-    return write_topology_outputs(
-        build_result,
-        policy=policy_path,
-        output_dir=output_dir,
-        repo_root=repo_root,
-        build_timestamp_utc=build_timestamp_utc,
-    )
-

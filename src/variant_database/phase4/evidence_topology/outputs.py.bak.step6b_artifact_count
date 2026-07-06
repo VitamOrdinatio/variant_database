@@ -412,8 +412,6 @@ def write_topology_outputs(
             "output_writer_version": OUTPUT_WRITER_VERSION,
             "build_timestamp_utc": timestamp,
             "validation_status": validation_status,
-            "artifact_count": len(manifest_rows),
-            "required_output_count": len(REQUIRED_OUTPUTS),
             "artifacts": manifest_rows,
         },
     )
