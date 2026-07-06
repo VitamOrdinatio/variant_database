@@ -1,12 +1,12 @@
 """Policy-aware Evidence Topology builder orchestration.
 
-This scaffold currently implements preflight only. It validates that the active
-topology policy and governed Assertion Record surface are coherent before any
-topology relationships are emitted.
+The current Phase 4.4 implementation supports:
+- policy and governed-input preflight
+- conservative v1 relationship-family row construction in memory
 
-It deliberately does not yet emit topology rows, build Convergence Geometry,
-perform namespace-mediated matching, run statistical tests, or perform RDGP
-reasoning.
+It deliberately does not yet emit topology artifacts to disk, build Convergence
+Geometry, perform namespace-mediated canonical matching, run statistical tests,
+or perform RDGP reasoning.
 """
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ from .policy import (
     load_topology_policy,
     preflight_policy,
 )
+from .relationships import TopologyRelationshipBuildResult, build_relationship_rows
 
 
 VALIDATION_STATUS_PASSED = "passed"
@@ -68,6 +69,28 @@ def run_preflight(
         policy_result=policy_result,
         input_result=input_result,
     )
+
+
+def build_topology_rows(
+    policy_path: str | Path,
+    repo_root: str | Path = Path("."),
+) -> TopologyRelationshipBuildResult:
+    """Build conservative v1 topology rows in memory.
+
+    The function runs preflight first and raises ValueError on failure. It does
+    not write output artifacts to disk.
+    """
+
+    preflight = run_preflight(policy_path, repo_root)
+    if preflight.validation_status != VALIDATION_STATUS_PASSED:
+        failed = [check.check_id for check in all_checks(preflight) if check.status != VALIDATION_STATUS_PASSED]
+        raise ValueError(
+            "Evidence Topology preflight failed before row construction: "
+            + ", ".join(failed)
+        )
+
+    policy = load_topology_policy(policy_path)
+    return build_relationship_rows(policy, repo_root)
 
 
 def failed_policy_checks(
