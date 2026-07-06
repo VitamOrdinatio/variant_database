@@ -10,7 +10,6 @@ RDGP reasoning.
 from __future__ import annotations
 
 import csv
-import json
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,8 +17,9 @@ from typing import Any, Iterable
 
 from .identity import (
     make_normalized_grouping_key,
+    make_topology_basis_component_id,
+    make_topology_member_id,
     make_topology_relationship_id,
-    make_topology_row_id,
     normalize_identity_part,
 )
 
@@ -179,7 +179,9 @@ def execute_relationship_families(
         or policy_identity.get("input_corpus_generation_id")
         or ""
     )
-    relationship_id_prefix = str(identity_rules.get("relationship_id_prefix", "topology_rel_"))
+    relationship_id_prefix = str(
+        identity_rules.get("relationship_id_prefix", "topology_rel_")
+    )
 
     profiles = policy.get("relationship_strategy_profiles", {})
     if not isinstance(profiles, dict):
@@ -223,7 +225,9 @@ def execute_relationship_families(
             sorted_group_rows = tuple(
                 sorted(
                     group_rows,
-                    key=lambda row: normalize_identity_part(row.get(member_identifier_key)),
+                    key=lambda row: normalize_identity_part(
+                        row.get(member_identifier_key)
+                    ),
                 )
             )
             member_identifiers = tuple(
@@ -320,14 +324,27 @@ def execute_relationship_families(
             )
         )
 
-    return TopologyRelationshipBuildResult(
+    result = TopologyRelationshipBuildResult(
         topology_build_id=topology_build_id,
         input_corpus_generation_id=input_corpus_generation_id,
-        relationships=tuple(relationships),
-        members=tuple(members),
-        basis_components=tuple(basis_components),
-        family_execution_records=tuple(family_execution_records),
+        relationships=tuple(
+            sorted(relationships, key=lambda row: row.topology_relationship_id)
+        ),
+        members=tuple(
+            sorted(members, key=lambda row: (row.topology_relationship_id, row.member_id))
+        ),
+        basis_components=tuple(
+            sorted(
+                basis_components,
+                key=lambda row: (row.topology_relationship_id, row.basis_component_id),
+            )
+        ),
+        family_execution_records=tuple(
+            sorted(family_execution_records, key=lambda row: row.relationship_family_id)
+        ),
     )
+    _assert_unique_result_ids(result)
+    return result
 
 
 def _read_tsv(path: Path) -> list[dict[str, str]]:
@@ -384,24 +401,33 @@ def _make_grouping_basis_components(
     components: list[TopologyBasisComponentRow] = []
     for key in grouping_keys:
         value = normalize_identity_part(representative_row.get(key))
+        basis_component_type = (
+            "source_identity_set_field_value"
+            if source_table == "assertion_record_source_identity_sets"
+            else "assertion_field_value"
+        )
+        basis_component_role = "grouping_key"
+        basis_component_value = f"{key}={value}"
+        basis_component_reference = grouping_key
+        basis_component_namespace = (
+            value if key in {"source_namespace", "participant_source_namespace"} else ""
+        )
         components.append(
             TopologyBasisComponentRow(
                 topology_relationship_id=topology_relationship_id,
-                basis_component_id=make_topology_row_id(
-                    "topology_basis_",
-                    [topology_relationship_id, "grouping_key", key, value],
+                basis_component_id=make_topology_basis_component_id(
+                    topology_relationship_id=topology_relationship_id,
+                    basis_component_type=basis_component_type,
+                    basis_component_role=basis_component_role,
+                    basis_component_value=basis_component_value,
+                    basis_component_reference=basis_component_reference,
+                    basis_component_namespace=basis_component_namespace,
                 ),
-                basis_component_type=(
-                    "source_identity_set_field_value"
-                    if source_table == "assertion_record_source_identity_sets"
-                    else "assertion_field_value"
-                ),
-                basis_component_role="grouping_key",
-                basis_component_value=f"{key}={value}",
-                basis_component_reference=grouping_key,
-                basis_component_namespace=(
-                    value if key in {"source_namespace", "participant_source_namespace"} else ""
-                ),
+                basis_component_type=basis_component_type,
+                basis_component_role=basis_component_role,
+                basis_component_value=basis_component_value,
+                basis_component_reference=basis_component_reference,
+                basis_component_namespace=basis_component_namespace,
                 source_assertion_id="",
                 source_identity_set_id="",
                 source_registration_unit_id="",
@@ -427,9 +453,16 @@ def _make_member_rows(
 ) -> tuple[TopologyRelationshipMemberRow, ...]:
     member_identifier_key = _member_identifier_key(member_type)
     members: list[TopologyRelationshipMemberRow] = []
+    member_role = f"{relationship_family_id}_member"
     for row in rows:
         member_reference = str(row.get(member_identifier_key, ""))
-        source_identity_set_id = str(row.get("source_identity_set_id", ""))
+        row_source_identity_set_id = str(row.get("source_identity_set_id", ""))
+        source_identity_set_id = (
+            member_reference
+            if member_type == SOURCE_IDENTITY_SET_MEMBER_TYPE
+            else row_source_identity_set_id
+        )
+        source_assertion_id = str(row.get("assertion_id", ""))
         summary = source_identity_summary_by_set.get(source_identity_set_id, {})
         registration_unit_id = str(
             row.get("registration_unit_id")
@@ -442,19 +475,19 @@ def _make_member_rows(
         members.append(
             TopologyRelationshipMemberRow(
                 topology_relationship_id=topology_relationship_id,
-                member_id=make_topology_row_id(
-                    "topology_member_",
-                    [topology_relationship_id, relationship_family_id, member_reference],
+                member_id=make_topology_member_id(
+                    topology_relationship_id=topology_relationship_id,
+                    member_type=member_type,
+                    member_role=member_role,
+                    member_reference=member_reference,
+                    source_assertion_id=source_assertion_id,
+                    source_identity_set_id=source_identity_set_id,
                 ),
                 member_type=member_type,
-                member_role=f"{relationship_family_id}_member",
+                member_role=member_role,
                 member_reference=member_reference,
-                source_assertion_id=str(row.get("assertion_id", "")),
-                source_identity_set_id=(
-                    member_reference
-                    if member_type == SOURCE_IDENTITY_SET_MEMBER_TYPE
-                    else source_identity_set_id
-                ),
+                source_assertion_id=source_assertion_id,
+                source_identity_set_id=source_identity_set_id,
                 source_registration_unit_id=registration_unit_id,
                 source_corpus_generation_id=source_corpus_generation_id,
                 validation_status=VALIDATION_STATUS_PASSED,
@@ -477,6 +510,8 @@ def _make_source_identity_set_basis_components(
     components: list[TopologyBasisComponentRow] = []
     for row in rows:
         source_identity_set_id = str(row.get("source_identity_set_id", ""))
+        source_assertion_id = str(row.get("assertion_id", ""))
+        source_namespace = str(row.get("source_namespace", ""))
         summary = source_identity_summary_by_set.get(source_identity_set_id, {})
         registration_unit_id = str(
             row.get("registration_unit_id")
@@ -486,19 +521,26 @@ def _make_source_identity_set_basis_components(
         source_corpus_generation_id = str(
             row.get("corpus_generation_id") or input_corpus_generation_id
         )
+        basis_component_type = "source_identity_set_reference"
+        basis_component_role = "grouping_member"
         components.append(
             TopologyBasisComponentRow(
                 topology_relationship_id=topology_relationship_id,
-                basis_component_id=make_topology_row_id(
-                    "topology_basis_",
-                    [topology_relationship_id, "source_identity_set", source_identity_set_id],
+                basis_component_id=make_topology_basis_component_id(
+                    topology_relationship_id=topology_relationship_id,
+                    basis_component_type=basis_component_type,
+                    basis_component_role=basis_component_role,
+                    basis_component_reference=source_identity_set_id,
+                    basis_component_namespace=source_namespace,
+                    source_assertion_id=source_assertion_id,
+                    source_identity_set_id=source_identity_set_id,
                 ),
-                basis_component_type="source_identity_set_reference",
-                basis_component_role="grouping_member",
+                basis_component_type=basis_component_type,
+                basis_component_role=basis_component_role,
                 basis_component_value="",
                 basis_component_reference=source_identity_set_id,
-                basis_component_namespace=str(row.get("source_namespace", "")),
-                source_assertion_id=str(row.get("assertion_id", "")),
+                basis_component_namespace=source_namespace,
+                source_assertion_id=source_assertion_id,
                 source_identity_set_id=source_identity_set_id,
                 source_registration_unit_id=registration_unit_id,
                 source_corpus_generation_id=source_corpus_generation_id,
@@ -532,6 +574,29 @@ def _grouping_value(grouping_key: str) -> str:
 def _join_unique(values: Iterable[str]) -> str:
     cleaned = sorted({str(value) for value in values if str(value)})
     return "|".join(cleaned)
+
+
+def _assert_unique_result_ids(result: TopologyRelationshipBuildResult) -> None:
+    _assert_unique(
+        "topology_relationship_id",
+        (row.topology_relationship_id for row in result.relationships),
+    )
+    _assert_unique("member_id", (row.member_id for row in result.members))
+    _assert_unique(
+        "basis_component_id",
+        (row.basis_component_id for row in result.basis_components),
+    )
+
+
+def _assert_unique(label: str, values: Iterable[str]) -> None:
+    seen: set[str] = set()
+    duplicates: set[str] = set()
+    for value in values:
+        if value in seen:
+            duplicates.add(value)
+        seen.add(value)
+    if duplicates:
+        raise ValueError(f"Duplicate {label} values: {sorted(duplicates)}")
 
 
 def rows_as_dicts(rows: Iterable[Any]) -> tuple[dict[str, Any], ...]:

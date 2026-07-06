@@ -7,6 +7,7 @@ from variant_database.phase4.evidence_topology.policy import load_topology_polic
 from variant_database.phase4.evidence_topology.relationships import (
     ASSERTION_MEMBER_TYPE,
     SOURCE_IDENTITY_SET_MEMBER_TYPE,
+    build_relationship_rows,
     execute_relationship_families,
 )
 
@@ -226,12 +227,41 @@ def test_relationship_ids_are_stable_under_row_reordering() -> None:
     assert [row.topology_relationship_id for row in left.relationships] == [
         row.topology_relationship_id for row in right.relationships
     ]
+    assert [row.member_id for row in left.members] == [row.member_id for row in right.members]
+    assert [row.basis_component_id for row in left.basis_components] == [
+        row.basis_component_id for row in right.basis_components
+    ]
+
+
+def test_result_rows_are_sorted_by_stable_identifiers() -> None:
+    rows_by_input = {
+        "downstream_topology_input_manifest": [
+            {"assertion_id": "ar2", "producer_family": "VAP"},
+            {"assertion_id": "ar1", "producer_family": "VAP"},
+            {"assertion_id": "ar3", "producer_family": "GSC"},
+        ],
+        "assertion_record_source_identity_sets": [],
+    }
+
+    result = execute_relationship_families(_minimal_policy(), rows_by_input)
+
+    assert [row.topology_relationship_id for row in result.relationships] == sorted(
+        row.topology_relationship_id for row in result.relationships
+    )
+    assert [(row.topology_relationship_id, row.member_id) for row in result.members] == sorted(
+        (row.topology_relationship_id, row.member_id) for row in result.members
+    )
+    assert [
+        (row.topology_relationship_id, row.basis_component_id)
+        for row in result.basis_components
+    ] == sorted(
+        (row.topology_relationship_id, row.basis_component_id)
+        for row in result.basis_components
+    )
 
 
 def test_canonical_policy_executes_all_enabled_families_on_repo_local_surface() -> None:
     policy = load_topology_policy(POLICY_PATH)
-    from variant_database.phase4.evidence_topology.relationships import build_relationship_rows
-
     result = build_relationship_rows(policy, repo_root=Path("."))
 
     assert len(result.family_execution_records) == 12
@@ -242,3 +272,31 @@ def test_canonical_policy_executes_all_enabled_families_on_repo_local_surface() 
     assert result.relationships
     assert result.members
     assert result.basis_components
+
+
+def test_canonical_full_corpus_relationship_member_and_basis_ids_are_unique() -> None:
+    policy = load_topology_policy(POLICY_PATH)
+    result = build_relationship_rows(policy, repo_root=Path("."))
+
+    relationship_ids = [row.topology_relationship_id for row in result.relationships]
+    member_ids = [row.member_id for row in result.members]
+    basis_ids = [row.basis_component_id for row in result.basis_components]
+
+    assert len(relationship_ids) == len(set(relationship_ids))
+    assert len(member_ids) == len(set(member_ids))
+    assert len(basis_ids) == len(set(basis_ids))
+
+
+def test_canonical_full_corpus_build_is_stable_across_repeated_runs() -> None:
+    policy = load_topology_policy(POLICY_PATH)
+
+    left = build_relationship_rows(policy, repo_root=Path("."))
+    right = build_relationship_rows(policy, repo_root=Path("."))
+
+    assert [row.topology_relationship_id for row in left.relationships] == [
+        row.topology_relationship_id for row in right.relationships
+    ]
+    assert [row.member_id for row in left.members] == [row.member_id for row in right.members]
+    assert [row.basis_component_id for row in left.basis_components] == [
+        row.basis_component_id for row in right.basis_components
+    ]
