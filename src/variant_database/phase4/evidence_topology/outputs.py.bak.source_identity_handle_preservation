@@ -533,7 +533,7 @@ def _build_source_identity_expansion_rows(
             "registration_unit_id": _cell(member.get("source_registration_unit_id")) or _cell(basis.get("source_registration_unit_id")),
             "identity_kind": _cell(member.get("identity_kind")) or _cell(basis.get("identity_kind")),
             "participant_role": _cell(member.get("participant_role")) or _cell(basis.get("participant_role")),
-            "source_namespace": _cell(member.get("source_namespace")) or _cell(basis.get("source_namespace")) or _cell(basis.get("basis_component_namespace")) or _namespace_from_relationship(rel),
+            "source_namespace": _cell(member.get("source_namespace")) or _cell(basis.get("source_namespace")) or _namespace_from_relationship(rel),
             "source_identity_count": _cell(member.get("source_identity_count")) or _cell(basis.get("source_identity_count")),
             "lossiness_status": _cell(member.get("lossiness_status")) or _cell(basis.get("lossiness_status")) or "lossless_by_reference",
             "resolution_status": _cell(member.get("resolution_status")) or _cell(basis.get("resolution_status")),

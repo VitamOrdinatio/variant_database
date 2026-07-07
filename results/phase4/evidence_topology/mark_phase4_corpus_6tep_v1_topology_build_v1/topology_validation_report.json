@@ -109,7 +109,7 @@
       "check_id": "required_output_nonempty__topology_source_identity_expansion_index.tsv",
       "expected": "non-empty file",
       "message": "Required topology output is non-empty: topology_source_identity_expansion_index.tsv",
-      "observed": "283482",
+      "observed": "365276",
       "status": "passed",
       "validation_group": "artifact_family"
     },

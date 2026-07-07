@@ -60,14 +60,7 @@ class TopologyRelationshipRow:
 
 @dataclass(frozen=True)
 class TopologyRelationshipMemberRow:
-    """In-memory topology_relationship_members row.
-
-    The final block of Source Identity Set handle fields is populated for
-    ``source_identity_set`` members. These fields preserve the addressable
-    expansion handle through Step 4 so Step 6 can emit a complete
-    topology_source_identity_expansion_index.tsv without opening registration
-    SQLite files or flattening source identities.
-    """
+    """In-memory topology_relationship_members row."""
 
     topology_relationship_id: str
     member_id: str
@@ -78,14 +71,6 @@ class TopologyRelationshipMemberRow:
     source_identity_set_id: str
     source_registration_unit_id: str
     source_corpus_generation_id: str
-    source_assertion_registration_id: str
-    identity_kind: str
-    participant_role: str
-    source_namespace: str
-    source_identity_count: str
-    lossiness_status: str
-    resolution_status: str
-    source_identity_set_status: str
     validation_status: str
 
 
@@ -487,47 +472,6 @@ def _make_member_rows(
         source_corpus_generation_id = str(
             row.get("corpus_generation_id") or input_corpus_generation_id
         )
-        is_source_identity_set_member = member_type == SOURCE_IDENTITY_SET_MEMBER_TYPE
-        source_assertion_registration_id = (
-            str(row.get("source_assertion_registration_id") or summary.get("source_assertion_registration_id") or "")
-            if is_source_identity_set_member
-            else ""
-        )
-        identity_kind = (
-            str(row.get("identity_kind") or summary.get("identity_kind") or "")
-            if is_source_identity_set_member
-            else ""
-        )
-        participant_role = (
-            str(row.get("participant_role") or summary.get("participant_role") or "")
-            if is_source_identity_set_member
-            else ""
-        )
-        source_namespace = (
-            str(row.get("source_namespace") or summary.get("source_namespace") or "")
-            if is_source_identity_set_member
-            else ""
-        )
-        source_identity_count = (
-            str(row.get("source_identity_count") or summary.get("source_identity_count") or "")
-            if is_source_identity_set_member
-            else ""
-        )
-        lossiness_status = (
-            str(row.get("lossiness_status") or "")
-            if is_source_identity_set_member
-            else ""
-        )
-        resolution_status = (
-            str(row.get("resolution_status") or "")
-            if is_source_identity_set_member
-            else ""
-        )
-        source_identity_set_status = (
-            str(row.get("source_identity_set_status") or "")
-            if is_source_identity_set_member
-            else ""
-        )
         members.append(
             TopologyRelationshipMemberRow(
                 topology_relationship_id=topology_relationship_id,
@@ -546,14 +490,6 @@ def _make_member_rows(
                 source_identity_set_id=source_identity_set_id,
                 source_registration_unit_id=registration_unit_id,
                 source_corpus_generation_id=source_corpus_generation_id,
-                source_assertion_registration_id=source_assertion_registration_id,
-                identity_kind=identity_kind,
-                participant_role=participant_role,
-                source_namespace=source_namespace,
-                source_identity_count=source_identity_count,
-                lossiness_status=lossiness_status,
-                resolution_status=resolution_status,
-                source_identity_set_status=source_identity_set_status,
                 validation_status=VALIDATION_STATUS_PASSED,
             )
         )
