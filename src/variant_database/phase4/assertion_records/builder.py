@@ -125,6 +125,49 @@ SOURCE_IDENTITY_SUMMARY_COLUMNS = [
     "source_identity_count",
 ]
 
+COORDINATE_DECLARATION_SET_COLUMNS = [
+    "coordinate_declaration_set_id",
+    "assertion_id",
+    "source_assertion_registration_id",
+    "registration_unit_id",
+    "coordinate_declaration_table_reference",
+    "coordinate_declaration_filter",
+    "variant_source_namespace",
+    "reference_genome_build",
+    "reference_context_source",
+    "source_artifact_path",
+    "normalization_status",
+    "coordinate_system",
+    "coordinate_system_status",
+    "coordinate_declaration_count",
+    "lossiness_status",
+    "resolution_status",
+    "validation_status",
+    "coordinate_declaration_set_status",
+]
+
+FEATURE_DECLARATION_SET_COLUMNS = [
+    "feature_declaration_set_id",
+    "assertion_id",
+    "source_assertion_registration_id",
+    "registration_unit_id",
+    "feature_declaration_table_reference",
+    "feature_declaration_filter",
+    "feature_kind",
+    "feature_namespace",
+    "relationship_type",
+    "relationship_status",
+    "reference_genome_build",
+    "annotation_source",
+    "annotation_assembly",
+    "source_artifact_path",
+    "feature_declaration_count",
+    "lossiness_status",
+    "resolution_status",
+    "validation_status",
+    "feature_declaration_set_status",
+]
+
 VALIDATION_COLUMNS = [
     "registration_unit_id",
     "producer_family",
@@ -370,6 +413,149 @@ def _source_identity_groups(conn: sqlite3.Connection) -> dict[tuple[str, str, st
     return grouped
 
 
+def _sum_count_expression(*, table_name: str, count_column: str) -> str:
+    """Return a compressed-fixture-aware SQL count expression."""
+    return f"""
+        SUM(
+            CASE
+                WHEN {count_column} IS NULL THEN 1
+                WHEN TRIM(CAST({count_column} AS TEXT)) = '' THEN 1
+                ELSE CAST({count_column} AS INTEGER)
+            END
+        )
+    """
+
+
+def _coordinate_declaration_groups(conn: sqlite3.Connection) -> dict[tuple[str, str, str, str, str, str, str, str], int]:
+    """Aggregate coordinate declaration groups without loading row-scale tables."""
+    table_name = "source_coordinate_declarations"
+    if not _table_exists(conn, table_name):
+        return {}
+
+    columns = set(_table_columns(conn, table_name))
+    required = {
+        "assertion_registration_id",
+        "variant_source_namespace",
+        "reference_genome_build",
+        "reference_context_source",
+        "source_artifact_path",
+        "normalization_status",
+        "coordinate_system",
+        "coordinate_system_status",
+    }
+    if not required.issubset(columns):
+        return {}
+
+    if "coordinate_declaration_count" in columns:
+        count_expr = _sum_count_expression(table_name=table_name, count_column="coordinate_declaration_count")
+    else:
+        count_expr = "COUNT(*)"
+
+    sql = f"""
+        SELECT
+            assertion_registration_id,
+            variant_source_namespace,
+            reference_genome_build,
+            reference_context_source,
+            source_artifact_path,
+            normalization_status,
+            coordinate_system,
+            coordinate_system_status,
+            {count_expr} AS coordinate_declaration_count
+        FROM source_coordinate_declarations
+        GROUP BY
+            assertion_registration_id,
+            variant_source_namespace,
+            reference_genome_build,
+            reference_context_source,
+            source_artifact_path,
+            normalization_status,
+            coordinate_system,
+            coordinate_system_status
+    """
+    grouped: dict[tuple[str, str, str, str, str, str, str, str], int] = {}
+    for row in conn.execute(sql).fetchall():
+        key = (
+            str(row["assertion_registration_id"] or ""),
+            str(row["variant_source_namespace"] or ""),
+            str(row["reference_genome_build"] or ""),
+            str(row["reference_context_source"] or ""),
+            str(row["source_artifact_path"] or ""),
+            str(row["normalization_status"] or ""),
+            str(row["coordinate_system"] or ""),
+            str(row["coordinate_system_status"] or ""),
+        )
+        grouped[key] = int(row["coordinate_declaration_count"] or 0)
+    return grouped
+
+
+def _feature_declaration_groups(conn: sqlite3.Connection) -> dict[tuple[str, str, str, str, str, str, str, str, str], int]:
+    """Aggregate feature declaration groups without loading row-scale tables."""
+    table_name = "source_feature_declarations"
+    if not _table_exists(conn, table_name):
+        return {}
+
+    columns = set(_table_columns(conn, table_name))
+    required = {
+        "assertion_registration_id",
+        "feature_kind",
+        "feature_namespace",
+        "relationship_type",
+        "relationship_status",
+        "reference_genome_build",
+        "annotation_source",
+        "annotation_assembly",
+        "source_artifact_path",
+    }
+    if not required.issubset(columns):
+        return {}
+
+    if "feature_declaration_count" in columns:
+        count_expr = _sum_count_expression(table_name=table_name, count_column="feature_declaration_count")
+    else:
+        count_expr = "COUNT(*)"
+
+    sql = f"""
+        SELECT
+            assertion_registration_id,
+            feature_kind,
+            feature_namespace,
+            relationship_type,
+            relationship_status,
+            reference_genome_build,
+            annotation_source,
+            annotation_assembly,
+            source_artifact_path,
+            {count_expr} AS feature_declaration_count
+        FROM source_feature_declarations
+        GROUP BY
+            assertion_registration_id,
+            feature_kind,
+            feature_namespace,
+            relationship_type,
+            relationship_status,
+            reference_genome_build,
+            annotation_source,
+            annotation_assembly,
+            source_artifact_path
+    """
+    grouped: dict[tuple[str, str, str, str, str, str, str, str, str], int] = {}
+    for row in conn.execute(sql).fetchall():
+        key = (
+            str(row["assertion_registration_id"] or ""),
+            str(row["feature_kind"] or ""),
+            str(row["feature_namespace"] or ""),
+            str(row["relationship_type"] or ""),
+            str(row["relationship_status"] or ""),
+            str(row["reference_genome_build"] or ""),
+            str(row["annotation_source"] or ""),
+            str(row["annotation_assembly"] or ""),
+            str(row["source_artifact_path"] or ""),
+        )
+        grouped[key] = int(row["feature_declaration_count"] or 0)
+    return grouped
+
+
 def _source_identity_filter(
     *,
     source_assertion_registration_id: str,
@@ -382,6 +568,54 @@ def _source_identity_filter(
         f"identity_kind={identity_kind};"
         f"participant_role={participant_role};"
         f"source_namespace={source_namespace}"
+    )
+
+
+def _coordinate_declaration_filter(
+    *,
+    source_assertion_registration_id: str,
+    variant_source_namespace: str,
+    reference_genome_build: str,
+    reference_context_source: str,
+    source_artifact_path: str,
+    normalization_status: str,
+    coordinate_system: str,
+    coordinate_system_status: str,
+) -> str:
+    return (
+        f"assertion_registration_id={source_assertion_registration_id};"
+        f"variant_source_namespace={variant_source_namespace};"
+        f"reference_genome_build={reference_genome_build};"
+        f"reference_context_source={reference_context_source};"
+        f"source_artifact_path={source_artifact_path};"
+        f"normalization_status={normalization_status};"
+        f"coordinate_system={coordinate_system};"
+        f"coordinate_system_status={coordinate_system_status}"
+    )
+
+
+def _feature_declaration_filter(
+    *,
+    source_assertion_registration_id: str,
+    feature_kind: str,
+    feature_namespace: str,
+    relationship_type: str,
+    relationship_status: str,
+    reference_genome_build: str,
+    annotation_source: str,
+    annotation_assembly: str,
+    source_artifact_path: str,
+) -> str:
+    return (
+        f"assertion_registration_id={source_assertion_registration_id};"
+        f"feature_kind={feature_kind};"
+        f"feature_namespace={feature_namespace};"
+        f"relationship_type={relationship_type};"
+        f"relationship_status={relationship_status};"
+        f"reference_genome_build={reference_genome_build};"
+        f"annotation_source={annotation_source};"
+        f"annotation_assembly={annotation_assembly};"
+        f"source_artifact_path={source_artifact_path}"
     )
 
 
@@ -403,6 +637,58 @@ def _source_identity_set_id(
             participant_role,
             source_namespace,
             source_identity_filter,
+        ),
+    )
+
+
+def _coordinate_declaration_set_id(
+    *,
+    assertion_id: str,
+    source_assertion_registration_id: str,
+    coordinate_declaration_filter: str,
+    variant_source_namespace: str,
+    reference_genome_build: str,
+    normalization_status: str,
+    source_artifact_path: str,
+) -> str:
+    return _stable_id(
+        "cds",
+        (
+            assertion_id,
+            source_assertion_registration_id,
+            coordinate_declaration_filter,
+            variant_source_namespace,
+            reference_genome_build,
+            normalization_status,
+            source_artifact_path,
+        ),
+    )
+
+
+def _feature_declaration_set_id(
+    *,
+    assertion_id: str,
+    source_assertion_registration_id: str,
+    feature_declaration_filter: str,
+    feature_kind: str,
+    feature_namespace: str,
+    relationship_type: str,
+    annotation_source: str,
+    annotation_assembly: str,
+    source_artifact_path: str,
+) -> str:
+    return _stable_id(
+        "fds",
+        (
+            assertion_id,
+            source_assertion_registration_id,
+            feature_declaration_filter,
+            feature_kind,
+            feature_namespace,
+            relationship_type,
+            annotation_source,
+            annotation_assembly,
+            source_artifact_path,
         ),
     )
 
@@ -450,6 +736,8 @@ def build_assertion_records_from_manifest(
     payload_rows: list[dict[str, Any]] = []
     source_identity_set_rows: list[dict[str, Any]] = []
     source_identity_summary_rows: list[dict[str, Any]] = []
+    coordinate_declaration_set_rows: list[dict[str, Any]] = []
+    feature_declaration_set_rows: list[dict[str, Any]] = []
     validation_rows: list[dict[str, Any]] = []
     downstream_rows: list[dict[str, Any]] = []
 
@@ -466,6 +754,8 @@ def build_assertion_records_from_manifest(
             assertion_rows = _select_all(conn, "assertion_registrations")
             artifact_rows = _select_all(conn, "artifacts")
             source_groups = _source_identity_groups(conn)
+            coordinate_groups = _coordinate_declaration_groups(conn)
+            feature_groups = _feature_declaration_groups(conn)
 
         if not assertion_rows:
             raise ValueError(f"Registration Unit lacks assertion_registrations rows: {registration_unit_id}")
@@ -685,6 +975,147 @@ def build_assertion_records_from_manifest(
             )
             participant_rows.append(_participant_row_from_source_identity_set(set_row))
 
+        for (
+            source_assertion_registration_id,
+            variant_source_namespace,
+            reference_genome_build,
+            reference_context_source,
+            source_artifact_path,
+            normalization_status,
+            coordinate_system,
+            coordinate_system_status,
+        ), count in sorted(coordinate_groups.items()):
+            assertion_id = assertion_id_by_source.get(source_assertion_registration_id)
+            if not assertion_id:
+                validation_rows.append(
+                    {
+                        "registration_unit_id": registration_unit_id,
+                        "producer_family": producer_family,
+                        "source_assertion_registration_id": source_assertion_registration_id,
+                        "assertion_type": "unknown",
+                        "preservation_status": "not_applicable",
+                        "resolver_status": "orphan_coordinate_declaration_group",
+                        "validation_status": "orphan_coordinate_declaration_group",
+                        "source_identity_set_status": "unresolved",
+                        "message": "coordinate declaration group did not resolve to an assertion registration",
+                    }
+                )
+                continue
+            filter_value = _coordinate_declaration_filter(
+                source_assertion_registration_id=source_assertion_registration_id,
+                variant_source_namespace=variant_source_namespace,
+                reference_genome_build=reference_genome_build,
+                reference_context_source=reference_context_source,
+                source_artifact_path=source_artifact_path,
+                normalization_status=normalization_status,
+                coordinate_system=coordinate_system,
+                coordinate_system_status=coordinate_system_status,
+            )
+            coordinate_declaration_set_id = _coordinate_declaration_set_id(
+                assertion_id=assertion_id,
+                source_assertion_registration_id=source_assertion_registration_id,
+                coordinate_declaration_filter=filter_value,
+                variant_source_namespace=variant_source_namespace,
+                reference_genome_build=reference_genome_build,
+                normalization_status=normalization_status,
+                source_artifact_path=source_artifact_path,
+            )
+            coordinate_declaration_set_rows.append(
+                {
+                    "coordinate_declaration_set_id": coordinate_declaration_set_id,
+                    "assertion_id": assertion_id,
+                    "source_assertion_registration_id": source_assertion_registration_id,
+                    "registration_unit_id": registration_unit_id,
+                    "coordinate_declaration_table_reference": f"{registration_unit_id}:source_coordinate_declarations",
+                    "coordinate_declaration_filter": filter_value,
+                    "variant_source_namespace": variant_source_namespace,
+                    "reference_genome_build": reference_genome_build,
+                    "reference_context_source": reference_context_source,
+                    "source_artifact_path": source_artifact_path,
+                    "normalization_status": normalization_status,
+                    "coordinate_system": coordinate_system,
+                    "coordinate_system_status": coordinate_system_status,
+                    "coordinate_declaration_count": count,
+                    "lossiness_status": "lossless_by_reference",
+                    "resolution_status": "resolved",
+                    "validation_status": "not_evaluated",
+                    "coordinate_declaration_set_status": "resolved",
+                }
+            )
+
+        for (
+            source_assertion_registration_id,
+            feature_kind,
+            feature_namespace,
+            relationship_type,
+            relationship_status,
+            reference_genome_build,
+            annotation_source,
+            annotation_assembly,
+            source_artifact_path,
+        ), count in sorted(feature_groups.items()):
+            assertion_id = assertion_id_by_source.get(source_assertion_registration_id)
+            if not assertion_id:
+                validation_rows.append(
+                    {
+                        "registration_unit_id": registration_unit_id,
+                        "producer_family": producer_family,
+                        "source_assertion_registration_id": source_assertion_registration_id,
+                        "assertion_type": "unknown",
+                        "preservation_status": "not_applicable",
+                        "resolver_status": "orphan_feature_declaration_group",
+                        "validation_status": "orphan_feature_declaration_group",
+                        "source_identity_set_status": "unresolved",
+                        "message": "feature declaration group did not resolve to an assertion registration",
+                    }
+                )
+                continue
+            filter_value = _feature_declaration_filter(
+                source_assertion_registration_id=source_assertion_registration_id,
+                feature_kind=feature_kind,
+                feature_namespace=feature_namespace,
+                relationship_type=relationship_type,
+                relationship_status=relationship_status,
+                reference_genome_build=reference_genome_build,
+                annotation_source=annotation_source,
+                annotation_assembly=annotation_assembly,
+                source_artifact_path=source_artifact_path,
+            )
+            feature_declaration_set_id = _feature_declaration_set_id(
+                assertion_id=assertion_id,
+                source_assertion_registration_id=source_assertion_registration_id,
+                feature_declaration_filter=filter_value,
+                feature_kind=feature_kind,
+                feature_namespace=feature_namespace,
+                relationship_type=relationship_type,
+                annotation_source=annotation_source,
+                annotation_assembly=annotation_assembly,
+                source_artifact_path=source_artifact_path,
+            )
+            feature_declaration_set_rows.append(
+                {
+                    "feature_declaration_set_id": feature_declaration_set_id,
+                    "assertion_id": assertion_id,
+                    "source_assertion_registration_id": source_assertion_registration_id,
+                    "registration_unit_id": registration_unit_id,
+                    "feature_declaration_table_reference": f"{registration_unit_id}:source_feature_declarations",
+                    "feature_declaration_filter": filter_value,
+                    "feature_kind": feature_kind,
+                    "feature_namespace": feature_namespace,
+                    "relationship_type": relationship_type,
+                    "relationship_status": relationship_status,
+                    "reference_genome_build": reference_genome_build,
+                    "annotation_source": annotation_source,
+                    "annotation_assembly": annotation_assembly,
+                    "source_artifact_path": source_artifact_path,
+                    "feature_declaration_count": count,
+                    "lossiness_status": "lossless_by_reference",
+                    "resolution_status": "resolved",
+                    "validation_status": "not_evaluated",
+                    "feature_declaration_set_status": "resolved",
+                }
+            )
+
         # Source-identity-not-applicable assertions are already represented by their
         # assertion-aligned validation row above. Do not emit a second row with
         # source-identity obligation status in the resolver status column.
@@ -721,6 +1152,24 @@ def build_assertion_records_from_manifest(
             row["source_namespace"],
         )
     )
+    coordinate_declaration_set_rows.sort(
+        key=lambda row: (
+            row["assertion_id"],
+            row["variant_source_namespace"],
+            row["reference_genome_build"],
+            row["normalization_status"],
+            row["source_artifact_path"],
+        )
+    )
+    feature_declaration_set_rows.sort(
+        key=lambda row: (
+            row["assertion_id"],
+            row["feature_kind"],
+            row["feature_namespace"],
+            row["relationship_type"],
+            row["source_artifact_path"],
+        )
+    )
     validation_rows.sort(
         key=lambda row: (
             row["registration_unit_id"],
@@ -740,6 +1189,16 @@ def build_assertion_records_from_manifest(
     _write_tsv(output / "assertion_record_payload_references.tsv", payload_rows, PAYLOAD_REFERENCE_COLUMNS)
     _write_tsv(output / "assertion_record_source_identity_sets.tsv", source_identity_set_rows, SOURCE_IDENTITY_SET_COLUMNS)
     _write_tsv(output / "assertion_record_source_identity_summary.tsv", source_identity_summary_rows, SOURCE_IDENTITY_SUMMARY_COLUMNS)
+    _write_tsv(
+        output / "assertion_record_coordinate_declaration_sets.tsv",
+        coordinate_declaration_set_rows,
+        COORDINATE_DECLARATION_SET_COLUMNS,
+    )
+    _write_tsv(
+        output / "assertion_record_feature_declaration_sets.tsv",
+        feature_declaration_set_rows,
+        FEATURE_DECLARATION_SET_COLUMNS,
+    )
     _write_tsv(output / "assertion_record_validation_report.tsv", validation_rows, VALIDATION_COLUMNS)
     _write_json(
         output / "assertion_record_validation_report.json",
@@ -749,6 +1208,8 @@ def build_assertion_records_from_manifest(
             "assertion_record_count": len(index_rows),
             "participant_count": len(participant_rows),
             "source_identity_set_count": len(source_identity_set_rows),
+            "coordinate_declaration_set_count": len(coordinate_declaration_set_rows),
+            "feature_declaration_set_count": len(feature_declaration_set_rows),
             "validation_row_count": len(validation_rows),
             "preservation_status_counts": _count_values(index_rows, "preservation_status"),
             "resolver_status_counts": _count_values(index_rows, "resolver_status"),
