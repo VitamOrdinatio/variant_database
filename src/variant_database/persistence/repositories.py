@@ -352,3 +352,170 @@ def list_package_metadata_records(
 
     return [dict(row) for row in rows]
 
+
+
+
+def persist_source_coordinate_declaration(
+    connection: sqlite3.Connection,
+    coordinate_declaration: object,
+    commit: bool = True,
+) -> str:
+    """Persist one source coordinate declaration and return its ID."""
+    record = (
+        coordinate_declaration
+        if isinstance(coordinate_declaration, dict)
+        else coordinate_declaration.__dict__
+    )
+
+    connection.execute(
+        """
+        INSERT INTO source_coordinate_declarations (
+            coordinate_declaration_id,
+            assertion_registration_id,
+            source_identity_id,
+            source_record_ref,
+            source_artifact_path,
+            variant_source_namespace,
+            variant_source_value,
+            variant_source_label,
+            reference_genome_build,
+            reference_context_source,
+            chromosome,
+            position,
+            start,
+            end,
+            reference_allele,
+            alternate_allele,
+            variant_type,
+            variant_class,
+            coordinate_system,
+            coordinate_system_status,
+            normalization_status,
+            normalization_status_source,
+            sample_id,
+            run_id,
+            producer_pipeline,
+            extraction_method,
+            payload_json
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(coordinate_declaration_id) DO UPDATE SET
+            assertion_registration_id = excluded.assertion_registration_id,
+            source_identity_id = excluded.source_identity_id,
+            source_record_ref = excluded.source_record_ref,
+            source_artifact_path = excluded.source_artifact_path,
+            variant_source_namespace = excluded.variant_source_namespace,
+            variant_source_value = excluded.variant_source_value,
+            variant_source_label = excluded.variant_source_label,
+            reference_genome_build = excluded.reference_genome_build,
+            reference_context_source = excluded.reference_context_source,
+            chromosome = excluded.chromosome,
+            position = excluded.position,
+            start = excluded.start,
+            end = excluded.end,
+            reference_allele = excluded.reference_allele,
+            alternate_allele = excluded.alternate_allele,
+            variant_type = excluded.variant_type,
+            variant_class = excluded.variant_class,
+            coordinate_system = excluded.coordinate_system,
+            coordinate_system_status = excluded.coordinate_system_status,
+            normalization_status = excluded.normalization_status,
+            normalization_status_source = excluded.normalization_status_source,
+            sample_id = excluded.sample_id,
+            run_id = excluded.run_id,
+            producer_pipeline = excluded.producer_pipeline,
+            extraction_method = excluded.extraction_method,
+            payload_json = excluded.payload_json
+        """,
+        (
+            record["coordinate_declaration_id"],
+            record["assertion_registration_id"],
+            record["source_identity_id"],
+            record["source_record_ref"],
+            record["source_artifact_path"],
+            record["variant_source_namespace"],
+            record["variant_source_value"],
+            record["variant_source_label"],
+            record["reference_genome_build"],
+            record["reference_context_source"],
+            record["chromosome"],
+            record["position"],
+            record["start"],
+            record["end"],
+            record["reference_allele"],
+            record["alternate_allele"],
+            record["variant_type"],
+            record["variant_class"],
+            record["coordinate_system"],
+            record["coordinate_system_status"],
+            record["normalization_status"],
+            record["normalization_status_source"],
+            record["sample_id"],
+            record["run_id"],
+            record["producer_pipeline"],
+            record["extraction_method"],
+            record["payload_json"],
+        ),
+    )
+
+    if commit:
+        connection.commit()
+
+    return str(record["coordinate_declaration_id"])
+
+
+def list_source_coordinate_declarations(
+    connection: sqlite3.Connection,
+    assertion_registration_id: str | None = None,
+) -> list[dict[str, object]]:
+    """List registered source coordinate declarations."""
+    columns = """
+        coordinate_declaration_id,
+        assertion_registration_id,
+        source_identity_id,
+        source_record_ref,
+        source_artifact_path,
+        variant_source_namespace,
+        variant_source_value,
+        variant_source_label,
+        reference_genome_build,
+        reference_context_source,
+        chromosome,
+        position,
+        start,
+        end,
+        reference_allele,
+        alternate_allele,
+        variant_type,
+        variant_class,
+        coordinate_system,
+        coordinate_system_status,
+        normalization_status,
+        normalization_status_source,
+        sample_id,
+        run_id,
+        producer_pipeline,
+        extraction_method,
+        payload_json
+    """
+
+    if assertion_registration_id is None:
+        rows = connection.execute(
+            f"""
+            SELECT {columns}
+            FROM source_coordinate_declarations
+            ORDER BY assertion_registration_id, source_record_ref, variant_source_value
+            """
+        ).fetchall()
+    else:
+        rows = connection.execute(
+            f"""
+            SELECT {columns}
+            FROM source_coordinate_declarations
+            WHERE assertion_registration_id = ?
+            ORDER BY source_record_ref, variant_source_value
+            """,
+            (assertion_registration_id,),
+        ).fetchall()
+
+    return [dict(row) for row in rows]

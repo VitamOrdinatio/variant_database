@@ -5,7 +5,7 @@ from __future__ import annotations
 import sqlite3
 
 
-SCHEMA_VERSION = "0.1.0"
+SCHEMA_VERSION = "0.1.1"
 
 
 def initialize_schema(connection: sqlite3.Connection) -> None:
@@ -102,6 +102,49 @@ def initialize_schema(connection: sqlite3.Connection) -> None:
             FOREIGN KEY(assertion_registration_id)
                 REFERENCES assertion_registrations(assertion_registration_id)
         );        
+
+        CREATE TABLE IF NOT EXISTS source_coordinate_declarations (
+            coordinate_declaration_id TEXT PRIMARY KEY,
+            assertion_registration_id TEXT NOT NULL,
+            source_identity_id TEXT NOT NULL,
+            source_record_ref TEXT,
+            source_artifact_path TEXT NOT NULL,
+            variant_source_namespace TEXT NOT NULL,
+            variant_source_value TEXT NOT NULL,
+            variant_source_label TEXT,
+            reference_genome_build TEXT,
+            reference_context_source TEXT,
+            chromosome TEXT NOT NULL,
+            position TEXT NOT NULL,
+            start TEXT,
+            end TEXT,
+            reference_allele TEXT NOT NULL,
+            alternate_allele TEXT NOT NULL,
+            variant_type TEXT,
+            variant_class TEXT,
+            coordinate_system TEXT NOT NULL,
+            coordinate_system_status TEXT NOT NULL,
+            normalization_status TEXT NOT NULL,
+            normalization_status_source TEXT NOT NULL,
+            sample_id TEXT,
+            run_id TEXT,
+            producer_pipeline TEXT,
+            extraction_method TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            FOREIGN KEY(assertion_registration_id)
+                REFERENCES assertion_registrations(assertion_registration_id),
+            FOREIGN KEY(source_identity_id)
+                REFERENCES source_identities(source_identity_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_source_coordinate_declarations_assertion
+            ON source_coordinate_declarations(assertion_registration_id);
+
+        CREATE INDEX IF NOT EXISTS idx_source_coordinate_declarations_variant
+            ON source_coordinate_declarations(variant_source_namespace, variant_source_value);
+
+        CREATE INDEX IF NOT EXISTS idx_source_coordinate_declarations_reference
+            ON source_coordinate_declarations(reference_genome_build, chromosome, position);
         """
     )
 

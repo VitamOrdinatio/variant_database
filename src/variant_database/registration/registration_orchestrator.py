@@ -22,10 +22,15 @@ from variant_database.persistence.backend import connect_sqlite
 from variant_database.persistence.repositories import (
     list_artifact_records,
     list_package_metadata_records,
+    list_source_coordinate_declarations,
     persist_package_inventory,
     persist_package_metadata_record,
+    persist_source_coordinate_declaration,
 )
 from variant_database.persistence.schema_manager import initialize_schema
+from variant_database.registration.coordinate_extractor import (
+    build_vap_coordinate_declaration_from_row,
+)
 from variant_database.registration.metadata_extractor import (
     build_vap_package_metadata_record,
 )
@@ -55,6 +60,7 @@ class RegistrationPipelineSummary:
     artifact_count: int
     assertion_registration_count: int
     package_metadata_count: int
+    coordinate_declaration_count: int
     row_count_scanned: int
     participant_count_discovered: int
     source_identity_count: int
@@ -101,6 +107,7 @@ def run_registration_pipeline(
     package_id = persist_package_inventory(connection, inventory)
     artifact_records = list_artifact_records(connection, package_id)
 
+    package_metadata_record: dict[str, object] | None = None
     package_metadata_count = 0
     if producer_family.strip().upper() == "VAP":
         package_metadata_record = build_vap_package_metadata_record(
@@ -170,16 +177,34 @@ def run_registration_pipeline(
 
                 participant_count_discovered += len(participants)
 
+                assertion_registration_id = str(
+                    registration["assertion_registration_id"]
+                )
+
                 attach_participants_to_assertion(
                     connection=connection,
-                    assertion_registration_id=str(
-                        registration["assertion_registration_id"]
-                    ),
+                    assertion_registration_id=assertion_registration_id,
                     participants=participants,
                     commit=False,
                 )
 
+                if producer_family.strip().upper() == "VAP":
+                    coordinate_declaration = build_vap_coordinate_declaration_from_row(
+                        assertion_registration_id=assertion_registration_id,
+                        row=row,
+                        source_record_ref=source_record_ref,
+                        source_artifact_path=relative_path,
+                        package_metadata=package_metadata_record,
+                    )
+                    if coordinate_declaration is not None:
+                        persist_source_coordinate_declaration(
+                            connection=connection,
+                            coordinate_declaration=coordinate_declaration,
+                            commit=False,
+                        )
+
     source_identities = list_source_identities(connection)
+    source_coordinate_declarations = list_source_coordinate_declarations(connection)
 
     elapsed_seconds = perf_counter() - started_at
     rows_per_second = (
@@ -202,6 +227,7 @@ def run_registration_pipeline(
         artifact_count=inventory.artifact_count,
         assertion_registration_count=len(assertion_registrations),
         package_metadata_count=package_metadata_count,
+        coordinate_declaration_count=len(source_coordinate_declarations),
         row_count_scanned=row_count_scanned,
         participant_count_discovered=participant_count_discovered,
         source_identity_count=len(source_identities),

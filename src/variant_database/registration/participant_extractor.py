@@ -36,12 +36,14 @@ POS_COLUMNS = (
 REF_COLUMNS = (
     "ref",
     "reference",
+    "reference_allele",
 )
 
 ALT_COLUMNS = (
     "alt",
     "alternate",
     "alternative",
+    "alternate_allele",
 )
 
 GENE_SYMBOL_COLUMNS = (
