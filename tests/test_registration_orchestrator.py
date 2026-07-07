@@ -214,6 +214,7 @@ def test_registration_pipeline_registers_vap_coordinate_declarations(tmp_path: P
     assert summary.package_metadata_count == 1
     assert summary.row_count_scanned == 2
     assert summary.coordinate_declaration_count == 2
+    assert summary.feature_declaration_count >= 1
 
     connection = connect_sqlite(tmp_path / "vdb.sqlite")
     rows = connection.execute(
@@ -267,9 +268,92 @@ def test_registration_pipeline_does_not_emit_coordinates_for_gsc(tmp_path: Path)
     assert summary.row_count_scanned == 1
     assert summary.source_identity_count == 4
     assert summary.coordinate_declaration_count == 0
+    assert summary.feature_declaration_count == 0
 
     connection = connect_sqlite(tmp_path / "vdb.sqlite")
     coordinate_count = connection.execute(
         "SELECT COUNT(*) AS count FROM source_coordinate_declarations"
     ).fetchone()["count"]
     assert coordinate_count == 0
+
+
+
+def test_registration_pipeline_registers_vap_feature_declarations(tmp_path: Path) -> None:
+    package = tmp_path / "vap_tep_HG002_run_2026_06_03_010030_v1"
+    (package / "entities" / "metadata").mkdir(parents=True)
+    (package / "entities" / "noncoding_interpretation").mkdir(parents=True)
+
+    (
+        package / "entities" / "metadata" / "config_snapshot.yaml"
+    ).write_text(
+        "project:\n"
+        "  pipeline_name: variant_annotation_pipeline\n"
+        "input:\n"
+        "  sample_id: HG002\n"
+        "  sra_accession: SRR12898354\n"
+        "reference:\n"
+        "  genome_build: GRCh38\n"
+        "tools:\n"
+        "  vep:\n"
+        "    assembly: GRCh38\n",
+        encoding="utf-8",
+    )
+
+    (
+        package
+        / "entities"
+        / "noncoding_interpretation"
+        / "stage_10_noncoding_interpreted.tsv"
+    ).write_text(
+        "variant_id\tchromosome\tposition\treference_allele\talternate_allele\t"
+        "gene_id\tgene_symbol\ttranscript_id\tconsequence\timpact_class\t"
+        "variant_context\tis_regulatory_candidate\tclinvar_significance\t"
+        "annotation_source\tannotation_version\n"
+        "1:895427:G:C\t1\t895427\tG\tC\tNA\tNA\tNA\tintergenic_variant\t"
+        "MODIFIER\tnoncoding\tfalse\tNA\tVEP\tsource_configured\n",
+        encoding="utf-8",
+    )
+
+    summary = run_registration_pipeline(
+        package_path=package,
+        db_path=tmp_path / "vdb.sqlite",
+        producer_family="VAP",
+    )
+
+    assert summary.package_metadata_count == 1
+    assert summary.coordinate_declaration_count == 1
+    assert summary.feature_declaration_count >= 5
+
+    connection = connect_sqlite(tmp_path / "vdb.sqlite")
+    rows = connection.execute(
+        """
+        SELECT
+            feature_kind,
+            feature_namespace,
+            feature_value,
+            relationship_status,
+            coordinate_declaration_id,
+            reference_genome_build,
+            annotation_assembly
+        FROM source_feature_declarations
+        ORDER BY feature_kind, feature_value
+        """
+    ).fetchall()
+
+    values = {row["feature_value"] for row in rows}
+    assert "intergenic_variant" in values
+    assert "MODIFIER" in values
+    assert "noncoding" in values
+    assert "noncoding_coordinate_surveillance" in values
+    assert "intergenic_coordinate_surveillance" in values
+    assert "no_gene_mapping_observed" in values
+    assert "no_transcript_annotation_observed" in values
+    assert "no_clinical_annotation_observed" in values
+    assert "true" not in {
+        row["feature_value"]
+        for row in rows
+        if row["feature_kind"] == "regulatory_candidate"
+    }
+    assert all(row["coordinate_declaration_id"] is not None for row in rows)
+    assert all(row["reference_genome_build"] == "GRCh38" for row in rows)
+    assert all(row["annotation_assembly"] == "GRCh38" for row in rows)

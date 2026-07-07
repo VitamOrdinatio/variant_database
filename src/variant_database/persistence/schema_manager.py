@@ -5,7 +5,7 @@ from __future__ import annotations
 import sqlite3
 
 
-SCHEMA_VERSION = "0.1.1"
+SCHEMA_VERSION = "0.1.2"
 
 
 def initialize_schema(connection: sqlite3.Connection) -> None:
@@ -145,6 +145,62 @@ def initialize_schema(connection: sqlite3.Connection) -> None:
 
         CREATE INDEX IF NOT EXISTS idx_source_coordinate_declarations_reference
             ON source_coordinate_declarations(reference_genome_build, chromosome, position);
+
+
+        CREATE TABLE IF NOT EXISTS source_feature_declarations (
+            feature_declaration_id TEXT PRIMARY KEY,
+            assertion_registration_id TEXT NOT NULL,
+            coordinate_declaration_id TEXT,
+            source_identity_id TEXT,
+            source_record_ref TEXT,
+            source_artifact_path TEXT NOT NULL,
+            variant_source_namespace TEXT,
+            variant_source_value TEXT,
+            feature_kind TEXT NOT NULL,
+            feature_namespace TEXT NOT NULL,
+            feature_value TEXT NOT NULL,
+            feature_label TEXT,
+            relationship_type TEXT NOT NULL,
+            relationship_status TEXT NOT NULL,
+            gene_id TEXT,
+            gene_symbol TEXT,
+            gene_mapping_status TEXT,
+            transcript_id TEXT,
+            consequence TEXT,
+            impact TEXT,
+            impact_class TEXT,
+            functional_impact TEXT,
+            variant_context TEXT,
+            is_regulatory_candidate TEXT,
+            is_splice_region_candidate TEXT,
+            annotation_source TEXT,
+            annotation_version TEXT,
+            annotation_assembly TEXT,
+            reference_genome_build TEXT,
+            sample_id TEXT,
+            run_id TEXT,
+            producer_pipeline TEXT,
+            extraction_method TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            FOREIGN KEY(assertion_registration_id)
+                REFERENCES assertion_registrations(assertion_registration_id),
+            FOREIGN KEY(coordinate_declaration_id)
+                REFERENCES source_coordinate_declarations(coordinate_declaration_id),
+            FOREIGN KEY(source_identity_id)
+                REFERENCES source_identities(source_identity_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_source_feature_declarations_assertion
+            ON source_feature_declarations(assertion_registration_id);
+
+        CREATE INDEX IF NOT EXISTS idx_source_feature_declarations_coordinate
+            ON source_feature_declarations(coordinate_declaration_id);
+
+        CREATE INDEX IF NOT EXISTS idx_source_feature_declarations_feature
+            ON source_feature_declarations(feature_kind, feature_namespace, feature_value);
+
+        CREATE INDEX IF NOT EXISTS idx_source_feature_declarations_variant
+            ON source_feature_declarations(variant_source_namespace, variant_source_value);
         """
     )
 

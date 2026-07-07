@@ -519,3 +519,197 @@ def list_source_coordinate_declarations(
         ).fetchall()
 
     return [dict(row) for row in rows]
+
+
+def persist_source_feature_declaration(
+    connection: sqlite3.Connection,
+    feature_declaration: object,
+    commit: bool = True,
+) -> str:
+    """Persist one source feature declaration and return its ID."""
+    record = (
+        feature_declaration
+        if isinstance(feature_declaration, dict)
+        else feature_declaration.__dict__
+    )
+
+    connection.execute(
+        """
+        INSERT INTO source_feature_declarations (
+            feature_declaration_id,
+            assertion_registration_id,
+            coordinate_declaration_id,
+            source_identity_id,
+            source_record_ref,
+            source_artifact_path,
+            variant_source_namespace,
+            variant_source_value,
+            feature_kind,
+            feature_namespace,
+            feature_value,
+            feature_label,
+            relationship_type,
+            relationship_status,
+            gene_id,
+            gene_symbol,
+            gene_mapping_status,
+            transcript_id,
+            consequence,
+            impact,
+            impact_class,
+            functional_impact,
+            variant_context,
+            is_regulatory_candidate,
+            is_splice_region_candidate,
+            annotation_source,
+            annotation_version,
+            annotation_assembly,
+            reference_genome_build,
+            sample_id,
+            run_id,
+            producer_pipeline,
+            extraction_method,
+            payload_json
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(feature_declaration_id) DO UPDATE SET
+            assertion_registration_id = excluded.assertion_registration_id,
+            coordinate_declaration_id = excluded.coordinate_declaration_id,
+            source_identity_id = excluded.source_identity_id,
+            source_record_ref = excluded.source_record_ref,
+            source_artifact_path = excluded.source_artifact_path,
+            variant_source_namespace = excluded.variant_source_namespace,
+            variant_source_value = excluded.variant_source_value,
+            feature_kind = excluded.feature_kind,
+            feature_namespace = excluded.feature_namespace,
+            feature_value = excluded.feature_value,
+            feature_label = excluded.feature_label,
+            relationship_type = excluded.relationship_type,
+            relationship_status = excluded.relationship_status,
+            gene_id = excluded.gene_id,
+            gene_symbol = excluded.gene_symbol,
+            gene_mapping_status = excluded.gene_mapping_status,
+            transcript_id = excluded.transcript_id,
+            consequence = excluded.consequence,
+            impact = excluded.impact,
+            impact_class = excluded.impact_class,
+            functional_impact = excluded.functional_impact,
+            variant_context = excluded.variant_context,
+            is_regulatory_candidate = excluded.is_regulatory_candidate,
+            is_splice_region_candidate = excluded.is_splice_region_candidate,
+            annotation_source = excluded.annotation_source,
+            annotation_version = excluded.annotation_version,
+            annotation_assembly = excluded.annotation_assembly,
+            reference_genome_build = excluded.reference_genome_build,
+            sample_id = excluded.sample_id,
+            run_id = excluded.run_id,
+            producer_pipeline = excluded.producer_pipeline,
+            extraction_method = excluded.extraction_method,
+            payload_json = excluded.payload_json
+        """,
+        (
+            record["feature_declaration_id"],
+            record["assertion_registration_id"],
+            record["coordinate_declaration_id"],
+            record["source_identity_id"],
+            record["source_record_ref"],
+            record["source_artifact_path"],
+            record["variant_source_namespace"],
+            record["variant_source_value"],
+            record["feature_kind"],
+            record["feature_namespace"],
+            record["feature_value"],
+            record["feature_label"],
+            record["relationship_type"],
+            record["relationship_status"],
+            record["gene_id"],
+            record["gene_symbol"],
+            record["gene_mapping_status"],
+            record["transcript_id"],
+            record["consequence"],
+            record["impact"],
+            record["impact_class"],
+            record["functional_impact"],
+            record["variant_context"],
+            record["is_regulatory_candidate"],
+            record["is_splice_region_candidate"],
+            record["annotation_source"],
+            record["annotation_version"],
+            record["annotation_assembly"],
+            record["reference_genome_build"],
+            record["sample_id"],
+            record["run_id"],
+            record["producer_pipeline"],
+            record["extraction_method"],
+            record["payload_json"],
+        ),
+    )
+
+    if commit:
+        connection.commit()
+
+    return str(record["feature_declaration_id"])
+
+
+def list_source_feature_declarations(
+    connection: sqlite3.Connection,
+    assertion_registration_id: str | None = None,
+) -> list[dict[str, object]]:
+    """List registered source feature declarations."""
+    columns = """
+        feature_declaration_id,
+        assertion_registration_id,
+        coordinate_declaration_id,
+        source_identity_id,
+        source_record_ref,
+        source_artifact_path,
+        variant_source_namespace,
+        variant_source_value,
+        feature_kind,
+        feature_namespace,
+        feature_value,
+        feature_label,
+        relationship_type,
+        relationship_status,
+        gene_id,
+        gene_symbol,
+        gene_mapping_status,
+        transcript_id,
+        consequence,
+        impact,
+        impact_class,
+        functional_impact,
+        variant_context,
+        is_regulatory_candidate,
+        is_splice_region_candidate,
+        annotation_source,
+        annotation_version,
+        annotation_assembly,
+        reference_genome_build,
+        sample_id,
+        run_id,
+        producer_pipeline,
+        extraction_method,
+        payload_json
+    """
+
+    if assertion_registration_id is None:
+        rows = connection.execute(
+            f"""
+            SELECT {columns}
+            FROM source_feature_declarations
+            ORDER BY assertion_registration_id, source_record_ref, feature_kind, feature_value
+            """
+        ).fetchall()
+    else:
+        rows = connection.execute(
+            f"""
+            SELECT {columns}
+            FROM source_feature_declarations
+            WHERE assertion_registration_id = ?
+            ORDER BY source_record_ref, feature_kind, feature_value
+            """,
+            (assertion_registration_id,),
+        ).fetchall()
+
+    return [dict(row) for row in rows]
