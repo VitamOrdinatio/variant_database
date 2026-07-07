@@ -157,3 +157,198 @@ def list_artifact_records(
     ).fetchall()
 
     return [dict(row) for row in rows]
+
+
+def persist_package_metadata_record(
+    connection: sqlite3.Connection,
+    metadata_record: dict[str, object],
+    commit: bool = True,
+) -> str:
+    """Persist one package metadata record and return its deterministic ID."""
+    connection.execute(
+        """
+        INSERT INTO package_metadata (
+            package_metadata_id,
+            package_id,
+            metadata_artifact_id,
+            metadata_role,
+            metadata_artifact_path,
+            metadata_artifact_sha256,
+            metadata_format,
+            run_id,
+            run_id_derivation_method,
+            sample_id,
+            sample_alias,
+            sra_accession,
+            assay_type,
+            project_name,
+            pipeline_name,
+            pipeline_version,
+            execution_profile_name,
+            hardware_class,
+            reference_genome_build,
+            reference_fasta_path,
+            reference_fasta_index_path,
+            reference_sequence_dictionary_path,
+            annotation_engine,
+            annotation_assembly,
+            annotation_cache_dir,
+            deterministic_mode,
+            record_tool_versions,
+            metadata_parse_status,
+            payload_json
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(package_metadata_id) DO UPDATE SET
+            package_id = excluded.package_id,
+            metadata_artifact_id = excluded.metadata_artifact_id,
+            metadata_role = excluded.metadata_role,
+            metadata_artifact_path = excluded.metadata_artifact_path,
+            metadata_artifact_sha256 = excluded.metadata_artifact_sha256,
+            metadata_format = excluded.metadata_format,
+            run_id = excluded.run_id,
+            run_id_derivation_method = excluded.run_id_derivation_method,
+            sample_id = excluded.sample_id,
+            sample_alias = excluded.sample_alias,
+            sra_accession = excluded.sra_accession,
+            assay_type = excluded.assay_type,
+            project_name = excluded.project_name,
+            pipeline_name = excluded.pipeline_name,
+            pipeline_version = excluded.pipeline_version,
+            execution_profile_name = excluded.execution_profile_name,
+            hardware_class = excluded.hardware_class,
+            reference_genome_build = excluded.reference_genome_build,
+            reference_fasta_path = excluded.reference_fasta_path,
+            reference_fasta_index_path = excluded.reference_fasta_index_path,
+            reference_sequence_dictionary_path = excluded.reference_sequence_dictionary_path,
+            annotation_engine = excluded.annotation_engine,
+            annotation_assembly = excluded.annotation_assembly,
+            annotation_cache_dir = excluded.annotation_cache_dir,
+            deterministic_mode = excluded.deterministic_mode,
+            record_tool_versions = excluded.record_tool_versions,
+            metadata_parse_status = excluded.metadata_parse_status,
+            payload_json = excluded.payload_json
+        """,
+        (
+            metadata_record["package_metadata_id"],
+            metadata_record["package_id"],
+            metadata_record["metadata_artifact_id"],
+            metadata_record["metadata_role"],
+            metadata_record["metadata_artifact_path"],
+            metadata_record["metadata_artifact_sha256"],
+            metadata_record["metadata_format"],
+            metadata_record["run_id"],
+            metadata_record["run_id_derivation_method"],
+            metadata_record["sample_id"],
+            metadata_record["sample_alias"],
+            metadata_record["sra_accession"],
+            metadata_record["assay_type"],
+            metadata_record["project_name"],
+            metadata_record["pipeline_name"],
+            metadata_record["pipeline_version"],
+            metadata_record["execution_profile_name"],
+            metadata_record["hardware_class"],
+            metadata_record["reference_genome_build"],
+            metadata_record["reference_fasta_path"],
+            metadata_record["reference_fasta_index_path"],
+            metadata_record["reference_sequence_dictionary_path"],
+            metadata_record["annotation_engine"],
+            metadata_record["annotation_assembly"],
+            metadata_record["annotation_cache_dir"],
+            metadata_record["deterministic_mode"],
+            metadata_record["record_tool_versions"],
+            metadata_record["metadata_parse_status"],
+            metadata_record["payload_json"],
+        ),
+    )
+
+    if commit:
+        connection.commit()
+
+    return str(metadata_record["package_metadata_id"])
+
+
+def list_package_metadata_records(
+    connection: sqlite3.Connection,
+    package_id: str | None = None,
+) -> list[dict[str, object]]:
+    """List registered package metadata records."""
+    if package_id is None:
+        rows = connection.execute(
+            """
+            SELECT
+                package_metadata_id,
+                package_id,
+                metadata_artifact_id,
+                metadata_role,
+                metadata_artifact_path,
+                metadata_artifact_sha256,
+                metadata_format,
+                run_id,
+                run_id_derivation_method,
+                sample_id,
+                sample_alias,
+                sra_accession,
+                assay_type,
+                project_name,
+                pipeline_name,
+                pipeline_version,
+                execution_profile_name,
+                hardware_class,
+                reference_genome_build,
+                reference_fasta_path,
+                reference_fasta_index_path,
+                reference_sequence_dictionary_path,
+                annotation_engine,
+                annotation_assembly,
+                annotation_cache_dir,
+                deterministic_mode,
+                record_tool_versions,
+                metadata_parse_status,
+                payload_json
+            FROM package_metadata
+            ORDER BY package_id, metadata_artifact_path
+            """
+        ).fetchall()
+    else:
+        rows = connection.execute(
+            """
+            SELECT
+                package_metadata_id,
+                package_id,
+                metadata_artifact_id,
+                metadata_role,
+                metadata_artifact_path,
+                metadata_artifact_sha256,
+                metadata_format,
+                run_id,
+                run_id_derivation_method,
+                sample_id,
+                sample_alias,
+                sra_accession,
+                assay_type,
+                project_name,
+                pipeline_name,
+                pipeline_version,
+                execution_profile_name,
+                hardware_class,
+                reference_genome_build,
+                reference_fasta_path,
+                reference_fasta_index_path,
+                reference_sequence_dictionary_path,
+                annotation_engine,
+                annotation_assembly,
+                annotation_cache_dir,
+                deterministic_mode,
+                record_tool_versions,
+                metadata_parse_status,
+                payload_json
+            FROM package_metadata
+            WHERE package_id = ?
+            ORDER BY metadata_artifact_path
+            """,
+            (package_id,),
+        ).fetchall()
+
+    return [dict(row) for row in rows]
+

@@ -35,6 +35,40 @@ def initialize_schema(connection: sqlite3.Connection) -> None:
             FOREIGN KEY(package_id) REFERENCES tep_packages(package_id)
         );
 
+        CREATE TABLE IF NOT EXISTS package_metadata (
+            package_metadata_id TEXT PRIMARY KEY,
+            package_id TEXT NOT NULL,
+            metadata_artifact_id TEXT NOT NULL,
+            metadata_role TEXT NOT NULL,
+            metadata_artifact_path TEXT NOT NULL,
+            metadata_artifact_sha256 TEXT NOT NULL,
+            metadata_format TEXT NOT NULL,
+            run_id TEXT,
+            run_id_derivation_method TEXT NOT NULL,
+            sample_id TEXT,
+            sample_alias TEXT,
+            sra_accession TEXT,
+            assay_type TEXT,
+            project_name TEXT,
+            pipeline_name TEXT,
+            pipeline_version TEXT,
+            execution_profile_name TEXT,
+            hardware_class TEXT,
+            reference_genome_build TEXT,
+            reference_fasta_path TEXT,
+            reference_fasta_index_path TEXT,
+            reference_sequence_dictionary_path TEXT,
+            annotation_engine TEXT,
+            annotation_assembly TEXT,
+            annotation_cache_dir TEXT,
+            deterministic_mode INTEGER,
+            record_tool_versions INTEGER,
+            metadata_parse_status TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            FOREIGN KEY(package_id) REFERENCES tep_packages(package_id),
+            FOREIGN KEY(metadata_artifact_id) REFERENCES artifacts(artifact_id)
+        );
+
         CREATE TABLE IF NOT EXISTS assertion_registrations (
             assertion_registration_id TEXT PRIMARY KEY,
             package_id TEXT NOT NULL,

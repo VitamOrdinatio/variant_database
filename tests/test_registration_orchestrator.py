@@ -95,3 +95,77 @@ def test_registration_pipeline_respects_max_rows_per_artifact(tmp_path: Path) ->
 
     assert summary.row_count_scanned == 1
     assert summary.participant_count_discovered == 2
+
+
+def test_registration_pipeline_registers_vap_package_metadata(tmp_path: Path) -> None:
+    package = tmp_path / "vap_tep_HG002_run_2026_06_03_010030_v1"
+    (package / "entities" / "metadata").mkdir(parents=True)
+
+    (
+        package / "entities" / "metadata" / "config_snapshot.yaml"
+    ).write_text(
+        "project:\n"
+        "  name: variant_annotation_pipeline\n"
+        "  pipeline_name: variant_annotation_pipeline\n"
+        "  version: v1.0\n"
+        "input:\n"
+        "  sample_id: HG002\n"
+        "  sample_alias: NA24385\n"
+        "  sra_accession: SRR12898354\n"
+        "  assay_type: WGS\n"
+        "reference:\n"
+        "  genome_build: GRCh38\n"
+        "  fasta_path: /data/storage/reference/grch38/GRCh38.primary_assembly.genome.fa\n"
+        "  fasta_index: /data/storage/reference/grch38/GRCh38.primary_assembly.genome.fa.fai\n"
+        "  sequence_dictionary: /data/storage/reference/grch38/GRCh38.primary_assembly.genome.dict\n"
+        "tools:\n"
+        "  vep:\n"
+        "    assembly: GRCh38\n"
+        "    cache_dir: /root/.vep\n"
+        "runtime:\n"
+        "  deterministic_mode: true\n"
+        "  record_tool_versions: true\n",
+        encoding="utf-8",
+    )
+
+    summary = run_registration_pipeline(
+        package_path=package,
+        db_path=tmp_path / "vdb.sqlite",
+        producer_family="VAP",
+    )
+
+    assert summary.package_exists is True
+    assert summary.package_metadata_count == 1
+    assert summary.assertion_registration_count == 0
+    assert summary.source_identity_count == 0
+
+    connection = connect_sqlite(tmp_path / "vdb.sqlite")
+    row = connection.execute(
+        """
+        SELECT
+            metadata_role,
+            metadata_artifact_path,
+            run_id,
+            run_id_derivation_method,
+            sample_id,
+            sra_accession,
+            reference_genome_build,
+            annotation_engine,
+            annotation_assembly,
+            metadata_parse_status
+        FROM package_metadata
+        """
+    ).fetchone()
+
+    assert row is not None
+    assert row["metadata_role"] == "package_metadata"
+    assert row["metadata_artifact_path"] == "entities/metadata/config_snapshot.yaml"
+    assert row["run_id"] == "run_2026_06_03_010030"
+    assert row["run_id_derivation_method"] == "tep_package_path_regex"
+    assert row["sample_id"] == "HG002"
+    assert row["sra_accession"] == "SRR12898354"
+    assert row["reference_genome_build"] == "GRCh38"
+    assert row["annotation_engine"] == "vep"
+    assert row["annotation_assembly"] == "GRCh38"
+    assert row["metadata_parse_status"] == "parsed"
+

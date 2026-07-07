@@ -21,9 +21,14 @@ from variant_database.ingestion.package_scanner import scan_package
 from variant_database.persistence.backend import connect_sqlite
 from variant_database.persistence.repositories import (
     list_artifact_records,
+    list_package_metadata_records,
     persist_package_inventory,
+    persist_package_metadata_record,
 )
 from variant_database.persistence.schema_manager import initialize_schema
+from variant_database.registration.metadata_extractor import (
+    build_vap_package_metadata_record,
+)
 from variant_database.registration.assertion_registration import (
     list_assertion_registrations,
     register_artifact_level_assertions_for_package,
@@ -49,6 +54,7 @@ class RegistrationPipelineSummary:
     package_exists: bool
     artifact_count: int
     assertion_registration_count: int
+    package_metadata_count: int
     row_count_scanned: int
     participant_count_discovered: int
     source_identity_count: int
@@ -94,6 +100,22 @@ def run_registration_pipeline(
 
     package_id = persist_package_inventory(connection, inventory)
     artifact_records = list_artifact_records(connection, package_id)
+
+    package_metadata_count = 0
+    if producer_family.strip().upper() == "VAP":
+        package_metadata_record = build_vap_package_metadata_record(
+            package_id=package_id,
+            package_path=inventory.package_path,
+            artifact_records=artifact_records,
+        )
+        if package_metadata_record is not None:
+            persist_package_metadata_record(
+                connection=connection,
+                metadata_record=package_metadata_record,
+            )
+            package_metadata_count = len(
+                list_package_metadata_records(connection, package_id=package_id)
+            )
 
     register_artifact_level_assertions_for_package(
         connection=connection,
@@ -179,6 +201,7 @@ def run_registration_pipeline(
         package_exists=inventory.package_exists,
         artifact_count=inventory.artifact_count,
         assertion_registration_count=len(assertion_registrations),
+        package_metadata_count=package_metadata_count,
         row_count_scanned=row_count_scanned,
         participant_count_discovered=participant_count_discovered,
         source_identity_count=len(source_identities),
