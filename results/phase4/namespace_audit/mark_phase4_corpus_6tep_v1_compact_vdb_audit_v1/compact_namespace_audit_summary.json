@@ -1,0 +1,19 @@
+{
+  "artifact_count": 6,
+  "audit_id": "mark_phase4_corpus_6tep_v1_compact_vdb_audit_v1",
+  "corpus_id": "mark_phase4_corpus_6tep_v1",
+  "generated_utc": "2026-07-07T07:02:12Z",
+  "join_audit_status_counts": {
+    "passed": 19
+  },
+  "output_dir": "results/phase4/namespace_audit/mark_phase4_corpus_6tep_v1_compact_vdb_audit_v1",
+  "route_inventory_status_counts": {
+    "passed_tier1_compact_handles": 6
+  },
+  "source_identity_set_count": 204,
+  "tier1_verdict": "passed_compact_handle_audit",
+  "topology_build_id": "mark_phase4_corpus_6tep_v1_topology_build_v1",
+  "topology_expansion_row_count": 816,
+  "unique_expansion_source_identity_sets": 204,
+  "unique_represented_source_identity_count": 147941196
+}
