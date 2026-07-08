@@ -32,6 +32,7 @@ REQUIRED_OUTPUTS = [
     "topology_relationship_members.tsv",
     "topology_basis_components.tsv",
     "topology_source_identity_expansion_index.tsv",
+    "topology_declaration_set_expansion_index.tsv",
     "topology_namespace_mediation.tsv",
     "topology_metadata_relationships.tsv",
     "topology_summary.tsv",
@@ -111,6 +112,30 @@ SOURCE_IDENTITY_EXPANSION_COLUMNS = [
     "resolution_status",
     "source_identity_set_status",
     "source_identity_expansion_status",
+    "statistical_testing_status",
+    "validation_status",
+]
+
+DECLARATION_SET_EXPANSION_COLUMNS = [
+    "topology_build_id",
+    "topology_relationship_id",
+    "declaration_set_type",
+    "declaration_set_id",
+    "assertion_id",
+    "source_assertion_registration_id",
+    "registration_unit_id",
+    "declaration_table_reference",
+    "declaration_filter",
+    "declaration_count",
+    "declaration_kind",
+    "declaration_namespace",
+    "relationship_type",
+    "reference_genome_build",
+    "source_artifact_path",
+    "lossiness_status",
+    "resolution_status",
+    "declaration_set_status",
+    "declaration_expansion_status",
     "statistical_testing_status",
     "validation_status",
 ]
@@ -294,6 +319,7 @@ def write_topology_outputs(
     family_execution_rows = _normalize_generic_rows(family_execution_rows)
 
     expansion_rows = _build_source_identity_expansion_rows(relationships, members, basis_components)
+    declaration_expansion_rows = _build_declaration_set_expansion_rows(relationships, members, basis_components)
     namespace_rows = _build_namespace_mediation_rows(relationships, members, basis_components)
     metadata_rows = _build_metadata_relationship_rows(relationships)
     downstream_rows = _build_downstream_geometry_rows(relationships)
@@ -305,6 +331,7 @@ def write_topology_outputs(
         basis_components=basis_components,
         family_execution_rows=family_execution_rows,
         expansion_rows=expansion_rows,
+        declaration_expansion_rows=declaration_expansion_rows,
         namespace_rows=namespace_rows,
         metadata_rows=metadata_rows,
         downstream_rows=downstream_rows,
@@ -320,6 +347,11 @@ def write_topology_outputs(
         artifact_paths["topology_source_identity_expansion_index.tsv"],
         expansion_rows,
         SOURCE_IDENTITY_EXPANSION_COLUMNS,
+    )
+    _write_tsv(
+        artifact_paths["topology_declaration_set_expansion_index.tsv"],
+        declaration_expansion_rows,
+        DECLARATION_SET_EXPANSION_COLUMNS,
     )
     _write_tsv(
         artifact_paths["topology_namespace_mediation.tsv"],
@@ -351,6 +383,7 @@ def write_topology_outputs(
         members=members,
         basis_components=basis_components,
         expansion_rows=expansion_rows,
+        declaration_expansion_rows=declaration_expansion_rows,
         namespace_rows=namespace_rows,
         metadata_rows=metadata_rows,
         downstream_rows=downstream_rows,
@@ -546,6 +579,58 @@ def _build_source_identity_expansion_rows(
 
 
 
+
+def _build_declaration_set_expansion_rows(
+    relationships: list[dict[str, Any]],
+    members: list[dict[str, Any]],
+    basis_components: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    relationship_by_id = {str(row.get("topology_relationship_id", "")): row for row in relationships}
+    basis_by_rel_and_set: dict[tuple[str, str], dict[str, Any]] = {}
+    for basis in basis_components:
+        rel_id = _cell(basis.get("topology_relationship_id"))
+        component_type = _cell(basis.get("basis_component_type"))
+        if component_type not in {"coordinate_declaration_set_reference", "feature_declaration_set_reference"}:
+            continue
+        declaration_set_id = _cell(basis.get("basis_component_reference"))
+        if rel_id and declaration_set_id and (rel_id, declaration_set_id) not in basis_by_rel_and_set:
+            basis_by_rel_and_set[(rel_id, declaration_set_id)] = basis
+
+    rows: dict[tuple[str, str], dict[str, Any]] = {}
+    for member in members:
+        declaration_set_id = _cell(member.get("declaration_set_id"))
+        if not declaration_set_id:
+            continue
+        rel_id = _cell(member.get("topology_relationship_id"))
+        rel = relationship_by_id.get(rel_id, {})
+        basis = basis_by_rel_and_set.get((rel_id, declaration_set_id), {})
+        key = (rel_id, declaration_set_id)
+        rows[key] = {
+            "topology_build_id": _cell(rel.get("topology_build_id")),
+            "topology_relationship_id": rel_id,
+            "declaration_set_type": _cell(member.get("declaration_set_type")),
+            "declaration_set_id": declaration_set_id,
+            "assertion_id": _cell(member.get("source_assertion_id")) or _cell(basis.get("source_assertion_id")),
+            "source_assertion_registration_id": _cell(member.get("source_assertion_registration_id")),
+            "registration_unit_id": _cell(member.get("source_registration_unit_id")) or _cell(basis.get("source_registration_unit_id")),
+            "declaration_table_reference": _cell(member.get("declaration_table_reference")),
+            "declaration_filter": _cell(member.get("declaration_filter")),
+            "declaration_count": _cell(member.get("declaration_count")) or _cell(basis.get("basis_component_value")),
+            "declaration_kind": _cell(member.get("declaration_kind")),
+            "declaration_namespace": _cell(member.get("declaration_namespace")) or _cell(basis.get("basis_component_namespace")),
+            "relationship_type": _cell(member.get("declaration_relationship_type")),
+            "reference_genome_build": _cell(member.get("declaration_reference_genome_build")),
+            "source_artifact_path": _cell(member.get("declaration_source_artifact_path")),
+            "lossiness_status": _cell(member.get("declaration_lossiness_status")) or _cell(basis.get("lossiness_status")) or "lossless_by_reference",
+            "resolution_status": _cell(member.get("declaration_resolution_status")) or _cell(basis.get("resolution_status")),
+            "declaration_set_status": _cell(member.get("declaration_set_status")),
+            "declaration_expansion_status": _cell(member.get("declaration_expansion_status")) or "available_by_declaration_set_reference",
+            "statistical_testing_status": _cell(rel.get("statistical_testing_status")) or "requires_declaration_expansion",
+            "validation_status": _cell(member.get("validation_status")) or _cell(rel.get("validation_status")) or VALIDATION_STATUS_PASSED,
+        }
+    return sorted(rows.values(), key=lambda row: (_cell(row.get("topology_relationship_id")), _cell(row.get("declaration_set_id"))))
+
+
 def _build_namespace_mediation_rows(
     relationships: list[dict[str, Any]],
     members: list[dict[str, Any]],
@@ -655,6 +740,7 @@ def _build_summary_rows(
     basis_components: list[dict[str, Any]],
     family_execution_rows: list[dict[str, Any]],
     expansion_rows: list[dict[str, Any]],
+    declaration_expansion_rows: list[dict[str, Any]],
     namespace_rows: list[dict[str, Any]],
     metadata_rows: list[dict[str, Any]],
     downstream_rows: list[dict[str, Any]],
@@ -676,6 +762,7 @@ def _build_summary_rows(
     add("artifact_counts", "basis_component_count", len(basis_components))
     add("artifact_counts", "family_execution_count", len(family_execution_rows))
     add("artifact_counts", "source_identity_expansion_index_count", len(expansion_rows))
+    add("artifact_counts", "declaration_set_expansion_index_count", len(declaration_expansion_rows))
     add("artifact_counts", "namespace_mediation_row_count", len(namespace_rows))
     add("artifact_counts", "metadata_relationship_count", len(metadata_rows))
     add("artifact_counts", "downstream_geometry_input_count", len(downstream_rows))
@@ -705,6 +792,7 @@ def _build_validation_checks(
     members: list[dict[str, Any]],
     basis_components: list[dict[str, Any]],
     expansion_rows: list[dict[str, Any]],
+    declaration_expansion_rows: list[dict[str, Any]],
     namespace_rows: list[dict[str, Any]],
     metadata_rows: list[dict[str, Any]],
     downstream_rows: list[dict[str, Any]],
@@ -770,13 +858,25 @@ def _build_validation_checks(
     observed_families = executed_families or emitted_families
     add("enabled_families_accounted", "policy_execution", enabled_families <= observed_families, "Every enabled relationship family is executed or represented in emitted relationships.", sorted(enabled_families), sorted(observed_families))
 
-    add("source_identity_expansion_index_emitted", "source_identity_expansion", bool(expansion_rows), "Source Identity Set expansion index rows are emitted when source identity set members are present.", ">0", len(expansion_rows))
+    source_identity_set_members_present = any(_cell(row.get("source_identity_set_id")) for row in members)
+    add("source_identity_expansion_index_emitted", "source_identity_expansion", (not source_identity_set_members_present) or bool(expansion_rows), "Source Identity Set expansion index rows are emitted when source identity set members are present.", ">0 when source identity set members present", len(expansion_rows))
     expanded_values_present = any(_cell(row.get("expanded_source_identity_value")) for row in expansion_rows)
     add("source_identity_values_not_flattened", "source_identity_expansion", not expanded_values_present, "Expansion index does not flatten individual source identity values.", "no expanded_source_identity_value", "present" if expanded_values_present else "absent")
 
+    declaration_set_members_present = any(_cell(row.get("declaration_set_id")) for row in members)
+    add("declaration_set_expansion_index_emitted", "declaration_set_expansion", (not declaration_set_members_present) or bool(declaration_expansion_rows), "Declaration Set expansion index rows are emitted when declaration set members are present.", ">0 when declaration sets present", len(declaration_expansion_rows))
+    expanded_declaration_values_present = any(_cell(row.get("expanded_declaration_value")) for row in declaration_expansion_rows)
+    add("declaration_values_not_flattened", "declaration_set_expansion", not expanded_declaration_values_present, "Declaration expansion index does not flatten individual coordinate or feature declaration values.", "no expanded_declaration_value", "present" if expanded_declaration_values_present else "absent")
+
     canonical_matches = [row for row in namespace_rows if _cell(row.get("match_type")) == "canonical_identity_match"]
     mediated_matches = [row for row in namespace_rows if _cell(row.get("match_type")) == "namespace_mediated_match"]
-    add("namespace_rows_emitted", "namespace_mediation", bool(namespace_rows), "Namespace mediation/status artifact rows are emitted when namespace-relevant relationships exist.", ">0", len(namespace_rows))
+    namespace_relevant_relationships = [
+        row
+        for row in relationships
+        if _cell(row.get("namespace_mediation_status")) not in {"", "not_applicable"}
+        or _cell(row.get("relationship_kind")) == "source_identity_set_role_namespace_membership"
+    ]
+    add("namespace_rows_emitted", "namespace_mediation", (not namespace_relevant_relationships) or bool(namespace_rows), "Namespace mediation/status artifact rows are emitted when namespace-relevant relationships exist.", ">0 when namespace-relevant relationships exist", len(namespace_rows))
     add("canonical_namespace_matching_not_emitted_v1", "namespace_mediation", not canonical_matches and not mediated_matches, "v1 namespace output does not emit canonical or namespace-mediated identity matches.", "0 canonical/mediated matches", len(canonical_matches) + len(mediated_matches))
 
     forbidden_columns = sorted(FORBIDDEN_DOWNSTREAM_GEOMETRY_COLUMNS & set(DOWNSTREAM_GEOMETRY_COLUMNS))
@@ -859,6 +959,7 @@ def _build_report_markdown(
         f"- members: {summary_lookup.get(('artifact_counts', 'member_count'), '0')}",
         f"- basis components: {summary_lookup.get(('artifact_counts', 'basis_component_count'), '0')}",
         f"- source identity expansion index rows: {summary_lookup.get(('artifact_counts', 'source_identity_expansion_index_count'), '0')}",
+        f"- declaration set expansion index rows: {summary_lookup.get(('artifact_counts', 'declaration_set_expansion_index_count'), '0')}",
         f"- namespace mediation rows: {summary_lookup.get(('artifact_counts', 'namespace_mediation_row_count'), '0')}",
         f"- downstream geometry input rows: {summary_lookup.get(('artifact_counts', 'downstream_geometry_input_count'), '0')}",
         "",
@@ -881,6 +982,7 @@ def _build_report_markdown(
             "## Boundary Statements",
             "",
             "- Source Identity Sets are preserved by reference; individual source identity values are not flattened.",
+            "- Coordinate and feature declaration sets are preserved by reference; individual declaration values are not flattened.",
             "- Namespace output preserves source namespace state only for v1; canonical namespace mediation is not performed.",
             "- The downstream geometry manifest identifies topology relationships available to Phase 4.5 but emits no Convergence Geometry features.",
             "- This build report is not biological interpretation, statistical testing, Projection View output, or RDGP reasoning.",
@@ -998,6 +1100,8 @@ def _artifact_role(name: str) -> str:
         return "basis_components"
     if name == "topology_source_identity_expansion_index.tsv":
         return "source_identity_expansion_index"
+    if name == "topology_declaration_set_expansion_index.tsv":
+        return "declaration_set_expansion_index"
     if name == "topology_namespace_mediation.tsv":
         return "namespace_mediation"
     if name == "topology_metadata_relationships.tsv":

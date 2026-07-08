@@ -75,6 +75,9 @@ ALLOWED_TOPOLOGY_DIMENSIONS = {
     "corpus_generation",
     "metadata",
     "source_identity_set",
+    "coordinate",
+    "feature",
+    "declaration_set",
 }
 
 ALLOWED_RELATIONSHIP_KINDS = {
@@ -107,6 +110,10 @@ ALLOWED_RELATIONSHIP_KINDS = {
     "uncertainty_contrast",
     "temporal_generation_match",
     "registration_metadata_membership",
+    "coordinate_declaration_reference_build_membership",
+    "coordinate_declaration_namespace_membership",
+    "feature_declaration_kind_namespace_membership",
+    "feature_declaration_annotation_context_membership",
 }
 
 ALLOWED_DERIVATION_BASES = {
@@ -133,11 +140,17 @@ ALLOWED_DERIVATION_BASES = {
     "shared_corpus_generation",
     "namespace_mediated_match",
     "metadata_membership",
+    "shared_reference_genome_build",
+    "shared_variant_source_namespace",
+    "shared_feature_kind_namespace_relationship",
+    "shared_annotation_context",
 }
 
 ALLOWED_RELATIONSHIP_SCOPES = {
     "metadata",
     "source_identity_set",
+    "coordinate_declaration_set",
+    "feature_declaration_set",
     "namespace",
     "participant",
     "relationship",
@@ -165,6 +178,7 @@ ALLOWED_STATISTICAL_TESTING_STATUS = {
     "not_statistical_input",
     "analysis_ready",
     "requires_source_identity_expansion",
+    "requires_declaration_expansion",
     "requires_external_annotation",
     "requires_case_control_design",
     "deferred_to_projection_layer",

@@ -1,0 +1,790 @@
+{
+  "policy_identity": {
+    "policy_id": "mark_phase4_vap_gsc_topology_derivation_policy_v2",
+    "policy_version": "v2",
+    "policy_label": "MARK Phase 4 VAP/GSC Evidence Topology Derivation Policy v2",
+    "phase": "4.4",
+    "layer": "Evidence Topology",
+    "input_corpus_generation_id": "mark_phase4_corpus_6tep_v2",
+    "topology_build_id": "mark_phase4_corpus_6tep_v2_topology_build_v1",
+    "policy_status": "active_coordinate_feature_hardened"
+  },
+  "governing_references": {
+    "contract": "docs/contracts/evidence_topology/evidence_topology_contract.md",
+    "specification": "docs/implementation/specifications/evidence_topology_spec.md",
+    "schema": "docs/implementation/schemas/evidence_topology_schema.md",
+    "validation": "docs/validation/evidence_topology_validation.md",
+    "upstream_assertion_record_output": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/"
+  },
+  "input_boundary": {
+    "normal_input_chain": "Corpus Generation -> Assertion Records -> Evidence Topology",
+    "consumes_assertion_record_surface_only": true,
+    "downstream_topology_input_manifest_is_handoff_anchor": true,
+    "direct_registration_unit_access": "prohibited_v1",
+    "raw_producer_artifact_access": "prohibited_v1",
+    "source_identity_expansion_mode": "reference_only",
+    "source_identity_flattening": "prohibited",
+    "controlled_source_identity_expansion": "deferred_to_future_policy",
+    "assertion_record_primacy": "required",
+    "policy_schema_alignment": "required",
+    "coordinate_declaration_expansion_mode": "reference_only",
+    "feature_declaration_expansion_mode": "reference_only",
+    "declaration_set_flattening": "prohibited"
+  },
+  "conformance_requirements": {
+    "schema_recognized_vocabulary_required": true,
+    "policy_local_extensions_allowed": false,
+    "specification_alignment_required": true,
+    "validation_alignment_required": true,
+    "relationship_kind_must_be_policy_enabled": true,
+    "deferred_relationships_must_not_be_emitted_as_completed_topology": true,
+    "prohibited_relationships_must_not_be_emitted": true,
+    "phase4_4_v1_scope_expansion_allowed": false
+  },
+  "required_inputs": {
+    "assertion_record_index": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/assertion_record_index.tsv",
+      "required_columns": [
+        "assertion_id",
+        "source_assertion_key",
+        "corpus_generation_id",
+        "registration_unit_id",
+        "producer_family",
+        "source_package_id",
+        "source_artifact_id",
+        "source_assertion_registration_id",
+        "assertion_type",
+        "relationship_class",
+        "preservation_status",
+        "resolver_status",
+        "validation_status",
+        "source_identity_set_status",
+        "authority_context",
+        "uncertainty_context"
+      ]
+    },
+    "assertion_record_participants": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/assertion_record_participants.tsv",
+      "required_columns": [
+        "assertion_id",
+        "source_assertion_registration_id",
+        "participant_role",
+        "participant_value",
+        "participant_source",
+        "source_identity_set_id",
+        "participant_identity_kind",
+        "participant_source_namespace",
+        "participant_count",
+        "participant_resolution_status"
+      ]
+    },
+    "assertion_record_source_identity_sets": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/assertion_record_source_identity_sets.tsv",
+      "required_columns": [
+        "source_identity_set_id",
+        "assertion_id",
+        "source_assertion_registration_id",
+        "source_identity_table_reference",
+        "source_identity_filter",
+        "identity_kind",
+        "participant_role",
+        "source_namespace",
+        "source_identity_count",
+        "lossiness_status",
+        "resolution_status",
+        "validation_status",
+        "source_identity_set_status"
+      ]
+    },
+    "assertion_record_source_identity_summary": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/assertion_record_source_identity_summary.tsv",
+      "required_columns": [
+        "source_identity_set_id",
+        "assertion_id",
+        "source_assertion_registration_id",
+        "registration_unit_id",
+        "identity_kind",
+        "participant_role",
+        "source_namespace",
+        "source_identity_count"
+      ]
+    },
+    "assertion_record_lineage": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/assertion_record_lineage.tsv",
+      "required_columns": [
+        "assertion_id",
+        "source_assertion_registration_id",
+        "corpus_generation_id",
+        "registration_unit_id",
+        "source_package_id",
+        "source_artifact_id",
+        "source_artifact_relative_path",
+        "source_artifact_sha256",
+        "source_artifact_size_bytes",
+        "source_record_ref",
+        "source_record_ref_status",
+        "lineage_completeness_status"
+      ]
+    },
+    "downstream_topology_input_manifest": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/downstream_topology_input_manifest.tsv",
+      "required_columns": [
+        "assertion_id",
+        "corpus_generation_id",
+        "registration_unit_id",
+        "producer_family",
+        "source_assertion_registration_id",
+        "assertion_type",
+        "relationship_class",
+        "preservation_status",
+        "resolver_status",
+        "validation_status"
+      ]
+    },
+    "assertion_record_coordinate_declaration_sets": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/assertion_record_coordinate_declaration_sets.tsv",
+      "required_columns": [
+        "coordinate_declaration_set_id",
+        "assertion_id",
+        "source_assertion_registration_id",
+        "registration_unit_id",
+        "coordinate_declaration_table_reference",
+        "coordinate_declaration_filter",
+        "variant_source_namespace",
+        "reference_genome_build",
+        "reference_context_source",
+        "source_artifact_path",
+        "normalization_status",
+        "coordinate_system",
+        "coordinate_system_status",
+        "coordinate_declaration_count",
+        "lossiness_status",
+        "resolution_status",
+        "validation_status",
+        "coordinate_declaration_set_status"
+      ]
+    },
+    "assertion_record_feature_declaration_sets": {
+      "path": "results/phase4/assertion_records/mark_phase4_corpus_6tep_v2/assertion_record_feature_declaration_sets.tsv",
+      "required_columns": [
+        "feature_declaration_set_id",
+        "assertion_id",
+        "source_assertion_registration_id",
+        "registration_unit_id",
+        "feature_declaration_table_reference",
+        "feature_declaration_filter",
+        "feature_kind",
+        "feature_namespace",
+        "relationship_type",
+        "relationship_status",
+        "reference_genome_build",
+        "annotation_source",
+        "annotation_assembly",
+        "source_artifact_path",
+        "feature_declaration_count",
+        "lossiness_status",
+        "resolution_status",
+        "validation_status",
+        "feature_declaration_set_status"
+      ]
+    }
+  },
+  "topology_build_defaults": {
+    "topology_build_id": "mark_phase4_corpus_6tep_v2_topology_build_v1",
+    "topology_build_label": "MARK Phase 4 6-TEP Evidence Topology Build v2",
+    "input_corpus_generation_id": "mark_phase4_corpus_6tep_v2",
+    "topology_derivation_policy_id": "mark_phase4_vap_gsc_topology_derivation_policy_v2",
+    "topology_derivation_policy_version": "v2",
+    "builder_name": "variant_database.phase4.evidence_topology",
+    "builder_version": "v2",
+    "output_dir": "results/phase4/evidence_topology/mark_phase4_corpus_6tep_v2_topology_build_v1"
+  },
+  "deterministic_identity_rules": {
+    "relationship_id_algorithm": "sha256_truncated_24",
+    "relationship_id_prefix": "topology_rel_",
+    "relationship_id_components": [
+      "topology_build_id",
+      "relationship_family_id",
+      "topology_dimension",
+      "relationship_kind",
+      "derivation_basis",
+      "normalized_grouping_key",
+      "sorted_source_assertion_ids_or_source_identity_set_ids"
+    ],
+    "normalization_rules": {
+      "trim_whitespace": true,
+      "empty_string_token": "__EMPTY__",
+      "null_token": "__NULL__",
+      "sort_multivalue_fields": true,
+      "sort_members_by_stable_identifier": true,
+      "sort_basis_components_by_stable_identifier": true
+    },
+    "v1_expansion_rule": "Do not hash expanded source identity values. Use source_identity_set_id references for source-identity-set-derived relationships."
+  },
+  "relationship_strategy_profiles": {
+    "assertion_metadata_membership": {
+      "relationship_scope": "metadata",
+      "member_strategy": "assertion_records_grouped_by_key",
+      "basis_component_strategy": "field_value",
+      "emit_singleton_groups": true,
+      "source_identity_expansion_status": "not_required",
+      "statistical_testing_status": "not_statistical_input",
+      "namespace_mediation_status": "not_applicable"
+    },
+    "source_identity_set_membership": {
+      "relationship_scope": "source_identity_set",
+      "member_strategy": "source_identity_sets_grouped_by_key",
+      "basis_component_strategy": "source_identity_set_reference",
+      "emit_singleton_groups": true,
+      "source_identity_expansion_status": "available_by_source_identity_set_reference",
+      "statistical_testing_status": "requires_source_identity_expansion",
+      "namespace_mediation_status": "not_applicable"
+    },
+    "source_identity_set_role_namespace": {
+      "relationship_scope": "source_identity_set",
+      "member_strategy": "source_identity_sets_grouped_by_key",
+      "basis_component_strategy": "source_identity_set_reference",
+      "emit_singleton_groups": true,
+      "source_identity_expansion_status": "available_by_source_identity_set_reference",
+      "statistical_testing_status": "requires_source_identity_expansion",
+      "namespace_mediation_status": "source_namespace_only"
+    },
+    "coordinate_declaration_set_membership": {
+      "relationship_scope": "coordinate_declaration_set",
+      "member_strategy": "coordinate_declaration_sets_grouped_by_key",
+      "basis_component_strategy": "coordinate_declaration_set_reference",
+      "emit_singleton_groups": true,
+      "source_identity_expansion_status": "not_applicable",
+      "statistical_testing_status": "requires_declaration_expansion",
+      "namespace_mediation_status": "not_applicable"
+    },
+    "feature_declaration_set_membership": {
+      "relationship_scope": "feature_declaration_set",
+      "member_strategy": "feature_declaration_sets_grouped_by_key",
+      "basis_component_strategy": "feature_declaration_set_reference",
+      "emit_singleton_groups": true,
+      "source_identity_expansion_status": "not_applicable",
+      "statistical_testing_status": "requires_declaration_expansion",
+      "namespace_mediation_status": "not_applicable"
+    }
+  },
+  "enabled_relationship_families": [
+    {
+      "relationship_family_id": "corpus_metadata_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "corpus_generation",
+      "relationship_kind": "corpus_metadata_membership",
+      "derivation_basis": "shared_corpus_generation",
+      "source_table": "downstream_topology_input_manifest",
+      "grouping_keys": [
+        "corpus_generation_id"
+      ],
+      "derivation_basis_description": "shared corpus_generation_id value"
+    },
+    {
+      "relationship_family_id": "registration_unit_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "registration_unit",
+      "relationship_kind": "registration_unit_membership",
+      "derivation_basis": "shared_registration_unit",
+      "source_table": "downstream_topology_input_manifest",
+      "grouping_keys": [
+        "registration_unit_id"
+      ],
+      "derivation_basis_description": "shared registration_unit_id value"
+    },
+    {
+      "relationship_family_id": "producer_family_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "producer",
+      "relationship_kind": "producer_family_membership",
+      "derivation_basis": "shared_producer_family",
+      "source_table": "downstream_topology_input_manifest",
+      "grouping_keys": [
+        "producer_family"
+      ],
+      "derivation_basis_description": "shared producer_family value"
+    },
+    {
+      "relationship_family_id": "assertion_type_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "relationship",
+      "relationship_kind": "assertion_type_membership",
+      "derivation_basis": "shared_assertion_type",
+      "source_table": "downstream_topology_input_manifest",
+      "grouping_keys": [
+        "assertion_type"
+      ],
+      "derivation_basis_description": "shared assertion_type value"
+    },
+    {
+      "relationship_family_id": "relationship_class_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "relationship",
+      "relationship_kind": "relationship_class_membership",
+      "derivation_basis": "shared_relationship_class",
+      "source_table": "downstream_topology_input_manifest",
+      "grouping_keys": [
+        "relationship_class"
+      ],
+      "derivation_basis_description": "shared relationship_class value"
+    },
+    {
+      "relationship_family_id": "preservation_status_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "metadata",
+      "relationship_kind": "preservation_status_membership",
+      "derivation_basis": "shared_preservation_status",
+      "source_table": "assertion_record_index",
+      "grouping_keys": [
+        "preservation_status"
+      ],
+      "derivation_basis_description": "shared preservation_status value"
+    },
+    {
+      "relationship_family_id": "resolver_status_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "metadata",
+      "relationship_kind": "resolver_status_membership",
+      "derivation_basis": "shared_resolver_status",
+      "source_table": "downstream_topology_input_manifest",
+      "grouping_keys": [
+        "resolver_status"
+      ],
+      "derivation_basis_description": "shared resolver_status value"
+    },
+    {
+      "relationship_family_id": "validation_status_membership",
+      "strategy_profile": "assertion_metadata_membership",
+      "topology_dimension": "metadata",
+      "relationship_kind": "validation_status_membership",
+      "derivation_basis": "shared_validation_status",
+      "source_table": "downstream_topology_input_manifest",
+      "grouping_keys": [
+        "validation_status"
+      ],
+      "derivation_basis_description": "shared validation_status value"
+    },
+    {
+      "relationship_family_id": "source_identity_set_status_membership",
+      "strategy_profile": "source_identity_set_membership",
+      "topology_dimension": "metadata",
+      "relationship_kind": "source_identity_set_status_membership",
+      "derivation_basis": "shared_source_identity_set_status",
+      "source_table": "assertion_record_source_identity_sets",
+      "grouping_keys": [
+        "source_identity_set_status"
+      ],
+      "derivation_basis_description": "shared source_identity_set_status value"
+    },
+    {
+      "relationship_family_id": "source_identity_set_role_namespace_membership",
+      "strategy_profile": "source_identity_set_role_namespace",
+      "topology_dimension": "participant",
+      "relationship_kind": "source_identity_set_role_namespace_membership",
+      "derivation_basis": "shared_source_identity_set_role_kind_namespace",
+      "source_table": "assertion_record_source_identity_sets",
+      "grouping_keys": [
+        "identity_kind",
+        "participant_role",
+        "source_namespace"
+      ],
+      "derivation_basis_description": "shared source identity set role/kind/namespace"
+    },
+    {
+      "relationship_family_id": "source_identity_resolution_status_membership",
+      "strategy_profile": "source_identity_set_membership",
+      "topology_dimension": "namespace",
+      "relationship_kind": "source_identity_resolution_status_membership",
+      "derivation_basis": "shared_source_identity_resolution_status",
+      "source_table": "assertion_record_source_identity_sets",
+      "grouping_keys": [
+        "resolution_status"
+      ],
+      "derivation_basis_description": "shared source identity resolution_status value"
+    },
+    {
+      "relationship_family_id": "source_identity_lossiness_status_membership",
+      "strategy_profile": "source_identity_set_membership",
+      "topology_dimension": "metadata",
+      "relationship_kind": "source_identity_lossiness_status_membership",
+      "derivation_basis": "shared_source_identity_lossiness_status",
+      "source_table": "assertion_record_source_identity_sets",
+      "grouping_keys": [
+        "lossiness_status"
+      ],
+      "derivation_basis_description": "shared source identity lossiness_status value"
+    },
+    {
+      "relationship_family_id": "coordinate_declaration_reference_build_membership",
+      "strategy_profile": "coordinate_declaration_set_membership",
+      "topology_dimension": "coordinate",
+      "relationship_kind": "coordinate_declaration_reference_build_membership",
+      "derivation_basis": "shared_reference_genome_build",
+      "source_table": "assertion_record_coordinate_declaration_sets",
+      "grouping_keys": [
+        "reference_genome_build"
+      ],
+      "derivation_basis_description": "shared coordinate declaration reference_genome_build value"
+    },
+    {
+      "relationship_family_id": "coordinate_declaration_namespace_membership",
+      "strategy_profile": "coordinate_declaration_set_membership",
+      "topology_dimension": "coordinate",
+      "relationship_kind": "coordinate_declaration_namespace_membership",
+      "derivation_basis": "shared_variant_source_namespace",
+      "source_table": "assertion_record_coordinate_declaration_sets",
+      "grouping_keys": [
+        "variant_source_namespace"
+      ],
+      "derivation_basis_description": "shared coordinate declaration variant_source_namespace value"
+    },
+    {
+      "relationship_family_id": "feature_declaration_kind_namespace_membership",
+      "strategy_profile": "feature_declaration_set_membership",
+      "topology_dimension": "feature",
+      "relationship_kind": "feature_declaration_kind_namespace_membership",
+      "derivation_basis": "shared_feature_kind_namespace_relationship",
+      "source_table": "assertion_record_feature_declaration_sets",
+      "grouping_keys": [
+        "feature_kind",
+        "feature_namespace",
+        "relationship_type"
+      ],
+      "derivation_basis_description": "shared feature declaration kind, namespace, and relationship_type values"
+    },
+    {
+      "relationship_family_id": "feature_declaration_annotation_context_membership",
+      "strategy_profile": "feature_declaration_set_membership",
+      "topology_dimension": "feature",
+      "relationship_kind": "feature_declaration_annotation_context_membership",
+      "derivation_basis": "shared_annotation_context",
+      "source_table": "assertion_record_feature_declaration_sets",
+      "grouping_keys": [
+        "annotation_source",
+        "annotation_assembly",
+        "reference_genome_build"
+      ],
+      "derivation_basis_description": "shared feature declaration annotation source, assembly, and reference context"
+    }
+  ],
+  "deferred_relationship_families": [
+    {
+      "relationship_family_id": "evidence_domain_membership",
+      "status": "deferred_missing_input_field",
+      "required_missing_fields": [
+        "evidence_domain"
+      ]
+    },
+    {
+      "relationship_family_id": "temporal_generation_match",
+      "status": "deferred_missing_input_field",
+      "required_missing_fields": [
+        "temporal_or_generation_context"
+      ]
+    },
+    {
+      "relationship_family_id": "independence_group_membership",
+      "status": "deferred_missing_input_field",
+      "required_missing_fields": [
+        "independence_context"
+      ]
+    },
+    {
+      "relationship_family_id": "exact_source_identity_value_intersection",
+      "status": "deferred_requires_controlled_expansion"
+    },
+    {
+      "relationship_family_id": "exact_variant_overlap",
+      "status": "deferred_requires_controlled_expansion"
+    },
+    {
+      "relationship_family_id": "exact_gene_overlap",
+      "status": "deferred_requires_controlled_expansion"
+    },
+    {
+      "relationship_family_id": "exact_sample_overlap",
+      "status": "deferred_requires_controlled_expansion"
+    },
+    {
+      "relationship_family_id": "cross_producer_exact_participant_intersection",
+      "status": "deferred_requires_controlled_expansion"
+    },
+    {
+      "relationship_family_id": "cross_evidence_domain_exact_participant_intersection",
+      "status": "deferred_missing_input_field_and_controlled_expansion",
+      "required_missing_fields": [
+        "evidence_domain"
+      ]
+    },
+    {
+      "relationship_family_id": "namespace_mediated_participant_value_match",
+      "status": "deferred_requires_namespace_policy"
+    },
+    {
+      "relationship_family_id": "regulatory_feature_overlap",
+      "status": "deferred_requires_external_annotation_or_projection"
+    },
+    {
+      "relationship_family_id": "pathway_or_network_overlap",
+      "status": "deferred_requires_external_annotation_or_projection"
+    }
+  ],
+  "prohibited_relationship_families": [
+    "biological_convergence",
+    "candidate_gene_support",
+    "pathogenicity_support",
+    "phenotype_explanation",
+    "clinical_actionability",
+    "causal_relationship",
+    "burden_score",
+    "case_control_enrichment",
+    "statistical_significance",
+    "surface_eligible_region",
+    "projection_ready_region",
+    "rdgp_priority_signal"
+  ],
+  "source_identity_expansion_policy": {
+    "mode": "reference_only",
+    "flattening": "prohibited",
+    "required_output": "topology_source_identity_expansion_index.tsv",
+    "join_keys": [
+      "source_identity_set_id",
+      "assertion_id",
+      "source_assertion_registration_id"
+    ],
+    "registration_unit_recovery_source": "assertion_record_source_identity_summary",
+    "expansion_status_for_v1": "available_by_source_identity_set_reference",
+    "controlled_expansion_status": "deferred_by_policy",
+    "required_expansion_index_columns": [
+      "topology_build_id",
+      "topology_relationship_id",
+      "source_identity_set_id",
+      "assertion_id",
+      "source_assertion_registration_id",
+      "registration_unit_id",
+      "identity_kind",
+      "participant_role",
+      "source_namespace",
+      "source_identity_count",
+      "lossiness_status",
+      "resolution_status",
+      "source_identity_set_status",
+      "expansion_status",
+      "statistical_testing_status",
+      "validation_status"
+    ],
+    "allowed_expansion_status_values_v1": [
+      "not_required",
+      "available_by_source_identity_set_reference",
+      "requires_controlled_expansion",
+      "deferred_by_policy",
+      "not_applicable",
+      "unavailable",
+      "header_only_not_policy_enabled"
+    ],
+    "expanded_under_policy_allowed_v1": false
+  },
+  "namespace_mediation_policy": {
+    "namespace_mediation_mode": "source_namespace_only",
+    "source_namespace_grouping": "enabled_when_source_namespace_field_present",
+    "canonical_identity_matching": "disabled_v1",
+    "namespace_mediated_relationships": "deferred_requires_namespace_policy",
+    "unresolved_namespace_state": "preserve",
+    "allowed_match_types_v1": [
+      "source_namespace_match",
+      "not_applicable",
+      "deferred"
+    ],
+    "prohibited_v1": [
+      "canonical_identity_match",
+      "namespace_mediated_match_presented_as_direct_source_identity_match"
+    ],
+    "allowed_namespace_mediation_status_values_v1": [
+      "not_applicable",
+      "source_namespace_only",
+      "deferred_by_policy"
+    ],
+    "namespace_mediation_output_behavior_v1": "emit_explicit_status_rows"
+  },
+  "statistical_testing_policy": {
+    "topology_performs_statistical_testing": false,
+    "poly_noncoding_variant_burden_testing": "prohibited_in_evidence_topology_v1",
+    "default_status_by_relationship_scope": {
+      "metadata": "not_statistical_input",
+      "source_identity_set": "requires_source_identity_expansion"
+    },
+    "burden_capable_projection_requirements": [
+      "controlled_source_identity_expansion",
+      "sample_or_cohort_context",
+      "variant_or_feature_context",
+      "annotation_context",
+      "case_control_design_when_testing_enrichment",
+      "missingness_semantics",
+      "denominator_semantics",
+      "projection_lossiness_status"
+    ]
+  },
+  "validation_status_policy": {
+    "topology_validation_status_values": [
+      "passed",
+      "passed_with_note",
+      "failed",
+      "not_applicable",
+      "deferred_by_policy"
+    ],
+    "upstream_assertion_status_fields_must_be_named": [
+      "source_assertion_validation_status_summary",
+      "source_assertion_resolver_status_summary",
+      "source_assertion_preservation_status_summary"
+    ],
+    "prohibited_topology_validation_status_values": [
+      "preserved",
+      "supported",
+      "indexed_with_note",
+      "deferred"
+    ],
+    "validation_status_scope_rule": "validation_status in topology outputs is topology-layer validation status unless a field explicitly identifies upstream source status"
+  },
+  "allowed_output_vocabulary_v1": {
+    "relationship_kind": [
+      "corpus_metadata_membership",
+      "registration_unit_membership",
+      "producer_family_membership",
+      "assertion_type_membership",
+      "relationship_class_membership",
+      "preservation_status_membership",
+      "resolver_status_membership",
+      "validation_status_membership",
+      "source_identity_set_status_membership",
+      "source_identity_set_role_namespace_membership",
+      "source_identity_resolution_status_membership",
+      "source_identity_lossiness_status_membership"
+    ],
+    "derivation_basis": [
+      "shared_corpus_generation",
+      "shared_registration_unit",
+      "shared_producer_family",
+      "shared_assertion_type",
+      "shared_relationship_class",
+      "shared_preservation_status",
+      "shared_resolver_status",
+      "shared_validation_status",
+      "shared_source_identity_set_status",
+      "shared_source_identity_set_role_kind_namespace",
+      "shared_source_identity_resolution_status",
+      "shared_source_identity_lossiness_status"
+    ],
+    "relationship_scope": [
+      "metadata",
+      "source_identity_set"
+    ],
+    "source_identity_expansion_status": [
+      "not_required",
+      "available_by_source_identity_set_reference",
+      "requires_controlled_expansion",
+      "deferred_by_policy",
+      "not_applicable",
+      "unavailable",
+      "header_only_not_policy_enabled"
+    ],
+    "namespace_mediation_status": [
+      "not_applicable",
+      "source_namespace_only",
+      "deferred_by_policy"
+    ],
+    "statistical_testing_status": [
+      "not_statistical_input",
+      "analysis_ready",
+      "requires_source_identity_expansion",
+      "requires_external_annotation",
+      "requires_case_control_design",
+      "deferred_to_projection_layer",
+      "not_applicable"
+    ],
+    "lossiness_status": [
+      "lossless",
+      "lossless_by_reference",
+      "summary_only",
+      "reference_only",
+      "lossy",
+      "not_applicable",
+      "unknown"
+    ],
+    "validation_status": [
+      "passed",
+      "passed_with_note",
+      "failed",
+      "not_applicable",
+      "deferred_by_policy"
+    ]
+  },
+  "output_requirements": {
+    "output_dir": "results/phase4/evidence_topology/mark_phase4_corpus_6tep_v1_topology_build_v1",
+    "required_outputs": [
+      "topology_build_manifest.tsv",
+      "topology_build_manifest.json",
+      "topology_relationships.tsv",
+      "topology_relationships.jsonl",
+      "topology_relationship_members.tsv",
+      "topology_basis_components.tsv",
+      "topology_source_identity_expansion_index.tsv",
+      "topology_namespace_mediation.tsv",
+      "topology_metadata_relationships.tsv",
+      "topology_summary.tsv",
+      "topology_validation_report.json",
+      "topology_validation_report.tsv",
+      "topology_build_report.md",
+      "downstream_geometry_input_manifest.tsv"
+    ],
+    "downstream_geometry_manifest_boundary": "must_reference_topology_relationships_without_emitting_geometry_features"
+  },
+  "validation_behavior": {
+    "fail_if_required_input_missing": true,
+    "fail_if_required_column_missing": true,
+    "fail_if_enabled_family_silently_skipped": true,
+    "relationship_family_execution_report_required": true,
+    "fail_if_source_identity_set_join_fails": true,
+    "fail_if_relationship_lacks_dimension_kind_or_basis": true,
+    "fail_if_relationship_lacks_members_or_basis_components": true,
+    "fail_if_geometry_surface_projection_or_reasoning_authority_is_emitted": true,
+    "defer_optional_family_when_declared_missing_fields_are_absent": true,
+    "fail_if_output_value_not_schema_recognized": true,
+    "fail_if_policy_local_extension_undeclared": true,
+    "fail_if_deferred_family_emitted_as_completed_topology": true,
+    "fail_if_prohibited_family_emitted": true,
+    "fail_if_upstream_status_used_as_topology_validation_status": true,
+    "relationship_family_execution_report_required_columns": [
+      "topology_build_id",
+      "relationship_family_id",
+      "strategy_profile",
+      "source_table",
+      "grouping_keys",
+      "execution_status",
+      "relationship_count",
+      "member_count",
+      "basis_component_count",
+      "message"
+    ]
+  },
+  "anti_collapse_rules": [
+    "do_not_modify_assertion_records",
+    "do_not_mutate_registration_units",
+    "do_not_parse_raw_producer_artifacts",
+    "do_not_expand_corpus_scope_silently",
+    "do_not_flatten_source_identity_sets_into_topology_relationships",
+    "do_not_hide_source_identity_sets_behind_claim_level_rows",
+    "do_not_treat_source_identity_count_as_independent_evidence_count",
+    "do_not_treat_topology_as_source_evidence",
+    "do_not_treat_topology_as_biological_truth",
+    "do_not_emit_geometry_features",
+    "do_not_declare_surface_eligibility",
+    "do_not_emit_projection_readiness_claims",
+    "do_not_perform_statistical_testing",
+    "do_not_perform_rdgp_reasoning",
+    "do_not_treat_namespace_mediated_identity_as_direct_source_identity_match",
+    "do_not_flatten_coordinate_declaration_sets_into_topology_relationships",
+    "do_not_flatten_feature_declaration_sets_into_topology_relationships",
+    "do_not_treat_declaration_count_as_independent_evidence_count"
+  ]
+}

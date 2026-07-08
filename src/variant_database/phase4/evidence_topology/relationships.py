@@ -30,6 +30,12 @@ RELATIONSHIP_CLASSIFICATION_IMMEDIATE = "immediately_derived_topology"
 
 ASSERTION_MEMBER_TYPE = "assertion_record"
 SOURCE_IDENTITY_SET_MEMBER_TYPE = "source_identity_set"
+COORDINATE_DECLARATION_SET_MEMBER_TYPE = "coordinate_declaration_set"
+FEATURE_DECLARATION_SET_MEMBER_TYPE = "feature_declaration_set"
+DECLARATION_SET_MEMBER_TYPES = {
+    COORDINATE_DECLARATION_SET_MEMBER_TYPE,
+    FEATURE_DECLARATION_SET_MEMBER_TYPE,
+}
 
 
 @dataclass(frozen=True)
@@ -62,11 +68,10 @@ class TopologyRelationshipRow:
 class TopologyRelationshipMemberRow:
     """In-memory topology_relationship_members row.
 
-    The final block of Source Identity Set handle fields is populated for
-    ``source_identity_set`` members. These fields preserve the addressable
-    expansion handle through Step 4 so Step 6 can emit a complete
-    topology_source_identity_expansion_index.tsv without opening registration
-    SQLite files or flattening source identities.
+    The final handle blocks are populated for compact set members. Source
+    Identity Set fields preserve source identity expansion handles. Declaration
+    Set fields preserve coordinate/feature declaration expansion handles without
+    opening registration SQLite files or flattening row-scale declarations.
     """
 
     topology_relationship_id: str
@@ -86,6 +91,20 @@ class TopologyRelationshipMemberRow:
     lossiness_status: str
     resolution_status: str
     source_identity_set_status: str
+    declaration_set_type: str
+    declaration_set_id: str
+    declaration_table_reference: str
+    declaration_filter: str
+    declaration_count: str
+    declaration_kind: str
+    declaration_namespace: str
+    declaration_relationship_type: str
+    declaration_reference_genome_build: str
+    declaration_source_artifact_path: str
+    declaration_lossiness_status: str
+    declaration_resolution_status: str
+    declaration_set_status: str
+    declaration_expansion_status: str
     validation_status: str
 
 
@@ -282,10 +301,17 @@ def execute_relationship_families(
                 input_corpus_generation_id=input_corpus_generation_id,
                 source_identity_summary_by_set=source_identity_summary_by_set,
             )
+            declaration_set_basis_components = _make_declaration_set_basis_components(
+                topology_relationship_id=relationship_id,
+                rows=sorted_group_rows,
+                member_type=member_type,
+                input_corpus_generation_id=input_corpus_generation_id,
+            )
 
             all_basis_components = (
                 *grouping_basis_components,
                 *source_identity_basis_components,
+                *declaration_set_basis_components,
             )
             relationships.append(
                 TopologyRelationshipRow(
@@ -388,12 +414,20 @@ def _member_type_for_profile(profile_name: str, profile: dict[str, Any]) -> str:
     strategy = str(profile.get("member_strategy", ""))
     if profile_name.startswith("source_identity_set") or strategy.startswith("source_identity_sets"):
         return SOURCE_IDENTITY_SET_MEMBER_TYPE
+    if profile_name.startswith("coordinate_declaration_set") or strategy.startswith("coordinate_declaration_sets"):
+        return COORDINATE_DECLARATION_SET_MEMBER_TYPE
+    if profile_name.startswith("feature_declaration_set") or strategy.startswith("feature_declaration_sets"):
+        return FEATURE_DECLARATION_SET_MEMBER_TYPE
     return ASSERTION_MEMBER_TYPE
 
 
 def _member_identifier_key(member_type: str) -> str:
     if member_type == SOURCE_IDENTITY_SET_MEMBER_TYPE:
         return "source_identity_set_id"
+    if member_type == COORDINATE_DECLARATION_SET_MEMBER_TYPE:
+        return "coordinate_declaration_set_id"
+    if member_type == FEATURE_DECLARATION_SET_MEMBER_TYPE:
+        return "feature_declaration_set_id"
     return "assertion_id"
 
 
@@ -402,6 +436,16 @@ def _relationship_classification(profile: dict[str, Any]) -> str:
     if scope == "metadata" or scope.endswith("metadata_membership"):
         return RELATIONSHIP_CLASSIFICATION_METADATA
     return RELATIONSHIP_CLASSIFICATION_IMMEDIATE
+
+
+def _grouping_basis_component_type(source_table: str) -> str:
+    if source_table == "assertion_record_source_identity_sets":
+        return "source_identity_set_field_value"
+    if source_table == "assertion_record_coordinate_declaration_sets":
+        return "coordinate_declaration_set_field_value"
+    if source_table == "assertion_record_feature_declaration_sets":
+        return "feature_declaration_set_field_value"
+    return "assertion_field_value"
 
 
 def _make_grouping_basis_components(
@@ -416,16 +460,22 @@ def _make_grouping_basis_components(
     components: list[TopologyBasisComponentRow] = []
     for key in grouping_keys:
         value = normalize_identity_part(representative_row.get(key))
-        basis_component_type = (
-            "source_identity_set_field_value"
-            if source_table == "assertion_record_source_identity_sets"
-            else "assertion_field_value"
-        )
+        basis_component_type = _grouping_basis_component_type(source_table)
         basis_component_role = "grouping_key"
         basis_component_value = f"{key}={value}"
         basis_component_reference = grouping_key
         basis_component_namespace = (
-            value if key in {"source_namespace", "participant_source_namespace"} else ""
+            value
+            if key in {
+                "source_namespace",
+                "participant_source_namespace",
+                "variant_source_namespace",
+                "feature_namespace",
+                "reference_genome_build",
+                "annotation_source",
+                "annotation_assembly",
+            }
+            else ""
         )
         components.append(
             TopologyBasisComponentRow(
@@ -488,9 +538,10 @@ def _make_member_rows(
             row.get("corpus_generation_id") or input_corpus_generation_id
         )
         is_source_identity_set_member = member_type == SOURCE_IDENTITY_SET_MEMBER_TYPE
+        is_declaration_set_member = member_type in DECLARATION_SET_MEMBER_TYPES
         source_assertion_registration_id = (
             str(row.get("source_assertion_registration_id") or summary.get("source_assertion_registration_id") or "")
-            if is_source_identity_set_member
+            if is_source_identity_set_member or is_declaration_set_member
             else ""
         )
         identity_kind = (
@@ -528,6 +579,7 @@ def _make_member_rows(
             if is_source_identity_set_member
             else ""
         )
+        declaration = _declaration_member_fields(row, member_type)
         members.append(
             TopologyRelationshipMemberRow(
                 topology_relationship_id=topology_relationship_id,
@@ -554,10 +606,77 @@ def _make_member_rows(
                 lossiness_status=lossiness_status,
                 resolution_status=resolution_status,
                 source_identity_set_status=source_identity_set_status,
+                declaration_set_type=declaration["declaration_set_type"],
+                declaration_set_id=declaration["declaration_set_id"],
+                declaration_table_reference=declaration["declaration_table_reference"],
+                declaration_filter=declaration["declaration_filter"],
+                declaration_count=declaration["declaration_count"],
+                declaration_kind=declaration["declaration_kind"],
+                declaration_namespace=declaration["declaration_namespace"],
+                declaration_relationship_type=declaration["declaration_relationship_type"],
+                declaration_reference_genome_build=declaration["declaration_reference_genome_build"],
+                declaration_source_artifact_path=declaration["declaration_source_artifact_path"],
+                declaration_lossiness_status=declaration["declaration_lossiness_status"],
+                declaration_resolution_status=declaration["declaration_resolution_status"],
+                declaration_set_status=declaration["declaration_set_status"],
+                declaration_expansion_status=declaration["declaration_expansion_status"],
                 validation_status=VALIDATION_STATUS_PASSED,
             )
         )
     return tuple(members)
+
+
+def _declaration_member_fields(row: dict[str, str], member_type: str) -> dict[str, str]:
+    if member_type == COORDINATE_DECLARATION_SET_MEMBER_TYPE:
+        return {
+            "declaration_set_type": "coordinate",
+            "declaration_set_id": str(row.get("coordinate_declaration_set_id", "")),
+            "declaration_table_reference": str(row.get("coordinate_declaration_table_reference", "")),
+            "declaration_filter": str(row.get("coordinate_declaration_filter", "")),
+            "declaration_count": str(row.get("coordinate_declaration_count", "")),
+            "declaration_kind": "genomic_coordinate",
+            "declaration_namespace": str(row.get("variant_source_namespace", "")),
+            "declaration_relationship_type": "has_coordinate_declaration",
+            "declaration_reference_genome_build": str(row.get("reference_genome_build", "")),
+            "declaration_source_artifact_path": str(row.get("source_artifact_path", "")),
+            "declaration_lossiness_status": str(row.get("lossiness_status", "lossless_by_reference")),
+            "declaration_resolution_status": str(row.get("resolution_status", "resolved")),
+            "declaration_set_status": str(row.get("coordinate_declaration_set_status", "")),
+            "declaration_expansion_status": "available_by_declaration_set_reference",
+        }
+    if member_type == FEATURE_DECLARATION_SET_MEMBER_TYPE:
+        return {
+            "declaration_set_type": "feature",
+            "declaration_set_id": str(row.get("feature_declaration_set_id", "")),
+            "declaration_table_reference": str(row.get("feature_declaration_table_reference", "")),
+            "declaration_filter": str(row.get("feature_declaration_filter", "")),
+            "declaration_count": str(row.get("feature_declaration_count", "")),
+            "declaration_kind": str(row.get("feature_kind", "")),
+            "declaration_namespace": str(row.get("feature_namespace", "")),
+            "declaration_relationship_type": str(row.get("relationship_type", "")),
+            "declaration_reference_genome_build": str(row.get("reference_genome_build", "")),
+            "declaration_source_artifact_path": str(row.get("source_artifact_path", "")),
+            "declaration_lossiness_status": str(row.get("lossiness_status", "lossless_by_reference")),
+            "declaration_resolution_status": str(row.get("resolution_status", "resolved")),
+            "declaration_set_status": str(row.get("feature_declaration_set_status", "")),
+            "declaration_expansion_status": "available_by_declaration_set_reference",
+        }
+    return {
+        "declaration_set_type": "",
+        "declaration_set_id": "",
+        "declaration_table_reference": "",
+        "declaration_filter": "",
+        "declaration_count": "",
+        "declaration_kind": "",
+        "declaration_namespace": "",
+        "declaration_relationship_type": "",
+        "declaration_reference_genome_build": "",
+        "declaration_source_artifact_path": "",
+        "declaration_lossiness_status": "",
+        "declaration_resolution_status": "",
+        "declaration_set_status": "",
+        "declaration_expansion_status": "",
+    }
 
 
 def _make_source_identity_set_basis_components(
@@ -617,6 +736,58 @@ def _make_source_identity_set_basis_components(
         )
     return tuple(components)
 
+
+
+def _make_declaration_set_basis_components(
+    *,
+    topology_relationship_id: str,
+    rows: Iterable[dict[str, str]],
+    member_type: str,
+    input_corpus_generation_id: str,
+) -> tuple[TopologyBasisComponentRow, ...]:
+    if member_type not in DECLARATION_SET_MEMBER_TYPES:
+        return tuple()
+
+    components: list[TopologyBasisComponentRow] = []
+    basis_component_type = (
+        "coordinate_declaration_set_reference"
+        if member_type == COORDINATE_DECLARATION_SET_MEMBER_TYPE
+        else "feature_declaration_set_reference"
+    )
+    for row in rows:
+        declaration = _declaration_member_fields(row, member_type)
+        declaration_set_id = declaration["declaration_set_id"]
+        source_assertion_id = str(row.get("assertion_id", ""))
+        registration_unit_id = str(row.get("registration_unit_id", ""))
+        source_corpus_generation_id = str(row.get("corpus_generation_id") or input_corpus_generation_id)
+        components.append(
+            TopologyBasisComponentRow(
+                topology_relationship_id=topology_relationship_id,
+                basis_component_id=make_topology_basis_component_id(
+                    topology_relationship_id=topology_relationship_id,
+                    basis_component_type=basis_component_type,
+                    basis_component_role="grouping_member",
+                    basis_component_reference=declaration_set_id,
+                    basis_component_namespace=declaration["declaration_namespace"],
+                    source_assertion_id=source_assertion_id,
+                ),
+                basis_component_type=basis_component_type,
+                basis_component_role="grouping_member",
+                basis_component_value=declaration["declaration_count"],
+                basis_component_reference=declaration_set_id,
+                basis_component_namespace=declaration["declaration_namespace"],
+                source_assertion_id=source_assertion_id,
+                source_identity_set_id="",
+                source_registration_unit_id=registration_unit_id,
+                source_corpus_generation_id=source_corpus_generation_id,
+                resolution_status=declaration["declaration_resolution_status"] or "resolved",
+                ambiguity_status="not_applicable",
+                conflict_status="not_applicable",
+                lossiness_status=declaration["declaration_lossiness_status"] or "lossless_by_reference",
+                validation_status=VALIDATION_STATUS_PASSED,
+            )
+        )
+    return tuple(components)
 
 def _source_identity_summary_by_set(
     rows: Iterable[dict[str, str]],
