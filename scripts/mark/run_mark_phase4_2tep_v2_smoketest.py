@@ -625,12 +625,144 @@ def write_markdown_report(path: Path, *, summary: dict[str, Any], checks: list[d
 
 
 def make_retrieval_bundle(smoke_root: Path, *, desktop_root: Path) -> Path:
+    """Create a lightweight receipts-only retrieval bundle.
+
+    The smoke output root contains real MARK-scale Phase 3 SQLite files and
+    row-scale declaration substrate. Those files are intentionally left on
+    MARK. The desktop retrieval bundle is restricted to compact reports,
+    summaries, manifests, validation receipts, Assertion Record handle files,
+    Evidence Topology handle files, and a full file-size inventory.
+    """
+
     desktop_root.mkdir(parents=True, exist_ok=True)
-    bundle_path = desktop_root / f"{SMOKE_ID}.tgz"
+    receipt_root = desktop_root / f"{SMOKE_ID}_receipts"
+    bundle_path = desktop_root / f"{SMOKE_ID}_receipts.tgz"
+
+    if receipt_root.exists():
+        shutil.rmtree(receipt_root)
     if bundle_path.exists():
         bundle_path.unlink()
+    receipt_root.mkdir(parents=True, exist_ok=True)
+
+    exact_receipt_names = {
+        "smoke_summary.json",
+        "smoke_report.md",
+        "smoke_validation_checks.tsv",
+        "smoke_phase3_registration_summary.tsv",
+        "smoke_phase4_3_assertion_record_summary.tsv",
+        "smoke_phase4_4_topology_summary.json",
+        "smoke_console_log.txt",
+        "generated_topology_policy.json",
+        "downstream_assertion_record_input_manifest.tsv",
+        "assertion_record_index.tsv",
+        "assertion_record_source_identity_sets.tsv",
+        "assertion_record_source_identity_summary.tsv",
+        "assertion_record_coordinate_declaration_sets.tsv",
+        "assertion_record_feature_declaration_sets.tsv",
+        "assertion_record_validation_report.tsv",
+        "assertion_record_validation_report.json",
+        "topology_relationships.tsv",
+        "topology_relationship_members.tsv",
+        "topology_basis_components.tsv",
+        "topology_source_identity_expansion_index.tsv",
+        "topology_declaration_set_expansion_index.tsv",
+        "topology_namespace_mediation.tsv",
+        "topology_validation_report.tsv",
+        "topology_validation_report.json",
+        "topology_build_report.md",
+        "topology_summary.tsv",
+    }
+    text_suffixes = {".md", ".json", ".txt"}
+    excluded_suffixes = {".sqlite", ".sqlite3", ".db", ".db-shm", ".db-wal", ".sqlite-shm", ".sqlite-wal"}
+    max_receipt_file_bytes = 50 * 1024 * 1024
+
+    file_inventory_rows: list[dict[str, object]] = []
+    copied_rows: list[dict[str, object]] = []
+    skipped_rows: list[dict[str, object]] = []
+
+    def should_include(source: Path) -> tuple[bool, str]:
+        name = source.name
+        suffix = source.suffix.lower()
+        if suffix in excluded_suffixes:
+            return False, "excluded_database_or_sqlite_sidecar"
+        if name in exact_receipt_names:
+            return True, "exact_receipt_name"
+        if suffix in text_suffixes:
+            return True, "text_receipt_suffix"
+        if suffix == ".tsv" and any(token in name for token in ("summary", "report", "inventory", "validation", "manifest")):
+            return True, "compact_receipt_pattern"
+        return False, "not_receipt_pattern"
+
+    for source in sorted(p for p in smoke_root.rglob("*") if p.is_file()):
+        relative = source.relative_to(smoke_root)
+        size = source.stat().st_size
+        file_inventory_rows.append({
+            "size_bytes": size,
+            "size_mib": f"{size / 1024 / 1024:.3f}",
+            "relative_path": str(relative),
+        })
+
+        include, reason = should_include(source)
+        if not include:
+            skipped_rows.append({
+                "relative_path": str(relative),
+                "size_bytes": size,
+                "skip_reason": reason,
+            })
+            continue
+        if size > max_receipt_file_bytes:
+            skipped_rows.append({
+                "relative_path": str(relative),
+                "size_bytes": size,
+                "skip_reason": "receipt_file_size_guard",
+            })
+            continue
+
+        destination = receipt_root / smoke_root.name / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        copied_rows.append({
+            "relative_path": str(relative),
+            "size_bytes": size,
+            "include_reason": reason,
+        })
+
+    write_tsv(
+        receipt_root / "full_smoke_file_size_inventory.tsv",
+        sorted(file_inventory_rows, key=lambda row: int(row["size_bytes"]), reverse=True),
+        ["size_bytes", "size_mib", "relative_path"],
+    )
+    write_tsv(
+        receipt_root / "receipt_copied_files.tsv",
+        copied_rows,
+        ["relative_path", "size_bytes", "include_reason"],
+    )
+    write_tsv(
+        receipt_root / "receipt_skipped_files.tsv",
+        skipped_rows,
+        ["relative_path", "size_bytes", "skip_reason"],
+    )
+    (receipt_root / "full_smoke_file_list.txt").write_text(
+        "\n".join(row["relative_path"] for row in file_inventory_rows) + "\n",
+        encoding="utf-8",
+    )
+    write_json(
+        receipt_root / "receipt_bundle_manifest.json",
+        {
+            "smoke_id": SMOKE_ID,
+            "source_smoke_root": str(smoke_root),
+            "receipt_root": str(receipt_root),
+            "bundle_path": str(bundle_path),
+            "copied_file_count": len(copied_rows),
+            "skipped_file_count": len(skipped_rows),
+            "max_receipt_file_bytes": max_receipt_file_bytes,
+            "database_files_bundled": False,
+            "row_scale_payload_files_bundled": False,
+        },
+    )
+
     with tarfile.open(bundle_path, "w:gz") as tar:
-        tar.add(smoke_root, arcname=smoke_root.name)
+        tar.add(receipt_root, arcname=receipt_root.name)
     return bundle_path
 
 
@@ -666,7 +798,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--desktop-root",
         type=Path,
         default=Path.home() / "Desktop",
-        help="Directory where the retrieval TGZ should be written.",
+        help="Directory where the lightweight receipts-only retrieval TGZ should be written.",
     )
     parser.add_argument(
         "--overwrite",
@@ -676,7 +808,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--no-bundle",
         action="store_true",
-        help="Do not write a retrieval TGZ to the desktop root.",
+        help="Do not write a lightweight receipts-only retrieval TGZ to the desktop root.",
     )
     return parser.parse_args(argv)
 
@@ -812,7 +944,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     log(f"summary_json:  {smoke_root / 'smoke_summary.json'}")
     log(f"report_md:     {smoke_root / 'smoke_report.md'}")
     if bundle_path:
-        log(f"retrieval_tgz: {bundle_path}")
+        log(f"receipt_retrieval_tgz: {bundle_path}")
 
     if smoke_status != "passed":
         return 1
