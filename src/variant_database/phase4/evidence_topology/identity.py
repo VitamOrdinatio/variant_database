@@ -124,14 +124,16 @@ def make_topology_member_id(
 ) -> str:
     """Return a deterministic topology relationship member identifier."""
 
-    return f"{prefix}{stable_digest([
+    payload_parts = [
         topology_relationship_id,
         member_type,
         member_role,
         member_reference,
         source_assertion_id,
         source_identity_set_id,
-    ], digest_length=digest_length)}"
+    ]
+    digest = stable_digest(payload_parts, digest_length=digest_length)
+    return f"{prefix}{digest}"
 
 
 def make_topology_basis_component_id(
@@ -149,7 +151,7 @@ def make_topology_basis_component_id(
 ) -> str:
     """Return a deterministic topology basis component identifier."""
 
-    return f"{prefix}{stable_digest([
+    payload_parts = [
         topology_relationship_id,
         basis_component_type,
         basis_component_role,
@@ -158,7 +160,9 @@ def make_topology_basis_component_id(
         basis_component_namespace,
         source_assertion_id,
         source_identity_set_id,
-    ], digest_length=digest_length)}"
+    ]
+    digest = stable_digest(payload_parts, digest_length=digest_length)
+    return f"{prefix}{digest}"
 
 
 def make_topology_row_id(
