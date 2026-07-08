@@ -39,14 +39,14 @@ The central design principle is simple: **scientific software claims need receip
 
 ## Evidence Products in Scope
 
-VDB currently focuses on two producer families from companion repositories in this portfolio ecosystem.
+VDB currently focuses on two upstream evidence producers from the surrounding repository ecosystem: [VAP](https://github.com/VitamOrdinatio/variant_annotation_pipeline), a variant-evidence pipeline, and [GSC](https://github.com/VitamOrdinatio/gene_set_consensus), a phenotype-gene semantic prior system.
 
 A **TEP** (*Transportable Evidence Product*) is a structured evidence package emitted by an upstream pipeline. It may include machine-readable payloads, source artifact manifests, validation reports, provenance metadata, and producer-owned evidence roles.
 
 | Producer | Evidence shape | VDB role |
 | --- | --- | --- |
-| **VAP** | Sample/run-specific variant evidence lifecycles, including observation, normalization, coding and noncoding interpretation, prioritization, validation, and run context | Preserve variant-derived evidence, source identities, reference-context coordinates, feature declarations, and lifecycle provenance |
-| **GSC** | Phenotype-scoped semantic priors for phenotype-gene relationships | Preserve semantic-prior evidence, gene namespace, phenotype scope, source attribution, scoring context, and provenance |
+| **[VAP](https://github.com/VitamOrdinatio/variant_annotation_pipeline)** | Sample/run-specific variant evidence lifecycles, including observation, normalization, coding and noncoding interpretation, prioritization, validation, and run context | Preserve variant-derived evidence, source identities, reference-context coordinates, feature declarations, and lifecycle provenance |
+| **[GSC](https://github.com/VitamOrdinatio/gene_set_consensus)** | Phenotype-scoped semantic priors for phenotype-gene relationships | Preserve semantic-prior evidence, gene namespace, phenotype scope, source attribution, scoring context, and provenance |
 
 These products are intentionally different. VDB does not force them into a single flat schema. It preserves each producer's authority boundaries while creating durable substrates for cross-evidence organization.
 
