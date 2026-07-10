@@ -30,7 +30,7 @@ See also:
 - [Truth Layer Philosophy](./truth_layer_philosophy.md)
 - [Scientific Evidence Preservation Principles](./scientific_evidence_preservation_principles.md)
 - [Evidence Persistence Philosophy](./evidence_persistence_philosophy.md)
-- [Epistemic Boundaries](./epistemic_boundaries)
+- [Epistemic Boundaries](./epistemic_boundaries.md)
 - [Knowledge Flow Philosophy](./knowledge_flow_philosophy.md)
 
 ---
