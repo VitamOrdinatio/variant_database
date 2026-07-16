@@ -7,7 +7,7 @@
 
 ## 1. Purpose
 
-VDB uses heterogeneous Transportable Evidence Products (TEPs) to validate a
+VDB uses heterogeneous Transitional Evidence Products (TEPs) to validate a
 preservation-first genomic evidence architecture. The current stress-test proof
 corpus includes:
 
@@ -420,3 +420,53 @@ retain manifests, checksums, validation summaries, topology summaries, and cold-
 
 This preserves the scientific proof while protecting VDB development from
 unnecessary long-term storage burden.
+
+```text
+The preferred RDGP-facing exemplar corpus excludes HG002. Routine projection-layer
+and RDGP-oriented development should use either the 5TEP core corpus or, when
+available, the 14TEP disease/prior corpus. HG002-containing 6TEP outputs should
+be interpreted as WGS stress-test outputs, not disease-cohort topology,
+convergence, projection, or prioritization evidence.
+```
+
+## Appendix A: Information Flow
+
+```text
+epilepsy patient WES
+    → TEP-VAP
+        → VDB
+            → TEP-VDB
+                → RDGP
+                    → TEP-RDGP
+                        → optionally RDGP-informed TEP-VDB
+```
+
+## Appendix B: Three VDB Corpus Strategies
+
+1. 6TEP WGS stress corpus
+
+```text
+   Purpose: prove VDB can handle one WGS-scale VAP TEP plus WES/GSC heterogeneity.
+   Includes: HG002 WGS + q1/median/q3 epilepsy WES + 2 GSC TEPs.
+   Use for: registration, storage, assertion records, topology throughput,
+            identity preservation, receipt capture.
+```
+
+2. 5TEP core development corpus
+
+```text
+   Purpose: routine non-HG002 VDB development without storage bloat or
+            nondisease topology contamination.
+   Includes: q1/median/q3 epilepsy WES + GSC epilepsy + GSC mitochondrial disease.
+   Use for: evidence topology framework construction, TEP-VDB development,
+            projection-layer development, early RDGP-facing information flow.
+```
+
+3. 14TEP disease/prior exemplar corpus
+
+```text
+   Purpose: best public-facing disease-oriented demonstration.
+   Includes: 12 epilepsy TEP-VAPs + 2 TEP-GSCs.
+   Use for: weak exploratory RDGP statistics, MPLC/CFBS demonstrations,
+            full VAP → VDB → TEP-VDB → RDGP → TEP-RDGP flow.
+```

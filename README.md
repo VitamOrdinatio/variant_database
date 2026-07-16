@@ -41,7 +41,7 @@ The central design principle is simple: **scientific software claims need receip
 
 VDB currently focuses on two upstream evidence producers from the surrounding repository ecosystem: [VAP](https://github.com/VitamOrdinatio/variant_annotation_pipeline), a variant-evidence pipeline, and [GSC](https://github.com/VitamOrdinatio/gene_set_consensus), a phenotype-gene semantic prior system.
 
-A **TEP** (*Transportable Evidence Product*) is a structured evidence package emitted by an upstream pipeline. It may include machine-readable payloads, source artifact manifests, validation reports, provenance metadata, and producer-owned evidence roles.
+A **TEP** (*Transitional Evidence Product*) is a structured evidence package emitted by an upstream pipeline. It may include machine-readable payloads, source artifact manifests, validation reports, provenance metadata, and producer-owned evidence roles.
 
 | Producer | Evidence shape | VDB role |
 | --- | --- | --- |
