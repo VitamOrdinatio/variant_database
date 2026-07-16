@@ -1,14 +1,39 @@
 # Matched Prior-Locus Contrast (MPLC)
 
-> Status: SAGE-VDB scientific method design.
+> Status: SAGE-VDB projection-surface design draft.
+>
+> Intended path:
+>
+> `docs/design/projection_surfaces/mplc_matched_prior_locus_contrast.md`
+>
+> Parent architecture:
+>
+> `docs/architecture/tep_vdb_architecture.md`
+>
+> Mathematical parent:
+>
+> `docs/design/mathematical_foundations/evidence_topology_projection_geometry_formalism.md`
+>
+> Projection family:
+>
+> TEP-VDB unknown-tomorrow diagnostic discovery support surface.
+>
+> Primary consumer:
+>
+> RDGP and future downstream reasoning systems.
+>
 > This document defines the biological, mathematical, and evidentiary constraints
 > for a VDB-emitted TEP-VDB projection surface. It is not a final implementation
 > schema. DEX-VDB should derive implementation schemas, validators, and emission
 > contracts from this design.
 
-The Matched Prior-Locus Contrast (MPLC) method is a way for a priori evidence emanating from the Gene Set Consensus (GSC) repository to interface with patient variant information emanating from the Variant Annotation Pipeline (VAP) repository so that reasoning can be performed by the Rare Disease Gene Prioritization (RDGP) repository.
+The Matched Prior-Locus Contrast (MPLC) surface is a prior-informed TEP-VDB
+projection surface that compares burden near phenotype-scoped prior loci against
+matched non-prior background loci using VAP-derived sample-specific coordinate
+observations and GSC-derived prior provenance preserved through VDB.
 
-For our trial run, let's consider epilepsy manifestations in the clinical setting.
+For the planned first demonstration profile, the disease context is epilepsy.
+The method design, however, should remain corpus- and phenotype-scope-general.
 
 The Matched Prior-Locus Contrast (MPLC) method can be summarized in plain-English as:
 
@@ -65,6 +90,172 @@ surfaces inside the same TEP-VDB emission, not as separate ingestion modes.
 
 ---
 
+# Projection-Surface Alignment Addendum
+
+MPLC is a TEP-VDB prior-informed discovery projection surface.
+
+It belongs to the unknown-tomorrow diagnostic discovery family in the TEP-VDB
+architecture, with strong dependency on phenotype-scoped prior evidence from
+GSC.
+
+Its role is to expose matched prior-locus burden, recurrence, background-null,
+opportunity, and traceability substrates so RDGP can reason over whether
+phenotype-scoped prior loci show burden excess relative to matched non-prior
+loci.
+
+The core doctrine is:
+
+```text
+MPLC does not prove disease association.
+
+MPLC exposes exploratory, opportunity-aware burden and recurrence contrast
+between phenotype-scoped prior loci and matched non-prior background loci under
+declared target-locus, background-matching, window, variant-filter, null-model,
+and opportunity policies.
+```
+
+MPLC is:
+
+```text
+prior-informed
+phenotype-scope aware
+matched-background based
+opportunity-aware
+locus/window based
+null-model declared
+traceable to sample-specific variant observations
+traceable to GSC prior sources
+exploratory
+RDGP-facing
+```
+
+MPLC is not:
+
+```text
+a formal disease-association test
+a diagnostic result
+a causal-gene classifier
+a pathogenicity adjudication
+a proof that GSC-prior loci are disease-causing
+a proof that background loci are non-disease loci
+a replacement for RDGP reasoning
+```
+
+The safe boundary is:
+
+```text
+MPLC exposes matched prior-locus burden contrast.
+RDGP reasons over that contrast.
+Scientists and clinicians interpret evaluated evidence.
+```
+
+---
+
+# Relationship to TEP-VDB Architecture
+
+MPLC should conform to the TEP-VDB architecture and the mathematical foundation
+for evidence topology, opportunity-aware geometry, and projection surfaces.
+
+In the TEP-VDB v1 surface family, MPLC complements:
+
+```text
+CFBS:
+    coordinate-first burden scan
+
+PAPS:
+    phenotype-prior alignment and prior provenance
+
+PGERS:
+    patient-gene / patient-locus evidence rollup
+
+OACS:
+    opportunity, absence, and callability context
+
+CUES:
+    conflict and uncertainty state
+
+EVRS:
+    exact variant recurrence
+
+RFPS:
+    regulatory / feature projection
+
+RMCS:
+    method, dependency, and currency state
+```
+
+MPLC should remain distinct from these sibling surfaces. It may reference or
+consume their outputs, but it should not absorb their responsibilities.
+
+---
+
+# Relationship to Mathematical Formalism
+
+Under the mathematical foundation, MPLC is a specialization of an
+opportunity-aware prior-locus contrast surface.
+
+```text
+θ_MPLC:
+    source objects =
+        sample-specific coordinate / variant observations,
+        phenotype-scoped GSC prior records,
+        target locus definitions,
+        matched background locus definitions,
+        opportunity states,
+        variant filter partitions,
+        null-model receipts,
+        matching diagnostics
+
+    target objects =
+        phenotype-scoped prior loci and matched non-prior background loci
+
+    membership =
+        a sample-specific variant observation belongs to a target or background
+        locus if its coordinate satisfies the declared locus-window,
+        variant-filter, opportunity, and membership policy
+
+    opportunity =
+        callable / assay-visible / quality-supported coordinate territory used
+        as denominator context for target and background burden comparison
+
+    geometry =
+        target burden, background burden, burden excess, patient recurrence,
+        exploratory empirical-null position, and matching diagnostics
+
+    surface =
+        matched prior-locus contrast substrate for RDGP
+```
+
+Compact form:
+
+```text
+S_MPLC = F_MPLC(T_C, M_MPLC, Ω_MPLC, P_MPLC)
+```
+
+Where:
+
+```text
+T_C = evidence topology
+
+M_MPLC = membership operator from sample-specific coordinate observations
+         to target and matched background loci
+
+Ω_MPLC = opportunity space for locus-window burden comparison
+
+P_MPLC = target-locus, background-matching, window, variant-filter,
+         counting, null-model, and labeling policy
+```
+
+Traceability rule:
+
+```text
+Every MPLC burden count, recurrence count, target/background assignment,
+matched background draw, empirical-null summary, and result label must trace to
+contributing sample-specific variant observations, GSC prior records, matching
+policy, opportunity records, projection policies, and source assertion records.
+```
+
+---
 
 # 1. What MPLC is trying to test
 
@@ -82,10 +273,15 @@ Background loci:
 For each group, RDGP asks:
 
 ```text
-Across the 12 epilepsy patients,
+Across the declared case/sample corpus,
 how much rare coding / noncoding / regulatory / splice-proximal burden
 appears near these loci?
 ```
+
+For the planned first epilepsy demonstration profile, the declared case/sample
+corpus is expected to contain 12 epilepsy TEP-VAPs. Generic MPLC schemas should
+not hard-code this sample count.
+
 
 The scientific question is not:
 
@@ -110,10 +306,14 @@ The null hypothesis is the “nothing special is happening here” model.
 For MPLC, the null should be:
 
 ```text
-After accounting for genomic opportunity, GSC-prior loci do not carry
-more rare variant burden than matched non-prior background loci
-in the same 12 epilepsy patients.
+After accounting for genomic opportunity, phenotype-scoped prior loci do not
+carry more rare variant burden than matched non-prior background loci in the
+same declared case/sample corpus.
 ```
+
+For the planned first epilepsy demonstration profile, those prior loci may be
+GSC-derived epilepsy or mitochondrial-disease prior loci, analyzed under explicit
+phenotype-scope policy.
 
 Or even simpler:
 
@@ -220,6 +420,48 @@ projection_membership_id:
 Burden counts should operate over sample-specific coordinate observations, not
 over duplicated annotation rows. Multiple transcript, feature, or gene-window
 mappings should create multiple memberships, not multiple observed variants.
+
+## Sample, Patient, and Recurrence Unit Boundary
+
+MPLC may use `sample_id` as the practical v1 row anchor, but recurrence claims
+must declare the recurrence unit.
+
+Recommended recurrence units include:
+
+```text
+sample
+patient
+subject
+family
+unknown
+not_evaluated
+```
+
+For the planned first epilepsy WES demonstration, `sample` and `patient` may be
+one-to-one under the source corpus. Generic MPLC schemas should not assume that
+relationship silently.
+
+When patient or subject identity is available, MPLC should preserve:
+
+```text
+patient_id when available
+subject_id when available
+sample_id
+sample_patient_link_id when available
+sample_patient_link_status
+recurrence_unit_policy_id
+recurrence_unit
+```
+
+Recommended `sample_patient_link_status` values include:
+
+```text
+same_subject_declared
+same_subject_inferred_by_source
+sample_patient_link_unavailable
+sample_patient_link_ambiguous
+sample_patient_link_not_evaluated
+```
 
 ---
 
@@ -539,10 +781,16 @@ Here is the clean scientific version:
 ```text
 MPLC null hypothesis:
 
-Conditional on callable opportunity, locus-window structure, and matching
-features, GSC-prior target loci are exchangeable with matched non-prior
-background loci with respect to rare variant burden in the 12 epilepsy patients.
+Conditional on callable opportunity, locus-window structure, phenotype-scope
+policy, and matching features, phenotype-scoped prior target loci are
+exchangeable with matched non-prior background loci with respect to rare variant
+burden in the declared case/sample corpus.
 ```
+
+For the planned first epilepsy demonstration profile, the declared corpus is
+expected to be the 12-sample epilepsy WES cohort. The null model should
+nevertheless be defined over the declared corpus and policy, not over a
+hard-coded sample count.
 
 Freshman biology translation:
 
@@ -603,6 +851,80 @@ TEP-VDB. MPLC should support separate phenotype-scoped prior surfaces and should
 not silently combine them into one disease-prior target set unless an explicit
 projection policy declares that combined view.
 
+# 13A. MPLC Projection Policy
+
+MPLC requires an explicit projection policy.
+
+Recommended policy fields:
+
+```text
+mplc_projection_policy_id
+mplc_projection_policy_version
+source_corpus_generation_id
+target_locus_policy_id
+target_prior_scope_policy_id
+paps_reference_policy_id
+background_pool_policy_id
+background_matching_policy_id
+window_policy_id
+variant_filter_policy_id
+variant_class_partition_policy_id
+counting_policy_id
+recurrence_unit_policy_id
+opportunity_model_id
+oacs_reference_policy_id
+null_model_policy_id
+matching_diagnostics_policy_id
+patient_dominance_policy_id
+artifact_warning_policy_id
+cues_reference_policy_id
+rmcs_reference_policy_id
+traceability_policy_id
+anti_overclaim_policy_id
+```
+
+The MPLC projection policy must declare:
+
+```text
+which phenotype-scoped prior loci are eligible as targets
+
+which prior source and phenotype scope are being tested
+
+whether epilepsy, mitochondrial, broad, narrow, or combined prior scopes are
+analyzed separately or together
+
+which loci are eligible for the matched background pool
+
+how background loci are excluded from target/prior sets
+
+which matching features are required
+
+which coordinate window policy is used
+
+which samples or patients are included
+
+which variant classes and filters are included
+
+which opportunity denominator is used
+
+which counting unit is used
+
+which recurrence unit is used
+
+which null model is used
+
+which statistic ranks or summarizes the contrast
+
+which warnings block, limit, or qualify MPLC consumption
+
+which claims are prohibited
+```
+
+Silent filtering, silent prior-scope combination, silent denominator
+substitution, silent recurrence-unit changes, and silent background-pool changes
+are prohibited.
+
+
 ---
 
 # 14. What TEP-VDB should emit for MPLC
@@ -634,23 +956,51 @@ tep_vdb_analysis_scope:
     emission_policy_id
 
 mplc_analysis_scope:
+    mplc_surface_id
+    mplc_surface_generation_id
     method_id
     method_version
+    mplc_projection_policy_id
     target_locus_policy_id
+    target_prior_scope_policy_id
+    paps_surface_ref when available
+    background_pool_policy_id
     background_matching_policy_id
     window_policy_id
     variant_filter_policy_id
+    variant_class_partition_policy_id
+    counting_policy_id
+    recurrence_unit_policy_id
     opportunity_model_id
+    oacs_surface_ref
     null_model_id
+    null_model_policy_id
+    matching_diagnostics_policy_id
+    cues_surface_ref when applicable
+    rmcs_surface_ref when applicable
     number_of_null_draws
     random_seed
+    anti_overclaim_policy_id
 
 target_locus_set:
+    target_locus_membership_id
+    mplc_surface_id
+    mplc_surface_generation_id
     target_set_id
     target_set_policy_id
+    target_prior_scope_policy_id
     locus_id
+    projected_target_id
+    target_type
     phenotype_scope
+    phenotype_scope_namespace
+    phenotype_scope_alignment_status when available
+    paps_surface_ref when available
+    paps_prior_refs when available
+    gsc_tep_id
+    gsc_tep_version
     gsc_release_id
+    gsc_prior_record_id when available
     semantic_prior_id
     gsc_prior_source
     gsc_prior_score
@@ -660,30 +1010,50 @@ target_locus_set:
     gene_id
     gene_symbol
     gene_biotype
+    target_identity_bridge_id
+    target_identity_bridge_status
+    target_identity_bridge_lossiness
     chromosome
     window_start
     window_end
     window_policy_id
     source_gsc_trace
+    traceability_refs
+    anti_overclaim_label
 
 background_locus_pool:
+    background_locus_id
     background_pool_policy_id
+    mplc_surface_id
+    mplc_surface_generation_id
     locus_id
+    projected_target_id when applicable
     background_gene_namespace
     background_gene_id
     background_gene_symbol
+    target_identity_bridge_status
+    target_identity_bridge_lossiness
     chromosome
     window_start
     window_end
+    window_policy_id
     matching_feature_values
     eligibility_status
     matching_eligible: true/false
     excluded_from_target_set: true/false
-    excluded_due_to_gsc_prior: true/false
+    excluded_due_to_prior_under_policy: true/false
     excluded_due_to_overlap_with_target_window: true/false
+    excluded_due_to_opportunity_limitation: true/false
     exclusion_reason_if_any
+    background_locus_not_non_disease_label
+    oacs_surface_ref when applicable
+    traceability_refs
+    anti_overclaim_label
 
 matched_locus_sets:
+    matched_locus_membership_id
+    mplc_surface_id
+    mplc_surface_generation_id
     draw_id
     target_locus_id
     matched_background_locus_id
@@ -692,12 +1062,43 @@ matched_locus_sets:
     matching_distance
     matching_features_used
     matching_feature_summary
+    matching_quality_label
+    matching_limitation_label
     random_seed
-    matching_policy_id
+    background_matching_policy_id
+    matching_diagnostics_ref
+    traceability_refs
+    anti_overclaim_label
+
+matching_diagnostics:
+    matching_diagnostics_id
+    mplc_surface_id
+    mplc_surface_generation_id
+    background_matching_policy_id
+    target_set_id
+    background_pool_policy_id
+    matching_feature_name
+    target_distribution_summary
+    matched_background_distribution_summary
+    imbalance_metric
+    imbalance_label
+    matching_pass_status
+    matching_limitation_label
+    cues_event_refs when applicable
+    traceability_refs
 
 sample_locus_burden_matrix:
+    mplc_sample_locus_row_id
+    mplc_surface_id
+    mplc_surface_generation_id
     sample_id
+    patient_id when available
+    subject_id when available
+    sample_patient_link_status when applicable
     locus_id
+    locus_role
+    counting_policy_id
+    recurrence_unit_policy_id
     burden_count
     rare_burden_count
     ultra_rare_burden_count
@@ -708,20 +1109,62 @@ sample_locus_burden_matrix:
     burden_per_callable_base
     no_call_bases
     not_assayed_bases
+    low_confidence_bases
+    filtered_bases
+    unknown_opportunity_bases
+    oacs_surface_ref
+    traceability_refs
+    anti_overclaim_label
 
 patient_locus_hit_matrix:
+    mplc_hit_row_id
+    mplc_surface_id
+    mplc_surface_generation_id
     sample_id
+    patient_id when available
+    subject_id when available
+    sample_patient_link_status when applicable
     locus_id
+    locus_role
+    recurrence_unit
+    recurrence_unit_policy_id
     has_qualifying_variant
     qualifying_variant_count
     strongest_variant_class
     strongest_variant_handle
     hit_partition_label
+    genotype_context_summary when applicable
+    genotype_variant_relationship_state_summary when applicable
+    direct_source_biallelic_relationship_count when applicable
+    resolved_from_multiallelic_record_count when applicable
+    brokered_with_normalization_relationship_count when applicable
+    ambiguous_genotype_variant_relationship_count when applicable
+    unresolved_genotype_variant_relationship_count when applicable    
+    quality_context_summary
+    traceability_refs
+    anti_overclaim_label
 
 variant_locus_memberships:
-    variant_handle
+    mplc_locus_membership_id
+    mplc_surface_id
+    mplc_surface_generation_id
+    projection_membership_id
+    coordinate_variant_handle
+    sample_variant_observation_id
+    genotype_observation_id when applicable
+    genotype_variant_relationship_id when applicable
+    genotype_variant_relationship_state when applicable
+    relationship_derivation_policy_id when applicable
+    allele_index when applicable
+    source_alt_allele when applicable
+    relationship_ambiguity_state when applicable
+    relationship_lossiness_state when applicable
+    identity_registration_state when applicable
     sample_id
+    patient_id when available
+    subject_id when available
     locus_id
+    locus_role
     source_coordinate
     chrom
     pos
@@ -735,23 +1178,59 @@ variant_locus_memberships:
     frequency_source
     frequency_version
     frequency_status
+    variant_filter_partition
+    counting_unit
     source_vap_trace
+    source_assertion_refs
+    traceability_refs
+    anti_overclaim_label
 
 null_draw_manifest:
+    null_draw_membership_id
+    mplc_surface_id
+    mplc_surface_generation_id
     draw_id
     target_locus_id
     selected_background_locus_id
     replacement_status
     random_seed
-    matching_policy_id
+    background_matching_policy_id
+    null_model_id
+    null_model_policy_id
+    matching_distance
+    matching_quality_label
+    traceability_refs
+    anti_overclaim_label
 
 mplc_results:
+    mplc_result_id
+    mplc_surface_id
+    mplc_surface_generation_id
     statistic_name
+    statistic_scope
     observed_target_value
+    observed_background_summary
     null_mean
     null_percentile
     exploratory_empirical_p_value
+    empirical_tail_probability_scope
+    null_model_id
+    null_model_policy_id
+    target_locus_count
+    background_locus_count
+    sample_recurrence_count
+    patient_recurrence_count when patient identity is available
+    recurrence_unit
+    max_single_sample_burden_fraction
+    patient_dominance_warning
+    matching_quality_summary
+    opportunity_limitation_label
+    candidate_label
     interpretation_label
+    cues_event_refs when applicable
+    rmcs_currency_refs when applicable
+    traceability_refs
+    anti_overclaim_label
 
 validation_receipts:
     source_corpus_integrity_pass
@@ -763,8 +1242,22 @@ validation_receipts:
     anti_overclaim_pass
 ```
 
-That is enough substrate for RDGP to reason without needing to rediscover
-VAP/GSC source evidence or independently overlay producer outputs.
+Recommended `locus_role` values:
+
+```text
+target_prior_locus
+matched_background_locus
+excluded_background_candidate
+not_evaluated
+```
+
+`interpretation_label` must remain an anti-overclaim-safe label such as
+`exploratory_prior_locus_burden_contrast`. It must not encode disease
+association, pathogenicity, causality, diagnostic status, or RDGP ranking.
+
+Background loci are matched non-prior loci under the declared MPLC policy. They
+must not be described as proven nondisease loci, unaffected controls, benign
+genes, or negative biological controls.
 
 ## Suggested shared TEP-VDB layout
 
@@ -924,6 +1417,326 @@ validation warnings
 
 ---
 
+# MPLC Relationship to Sibling Projection Surfaces
+
+MPLC should interoperate with sibling TEP-VDB projection surfaces without
+collapsing into them.
+
+## Relationship to KVPS
+
+KVPS exposes known pathogenicity evidence attached to sample-specific observed
+variants.
+
+MPLC may reference KVPS when a variant contributing to a target or background
+locus has known pathogenicity or clinical-significance context.
+
+MPLC may include KVPS-derived context such as:
+
+```text
+known_pathogenicity_overlap
+known_conflicting_pathogenicity_overlap
+known_vus_or_uncertain_overlap
+kvps_surface_ref
+kvps_membership_refs
+```
+
+KVPS context must remain contribution-level context. It must not be used to
+define target loci, define background loci, select matched backgrounds, or
+convert target-locus burden into disease association.
+
+---
+
+## Relationship to GIRS
+
+GIRS exposes genotype observation structure and inheritance-readiness context.
+
+MPLC may reference GIRS for genotype-aware variant partitions or contribution
+context, such as:
+
+```text
+genotype_context_available
+heterozygous_like_contributor_count
+homozygous_alt_like_contributor_count
+no_call_or_uncertain_genotype_count
+genotype_quality_limited_count
+girs_surface_ref
+girs_membership_refs
+```
+
+MPLC must not perform inheritance reasoning. Genotype context may help RDGP
+evaluate target-locus evidence later, but MPLC itself remains a matched
+prior-locus burden and recurrence contrast surface.
+
+---
+
+## Relationship to PAPS
+
+PAPS provides phenotype-prior alignment and GSC prior provenance.
+
+MPLC should consume phenotype-scoped prior targets through PAPS-compatible prior
+context whenever available. MPLC must preserve phenotype scope and must not
+flatten epilepsy, mitochondrial, broad, narrow, stale, or mismatched priors into
+generic disease-gene labels.
+
+PAPS owns phenotype-prior provenance and alignment state. MPLC owns matched
+prior-locus burden contrast.
+
+---
+
+## Relationship to OACS
+
+OACS provides the denominator and absence-readiness context MPLC requires.
+
+MPLC should reference OACS for:
+
+```text
+target-locus opportunity
+background-locus opportunity
+callable bases
+not-callable territory
+not-assayed territory
+low-confidence territory
+filtered territory
+unknown opportunity
+negative-evidence readiness
+```
+
+MPLC must not compare target and background burden without declared opportunity
+or explicit unmodeled-opportunity state.
+
+---
+
+## Relationship to OACS/PAPS Boundary Note
+
+PAPS-derived prior scope may define MPLC target loci only through the declared
+MPLC target-locus policy. OACS-derived opportunity context defines whether
+target and background loci are comparable as burden denominators. These are
+different roles:
+
+```text
+PAPS:
+    Which phenotype-scoped prior targets are eligible?
+
+OACS:
+    Was the target/background locus observable enough for burden comparison?
+
+MPLC:
+    Does the prior target set show exploratory burden contrast relative to
+    matched background loci?
+```
+
+---
+
+## Relationship to CUES
+
+CUES should index MPLC uncertainty and limitation events.
+
+Examples include:
+
+```text
+target_background_matching_limited
+matching_feature_imbalance
+opportunity_unmodeled
+patient_dominance_detected
+phenotype_scope_mismatch
+gsc_prior_stale
+background_pool_limited
+null_model_limited
+exploratory_empirical_p_value_overread_risk
+```
+
+MPLC may carry these warning fields, but CUES owns the package-level epistemic
+event surface.
+
+---
+
+## Relationship to PGERS
+
+PGERS may summarize MPLC target-locus memberships inside patient-gene or
+patient-locus evidence rollups.
+
+MPLC should expose target-locus, background-locus, and contributing variant
+references so PGERS can include prior-locus burden context without flattening
+MPLC into a generic gene score.
+
+---
+
+## Relationship to RFPS
+
+RFPS can provide feature and regulatory context for variants contributing to
+MPLC target or background loci.
+
+MPLC may include RFPS-derived partitions such as:
+
+```text
+regulatory_feature_variant_count
+promoter_projected_variant_count
+enhancer_projected_variant_count
+splice_regulatory_variant_count
+conserved_noncoding_variant_count
+```
+
+But MPLC must not infer regulatory mechanism.
+
+---
+
+## Relationship to EVRS
+
+EVRS exposes exact allele recurrence.
+
+MPLC exposes locus-level burden and recurrence relative to matched background
+loci.
+
+An exact recurrent allele may contribute to an MPLC locus signal, but MPLC
+should not treat exact recurrence as equivalent to locus burden excess. MPLC
+should preserve EVRS references when exact recurrent variants contribute to
+target or background loci.
+
+---
+
+## Relationship to CFBS
+
+CFBS is coordinate-first. MPLC is prior-informed.
+
+MPLC may be compared narratively with CFBS, but the two surfaces answer
+different questions and use different candidate-generation policies.
+
+```text
+CFBS:
+    coordinates → burden scan → candidate intervals → post hoc biology
+
+MPLC:
+    phenotype-scoped priors → matched loci → burden contrast
+```
+
+A locus supported by both surfaces may be interesting to RDGP, but VDB must not
+convert cross-surface convergence into causality.
+
+---
+
+## Relationship to RMCS
+
+RMCS should track MPLC dependency and method currency, including:
+
+```text
+target_locus_policy_id
+background_matching_policy_id
+window_policy_id
+variant_filter_policy_id
+opportunity_model_id
+null_model_id
+gsc_release_id
+phenotype_scope_policy_id
+number_of_null_draws
+random_seed
+source_corpus_id
+surface_generation_id
+```
+
+An MPLC surface generated under a different GSC release, target policy,
+background-matching policy, source corpus, opportunity policy, null model, or
+random seed should not be compared to another MPLC surface without an RMCS
+comparability state.
+
+---
+
+## Required Anti-Overclaim Labels
+
+MPLC rows, target/background summaries, result objects, and package-level
+summaries should carry anti-overclaim labels.
+
+Recommended default label:
+
+```text
+exploratory_prior_locus_contrast_not_association
+```
+
+Additional labels may include:
+
+```text
+prior_locus_burden_not_disease_association
+matched_background_not_control_cohort
+empirical_tail_probability_not_formal_association_p_value
+gsc_prior_not_causality
+target_burden_excess_not_diagnosis
+opportunity_limited_burden_surface
+mplc_candidate_not_rdgp_priority
+mplc_result_not_genetic_diagnosis
+patient_recurrence_not_case_control_association
+background_locus_not_non_disease_control
+genotype_context_not_inheritance_evidence_by_mplc
+known_pathogenicity_overlap_not_locus_causality
+paps_prior_scope_not_target_causality
+```
+
+---
+
+## Invalid MPLC Patterns
+
+Invalid MPLC designs include:
+
+```text
+GSC-prior loci are treated as causal loci.
+
+Matched background loci are described as non-disease genes.
+
+Target and background loci are compared without opportunity accounting.
+
+Phenotype-scoped GSC priors are flattened into generic gene support.
+
+Epilepsy and mitochondrial priors are silently combined without a projection
+policy.
+
+Exploratory empirical tail probabilities are described as formal
+disease-association p-values.
+
+Target-locus burden is labeled disease-associated, pathogenic, causal, or
+diagnostic.
+
+Background matching diagnostics are omitted.
+
+One high-burden patient can dominate the target burden without a detectable
+patient-dominance warning.
+
+Multiple genotype_variant_relationship rows from one genotype_observation_id are
+counted as multiple source genotype observations.
+
+Resolved multiallelic genotype-to-variant relationships are treated as
+direct_source_biallelic producer calls.
+
+Unresolved, ambiguous, or not-evaluated genotype-to-variant relationships are
+treated as absence or clean noncontribution without CUES/OACS-compatible
+limitation state.
+
+MPLC outputs are encoded as RDGP rankings.
+
+MPLC summary rows replace membership-level coordinate and GSC-prior
+traceability.
+
+MPLC surfaces generated under different target/background/null policies are
+compared without RMCS comparability state.
+
+Sample recurrence is reported as patient recurrence without declared
+sample-patient linkage.
+
+Background loci are treated as nondisease controls.
+
+A phenotype-scoped prior is treated as target-locus causality.
+
+KVPS known pathogenicity context is used to define MPLC target loci.
+
+GIRS genotype context is used to infer inheritance inside MPLC.
+
+PAPS phenotype-prior context is silently combined across phenotype scopes.
+
+RFPS feature context is treated as mechanism rather than contribution context.
+
+A target or background locus with stale or incomparable MPLC policy state is
+consumed without RMCS warning.
+```
+
+---
+
 # 16. What not to do
 
 Do not compare D (disease) loci to arbitrary random N (non-disease) loci.
@@ -1031,6 +1844,36 @@ For MPLC, validation should include:
 
 7. Anti-overclaim validation
    Results must be labeled hypothesis-generating.
+
+8. Recurrence-unit audit
+   Confirm sample recurrence, patient recurrence, and subject recurrence are
+   not silently conflated.
+
+9. Counting-unit audit
+   Confirm burden counts use sample-specific variant observations unless a
+   different counting unit is explicitly declared.
+
+10. Phenotype-scope audit
+    Confirm epilepsy, mitochondrial, broad, narrow, and combined prior scopes
+    are analyzed under explicit target-locus policy and not silently merged.
+
+11. Background-label audit
+    Confirm matched background loci are described as non-prior matched loci,
+    not nondisease genes or biological controls.
+
+12. Daughter-surface boundary audit
+    Confirm KVPS, GIRS, PAPS, RFPS, EVRS, PGERS, CUES, OACS, and RMCS
+    references do not replace MPLC locus-membership traceability.
+
+13. RMCS comparability audit
+    Confirm MPLC surfaces generated under different target, background,
+    window, variant-filter, opportunity, null-model, matching, GSC-release, or
+    random-seed policies are not compared without explicit comparability state.
+
+14. Interpretation-label audit
+    Confirm MPLC labels remain exploratory and do not encode RDGP ranking,
+    disease association, pathogenicity, causality, diagnosis, or clinical
+    actionability.
 ```
 
 ---
@@ -1091,3 +1934,24 @@ Package everything in TEP-VDB so RDGP can reason transparently.
 ```
 
 This gives RDGP a scientifically honest room to reason inside.
+
+---
+
+# 22. Daughter-Surface Summary Doctrine
+
+MPLC is the TEP-VDB projection surface that compares phenotype-scoped GSC-prior
+target loci against matched non-prior background loci using VAP-derived
+sample-specific coordinate observations, opportunity-aware denominator context,
+declared target/background/window/filter/null policies, recurrence summaries,
+matching diagnostics, source traceability, uncertainty state, method currency,
+and anti-overclaim boundaries so RDGP can reason over prior-informed burden
+contrast without VDB claiming disease association, causality, pathogenicity, or
+diagnosis.
+
+In short:
+
+```text
+MPLC exposes matched prior-locus burden contrast.
+RDGP reasons over that contrast.
+Scientists and clinicians interpret evaluated evidence.
+```

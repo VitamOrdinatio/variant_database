@@ -1,6 +1,27 @@
 # Coordinate-First Burden Scan (CFBS)
 
-> Status: SAGE-VDB scientific method design.
+> Status: SAGE-VDB projection-surface design draft.
+>
+> Intended path:
+>
+> `docs/design/projection_surfaces/cfbs_coordinate_first_burden_scan.md`
+>
+> Parent architecture:
+>
+> `docs/architecture/tep_vdb_architecture.md`
+>
+> Mathematical parent:
+>
+> `docs/design/mathematical_foundations/evidence_topology_projection_geometry_formalism.md`
+>
+> Projection family:
+>
+> TEP-VDB unknown-tomorrow diagnostic discovery support surface.
+>
+> Primary consumer:
+>
+> RDGP and future downstream reasoning systems.
+>
 > This document defines the biological, mathematical, and evidentiary constraints
 > for a VDB-emitted TEP-VDB projection surface. It is not a final implementation
 > schema. DEX-VDB should derive implementation schemas, validators, and emission
@@ -77,12 +98,169 @@ surfaces inside the same TEP-VDB emission, not as separate ingestion modes.
 
 ---
 
+# Projection-Surface Alignment Addendum
+
+CFBS is a TEP-VDB discovery-oriented projection surface.
+
+It belongs to the unknown-tomorrow diagnostic discovery family in the TEP-VDB
+architecture.
+
+Its role is to expose coordinate-first burden, recurrence, opportunity,
+candidate-interval, null-model, and post hoc annotation substrates so RDGP can
+reason over candidate genomic regions without VDB claiming disease association.
+
+The core doctrine is:
+
+```text
+CFBS does not prove disease association.
+
+CFBS exposes exploratory, opportunity-aware coordinate burden and recurrence
+signals under declared scan-space, window, variant-filter, null-model,
+candidate-interval, and post hoc annotation policies.
+```
+
+CFBS is:
+
+```text
+coordinate-first
+opportunity-aware
+window- or interval-based
+scan-policy declared
+null-model declared
+post hoc annotation aware
+traceable to sample-specific variant observations
+exploratory
+RDGP-facing
+```
+
+CFBS is not:
+
+```text
+a disease-association test
+a diagnostic result
+a pathogenic-region classifier
+a gene-prior test
+a GSC-selected scan
+a clinical actionability surface
+a replacement for RDGP reasoning
+```
+
+The safe boundary is:
+
+```text
+CFBS nominates exploratory coordinate burden candidates.
+RDGP reasons over those candidates.
+Scientists and clinicians interpret evaluated evidence.
+```
+
+---
+
+# Relationship to TEP-VDB Architecture
+
+CFBS should conform to the TEP-VDB architecture and the mathematical foundation
+for evidence topology, opportunity-aware geometry, and projection surfaces.
+
+In the TEP-VDB v1 surface family, CFBS complements:
+
+```text
+MPLC:
+    prior-informed locus contrast
+
+EVRS:
+    exact variant recurrence
+
+RFPS:
+    regulatory / feature projection
+
+PGERS:
+    patient-gene / patient-locus evidence rollup
+
+OACS:
+    opportunity, absence, and callability context
+
+CUES:
+    conflict and uncertainty state
+
+RMCS:
+    method, dependency, and currency state
+```
+
+CFBS should remain distinct from these sibling surfaces. It may reference or
+consume their outputs, but it should not absorb their responsibilities.
+
+# Relationship to Mathematical Formalism
+
+Under the mathematical foundation, CFBS is a specialization of an
+opportunity-aware projection surface.
+
+```text
+θ_CFBS:
+    source objects =
+        sample-specific coordinate / variant observations,
+        variant filter partitions,
+        scan-space declarations,
+        opportunity states,
+        window memberships,
+        null-model receipts,
+        post hoc annotation memberships
+
+    target objects =
+        coordinate windows and assembled candidate intervals
+
+    membership =
+        a sample-specific variant observation belongs to a scan window or
+        candidate interval if its coordinate satisfies the declared window,
+        scan-space, variant-filter, and membership policy
+
+    opportunity =
+        callable / assay-visible / quality-supported coordinate territory used
+        as denominator context for burden, recurrence, and absence-like claims
+
+    geometry =
+        burden excess, patient recurrence, compactness where available,
+        exploratory empirical-null position, and candidate-interval summaries
+
+    surface =
+        coordinate-first burden scan substrate for RDGP
+```
+
+Compact form:
+
+```text
+S_CFBS = F_CFBS(T_C, M_CFBS, Ω_CFBS, P_CFBS)
+```
+
+Where:
+
+```text
+T_C = evidence topology
+
+M_CFBS = membership operator from sample-specific coordinate observations
+         to scan windows and candidate intervals
+
+Ω_CFBS = opportunity space for scanned coordinate territory
+
+P_CFBS = scan-space, window, variant-filter, counting, null-model,
+         candidate-interval, and post hoc annotation policy
+```
+
+Traceability rule:
+
+```text
+Every CFBS burden count, recurrence count, candidate interval, empirical-null
+summary, and post hoc annotation must trace to contributing sample-specific
+variant observations, opportunity records, projection policies, and source
+assertion records.
+```
+
+---
+
 # 1. What CFBS is trying to test
 
 The scientific question is:
 
 ```text
-Across the 12 epilepsy patients, are there genomic coordinate intervals
+Across the declared case/sample corpus, are there genomic coordinate intervals
 where qualifying variants cluster more than expected under a declared
 genomic opportunity model?
 ```
@@ -285,6 +463,48 @@ projection_membership_id:
 Burden counts should operate over sample-specific coordinate observations, not
 over duplicated annotation rows. Multiple transcript, feature, or post hoc GSC
 mappings should create multiple memberships, not multiple observed variants.
+
+## Sample, Patient, and Recurrence Unit Boundary
+
+CFBS may use `sample_id` as the practical v1 row anchor, but recurrence claims
+must declare the recurrence unit.
+
+Recommended recurrence units include:
+
+```text
+sample
+patient
+subject
+family
+unknown
+not_evaluated
+```
+
+For the planned first epilepsy WES demonstration, `sample` and `patient` may be
+one-to-one under the source corpus. Generic CFBS schemas should not assume that
+relationship silently.
+
+When patient or subject identity is available, CFBS should preserve:
+
+```text
+patient_id when available
+subject_id when available
+sample_id
+sample_patient_link_id when available
+sample_patient_link_status
+recurrence_unit_policy_id
+recurrence_unit
+```
+
+Recommended `sample_patient_link_status` values include:
+
+```text
+same_subject_declared
+same_subject_inferred_by_source
+sample_patient_link_unavailable
+sample_patient_link_ambiguous
+sample_patient_link_not_evaluated
+```
 
 ---
 
@@ -678,11 +898,16 @@ candidate_interval_assembly_policy:
 ```text
 CFBS null hypothesis:
 
-Conditional on callable opportunity, matched genomic context, patient-level
+Conditional on callable opportunity, matched genomic context, sample/patient-level
 variant burden, and variant-class partition, qualifying variants from the
-12 epilepsy patients are not more clustered in any coordinate interval than
-expected under random placement within comparable genomic opportunity space.
+declared case/sample corpus are not more clustered in any coordinate interval
+than expected under random placement within comparable genomic opportunity
+space.
 ```
+
+For the planned first epilepsy demonstration profile, this corpus is expected
+to be the 12-sample epilepsy WES cohort. The null model should nevertheless be
+defined over the declared corpus and policy, not over a hard-coded sample count.
 
 Freshman biology translation:
 
@@ -756,6 +981,67 @@ Post hoc GSC annotations must remain phenotype-scope aware. Epilepsy and
 mitochondrial-disease GSC priors may both be present in the TEP-VDB, but CFBS
 should not silently combine them into one disease-prior label unless an explicit
 annotation policy declares that combined view.
+
+---
+
+# 15A. CFBS Projection Policy
+
+CFBS requires an explicit projection policy.
+
+Recommended policy fields:
+
+```text
+cfbs_projection_policy_id
+cfbs_projection_policy_version
+source_corpus_generation_id
+scan_space_policy_id
+window_policy_id
+variant_filter_policy_id
+variant_class_partition_policy_id
+counting_policy_id
+opportunity_model_id
+oacs_reference_policy_id
+null_model_policy_id
+candidate_interval_assembly_policy_id
+posthoc_annotation_policy_id
+patient_dominance_policy_id
+artifact_warning_policy_id
+cues_reference_policy_id
+rmcs_reference_policy_id
+traceability_policy_id
+anti_overclaim_policy_id
+```
+
+The CFBS projection policy must declare:
+
+```text
+which coordinate territory is eligible for scanning
+
+which samples or patients are included
+
+which variant classes and filters are included
+
+which opportunity denominator is used
+
+which counting unit is used
+
+which recurrence unit is used
+
+which null model is used
+
+which statistic ranks windows
+
+how adjacent windows become candidate intervals
+
+which annotations are post hoc
+
+which warnings block, limit, or qualify CFBS consumption
+
+which claims are prohibited
+```
+
+Silent filtering, silent denominator substitution, silent recurrence-unit
+changes, and silent post hoc annotation use are prohibited.
 
 ---
 
@@ -905,16 +1191,28 @@ tep_vdb_analysis_scope:
     emission_policy_id
 
 cfbs_analysis_scope:
+    cfbs_surface_id
+    cfbs_surface_generation_id
     method_id
     method_version
+    cfbs_projection_policy_id
     scan_space_policy_id
     window_policy_id
     variant_filter_policy_id
+    variant_class_partition_policy_id
+    counting_policy_id
+    recurrence_unit_policy_id
     opportunity_model_id
+    oacs_surface_ref
     null_model_id
+    null_model_policy_id
+    candidate_interval_assembly_policy_id
     posthoc_annotation_policy_id
+    cues_surface_ref when applicable
+    rmcs_surface_ref when applicable
     number_of_null_draws
     random_seed
+    anti_overclaim_policy_id
 
 scan_space:
     chromosome
@@ -940,8 +1238,16 @@ window_set:
     exclusion_reason
 
 sample_window_burden_matrix:
+    cfbs_sample_window_row_id
+    cfbs_surface_id
+    cfbs_surface_generation_id
     sample_id
+    patient_id when available
+    subject_id when available
+    sample_patient_link_status when applicable
     window_id
+    counting_policy_id
+    recurrence_unit_policy_id
     burden_count
     rare_burden_count
     ultra_rare_burden_count
@@ -952,19 +1258,59 @@ sample_window_burden_matrix:
     burden_per_callable_base
     no_call_bases
     not_assayed_bases
+    low_confidence_bases
+    filtered_bases
+    unknown_opportunity_bases
+    oacs_surface_ref
+    traceability_refs
+    anti_overclaim_label
 
 patient_window_hit_matrix:
+    cfbs_hit_row_id
+    cfbs_surface_id
+    cfbs_surface_generation_id
     sample_id
+    patient_id when available
+    subject_id when available
+    sample_patient_link_status when applicable
     window_id
+    recurrence_unit
+    recurrence_unit_policy_id
     has_qualifying_variant
     qualifying_variant_count
     strongest_variant_class
     strongest_variant_handle
     hit_partition_label
+    genotype_context_summary when applicable
+    genotype_variant_relationship_state_summary when applicable
+    direct_source_biallelic_relationship_count when applicable
+    resolved_from_multiallelic_record_count when applicable
+    brokered_with_normalization_relationship_count when applicable
+    ambiguous_genotype_variant_relationship_count when applicable
+    unresolved_genotype_variant_relationship_count when applicable    
+    quality_context_summary
+    traceability_refs
+    anti_overclaim_label
 
 variant_window_memberships:
-    variant_handle
+    cfbs_window_membership_id
+    cfbs_surface_id
+    cfbs_surface_generation_id
+    projection_membership_id
+    coordinate_variant_handle
+    sample_variant_observation_id
+    genotype_observation_id when applicable
+    genotype_variant_relationship_id when applicable
+    genotype_variant_relationship_state when applicable
+    relationship_derivation_policy_id when applicable
+    allele_index when applicable
+    source_alt_allele when applicable
+    relationship_ambiguity_state when applicable
+    relationship_lossiness_state when applicable
+    identity_registration_state when applicable    
     sample_id
+    patient_id when available
+    subject_id when available
     window_id
     chrom
     pos
@@ -977,18 +1323,34 @@ variant_window_memberships:
     frequency_source
     frequency_version
     frequency_status
+    variant_filter_partition
+    counting_unit
     source_vap_trace
+    source_assertion_refs
+    traceability_refs
+    anti_overclaim_label
 
 null_model:
     null_model_id
+    null_model_policy_id
     null_model_type
     null_scope
+    null_statistic_scope
     random_seed
     matching_features
     number_of_draws
     scan_space_policy_id
-    preserve_patient_level_burden: true
+    opportunity_model_id
+    oacs_surface_ref
+    recurrence_unit_policy_id
+    preserve_sample_level_burden: true
+    preserve_patient_level_burden: true/false under declared recurrence policy
     preserve_variant_class_partitions: true/false
+    preserve_chromosome_distribution: true/false
+    preserve_callable_territory: true
+    exploratory_only: true
+    traceability_refs
+    anti_overclaim_label
 
 null_draw_summary:
     draw_id
@@ -999,6 +1361,8 @@ null_draw_summary:
 
 candidate_interval_set:
     candidate_interval_id
+    cfbs_surface_id
+    cfbs_surface_generation_id
     source_window_ids
     chromosome
     start
@@ -1008,35 +1372,79 @@ candidate_interval_set:
     ranking_statistic
     minimum_recurrence_count
     minimum_callable_bases
+    observed_count
+    expected_count
+    burden_excess
+    recurrence_unit
+    patient_recurrence_count when patient identity is available
+    sample_recurrence_count
+    max_single_sample_burden_fraction
+    dominant_sample_id when applicable
+    patient_dominance_warning
+    opportunity_limitation_label
+    cues_event_refs when applicable
+    rmcs_currency_refs when applicable
+    traceability_refs
+    anti_overclaim_label
 
 cfbs_results:
+    cfbs_result_id
+    cfbs_surface_id
+    cfbs_surface_generation_id
     window_id
     candidate_interval_id
     observed_count
     expected_count
     burden_excess
-    patient_recurrence_count
+    burden_rate_per_callable_base
+    sample_recurrence_count
+    patient_recurrence_count when patient identity is available
+    recurrence_unit
+    max_single_sample_burden_fraction
+    patient_dominance_warning
     exploratory_empirical_p_value
+    empirical_tail_probability_scope
     null_percentile
+    null_model_id
+    null_model_policy_id
     candidate_label
     interpretation_label
+    cues_event_refs when applicable
+    rmcs_currency_refs when applicable
+    traceability_refs
+    anti_overclaim_label
 
 posthoc_annotations:
+    cfbs_posthoc_annotation_id
+    cfbs_surface_id
+    cfbs_surface_generation_id
     window_id
     candidate_interval_id
+    annotation_timing
+    annotation_policy_id
     nearest_gene
     overlapping_gene
     distance_to_gene
     gene_namespace
     gene_id
     gene_symbol
+    target_identity_bridge_status
+    target_identity_bridge_lossiness
+    paps_surface_ref when phenotype-prior context is used
+    paps_prior_refs when applicable
     gsc_epilepsy_overlap
     gsc_mitochondrial_overlap
     gsc_release_id
     gsc_phenotype_scope
     semantic_prior_id
+    rfps_surface_ref when feature context is used
     regulatory_feature_overlap
-    annotation_policy_id
+    kvps_surface_ref when known-variant context is used
+    evrs_surface_ref when exact recurrence context is used
+    posthoc_annotation_boundary_label
+    annotation_timing
+    traceability_refs
+    anti_overclaim_label
 
 validation_receipts:
     source_corpus_integrity_pass
@@ -1047,6 +1455,10 @@ validation_receipts:
     posthoc_annotation_boundary_pass
     anti_overclaim_pass
 ```
+
+`interpretation_label` must remain an anti-overclaim-safe label such as
+`exploratory_coordinate_hotspot_candidate`. It must not encode disease
+association, pathogenicity, causality, diagnostic status, or RDGP ranking.
 
 This is enough for RDGP to reason without inventing its own substrate.
 
@@ -1101,6 +1513,269 @@ tep_vdb/
 This keeps the source corpus unified while letting MPLC and CFBS remain
 distinct reasoning rooms. In the planned first epilepsy demonstration, that
 unified corpus uses the 14-source profile described above.
+
+---
+
+# CFBS Relationship to Sibling Projection Surfaces
+
+CFBS should interoperate with sibling TEP-VDB projection surfaces without
+collapsing into them.
+
+## Relationship to KVPS
+
+KVPS exposes known pathogenicity evidence attached to sample-specific observed
+variants.
+
+CFBS may reference KVPS when a contributing variant or post hoc annotated target
+has known pathogenicity or clinical-significance context.
+
+CFBS may include KVPS-derived context such as:
+
+```text
+known_pathogenicity_overlap
+known_conflicting_pathogenicity_overlap
+known_vus_or_uncertain_overlap
+kvps_surface_ref
+kvps_membership_refs
+```
+
+KVPS context must remain post hoc or contribution-level context. It must not be
+used to select CFBS scan windows or to convert a coordinate hotspot into a known
+disease association.
+
+---
+
+## Relationship to GIRS
+
+GIRS exposes genotype observation structure and inheritance-readiness context.
+
+CFBS may reference GIRS for genotype-aware variant partitions or contribution
+context, such as:
+
+```text
+genotype_context_available
+heterozygous_like_contributor_count
+homozygous_alt_like_contributor_count
+no_call_or_uncertain_genotype_count
+genotype_quality_limited_count
+girs_surface_ref
+girs_membership_refs
+```
+
+CFBS must not perform inheritance reasoning. Genotype context may help RDGP
+evaluate a candidate interval later, but CFBS itself remains a coordinate-first
+burden and recurrence surface.
+
+---
+
+## Relationship to OACS
+
+OACS provides the denominator and absence-readiness context CFBS requires.
+
+CFBS should reference OACS for:
+
+```text
+scan-space opportunity
+window-level callable bases
+not-callable territory
+not-assayed territory
+low-confidence territory
+filtered territory
+unknown opportunity
+negative-evidence readiness
+```
+
+CFBS must not treat a window with zero observed variants as informative absence
+unless OACS declares sufficient opportunity under the relevant policy.
+
+---
+
+## Relationship to CUES
+
+CUES should index CFBS uncertainty and limitation events.
+
+Examples include:
+
+```text
+low-mappability candidate interval
+repeat-rich candidate interval
+opportunity_unmodeled
+patient_dominance_detected
+null_model_limited
+post_hoc_annotation_bias_risk
+window_boundary_sensitivity
+candidate_interval_assembly_uncertainty
+exploratory_empirical_p_value_overread_risk
+```
+
+CFBS may carry these warning fields, but CUES owns the package-level epistemic
+event surface.
+
+---
+
+## Relationship to EVRS
+
+EVRS exposes exact allele recurrence.
+
+CFBS exposes coordinate-window burden and recurrence.
+
+A recurrent exact allele may contribute to a CFBS window signal, but CFBS should
+not treat exact allele recurrence as equivalent to regional burden. CFBS should
+preserve EVRS references when exact recurrent variants contribute to candidate
+intervals.
+
+---
+
+## Relationship to RFPS
+
+RFPS provides regulatory, transcriptomic, conserved, structural, or functional
+feature projection context for CFBS candidate intervals.
+
+CFBS may include RFPS-derived post hoc annotations such as:
+
+```text
+regulatory_feature_overlap
+conserved_noncoding_overlap
+promoter_or_enhancer_overlap
+feature_linked_gene_context
+```
+
+But CFBS must not infer regulatory mechanism.
+
+---
+
+## Relationship to PAPS
+
+PAPS provides phenotype-scoped prior context.
+
+CFBS may report whether post hoc genes or feature-linked targets have
+phenotype-scoped priors, but those priors must remain post hoc annotations.
+PAPS context must not be used to select CFBS scan windows.
+
+---
+
+## Relationship to PGERS
+
+PGERS may later roll CFBS candidate-interval memberships into patient-gene or
+patient-locus evidence summaries.
+
+CFBS should expose candidate interval and contributing variant references so
+PGERS can summarize them without losing coordinate-first provenance.
+
+---
+
+## Relationship to RMCS
+
+RMCS should track CFBS dependency and method currency, including:
+
+```text
+scan_space_policy_id
+window_policy_id
+variant_filter_policy_id
+opportunity_model_id
+null_model_id
+candidate_interval_assembly_policy_id
+posthoc_annotation_policy_id
+number_of_null_draws
+random_seed
+source_corpus_id
+surface_generation_id
+```
+
+A CFBS surface generated under a different window policy, null model, source
+corpus, opportunity policy, or random seed should not be compared to another
+CFBS surface without an RMCS comparability state.
+
+---
+
+# Required Anti-Overclaim Labels
+
+CFBS rows, candidate intervals, result summaries, and package-level summaries
+should carry anti-overclaim labels.
+
+Recommended default label:
+
+```text
+exploratory_burden_surface_not_association
+```
+
+Additional labels may include:
+
+```text
+coordinate_hotspot_not_disease_association
+empirical_tail_probability_not_formal_association_p_value
+posthoc_annotation_not_scan_selection
+burden_excess_not_causality
+candidate_interval_not_pathogenic_region
+opportunity_limited_burden_surface
+cfbs_candidate_not_rdgp_priority
+cfbs_result_not_genetic_diagnosis
+patient_recurrence_not_case_control_association
+posthoc_gsc_overlap_not_prior_selection
+genotype_context_not_inheritance_evidence_by_cfbs
+known_pathogenicity_overlap_not_interval_causality
+```
+
+# Invalid CFBS Patterns
+
+Invalid CFBS designs include:
+
+```text
+GSC-prior genes are used to choose coordinate scan windows.
+
+Candidate intervals are filtered by gene, GSC, or regulatory annotation before
+coordinate ranking.
+
+Observed zero burden is interpreted without OACS opportunity support.
+
+Exploratory empirical tail probabilities are described as formal
+disease-association p-values.
+
+Candidate intervals are labeled disease-associated, pathogenic, causal, or
+diagnostic.
+
+Post hoc annotations are presented as if they were scan-selection criteria.
+
+Burden counts are calculated from duplicated annotation rows rather than
+sample-specific variant observations.
+
+Multiple genotype_variant_relationship rows from one genotype_observation_id are
+counted as multiple source genotype observations.
+
+Resolved multiallelic genotype-to-variant relationships are treated as
+direct_source_biallelic producer calls.
+
+Unresolved, ambiguous, or not-evaluated genotype-to-variant relationships are
+treated as absence or clean noncontribution without CUES/OACS-compatible
+limitation state.
+
+One high-burden patient can dominate a candidate interval without a detectable
+patient-dominance warning.
+
+CFBS outputs are encoded as RDGP rankings.
+
+CFBS summary rows replace membership-level coordinate traceability.
+
+CFBS surfaces generated under different scan/window/null policies are compared
+without RMCS comparability state.
+
+Sample recurrence is reported as patient recurrence without declared
+sample-patient linkage.
+
+A CFBS candidate interval is promoted to a patient-gene rollup without preserving
+coordinate-first candidate interval traceability.
+
+KVPS known pathogenicity context is used to select scan windows.
+
+GIRS genotype context is used to infer inheritance inside CFBS.
+
+PAPS phenotype-prior context is treated as pre-scan evidence.
+
+RFPS feature context is treated as mechanism rather than post hoc annotation.
+
+A candidate interval with stale or incomparable CFBS policy state is consumed
+without RMCS warning.
+```
 
 ---
 
@@ -1215,6 +1890,28 @@ For CFBS, validation should include:
 10. Anti-overclaim validation
    Output must say exploratory coordinate hotspot candidate,
    not disease-associated or pathogenic region.
+
+11. Recurrence-unit audit
+    Confirm sample recurrence, patient recurrence, and subject recurrence are
+    not silently conflated.
+
+12. Counting-unit audit
+    Confirm burden counts use sample-specific variant observations unless a
+    different counting unit is explicitly declared.
+
+13. Daughter-surface boundary audit
+    Confirm KVPS, GIRS, PAPS, RFPS, EVRS, PGERS, CUES, OACS, and RMCS references
+    do not replace CFBS coordinate-first membership traceability.
+
+14. RMCS comparability audit
+    Confirm CFBS surfaces generated under different scan-space, window,
+    variant-filter, opportunity, null-model, post hoc annotation, or random-seed
+    policies are not compared without explicit comparability state.
+
+15. Interpretation-label audit
+    Confirm CFBS labels remain exploratory and do not encode RDGP ranking,
+    disease association, pathogenicity, causality, diagnosis, or clinical
+    actionability.
 ```
 
 ---
@@ -1289,4 +1986,23 @@ The key scientific identity is:
 ```text
 CFBS lets VDB ask where the genome itself points first.
 RDGP asks what the biology might mean afterward.
+```
+
+# 25. Daughter-Surface Summary Doctrine
+
+CFBS is the TEP-VDB projection surface that scans coordinate space before
+biological annotation, compares observed qualifying variant burden against
+declared matched genomic opportunity, exposes exploratory burden, recurrence,
+candidate-interval, null-model, and post hoc annotation substrates, and preserves
+sample-specific coordinate traceability, opportunity context, policy identity,
+uncertainty state, method currency, and anti-overclaim boundaries so RDGP can
+reason over coordinate-first discovery signals without VDB claiming disease
+association, causality, pathogenicity, or diagnosis.
+
+In short:
+
+```text
+CFBS exposes coordinate-first burden candidates.
+RDGP reasons over those candidates.
+Scientists and clinicians interpret evaluated evidence.
 ```
