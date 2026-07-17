@@ -21,9 +21,6 @@ from variant_database.ingestion.package_scanner import scan_package
 from variant_database.persistence.backend import connect_sqlite
 from variant_database.persistence.repositories import (
     list_artifact_records,
-    list_package_metadata_records,
-    list_source_coordinate_declarations,
-    list_source_feature_declarations,
     persist_package_inventory,
     persist_package_metadata_record,
     persist_source_coordinate_declaration,
@@ -49,7 +46,6 @@ from variant_database.registration.participant_extractor import (
 from variant_database.registration.source_identity import (
     attach_participants_to_assertion,
     attach_vap_sample_identity_to_assertions,
-    list_source_identities,
 )
 
 
@@ -94,6 +90,36 @@ def _is_tsv_artifact(relative_path: str) -> bool:
     return relative_path.lower().endswith(".tsv")
 
 
+def _count_rows(
+    connection,
+    table_name: str,
+    where_clause: str = "",
+    parameters: tuple[object, ...] = (),
+) -> int:
+    """Count rows in a known VDB table without materializing records.
+
+    This helper is intentionally narrow. Table names are allowlisted because SQL
+    parameters cannot bind table identifiers.
+    """
+    allowed_tables = {
+        "package_metadata",
+        "source_identities",
+        "source_coordinate_declarations",
+        "source_feature_declarations",
+    }
+
+    if table_name not in allowed_tables:
+        raise ValueError(f"Unsupported table for row counting: {table_name}")
+
+    query = f"SELECT COUNT(*) FROM {table_name}"
+
+    if where_clause:
+        query = f"{query} WHERE {where_clause}"
+
+    row = connection.execute(query, parameters).fetchone()
+    return int(row[0]) if row is not None else 0
+
+
 def run_registration_pipeline(
     package_path: Path | str,
     db_path: Path | str,
@@ -126,8 +152,11 @@ def run_registration_pipeline(
                 connection=connection,
                 metadata_record=package_metadata_record,
             )
-            package_metadata_count = len(
-                list_package_metadata_records(connection, package_id=package_id)
+            package_metadata_count = _count_rows(
+                connection=connection,
+                table_name="package_metadata",
+                where_clause="package_id = ?",
+                parameters=(package_id,),
             )
 
     register_artifact_level_assertions_for_package(
@@ -224,9 +253,18 @@ def run_registration_pipeline(
                             commit=False,
                         )
 
-    source_identities = list_source_identities(connection)
-    source_coordinate_declarations = list_source_coordinate_declarations(connection)
-    source_feature_declarations = list_source_feature_declarations(connection)
+    source_identity_count = _count_rows(
+        connection=connection,
+        table_name="source_identities",
+    )
+    coordinate_declaration_count = _count_rows(
+        connection=connection,
+        table_name="source_coordinate_declarations",
+    )
+    feature_declaration_count = _count_rows(
+        connection=connection,
+        table_name="source_feature_declarations",
+    )
 
     elapsed_seconds = perf_counter() - started_at
     rows_per_second = (
@@ -249,11 +287,11 @@ def run_registration_pipeline(
         artifact_count=inventory.artifact_count,
         assertion_registration_count=len(assertion_registrations),
         package_metadata_count=package_metadata_count,
-        coordinate_declaration_count=len(source_coordinate_declarations),
-        feature_declaration_count=len(source_feature_declarations),
+        coordinate_declaration_count=coordinate_declaration_count,
+        feature_declaration_count=feature_declaration_count,
         row_count_scanned=row_count_scanned,
         participant_count_discovered=participant_count_discovered,
-        source_identity_count=len(source_identities),
+        source_identity_count=source_identity_count,
         elapsed_seconds=elapsed_seconds,
         rows_per_second=rows_per_second,
         participants_per_second=participants_per_second,
