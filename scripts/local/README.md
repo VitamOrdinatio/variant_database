@@ -1,3 +1,33 @@
+# Workflow
+
+Workflow (Orchestration):
+
+1. Register TEP (TEP enters VDB) in sqlite
+
+> For 1 TEP-VAP, see below for full run on ERR10619300
+
+> The python command below registers just 2 TEP-GSCs
+
+Run from VDB repo root:
+
+```bash
+python3 scripts/local/registration/run_sys76_double_gsc_registration.py \
+  --overwrite
+```
+
+
+
+2. Validate registered sqlite
+
+> Registering three TEPs (cross-repo): 1 TEP-VAP + 2 TEP-GSCs
+
+Run from VDB repo root:
+
+```bash
+python3 scripts/local/validation/run_sys76_3tep_genotype_discovery_validation.py
+```
+
+
 # Canary Runs
 
 Purpose: Run small batches of telemetry-equipped sqlite on sys76 (dev node) to extrapolate approximate time to completion for a full 1tep corpus (ERR10619300's TEP-VAP)
