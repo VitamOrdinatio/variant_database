@@ -36,6 +36,14 @@ from variant_database.registration.feature_declaration_extractor import (
 from variant_database.registration.metadata_extractor import (
     build_vap_package_metadata_record,
 )
+from variant_database.registration.genotype_extractor import (
+    build_genotype_discovery_records,
+)
+from variant_database.persistence.genotype_repositories import (
+    persist_genotype_artifact_index_records,
+    persist_genotype_context_index_records,
+    persist_genotype_package_classification,
+)
 from variant_database.registration.assertion_registration import (
     list_assertion_registrations,
     register_artifact_level_assertions_for_package,
@@ -158,6 +166,25 @@ def run_registration_pipeline(
                 where_clause="package_id = ?",
                 parameters=(package_id,),
             )
+
+    genotype_discovery_records = build_genotype_discovery_records(
+        package_id=package_id,
+        package_path=inventory.package_path,
+        artifact_records=artifact_records,
+        producer_family=producer_family,
+    )
+    persist_genotype_package_classification(
+        connection=connection,
+        classification=genotype_discovery_records["classification"],
+    )
+    persist_genotype_artifact_index_records(
+        connection=connection,
+        records=genotype_discovery_records["artifact_index_records"],
+    )
+    persist_genotype_context_index_records(
+        connection=connection,
+        records=genotype_discovery_records["context_index_records"],
+    )
 
     register_artifact_level_assertions_for_package(
         connection=connection,

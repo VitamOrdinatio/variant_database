@@ -5,7 +5,7 @@ from __future__ import annotations
 import sqlite3
 
 
-SCHEMA_VERSION = "0.1.2"
+SCHEMA_VERSION = "0.1.3"
 
 
 def initialize_schema(connection: sqlite3.Connection) -> None:
@@ -201,6 +201,86 @@ def initialize_schema(connection: sqlite3.Connection) -> None:
 
         CREATE INDEX IF NOT EXISTS idx_source_feature_declarations_variant
             ON source_feature_declarations(variant_source_namespace, variant_source_value);
+
+        CREATE TABLE IF NOT EXISTS source_genotype_package_classifications (
+            genotype_classification_id TEXT PRIMARY KEY,
+            package_id TEXT NOT NULL UNIQUE,
+            producer_family TEXT NOT NULL,
+            producer_genotype_applicability_state TEXT NOT NULL,
+            genotype_capability_state TEXT NOT NULL,
+            genotype_maturity_state TEXT NOT NULL,
+            genotype_artifact_set_status TEXT NOT NULL,
+            governance_artifact_set_status TEXT NOT NULL,
+            execution_provenance_status TEXT NOT NULL,
+            trusted_modern_ingestion_ready INTEGER NOT NULL,
+            classification_status TEXT NOT NULL,
+            classification_reason TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            FOREIGN KEY(package_id) REFERENCES tep_packages(package_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_package_classifications_state
+            ON source_genotype_package_classifications(genotype_capability_state, genotype_maturity_state);
+
+        CREATE TABLE IF NOT EXISTS source_genotype_artifact_index (
+            genotype_artifact_index_id TEXT PRIMARY KEY,
+            package_id TEXT NOT NULL,
+            artifact_id TEXT,
+            artifact_role TEXT NOT NULL,
+            artifact_path TEXT NOT NULL,
+            artifact_sha256 TEXT NOT NULL,
+            size_bytes INTEGER NOT NULL,
+            artifact_present INTEGER NOT NULL,
+            required_for_trusted_modern_ingestion INTEGER NOT NULL,
+            schema_version TEXT,
+            parse_status TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            UNIQUE(package_id, artifact_role),
+            FOREIGN KEY(package_id) REFERENCES tep_packages(package_id),
+            FOREIGN KEY(artifact_id) REFERENCES artifacts(artifact_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_artifact_index_package
+            ON source_genotype_artifact_index(package_id);
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_artifact_index_role
+            ON source_genotype_artifact_index(artifact_role, parse_status);
+
+        CREATE TABLE IF NOT EXISTS source_genotype_context_index (
+            genotype_context_index_id TEXT PRIMARY KEY,
+            package_id TEXT NOT NULL,
+            artifact_id TEXT,
+            context_kind TEXT NOT NULL,
+            context_artifact_path TEXT NOT NULL,
+            context_artifact_sha256 TEXT NOT NULL,
+            schema_version TEXT,
+            parse_status TEXT NOT NULL,
+            registered_as_context INTEGER NOT NULL,
+            registered_as_biological_evidence INTEGER NOT NULL,
+            contract_status TEXT,
+            provenance_completeness TEXT,
+            projection_status TEXT,
+            genotype_observation_row_count INTEGER,
+            source_record_count INTEGER,
+            direct_relationship_count INTEGER,
+            complex_relationship_count INTEGER,
+            unresolved_relationship_count INTEGER,
+            projection_error_count INTEGER,
+            projection_warning_count INTEGER,
+            reference_build TEXT,
+            sample_id TEXT,
+            run_id TEXT,
+            payload_json TEXT NOT NULL,
+            UNIQUE(package_id, context_kind),
+            FOREIGN KEY(package_id) REFERENCES tep_packages(package_id),
+            FOREIGN KEY(artifact_id) REFERENCES artifacts(artifact_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_context_index_package
+            ON source_genotype_context_index(package_id);
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_context_index_kind
+            ON source_genotype_context_index(context_kind, parse_status);
         """
     )
 
