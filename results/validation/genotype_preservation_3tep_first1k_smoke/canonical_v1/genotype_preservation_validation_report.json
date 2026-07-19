@@ -1,0 +1,379 @@
+{
+  "check_status_counts": {
+    "passed": 44
+  },
+  "checks": [
+    {
+      "check_id": "database_exists",
+      "expected": "file exists",
+      "message": "Genotype preservation SQLite database exists.",
+      "observed": "results/registration/genotype_preservation_3tep_first1k_smoke/vap_ERR10619300_first1k_smoke/vdb.sqlite",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "required_table__source_genotype_artifact_index",
+      "expected": "table exists",
+      "message": "Required genotype preservation table exists: source_genotype_artifact_index.",
+      "observed": "source_genotype_artifact_index",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "required_table__source_genotype_context_index",
+      "expected": "table exists",
+      "message": "Required genotype preservation table exists: source_genotype_context_index.",
+      "observed": "source_genotype_context_index",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "required_table__source_genotype_observations",
+      "expected": "table exists",
+      "message": "Required genotype preservation table exists: source_genotype_observations.",
+      "observed": "source_genotype_observations",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "required_table__source_genotype_package_classifications",
+      "expected": "table exists",
+      "message": "Required genotype preservation table exists: source_genotype_package_classifications.",
+      "observed": "source_genotype_package_classifications",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "required_table__source_genotype_preservation_scopes",
+      "expected": "table exists",
+      "message": "Required genotype preservation table exists: source_genotype_preservation_scopes.",
+      "observed": "source_genotype_preservation_scopes",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "required_table__tep_packages",
+      "expected": "table exists",
+      "message": "Required genotype preservation table exists: tep_packages.",
+      "observed": "tep_packages",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "package_classification_cardinality",
+      "expected": "1",
+      "message": "Preservation database contains exactly one package classification.",
+      "observed": "1",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "classification__producer_family",
+      "expected": "VAP",
+      "message": "Preservation starts from the required discovery classification: producer_family.",
+      "observed": "VAP",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "classification__producer_genotype_applicability_state",
+      "expected": "genotype_applicable_to_producer_type",
+      "message": "Preservation starts from the required discovery classification: producer_genotype_applicability_state.",
+      "observed": "genotype_applicable_to_producer_type",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "classification__genotype_capability_state",
+      "expected": "genotype_capability_available",
+      "message": "Preservation starts from the required discovery classification: genotype_capability_state.",
+      "observed": "genotype_capability_available",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "classification__genotype_maturity_state",
+      "expected": "genotype_discovered",
+      "message": "Preservation starts from the required discovery classification: genotype_maturity_state.",
+      "observed": "genotype_discovered",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "classification__classification_status",
+      "expected": "classified",
+      "message": "Preservation starts from the required discovery classification: classification_status.",
+      "observed": "classified",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "classification__trusted_modern_ingestion_ready",
+      "expected": "1",
+      "message": "Preservation starts from the required discovery classification: trusted_modern_ingestion_ready.",
+      "observed": "1",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "declared_scope_cardinality",
+      "expected": "1",
+      "message": "Exactly one declared preservation scope matches the expected label.",
+      "observed": "1",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__scope_label",
+      "expected": "genotype_3tep_first1k_smoke_v1",
+      "message": "The persisted preservation scope records the expected scope_label.",
+      "observed": "genotype_3tep_first1k_smoke_v1",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__source_tep_id",
+      "expected": "vap_tep_ERR10619300_run_2026_07_14_114546_v1",
+      "message": "The persisted preservation scope records the expected source_tep_id.",
+      "observed": "vap_tep_ERR10619300_run_2026_07_14_114546_v1",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__preservation_scope_kind",
+      "expected": "bounded_first_n_source_rows",
+      "message": "The persisted preservation scope records the expected preservation_scope_kind.",
+      "observed": "bounded_first_n_source_rows",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__row_selection_policy",
+      "expected": "source_row_order_first_n",
+      "message": "The persisted preservation scope records the expected row_selection_policy.",
+      "observed": "source_row_order_first_n",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__requested_row_limit",
+      "expected": "1000",
+      "message": "The persisted preservation scope records the expected requested_row_limit.",
+      "observed": "1000",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__selected_row_count",
+      "expected": "1000",
+      "message": "The persisted preservation scope records the expected selected_row_count.",
+      "observed": "1000",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__first_selected_source_row",
+      "expected": "1",
+      "message": "The persisted preservation scope records the expected first_selected_source_row.",
+      "observed": "1",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__last_selected_source_row",
+      "expected": "1000",
+      "message": "The persisted preservation scope records the expected last_selected_source_row.",
+      "observed": "1000",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope__preservation_status",
+      "expected": "preservation_complete_pending_validation",
+      "message": "The persisted preservation scope records the expected preservation_status.",
+      "observed": "preservation_complete_pending_validation",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope_source_column_order",
+      "expected": "nonempty unique ordered columns",
+      "message": "Preservation scope records one ordered, duplicate-free source header.",
+      "observed": "68",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope_source_declared_row_count_supports_selection",
+      "expected": ">=1000",
+      "message": "Producer-declared genotype row count is sufficient for the bounded selection.",
+      "observed": "736508",
+      "receipt_family": "genotype_count_reconciliation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope_artifact_traceability__artifact_id",
+      "expected": "cdb0e298422760aa9113f23163280d89dad2375a64eb1d0cdc0951aca1d6f63a",
+      "message": "Preservation scope source_artifact_id reconciles to genotype artifact index.",
+      "observed": "cdb0e298422760aa9113f23163280d89dad2375a64eb1d0cdc0951aca1d6f63a",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope_artifact_traceability__artifact_path",
+      "expected": "entities/genotype/genotype_observations.tsv",
+      "message": "Preservation scope source_artifact_path reconciles to genotype artifact index.",
+      "observed": "entities/genotype/genotype_observations.tsv",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "scope_artifact_traceability__artifact_sha256",
+      "expected": "50af11d7e13197a0a1241343c32d88dfb1a26bef666d4b7b23f970784bfd715f",
+      "message": "Preservation scope source_artifact_sha256 reconciles to genotype artifact index.",
+      "observed": "50af11d7e13197a0a1241343c32d88dfb1a26bef666d4b7b23f970784bfd715f",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "persisted_row_count",
+      "expected": "1000",
+      "message": "Persisted bounded genotype row count equals the requested 1K scope.",
+      "observed": "1000",
+      "receipt_family": "genotype_count_reconciliation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "genotype_observation_id_uniqueness",
+      "expected": "1000",
+      "message": "Producer genotype_observation_id remains unique within the scope.",
+      "observed": "1000",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "source_row_number_sequence",
+      "expected": "1..1000",
+      "message": "Bounded preservation keeps deterministic first-N source row order.",
+      "observed": "1..1000 (1000 rows)",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "raw_source_rows_reconstructable",
+      "expected": "0",
+      "message": "Every producer row has a reconstructable ordered raw-value representation.",
+      "observed": "0",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "raw_source_row_hash_reconciliation",
+      "expected": "0",
+      "message": "Every raw source-row hash reconciles to its preserved ordered values.",
+      "observed": "0",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "typed_fields_match_raw_source_values",
+      "expected": "0",
+      "message": "Typed/indexed identity fields equal their raw producer values.",
+      "observed": "0",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "producer_observation_split_count",
+      "expected": "0",
+      "message": "No producer genotype observation is split into multiple source rows.",
+      "observed": "0",
+      "receipt_family": "anti_collapse_validation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "identity_coherence__sample_count",
+      "expected": "1",
+      "message": "The preserved 1K scope has one coherent sample identity.",
+      "observed": "1",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "identity_coherence__run_count",
+      "expected": "1",
+      "message": "The preserved 1K scope has one coherent run identity.",
+      "observed": "1",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "identity_coherence__reference_count",
+      "expected": "1",
+      "message": "The preserved 1K scope has one coherent reference build identity.",
+      "observed": "1",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "identity_coherence__vcf_sha_count",
+      "expected": "1",
+      "message": "The preserved 1K scope has one coherent source VCF checksum identity.",
+      "observed": "1",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "identity_coherence__header_hash_count",
+      "expected": "1",
+      "message": "The preserved 1K scope has one coherent source VCF header hash identity.",
+      "observed": "1",
+      "receipt_family": "genotype_identity_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "inheritance_assertion_count",
+      "expected": "0",
+      "message": "Source genotype preservation emits no inheritance assertions.",
+      "observed": "0",
+      "receipt_family": "anti_overclaim_validation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "database_fingerprint_unchanged",
+      "expected": "SQLiteFingerprint(exists=True, size_bytes=120446976, mtime_ns=1784437353093563302, sidecars=())",
+      "message": "Read-only preservation validation does not mutate the SQLite database.",
+      "observed": "SQLiteFingerprint(exists=True, size_bytes=120446976, mtime_ns=1784437353093563302, sidecars=())",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    },
+    {
+      "check_id": "database_sidecars_unchanged",
+      "expected": "[]",
+      "message": "Read-only preservation validation does not create or remove SQLite sidecars.",
+      "observed": "[]",
+      "receipt_family": "source_genotype_observation_preservation_receipt",
+      "status": "passed"
+    }
+  ],
+  "database_path": "results/registration/genotype_preservation_3tep_first1k_smoke/vap_ERR10619300_first1k_smoke/vdb.sqlite",
+  "generated_utc": "2026-07-19T05:02:33Z",
+  "package_id": "7f4ab2d0028ffad26dfcf0fcf8cf1464229168063c80bc9873649d3c64086a75",
+  "preservation_scope_id": "98d7df55c364abc1bbc37bf5a9405cd270df802a8ebeb8678cb79b2157524708",
+  "receipt_statuses": {
+    "anti_collapse_validation_receipt": "passed",
+    "anti_overclaim_validation_receipt": "passed",
+    "genotype_count_reconciliation_receipt": "passed",
+    "genotype_identity_preservation_receipt": "passed",
+    "source_genotype_observation_preservation_receipt": "passed"
+  },
+  "schema_version": "genotype_preservation_validation_report_v1",
+  "scope_label": "genotype_3tep_first1k_smoke_v1",
+  "validated_maturity_state": "genotype_preservation_validated",
+  "validation_scope": "single_registration_database_bounded_first_n",
+  "validation_status": "passed",
+  "validator": {
+    "name": "variant_database.registration.genotype_preservation_validation",
+    "version": "0.1.0"
+  }
+}

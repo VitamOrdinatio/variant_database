@@ -1,0 +1,36 @@
+{
+  "check_count": 44,
+  "check_status_counts": {
+    "passed": 44
+  },
+  "database_path": "results/registration/genotype_preservation_3tep_first1k_smoke/vap_ERR10619300_first1k_smoke/vdb.sqlite",
+  "expected_row_limit": 1000,
+  "failed_check_count": 0,
+  "generated_utc": "2026-07-19T05:02:33Z",
+  "inheritance_assertion_count": 0,
+  "malformed_raw_row_count": 0,
+  "observed_row_count": 1000,
+  "package_id": "7f4ab2d0028ffad26dfcf0fcf8cf1464229168063c80bc9873649d3c64086a75",
+  "preservation_scope_id": "98d7df55c364abc1bbc37bf5a9405cd270df802a8ebeb8678cb79b2157524708",
+  "producer_observation_split_count": 0,
+  "raw_hash_mismatch_count": 0,
+  "receipt_statuses": {
+    "anti_collapse_validation_receipt": "passed",
+    "anti_overclaim_validation_receipt": "passed",
+    "genotype_count_reconciliation_receipt": "passed",
+    "genotype_identity_preservation_receipt": "passed",
+    "source_genotype_observation_preservation_receipt": "passed"
+  },
+  "report_json_path": "results/validation/genotype_preservation_3tep_first1k_smoke/run_2026-07-19T05_02_33Z/vap_ERR10619300_first1k_smoke/genotype_preservation_validation_report.json",
+  "report_tsv_path": "results/validation/genotype_preservation_3tep_first1k_smoke/run_2026-07-19T05_02_33Z/vap_ERR10619300_first1k_smoke/genotype_preservation_validation_report.tsv",
+  "schema_version": "genotype_preservation_validation_summary_v1",
+  "scope_label": "genotype_3tep_first1k_smoke_v1",
+  "source_column_count": 68,
+  "typed_value_mismatch_count": 0,
+  "unique_genotype_observation_id_count": 1000,
+  "validated_maturity_state": "genotype_preservation_validated",
+  "validation_scope": "single_registration_database_bounded_first_n",
+  "validation_status": "passed",
+  "validator_name": "variant_database.registration.genotype_preservation_validation",
+  "validator_version": "0.1.0"
+}
