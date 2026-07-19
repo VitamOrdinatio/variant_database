@@ -5,7 +5,7 @@ from __future__ import annotations
 import sqlite3
 
 
-SCHEMA_VERSION = "0.1.3"
+SCHEMA_VERSION = "0.1.4"
 
 
 def initialize_schema(connection: sqlite3.Connection) -> None:
@@ -281,6 +281,98 @@ def initialize_schema(connection: sqlite3.Connection) -> None:
 
         CREATE INDEX IF NOT EXISTS idx_source_genotype_context_index_kind
             ON source_genotype_context_index(context_kind, parse_status);
+
+
+        CREATE TABLE IF NOT EXISTS source_genotype_preservation_scopes (
+            preservation_scope_id TEXT PRIMARY KEY,
+            package_id TEXT NOT NULL,
+            source_tep_id TEXT NOT NULL,
+            source_artifact_id TEXT NOT NULL,
+            source_artifact_path TEXT NOT NULL,
+            source_artifact_sha256 TEXT NOT NULL,
+            preservation_scope_kind TEXT NOT NULL,
+            scope_label TEXT NOT NULL,
+            row_selection_policy TEXT NOT NULL,
+            requested_row_limit INTEGER,
+            selected_row_count INTEGER NOT NULL,
+            source_declared_row_count INTEGER,
+            first_selected_source_row INTEGER,
+            last_selected_source_row INTEGER,
+            source_column_order_json TEXT NOT NULL,
+            preservation_status TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            UNIQUE(package_id, scope_label),
+            FOREIGN KEY(package_id) REFERENCES tep_packages(package_id),
+            FOREIGN KEY(source_artifact_id) REFERENCES artifacts(artifact_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_preservation_scopes_package
+            ON source_genotype_preservation_scopes(package_id, preservation_status);
+
+        CREATE TABLE IF NOT EXISTS source_genotype_observations (
+            source_genotype_observation_persistence_id TEXT PRIMARY KEY,
+            package_id TEXT NOT NULL,
+            preservation_scope_id TEXT NOT NULL,
+            source_row_number INTEGER NOT NULL,
+            genotype_observation_id TEXT NOT NULL,
+            genotype_observation_id_version TEXT,
+            schema_version TEXT,
+            entity_type TEXT,
+            evidence_class TEXT,
+            sample_id TEXT,
+            sample_alias TEXT,
+            sra_accession TEXT,
+            run_id TEXT,
+            vcf_sample_column_name TEXT,
+            sample_selection_policy TEXT,
+            sample_identity_mapping_status TEXT,
+            source_pipeline TEXT,
+            assay_type TEXT,
+            source_vcf_path TEXT,
+            source_vcf_sha256 TEXT,
+            source_vcf_header_hash TEXT,
+            source_record_ordinal TEXT,
+            source_line_number TEXT,
+            source_record_hash TEXT,
+            reference_build TEXT,
+            chromosome TEXT,
+            position TEXT,
+            reference_allele TEXT,
+            alternate_alleles_raw TEXT,
+            alternate_allele_count TEXT,
+            called_allele_indices TEXT,
+            variant_relationship_status TEXT,
+            relationship_reason TEXT,
+            relationship_resolution_target TEXT,
+            variant_id TEXT,
+            variant_observation_id TEXT,
+            format_raw TEXT,
+            sample_format_raw TEXT,
+            gt_raw TEXT,
+            ad_raw TEXT,
+            dp_raw TEXT,
+            gq_raw TEXT,
+            pl_raw TEXT,
+            ft_raw TEXT,
+            record_parse_status TEXT,
+            record_preservation_status TEXT,
+            raw_source_row_hash TEXT NOT NULL,
+            raw_source_values_json TEXT NOT NULL,
+            UNIQUE(preservation_scope_id, source_row_number),
+            UNIQUE(preservation_scope_id, genotype_observation_id),
+            FOREIGN KEY(package_id) REFERENCES tep_packages(package_id),
+            FOREIGN KEY(preservation_scope_id)
+                REFERENCES source_genotype_preservation_scopes(preservation_scope_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_observations_scope_row
+            ON source_genotype_observations(preservation_scope_id, source_row_number);
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_observations_identity
+            ON source_genotype_observations(package_id, genotype_observation_id);
+
+        CREATE INDEX IF NOT EXISTS idx_source_genotype_observations_source_record
+            ON source_genotype_observations(package_id, source_record_hash);
         """
     )
 

@@ -288,3 +288,202 @@ def persist_genotype_context_index_records(
         connection.commit()
 
     return ids
+
+
+def genotype_preservation_scope_id_for_request(
+    package_id: str,
+    scope_label: str,
+    source_artifact_sha256: str,
+    row_selection_policy: str,
+    requested_row_limit: int | None,
+) -> str:
+    """Return the stable identity for one declared preservation scope."""
+    return stable_hash(
+        [
+            "source_genotype_preservation_scope",
+            package_id,
+            scope_label,
+            source_artifact_sha256,
+            row_selection_policy,
+            "full" if requested_row_limit is None else str(requested_row_limit),
+        ]
+    )
+
+
+def source_genotype_observation_persistence_id(
+    package_id: str,
+    preservation_scope_id: str,
+    genotype_observation_id: str,
+) -> str:
+    """Return a VDB persistence identity without replacing producer identity."""
+    return stable_hash(
+        [
+            "source_genotype_observation",
+            package_id,
+            preservation_scope_id,
+            genotype_observation_id,
+        ]
+    )
+
+
+def persist_genotype_preservation_scope(
+    connection: sqlite3.Connection,
+    record: dict[str, object],
+    commit: bool = True,
+) -> str:
+    """Persist one explicit genotype preservation scope."""
+    connection.execute(
+        """
+        INSERT INTO source_genotype_preservation_scopes (
+            preservation_scope_id,
+            package_id,
+            source_tep_id,
+            source_artifact_id,
+            source_artifact_path,
+            source_artifact_sha256,
+            preservation_scope_kind,
+            scope_label,
+            row_selection_policy,
+            requested_row_limit,
+            selected_row_count,
+            source_declared_row_count,
+            first_selected_source_row,
+            last_selected_source_row,
+            source_column_order_json,
+            preservation_status,
+            payload_json
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            record["preservation_scope_id"],
+            record["package_id"],
+            record["source_tep_id"],
+            record["source_artifact_id"],
+            record["source_artifact_path"],
+            record["source_artifact_sha256"],
+            record["preservation_scope_kind"],
+            record["scope_label"],
+            record["row_selection_policy"],
+            record["requested_row_limit"],
+            _required_int(record["selected_row_count"], "selected_row_count"),
+            record["source_declared_row_count"],
+            record["first_selected_source_row"],
+            record["last_selected_source_row"],
+            record["source_column_order_json"],
+            record["preservation_status"],
+            record["payload_json"],
+        ),
+    )
+    if commit:
+        connection.commit()
+    return str(record["preservation_scope_id"])
+
+
+def persist_source_genotype_observation_batch(
+    connection: sqlite3.Connection,
+    records: list[dict[str, object]],
+    commit: bool = True,
+) -> list[str]:
+    """Persist a bounded batch of immutable producer genotype rows."""
+    if not records:
+        return []
+
+    columns = (
+        "source_genotype_observation_persistence_id",
+        "package_id",
+        "preservation_scope_id",
+        "source_row_number",
+        "genotype_observation_id",
+        "genotype_observation_id_version",
+        "schema_version",
+        "entity_type",
+        "evidence_class",
+        "sample_id",
+        "sample_alias",
+        "sra_accession",
+        "run_id",
+        "vcf_sample_column_name",
+        "sample_selection_policy",
+        "sample_identity_mapping_status",
+        "source_pipeline",
+        "assay_type",
+        "source_vcf_path",
+        "source_vcf_sha256",
+        "source_vcf_header_hash",
+        "source_record_ordinal",
+        "source_line_number",
+        "source_record_hash",
+        "reference_build",
+        "chromosome",
+        "position",
+        "reference_allele",
+        "alternate_alleles_raw",
+        "alternate_allele_count",
+        "called_allele_indices",
+        "variant_relationship_status",
+        "relationship_reason",
+        "relationship_resolution_target",
+        "variant_id",
+        "variant_observation_id",
+        "format_raw",
+        "sample_format_raw",
+        "gt_raw",
+        "ad_raw",
+        "dp_raw",
+        "gq_raw",
+        "pl_raw",
+        "ft_raw",
+        "record_parse_status",
+        "record_preservation_status",
+        "raw_source_row_hash",
+        "raw_source_values_json",
+    )
+    placeholders = ", ".join("?" for _ in columns)
+    connection.executemany(
+        f"""
+        INSERT INTO source_genotype_observations (
+            {", ".join(columns)}
+        )
+        VALUES ({placeholders})
+        """,
+        [tuple(record.get(column) for column in columns) for record in records],
+    )
+    if commit:
+        connection.commit()
+    return [
+        str(record["source_genotype_observation_persistence_id"])
+        for record in records
+    ]
+
+
+def update_genotype_preservation_scope_completion(
+    connection: sqlite3.Connection,
+    *,
+    preservation_scope_id: str,
+    selected_row_count: int,
+    first_selected_source_row: int | None,
+    last_selected_source_row: int | None,
+    preservation_status: str,
+    commit: bool = True,
+) -> None:
+    """Finalize one scope after all selected source rows persist."""
+    connection.execute(
+        """
+        UPDATE source_genotype_preservation_scopes
+        SET selected_row_count = ?,
+            first_selected_source_row = ?,
+            last_selected_source_row = ?,
+            preservation_status = ?
+        WHERE preservation_scope_id = ?
+        """,
+        (
+            selected_row_count,
+            first_selected_source_row,
+            last_selected_source_row,
+            preservation_status,
+            preservation_scope_id,
+        ),
+    )
+    if commit:
+        connection.commit()
