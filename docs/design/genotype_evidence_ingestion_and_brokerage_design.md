@@ -49,18 +49,36 @@ This document governs VDB behavior for:
 
 ```text
 modern TEP-VAP genotype artifact discovery
+
 execution provenance context registration
+
 lossless genotype observation registration
+
 direct genotype-to-variant relationship registration
+
 complex genotype relationship preservation
+
 multiallelic relationship brokerage
+
 spanning-deletion conservative handling
+
 genotype declaration set preparation
+
 genotype-aware Assertion Record preparation
+
 genotype-aware Evidence Topology preparation
+
 validation receipt design
+
 legacy compatibility behavior
+
+producer-family-aware genotype applicability, capability, and maturity
+classification in mixed VDB corpora
 ```
+
+This does not make the document responsible for GSC gene-evidence ingestion.
+
+It only establishes the genotype classification boundary encountered by VDB.
 
 This document does not define:
 
@@ -200,6 +218,16 @@ This design must support the following goals:
     Topology.
 
 12. Emit validation receipts proving no producer-truth collapse occurred.
+
+13. Preserve producer-specific evidence grammars in mixed VDB corpora using
+    coherent producer-aware applicability, capability, and maturity states,
+    without:
+
+    misclassifying genotype-not-applicable packages as legacy genotype packages
+
+    assigning genotype_discovered to genotype-not-applicable packages
+
+    assigning genotype_maturity_not_applicable to genotype-applicable packages
 ```
 
 ---
@@ -264,12 +292,26 @@ entities/genotype/genotype_source_header_context.json
 VDB must not classify a TEP-VAP package as genotype-enabled if only part of this
 artifact set is present.
 
-Discovery outcomes should use the canonical VDB genotype capability vocabulary:
+Package discovery must assign three distinct states:
+
+```text
+producer genotype applicability
+
+package genotype capability
+
+validated genotype maturity
+```
+
+These states must be persisted as one coherent package classification.
+
+The canonical genotype capability vocabulary is:
 
 ```text
 genotype_capability_available
 
 genotype_capability_unavailable_legacy
+
+genotype_capability_not_applicable
 
 genotype_capability_incomplete
 
@@ -278,12 +320,107 @@ genotype_capability_invalid
 genotype_capability_unsupported_version
 ```
 
+For genotype-applicable producer packages, the discovery-tier maturity state is:
+
+```text
+genotype_discovered
+```
+
+For producer package types whose evidence domains exclude genotype, the required
+maturity state is:
+
+```text
+genotype_maturity_not_applicable
+```
+
+`genotype_maturity_not_applicable` is not part of the cumulative genotype
+maturity progression.
+
+It means that genotype maturity does not apply to the producer package's
+evidence grammar.
+
+Package-classification completion must be represented separately through:
+
+```text
+classification_status = classified
+```
+
+It must not be represented by assigning `genotype_discovered` to a
+genotype-not-applicable package.
+
+Canonical package-level classifications are:
+
+```text
+modern genotype-capable TEP-VAP:
+    producer_family =
+        VAP
+
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_available
+
+    genotype_maturity_state =
+        genotype_discovered
+
+legacy variant-only TEP-VAP:
+    producer_family =
+        VAP
+
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_unavailable_legacy
+
+    genotype_maturity_state =
+        genotype_discovered
+
+TEP-GSC:
+    producer_family =
+        GSC
+
+    producer_genotype_applicability_state =
+        genotype_not_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_not_applicable
+
+    genotype_maturity_state =
+        genotype_maturity_not_applicable
+```
+
+Legacy unavailability applies only when genotype belongs to the producer
+package's evidence domain but was not emitted by the legacy package.
+
 A partial genotype artifact set must never be classified as legacy.
 
 Legacy means no genotype artifact set is present.
 
 Incomplete means one or more genotype artifacts are present but the canonical
 genotype artifact set is not complete.
+
+A genotype-not-applicable producer package must not synthesize:
+
+```text
+genotype artifact rows
+
+source genotype observations
+
+genotype relationship inputs
+
+direct genotype relationships
+
+derived genotype relationships
+
+brokerage receipts
+```
+
+Future producer families must receive explicit producer-specific applicability,
+capability, and maturity rules.
+
+They must not silently inherit TEP-VAP or TEP-GSC classification behavior.
 
 Trusted genotype-aware ingestion requires:
 
@@ -996,6 +1133,22 @@ safe brokerage.
 Minimum validation receipt topics:
 
 ```text
+package classification uniqueness
+
+producer-family classifier dispatch
+
+producer genotype applicability validation
+
+genotype capability validation
+
+genotype maturity validation
+
+capability/applicability pairing validation
+
+maturity/applicability pairing validation
+
+classification_status validation
+
 genotype artifact-set completeness
 
 canonical genotype artifact checksum reconciliation for trusted modern genotype
@@ -1055,7 +1208,32 @@ spanning-deletion conservative state count
 no producer observation splitting
 
 no inheritance interpretation emitted
+
+mixed-corpus genotype-applicable package count
+
+mixed-corpus genotype-not-applicable package count
+
+genotype-applicable package maturity floor
+
+mixed-corpus evaluation status
 ```
+
+An ordered corpus maturity floor must be calculated only across
+genotype-applicable packages.
+
+```text
+genotype_maturity_not_applicable
+```
+
+must be excluded from ordered maturity comparison.
+
+Three independent package validations do not establish:
+
+```text
+mixed_corpus_exercised = true
+```
+
+That claim requires a corpus-level evaluation of the declared package set.
 
 Validation should fail if VDB:
 
@@ -1079,7 +1257,7 @@ emits inheritance conclusions
 
 ## 20. Legacy Compatibility Mode
 
-Older TEP-VAP packages may lack genotype artifacts.
+Older genotype-applicable TEP-VAP packages may lack genotype artifacts.
 
 VDB may support them under explicit compatibility states:
 
@@ -1094,6 +1272,46 @@ genotype_projection_not_evaluated
 ```
 
 Legacy compatibility mode must not infer genotype.
+
+This mode applies only when genotype belongs to the producer package's evidence
+domain but was not emitted by a legacy package.
+
+It does not apply to producer package types whose evidence domain excludes
+genotype. Those packages use:
+
+```text
+producer_genotype_applicability_state =
+    genotype_not_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_not_applicable
+
+genotype_maturity_state =
+    genotype_maturity_not_applicable
+```
+
+A legacy variant-only TEP-VAP remains genotype-applicable.
+
+Its coherent discovery-tier classification is:
+
+```text
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_unavailable_legacy
+
+genotype_maturity_state =
+    genotype_discovered
+```
+
+For a legacy TEP-VAP package, `genotype_discovered` means that applicability and
+capability classification completed.
+
+It does not mean that genotype observations exist.
+
+The package must not advance to a higher genotype maturity tier without the
+required genotype substrate and passing validation receipts.
 
 VDB must not treat absent genotype artifacts as:
 
@@ -1122,6 +1340,8 @@ This design anticipates, but does not finalize, the following possible VDB
 implementation surfaces:
 
 ```text
+source_genotype_package_classifications
+
 source_genotype_observations
 
 genotype_artifact_index
@@ -1148,6 +1368,32 @@ genotype_topology_relationship_basis
 
 genotype_evidence_validation_summary
 ```
+
+`source_genotype_package_classifications` is the package-level discovery
+surface.
+
+It records:
+
+```text
+package_id
+
+producer_family
+
+producer_genotype_applicability_state
+
+genotype_capability_state
+
+genotype_maturity_state
+
+classification_status
+
+classification_reason
+
+trusted_modern_ingestion_ready
+```
+
+The classification surface must remain distinct from row-level genotype evidence
+surfaces.
 
 These names align with the logical schema document.
 
@@ -1220,6 +1466,30 @@ This design is successful when it gives DEX-VDB a clear path to implement:
 11. genotype-informed Evidence Topology
 
 12. validation receipts proving no loss, collapse, or reasoning overreach
+
+13. producer-aware genotype classification that distinguishes:
+
+    modern genotype-capable TEP-VAP:
+        genotype_applicable_to_producer_type
+        genotype_capability_available
+        genotype_discovered
+
+    legacy variant-only TEP-VAP:
+        genotype_applicable_to_producer_type
+        genotype_capability_unavailable_legacy
+        genotype_discovered
+
+    TEP-GSC:
+        genotype_not_applicable_to_producer_type
+        genotype_capability_not_applicable
+        genotype_maturity_not_applicable
+
+14. package classification completion represented by `classification_status`,
+    not by misuse of genotype maturity
+
+15. corpus maturity floors calculated only across genotype-applicable packages
+
+16. `mixed_corpus_exercised = true` supported only by a corpus-level evaluation
 ```
 
 The design is not successful if implementation would:
@@ -1232,6 +1502,19 @@ treat genotype as a late projection overlay
 create synthetic producer genotype observations
 
 force RDGP to reconstruct VCF allele-index logic
+
+classify TEP-GSC as genotype_capability_unavailable_legacy
+
+assign genotype_discovered to TEP-GSC
+
+assign genotype_capability_not_applicable to a TEP-VAP package
+
+assign genotype_maturity_not_applicable to a TEP-VAP package
+
+compute an ordered maturity floor across genotype-applicable and
+genotype-not-applicable packages
+
+silently assign future producer families the TEP-GSC applicability rule
 
 emit inheritance conclusions inside VDB
 ```
@@ -1299,6 +1582,22 @@ the code and test sequence
 ---
 
 ## 25. Final Doctrine
+
+VDB classifies producer packages before genotype-specific ingestion.
+
+For genotype-applicable packages, discovery-tier maturity begins at:
+
+```text
+genotype_discovered
+```
+
+For genotype-not-applicable packages, the required terminal state is:
+
+```text
+genotype_maturity_not_applicable
+```
+
+Package classification completion remains distinct from genotype maturity.
 
 VDB ingests genotype observations as immutable producer evidence.
 

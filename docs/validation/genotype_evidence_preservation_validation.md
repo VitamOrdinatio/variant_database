@@ -17,6 +17,12 @@
 This document defines how VDB validates preservation of first-class genotype
 evidence from genotype-capable TEP-VAP packages.
 
+For producer package types whose evidence domains exclude genotype, this
+document validates package-level genotype scope classification only.
+
+It does not validate genotype evidence preservation for those packages because
+no genotype evidence substrate is expected to exist.
+
 The architecture document defines what must remain true.
 
 The design document defines how genotype evidence should move through VDB.
@@ -208,12 +214,26 @@ This state must remain explicit.
 
 ## 4A. Genotype Maturity Validation Vocabulary
 
-Genotype validation is maturity-tiered.
+Genotype maturity validation is producer-aware.
 
-A package, corpus, or VDB build must not claim a higher genotype maturity state
-than its validation receipts support.
+Validation must distinguish:
 
-Recommended maturity states are:
+```text
+the cumulative genotype maturity progression for genotype-applicable producer
+packages
+
+and
+
+the terminal genotype-not-applicable state for producer package types whose
+evidence domains exclude genotype
+```
+
+These states must not be placed on one ordered maturity ladder.
+
+### 4A.1 Genotype-Applicable Maturity Progression
+
+For genotype-applicable producer packages, the allowed cumulative maturity
+states are:
 
 ```text
 genotype_discovered
@@ -238,6 +258,10 @@ Validation must prove the prerequisite receipts for each claimed maturity state.
 For example:
 
 ```text
+genotype_discovered
+    requires package-level applicability, capability, and maturity pairing
+    validation
+
 genotype_preservation_validated
     requires source genotype observation preservation validation
 
@@ -260,8 +284,94 @@ genotype_projection_ready
     requires later projection-surface validation outside this document
 ```
 
-A build may pass lower-tier genotype validation without passing higher-tier
-validation.
+A genotype-applicable package may pass a lower-tier validation without passing a
+higher-tier validation.
+
+### 4A.2 Genotype-Not-Applicable Maturity State
+
+For a producer package type whose evidence domain excludes genotype, the required
+maturity state is:
+
+```text
+genotype_maturity_not_applicable
+```
+
+This state is not part of the cumulative genotype maturity progression.
+
+It means:
+
+```text
+genotype maturity does not apply to the producer package's evidence grammar
+```
+
+It does not mean:
+
+```text
+genotype evidence was discovered
+
+genotype evidence is missing
+
+genotype evidence failed validation
+
+the package is a legacy genotype-applicable package
+```
+
+Package classification completion must be represented through:
+
+```text
+classification_status = classified
+```
+
+and through passing package-classification validation receipts.
+
+It must not be represented by assigning `genotype_discovered`.
+
+### 4A.3 Required Producer-Aware Pairings
+
+Validation must enforce at minimum:
+
+```text
+modern genotype-capable TEP-VAP:
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_available
+
+    genotype_maturity_state =
+        genotype_discovered
+
+legacy variant-only TEP-VAP:
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_unavailable_legacy
+
+    genotype_maturity_state =
+        genotype_discovered
+
+TEP-GSC:
+    producer_genotype_applicability_state =
+        genotype_not_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_not_applicable
+
+    genotype_maturity_state =
+        genotype_maturity_not_applicable
+```
+
+Validation must fail when:
+
+```text
+a genotype-not-applicable producer package is assigned genotype_discovered
+
+a genotype-applicable producer package is assigned
+genotype_maturity_not_applicable
+
+a producer family lacks an explicit genotype classification rule
+```
 
 ---
 
@@ -316,6 +426,12 @@ legacy_genotype_inference_detected
 
 unexpected_genotype_for_producer_type
 
+capability_applicability_pairing_error
+
+maturity_applicability_pairing_error
+
+producer_classification_rule_missing
+
 mixed_corpus_genotype_scope_error
 ```
 
@@ -325,14 +441,37 @@ Failure classes should be stable enough to support downstream review.
 
 ## 6. Package Classification Validation
 
-Every ingested package must receive exactly one genotype capability state.
+Every registered producer package must receive exactly one package-level
+genotype classification.
 
-Allowed states:
+The classification must record three separate axes:
+
+```text
+producer genotype applicability
+
+package genotype capability
+
+validated genotype maturity
+```
+
+Validation must also confirm that package classification completed successfully.
+
+Allowed applicability states are:
+
+```text
+genotype_applicable_to_producer_type
+
+genotype_not_applicable_to_producer_type
+```
+
+Allowed capability states are:
 
 ```text
 genotype_capability_available
 
 genotype_capability_unavailable_legacy
+
+genotype_capability_not_applicable
 
 genotype_capability_incomplete
 
@@ -341,19 +480,104 @@ genotype_capability_invalid
 genotype_capability_unsupported_version
 ```
 
+Allowed maturity states are:
+
+```text
+genotype_discovered
+
+genotype_preservation_validated
+
+genotype_direct_relationships_registered
+
+genotype_complex_relationships_preserved
+
+genotype_brokerage_evaluated
+
+genotype_assertion_ready
+
+genotype_topology_ready
+
+genotype_projection_ready
+
+genotype_maturity_not_applicable
+```
+
 Validation must prove:
 
 ```text
-one and only one state was assigned
+exactly one package-classification row exists for the registered package
 
-state assignment follows specification rules
+exactly one applicability state was assigned
+
+exactly one capability state was assigned
+
+exactly one maturity state was assigned
+
+classification_status = classified
+
+producer_family has an explicit genotype classification rule
+
+state assignment follows producer-specific specification rules
+
+producer applicability and capability form a coherent pair
+
+producer applicability and maturity form a coherent pair
 
 partial genotype artifact sets are not classified as legacy
 
 unsupported versions are not silently coerced
 
 invalid genotype-capable packages do not enter trusted genotype ingestion
+
+genotype_capability_not_applicable is used only with
+    genotype_not_applicable_to_producer_type
+
+genotype_maturity_not_applicable is used only with
+    genotype_not_applicable_to_producer_type
+
+genotype_capability_unavailable_legacy is used only when genotype applies to
+    the producer family but was not emitted by a legacy package
+
+genotype_discovered is not assigned to a genotype-not-applicable producer
+package
+
+genotype-capable TEP-VAP packages are not assigned
+    genotype_capability_not_applicable
+
+genotype-applicable TEP-VAP packages are not assigned
+    genotype_maturity_not_applicable
+
+genotype-not-applicable producer packages are not assigned
+    genotype_capability_unavailable_legacy
 ```
+
+Current required producer-family behavior is:
+
+```text
+producer_family = VAP:
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state must be a governed TEP-VAP capability state
+
+    genotype_maturity_state must be a governed genotype-applicable maturity
+    state
+
+producer_family = GSC:
+    producer_genotype_applicability_state =
+        genotype_not_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_not_applicable
+
+    genotype_maturity_state =
+        genotype_maturity_not_applicable
+```
+
+Future producer families must receive explicit producer-specific validation
+rules.
+
+They must not silently inherit VAP or GSC behavior.
 
 Expected receipt family:
 
@@ -364,13 +588,36 @@ genotype_package_classification_receipt
 Required receipt fields should include:
 
 ```text
-source_package_id
-producer_type
+package_id
+
+tep_id when available
+
+producer_family
+
+producer_type when retained
+
+producer_genotype_applicability_state
+
 genotype_capability_state
-classification_basis
+
+genotype_maturity_state
+
+genotype_artifact_set_status
+
+execution_provenance_status
+
+classification_status
+
+classification_reason
+
+trusted_modern_ingestion_ready
+
 artifact_presence_summary
+
 schema_version_summary
+
 validation_status
+
 failure_classes
 ```
 
@@ -1180,12 +1427,35 @@ anti_overclaim_validation_receipt
 
 ## 22. Legacy Compatibility Validation
 
-Legacy compatibility validation applies to older TEP-VAP packages without
-first-class genotype artifacts.
+Legacy compatibility validation applies to older genotype-applicable TEP-VAP
+packages without first-class genotype artifacts.
+
+It does not apply to producer package types whose evidence domain excludes
+genotype. Those packages must use:
+
+```text
+producer_genotype_applicability_state =
+    genotype_not_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_not_applicable
+
+genotype_maturity_state =
+    genotype_maturity_not_applicable
+```
 
 Validation must prove:
 
 ```text
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_unavailable_legacy
+
+genotype_maturity_state =
+    genotype_discovered
+
 legacy package has no genotype artifact set
 
 package is otherwise valid for variant-only ingestion
@@ -1202,6 +1472,11 @@ no homozygous-reference or no-call state is inferred
 
 no genotype opportunity or negative evidence is inferred
 ```
+
+For a legacy TEP-VAP package, `genotype_discovered` certifies completed
+applicability and capability classification.
+
+It does not certify that genotype observations exist.
 
 Recommended explicit states:
 
@@ -1225,37 +1500,134 @@ legacy_compatibility_validation_receipt
 
 ## 23. Mixed-Corpus Validation
 
-VDB corpora may contain multiple producer types.
+VDB corpora may contain multiple producer families with different evidence
+grammars.
 
-In the near-term 5-TEP local corpus, genotype validation applies to:
+Mixed-corpus genotype validation must evaluate package scope without requiring
+every package to contain genotype evidence.
 
-```text
-TEP-VAP packages:
-    genotype evidence validation applies when genotype artifacts are present
-```
-
-For TEP-GSC packages, genotype validation should record:
+In the near-term three-TEP proof corpus:
 
 ```text
-genotype_not_applicable_to_producer_type
+ERR10619300 TEP-VAP:
+    sample_id × variant_id
+    sample_id × genotype_observation_id
+
+epilepsy TEP-GSC:
+    phenotype_id × gene_id
+
+mitochondrial-disease TEP-GSC:
+    phenotype_id × gene_id
 ```
 
-and must not fail the corpus merely because GSC does not emit genotype evidence.
+The required package-level classifications are:
+
+```text
+ERR10619300 TEP-VAP:
+    producer_family =
+        VAP
+
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_available
+
+    genotype_maturity_state =
+        genotype_discovered
+
+both TEP-GSC packages:
+    producer_family =
+        GSC
+
+    producer_genotype_applicability_state =
+        genotype_not_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_not_applicable
+
+    genotype_maturity_state =
+        genotype_maturity_not_applicable
+```
 
 Mixed-corpus validation must prove:
 
 ```text
-producer_type is recorded for every package
+producer_family is recorded for every package
 
-producer type is respected
+producer-specific classification rules are respected
 
-TEP-VAP genotype packages are validated under genotype rules
+TEP-VAP genotype packages are validated under genotype-applicable rules
 
 TEP-GSC packages are not misclassified as failed genotype packages
 
-corpus-level summaries distinguish genotype-applicable and genotype-not-applicable
-packages
+TEP-GSC packages are not classified as
+    genotype_capability_unavailable_legacy
+
+TEP-GSC packages are not assigned genotype_discovered
+
+genotype-applicable TEP-VAP packages are not classified as
+    genotype_capability_not_applicable
+
+genotype-applicable TEP-VAP packages are not assigned
+    genotype_maturity_not_applicable
+
+corpus-level summaries distinguish genotype-applicable,
+genotype-not-applicable, legacy genotype-unavailable, incomplete, invalid, and
+quarantined packages
 ```
+
+A mixed-corpus receipt must not compute an ordered genotype maturity minimum
+across genotype-applicable and genotype-not-applicable packages.
+
+`genotype_maturity_not_applicable` is not an ordered maturity tier.
+
+Instead, the receipt should report:
+
+```text
+package_count
+
+genotype_applicable_count
+
+genotype_not_applicable_count
+
+legacy_genotype_unavailable_count
+
+invalid_or_incomplete_count
+
+genotype_applicable_package_maturity_floor
+
+mixed_corpus_exercised
+```
+
+For the near-term three-TEP proof corpus, the expected values are:
+
+```text
+package_count = 3
+
+genotype_applicable_count = 1
+
+genotype_not_applicable_count = 2
+
+legacy_genotype_unavailable_count = 0
+
+invalid_or_incomplete_count = 0
+
+genotype_applicable_package_maturity_floor =
+    genotype_discovered
+
+mixed_corpus_exercised = true
+```
+
+Three independent single-package validations do not by themselves establish:
+
+```text
+mixed_corpus_exercised = true
+```
+
+That claim requires one corpus-level evaluation that consumes all declared
+package classifications together and validates the aggregate counts and
+producer-aware pairings.
 
 Expected receipt family:
 
@@ -1323,13 +1695,25 @@ This document defines receipt responsibilities, not physical file formats.
 A genotype validation summary should include at minimum:
 
 ```text
-source_package_id
+package_id
 
-producer_type
+tep_id when available
+
+producer_family
+
+producer_type when retained
+
+producer_genotype_applicability_state
 
 genotype_capability_state
 
 genotype_maturity_state
+
+classification_status
+
+classification_reason
+
+trusted_modern_ingestion_ready
 
 genotype_artifact_set_status
 
@@ -1391,6 +1775,10 @@ inheritance_assertion_count
 
 execution_provenance_misclassified_count
 
+producer_capability_applicability_pairing_status
+
+producer_maturity_applicability_pairing_status
+
 validation_status
 
 failure_classes
@@ -1399,6 +1787,12 @@ failure_classes
 Expected invariant values:
 
 ```text
+classification_status = classified
+
+producer_capability_applicability_pairing_status = pass
+
+producer_maturity_applicability_pairing_status = pass
+
 producer_observation_split_count = 0
 
 inheritance_assertion_count = 0
@@ -1406,7 +1800,10 @@ inheritance_assertion_count = 0
 execution_provenance_misclassified_count = 0
 ```
 
-Any nonzero value for these three metrics must fail trusted genotype validation.
+Any failed package-classification pairing must fail validation.
+
+Any nonzero value for the three count-based anti-collapse and anti-overclaim
+metrics must fail trusted genotype validation.
 
 ---
 
@@ -1484,7 +1881,21 @@ Genotype evidence preservation validation succeeds when VDB can prove:
 16. mixed corpora distinguish genotype-applicable and genotype-not-applicable
     producer packages
 
-17. no VDB layer emits inheritance conclusions during genotype ingestion,
+17. genotype-applicable packages use only genotype-applicable maturity states
+
+18. genotype-not-applicable packages use
+    `genotype_maturity_not_applicable` and are not assigned
+    `genotype_discovered`
+
+19. package classification status remains distinct from genotype maturity
+
+20. mixed-corpus receipts report a maturity floor only across
+    genotype-applicable packages
+
+21. `mixed_corpus_exercised = true` is claimed only after one corpus-level
+    evaluation of the declared package set
+
+22. no VDB layer emits inheritance conclusions during genotype ingestion,
     declaration, or topology preparation
 ```
 

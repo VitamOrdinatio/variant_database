@@ -133,6 +133,56 @@ genotype_projection_ready
 Maturity states are cumulative only when their prerequisite validation receipts
 have passed.
 
+Because this specification governs TEP-VAP packages, every package classified
+under it has:
+
+```text
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+```
+
+The initial classification-level maturity state is:
+
+```text
+genotype_maturity_state =
+    genotype_discovered
+```
+
+This state means that VDB evaluated TEP-VAP genotype applicability and package
+capability.
+
+It does not by itself mean:
+
+```text
+genotype observations were emitted
+
+genotype observations were preserved
+
+the package is eligible for trusted genotype ingestion
+
+direct relationships were registered
+
+complex relationships were preserved
+
+brokerage was evaluated
+```
+
+A TEP-VAP package MUST NOT be assigned:
+
+```text
+genotype_maturity_not_applicable
+```
+
+That state is reserved for producer package types whose declared evidence
+domains exclude genotype.
+
+A correctly classified incomplete, invalid, or unsupported-version TEP-VAP may
+remain at `genotype_discovered` while trusted genotype ingestion is rejected or
+quarantined.
+
+Such a package MUST NOT advance to a higher maturity state until the blocking
+condition is resolved and the required validation receipts pass.
+
 A VDB build may be genotype-preserving before it is genotype-brokered.
 
 A VDB build may be genotype-brokered before it is genotype-projection-ready.
@@ -171,8 +221,39 @@ authority for VDB.
 
 ## 5. Package Classification
 
-VDB MUST classify every TEP-VAP package with respect to genotype capability
-before trusted ingestion.
+VDB MUST create exactly one package-level genotype classification for every
+TEP-VAP package before trusted ingestion.
+
+The classification MUST record:
+
+```text
+producer_family =
+    VAP
+
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+
+genotype_capability_state =
+    one governed TEP-VAP capability state
+
+genotype_maturity_state =
+    genotype_discovered
+
+classification_status =
+    classified
+
+classification_reason =
+    governed producer-specific reason
+
+trusted_modern_ingestion_ready =
+    producer- and capability-appropriate value
+```
+
+Package classification completion and trusted genotype-ingestion eligibility
+are separate determinations.
+
+A package may be correctly classified while remaining ineligible for trusted
+genotype ingestion.
 
 Allowed package-level genotype capability states are:
 
@@ -187,6 +268,36 @@ genotype_capability_invalid
 
 genotype_capability_unsupported_version
 ```
+
+Every TEP-VAP package governed by this specification has:
+
+```text
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+```
+
+`genotype_capability_not_applicable` and
+`genotype_maturity_not_applicable` are reserved for producer package types whose
+declared evidence domains exclude genotype.
+
+VDB MUST NOT assign either state to a TEP-VAP package.
+
+The required TEP-VAP maturity/applicability pairing is:
+
+```text
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+
+genotype_maturity_state =
+    genotype_discovered
+```
+
+Higher genotype-applicable maturity states MAY replace
+`genotype_discovered` only after their prerequisite validation receipts pass.
+
+Mixed-producer classification, including TEP-GSC not-applicable handling, is
+governed by the ecosystem-level schema, validation, contract, and implementation
+plan.
 
 ### 5.1 `genotype_capability_available`
 
@@ -222,6 +333,43 @@ the package is otherwise valid for variant-only ingestion
 
 Legacy unavailability MUST NOT be used when a partial genotype artifact set is
 present.
+
+`genotype_capability_unavailable_legacy` applies only to genotype-applicable
+TEP-VAP packages that predate first-class genotype emission.
+
+The coherent legacy package classification is:
+
+```text
+producer_family =
+    VAP
+
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_unavailable_legacy
+
+genotype_maturity_state =
+    genotype_discovered
+
+classification_status =
+    classified
+
+trusted_modern_ingestion_ready =
+    false
+```
+
+For a legacy TEP-VAP package, `genotype_discovered` means that genotype
+applicability and capability classification completed.
+
+It does not mean that genotype observations exist.
+
+A legacy package MUST NOT advance beyond `genotype_discovered` without a
+producer genotype substrate and the validation receipts required by the higher
+maturity state.
+
+`genotype_capability_unavailable_legacy` MUST NOT be used for producer package
+types whose evidence domains exclude genotype.
 
 ### 5.3 `genotype_capability_incomplete`
 
@@ -259,6 +407,28 @@ Unsupported-version genotype artifacts MAY be preserved for audit.
 
 They MUST NOT be registered into active trusted genotype structures without an
 explicit governed migration.
+
+For capability states:
+
+```text
+genotype_capability_incomplete
+
+genotype_capability_invalid
+
+genotype_capability_unsupported_version
+```
+
+a correctly completed package classification MAY retain:
+
+```text
+genotype_maturity_state =
+    genotype_discovered
+```
+
+This records successful producer-aware classification only.
+
+It MUST NOT be interpreted as trusted genotype evidence, row-level preservation,
+or permission to advance into a higher maturity state.
 
 ---
 
@@ -1037,7 +1207,7 @@ policy
 
 ## 22. Legacy Compatibility Requirements
 
-For packages classified as:
+For genotype-applicable TEP-VAP packages classified as:
 
 ```text
 genotype_capability_unavailable_legacy
@@ -1045,6 +1215,9 @@ genotype_capability_unavailable_legacy
 
 VDB MAY proceed with variant-only trusted ingestion if all non-genotype
 package requirements pass.
+
+This compatibility path does not apply to producer package types whose evidence
+domain excludes genotype.
 
 VDB MUST explicitly label legacy mode using states such as:
 
@@ -1126,6 +1299,21 @@ attempted complex-to-direct silent promotion
 
 attempted synthetic producer genotype row creation
 
+assignment of genotype_capability_not_applicable to a TEP-VAP package
+
+assignment of genotype_maturity_not_applicable to a TEP-VAP package
+
+assignment of a producer genotype applicability state other than
+genotype_applicable_to_producer_type to a TEP-VAP package
+
+missing or conflicting package-level genotype classification
+
+missing producer_family = VAP classifier dispatch
+
+capability/applicability pairing failure
+
+maturity/applicability pairing failure
+
 attempted inheritance interpretation during ingestion
 ```
 
@@ -1155,7 +1343,25 @@ A trusted genotype ingestion run MUST emit or record validation receipts
 covering at minimum:
 
 ```text
+package classification uniqueness
+
+producer_family = VAP classifier dispatch
+
+package producer genotype applicability classification
+
 package genotype capability classification
+
+package genotype maturity classification
+
+classification_status validation
+
+classification_reason capture
+
+trusted_modern_ingestion_ready validation
+
+capability/applicability pairing validation
+
+maturity/applicability pairing validation
 
 genotype artifact-set completeness
 
@@ -1210,6 +1416,25 @@ spanning-deletion conservative state count
 producer observation split count
 
 inheritance assertion count emitted by VDB ingestion
+```
+
+The expected TEP-VAP classification invariant is:
+
+```text
+producer_family = VAP
+
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+
+genotype_maturity_state !=
+    genotype_maturity_not_applicable
+```
+
+At package-discovery maturity, the expected value is:
+
+```text
+genotype_maturity_state =
+    genotype_discovered
 ```
 
 The expected value for producer observation split count is:
@@ -1268,48 +1493,225 @@ That policy remains authoritative for VDB relationship brokerage doctrine.
 
 ## 26. Success Criteria
 
-This specification is satisfied when VDB can demonstrate that a modern
-genotype-capable TEP-VAP package is ingested only if:
+This specification is satisfied when VDB can demonstrate the success criteria
+appropriate to each TEP-VAP package's capability state and claimed genotype
+maturity.
+
+### 26.1 Package Classification Criteria
+
+The following criteria apply to every TEP-VAP package:
 
 ```text
-1. The genotype artifact set is complete.
+1. Exactly one package-level genotype classification exists.
 
-2. Required versions are supported.
+2. The package classification records:
+
+       producer_family =
+           VAP
+
+3. The package is classified with:
+
+       producer_genotype_applicability_state =
+           genotype_applicable_to_producer_type
+
+4. The package is assigned exactly one governed TEP-VAP genotype capability
+   state.
+
+5. The package is not assigned:
+
+       genotype_capability_not_applicable
+
+   or:
+
+       genotype_maturity_not_applicable
+
+6. At package-classification maturity, the package records:
+
+       genotype_maturity_state =
+           genotype_discovered
+
+7. classification_status records successful package classification separately
+   from trusted genotype-ingestion eligibility.
+
+8. classification_reason records the governed basis for the assigned capability
+   and maturity states.
+
+9. trusted_modern_ingestion_ready accurately records whether the package may
+   enter trusted modern genotype ingestion.
+
+10. Capability, applicability, and maturity states form a valid TEP-VAP
+    producer-aware pairing.
+```
+
+Successful package classification does not by itself establish that genotype
+observations exist or that trusted genotype ingestion is permitted.
+
+### 26.2 Trusted Modern Genotype Ingestion Criteria
+
+The following criteria apply when:
+
+```text
+genotype_capability_state =
+    genotype_capability_available
+
+trusted_modern_ingestion_ready =
+    true
+```
+
+and VDB claims trusted genotype preservation:
+
+```text
+1. The canonical genotype artifact set is complete.
+
+2. Required genotype artifact versions are supported.
 
 3. Required package governance artifacts are readable.
 
-4. TEP validation state is discoverable and acceptable.
+4. TEP validation state is discoverable and acceptable for trusted ingestion.
 
 5. Genotype artifacts are registered in package governance metadata.
 
 6. Genotype lineage is discoverable.
 
-7. Genotype summary counts reconcile with observed rows.
+7. Genotype summary counts reconcile with observed genotype rows.
 
-8. All genotype observation columns are preserved.
+8. All producer-emitted genotype observation columns are preserved.
 
 9. genotype_observation_id values are preserved and unique.
 
-10. Source VCF, source header, source record, sample, run, and reference-build
+10. Source VCF, source-header, source-record, sample, run, and reference-build
     identities remain recoverable.
 
-11. Direct producer relationships are registered as direct and remain distinct
-    from VDB-derived relationships.
+11. Execution provenance is registered as context rather than biological
+    evidence.
 
-12. Complex relationships remain explicit and are routed to brokerage or
-    not-evaluated states.
+12. No producer genotype observation is rewritten, split, or synthetically
+    created.
 
-13. Multiallelic-derived relationships do not create producer genotype rows.
-
-14. Spanning-deletion relationships are preserved conservatively unless a
-    declared resolution policy exists.
-
-15. Execution provenance is registered as context, not biological evidence.
-
-16. Legacy variant-only packages remain usable without inferred genotype.
-
-17. No inheritance interpretation is emitted during genotype ingestion.
+13. No inheritance interpretation is emitted during genotype ingestion.
 ```
+
+These criteria are required before VDB may claim:
+
+```text
+genotype_maturity_state =
+    genotype_preservation_validated
+```
+
+They do not by themselves establish that direct relationships, complex
+relationships, brokerage, topology, or projection have been completed.
+
+### 26.3 Higher Genotype Maturity Criteria
+
+Additional criteria apply only when VDB claims the corresponding higher
+genotype maturity state.
+
+For:
+
+```text
+genotype_direct_relationships_registered
+```
+
+VDB must demonstrate:
+
+```text
+eligible direct producer relationships are registered as direct
+
+direct producer relationships remain distinguishable from VDB-derived
+relationships
+```
+
+For:
+
+```text
+genotype_complex_relationships_preserved
+```
+
+VDB must demonstrate:
+
+```text
+complex relationships remain explicit
+
+complex relationships are routed to brokerage input or an explicit
+not-evaluated state
+
+complex relationships are not silently promoted to direct relationships
+```
+
+For:
+
+```text
+genotype_brokerage_evaluated
+```
+
+VDB must demonstrate:
+
+```text
+multiallelic-derived relationships do not create synthetic producer genotype
+observations
+
+brokerage outcomes remain distinguishable from producer-declared relationships
+
+spanning-deletion relationships remain conservative unless a declared
+resolution policy exists
+```
+
+Later assertion, topology, and projection maturity claims require their own
+corresponding validation receipts.
+
+### 26.4 Legacy and Non-Trusted Package Criteria
+
+For:
+
+```text
+genotype_capability_unavailable_legacy
+```
+
+VDB must demonstrate:
+
+```text
+the canonical genotype artifact set is wholly absent rather than partial
+
+the package predates first-class genotype emission
+
+the package remains usable for variant-only ingestion when all non-genotype
+requirements pass
+
+no genotype observation is inferred
+
+genotype_maturity_state remains genotype_discovered
+```
+
+For:
+
+```text
+genotype_capability_incomplete
+
+genotype_capability_invalid
+
+genotype_capability_unsupported_version
+```
+
+VDB must demonstrate:
+
+```text
+the blocking condition is represented explicitly
+
+trusted_modern_ingestion_ready = false
+
+the package is rejected or quarantined from trusted genotype surfaces
+
+genotype_maturity_state does not advance beyond genotype_discovered while the
+blocking condition remains
+
+no absent, malformed, or unsupported genotype evidence is reconstructed or
+inferred
+```
+
+Legacy, incomplete, invalid, and unsupported-version classifications are valid
+package-classification outcomes.
+
+They are not successful trusted modern genotype-ingestion outcomes.
 
 ---
 
@@ -1349,6 +1751,24 @@ the code and test sequence for implementing this specification.
 Trusted genotype ingestion is valid only when VDB preserves the complete
 producer genotype observation substrate and records relationship state without
 collapsing producer evidence into derived topology or downstream reasoning.
+
+Every TEP-VAP package is genotype-applicable.
+
+Successful package classification begins at:
+
+```text
+genotype_maturity_state =
+    genotype_discovered
+```
+
+This classification-level maturity remains distinct from trusted genotype
+ingestion and higher preservation or brokerage maturity.
+
+A TEP-VAP package must never use:
+
+```text
+genotype_maturity_not_applicable
+```
 
 VDB may register direct producer relationships.
 

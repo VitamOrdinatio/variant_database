@@ -29,9 +29,17 @@ receipts pass.
 The central contract doctrine is:
 
 ```text
-VDB guarantees only the genotype evidence maturity tier whose required
-validation receipts have passed.
+For genotype-applicable producer packages, VDB guarantees only the genotype
+evidence maturity tier whose required validation receipts have passed.
+
+For genotype-not-applicable producer packages, VDB guarantees only the explicit
+not-applicable classification supported by package-scope validation receipts.
 ```
+
+`genotype_maturity_not_applicable` is not a genotype evidence maturity tier.
+
+It records that genotype maturity is outside the producer package's evidence
+grammar.
 
 VDB does not make a single undifferentiated `genotype-aware` guarantee.
 
@@ -148,6 +156,7 @@ Allowed genotype capability states are:
 ```text
 genotype_capability_available
 genotype_capability_unavailable_legacy
+genotype_capability_not_applicable
 genotype_capability_incomplete
 genotype_capability_invalid
 genotype_capability_unsupported_version
@@ -189,36 +198,196 @@ Legacy unavailability means genotype was not emitted by the producer substrate.
 
 It is not a biological observation.
 
+### 5.3 Genotype-Not-Applicable Capability
+
+```text
+genotype_capability_not_applicable
+```
+
+means genotype evidence is outside the declared producer package's evidence
+domain.
+
+This state is distinct from:
+
+```text
+genotype_capability_unavailable_legacy
+```
+
+The coherent package classification is:
+
+```text
+producer_genotype_applicability_state =
+    genotype_not_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_not_applicable
+
+genotype_maturity_state =
+    genotype_maturity_not_applicable
+```
+
+The fact that VDB evaluated this classification must be expressed through the
+package classification status and validation receipts.
+
+It must not be expressed by assigning `genotype_discovered`.
+
+Consumers may rely on this state meaning:
+
+```text
+genotype is not part of the producer package's evidence grammar
+no genotype artifact set is required
+no genotype observation should be inferred
+absence of genotype does not constitute package failure
+```
+
+Consumers must not interpret `genotype_capability_not_applicable` as:
+
+```text
+legacy genotype unavailability
+missing expected genotype evidence
+failed genotype evidence
+homozygous reference
+variant absence
+no-call
+negative biological evidence
+```
+
+A producer package whose evidence domain does not include genotype must not be
+represented as `genotype_capability_unavailable_legacy`.
+
 ---
 
 ## 6. Genotype Maturity Contract
 
-VDB genotype guarantees are maturity-tiered.
+VDB package-level genotype status distinguishes:
 
-Allowed genotype maturity states are:
+```text
+the cumulative genotype maturity progression for genotype-applicable producer
+packages
+
+and
+
+the terminal genotype-not-applicable maturity state for producer package types
+whose evidence domains exclude genotype
+```
+
+These are not the same kind of state.
+
+### 6.1 Genotype-Applicable Maturity Progression
+
+For genotype-applicable producer packages, allowed genotype maturity states are:
 
 ```text
 genotype_discovered
+
 genotype_preservation_validated
+
 genotype_direct_relationships_registered
+
 genotype_complex_relationships_preserved
+
 genotype_brokerage_evaluated
+
 genotype_assertion_ready
+
 genotype_topology_ready
+
 genotype_projection_ready
 ```
 
 VDB must not claim a higher genotype maturity state than its validation receipts
 support.
 
-### 6.1 `genotype_discovered`
+### 6.2 `genotype_discovered`
 
-VDB guarantees that genotype applicability and package-level genotype capability
-state have been evaluated.
+For a genotype-applicable producer package, VDB guarantees that:
 
-This state does not guarantee row-level genotype preservation.
+```text
+producer genotype applicability has been evaluated
 
-### 6.2 `genotype_preservation_validated`
+package genotype capability has been classified
+
+the applicability, capability, and maturity states form a valid producer-aware
+pairing
+```
+
+This state may apply to:
+
+```text
+a modern genotype-capable TEP-VAP package
+
+a legacy variant-only TEP-VAP package
+```
+
+For a legacy variant-only TEP-VAP package, `genotype_discovered` means that VDB
+classified genotype as applicable to the producer family but unavailable from
+the legacy package.
+
+It does not mean that the legacy package contains genotype observations.
+
+`genotype_discovered` does not guarantee:
+
+```text
+row-level genotype preservation
+
+direct relationship registration
+
+complex relationship preservation
+
+brokerage evaluation
+
+assertion readiness
+
+topology readiness
+
+projection readiness
+```
+
+`genotype_discovered` must not be assigned to a producer package whose genotype
+applicability state is:
+
+```text
+genotype_not_applicable_to_producer_type
+```
+
+### 6.3 `genotype_maturity_not_applicable`
+
+For a producer package type whose evidence domain excludes genotype, VDB
+guarantees the coherent package classification:
+
+```text
+producer_genotype_applicability_state =
+    genotype_not_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_not_applicable
+
+genotype_maturity_state =
+    genotype_maturity_not_applicable
+```
+
+`genotype_maturity_not_applicable` is not part of the cumulative genotype
+maturity progression.
+
+It does not mean:
+
+```text
+genotype evidence was discovered
+
+genotype evidence is missing
+
+genotype evidence failed validation
+
+the package is a legacy genotype-applicable package
+```
+
+It means that genotype maturity does not apply to the producer package's
+evidence grammar.
+
+Package classification status and validation receipts communicate that VDB
+evaluated and recorded this scope determination.
+
+### 6.4 `genotype_preservation_validated`
 
 VDB guarantees that producer genotype observations have been preserved and
 validated according to the genotype preservation validation gates.
@@ -229,7 +398,7 @@ requires execution provenance context validation to have passed.
 This state does not guarantee direct relationship registration, complex
 brokerage, topology readiness, projection readiness, or RDGP reasoning.
 
-### 6.3 `genotype_direct_relationships_registered`
+### 6.5 `genotype_direct_relationships_registered`
 
 VDB guarantees that eligible direct producer-declared genotype-to-variant
 relationships have been registered as direct producer relationships.
@@ -237,21 +406,21 @@ relationships have been registered as direct producer relationships.
 This state does not guarantee that complex genotype relationships have been
 brokered.
 
-### 6.4 `genotype_complex_relationships_preserved`
+### 6.6 `genotype_complex_relationships_preserved`
 
 VDB guarantees that complex genotype relationships are preserved as governed
 source states and routed to brokerage input or explicit not-evaluated states.
 
 This state does not guarantee that all complex relationships are resolved.
 
-### 6.5 `genotype_brokerage_evaluated`
+### 6.7 `genotype_brokerage_evaluated`
 
 VDB guarantees that brokerage-required genotype observations have either
 brokerage receipts or explicit not-evaluated / policy-unavailable states.
 
 This state does not guarantee projection readiness or RDGP reasoning.
 
-### 6.6 `genotype_assertion_ready`
+### 6.8 `genotype_assertion_ready`
 
 VDB guarantees that genotype declaration sets and genotype-informed Assertion
 Record substrates are available and non-interpretive.
@@ -259,7 +428,7 @@ Record substrates are available and non-interpretive.
 This state does not guarantee topology readiness unless topology validation has
 also passed.
 
-### 6.7 `genotype_topology_ready`
+### 6.9 `genotype_topology_ready`
 
 VDB guarantees that genotype topology members and topology relationship basis
 surfaces are typed, traceable, source-preserving, policy-declared where derived,
@@ -267,7 +436,7 @@ and non-interpretive.
 
 This state does not guarantee projection readiness or RDGP reasoning.
 
-### 6.8 `genotype_projection_ready`
+### 6.10 `genotype_projection_ready`
 
 VDB guarantees that later genotype-aware projection surfaces have passed their
 own projection-specific validation.
@@ -810,14 +979,35 @@ present or expected under modern genotype-capable ingestion.
 
 ### 19.2 TEP-GSC
 
-For `TEP-GSC` packages, VDB may record:
+For `TEP-GSC` packages, VDB guarantees:
 
 ```text
-genotype_not_applicable_to_producer_type
+producer_genotype_applicability_state =
+    genotype_not_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_not_applicable
+
+genotype_maturity_state =
+    genotype_maturity_not_applicable
 ```
+
+TEP-GSC packages represent phenotype-scoped gene evidence and do not emit
+sample-specific genotype evidence.
 
 This state must not fail the corpus merely because GSC does not emit genotype
 evidence.
+
+TEP-GSC packages must not be represented as:
+
+```text
+genotype_capability_unavailable_legacy
+
+genotype_maturity_state = genotype_discovered
+```
+
+because genotype is not missing from a legacy genotype-applicable producer
+substrate; it is outside the TEP-GSC evidence domain.
 
 ### 19.3 Mixed-Corpus Guarantee
 
@@ -861,6 +1051,15 @@ genotype-to-variant relationship
 
 execution provenance
     ≠ biological evidence
+
+package genotype classification completed
+    ≠ genotype evidence discovered
+
+genotype_maturity_not_applicable
+    ≠ genotype_discovered
+
+genotype-not-applicable producer scope
+    ≠ legacy genotype unavailability
 ```
 
 Any surface that collapses these distinctions is not contract-compliant.
@@ -945,14 +1144,28 @@ Consumers must not:
 
 ```text
 interpret genotype missingness as homozygous reference
+
 interpret no-call as absence
+
 interpret unresolved relationship as evidence absence
+
 interpret complex relationship as invalid genotype evidence
+
 interpret derived relationship as producer genotype observation
+
 interpret resolved_from_multiallelic_record as direct_source_biallelic
+
 interpret execution provenance as biological evidence
+
 interpret VDB topology as RDGP reasoning
+
 interpret genotype-aware burden as disease association
+
+interpret genotype_maturity_not_applicable as missing or failed genotype
+evidence
+
+interpret completed package classification as evidence that genotype
+observations exist
 ```
 
 Consumers that need inheritance, diagnosis, pathogenicity, or disease-model
@@ -994,22 +1207,47 @@ A VDB run, package, corpus, or surface violates this contract if it:
 
 ```text
 claims a maturity tier without required passing validation receipts
+
 classifies a partial genotype artifact set as legacy
+
 accepts trusted modern genotype ingestion without required execution provenance
+
 drops producer genotype rows
+
 drops producer genotype columns without reconstructability
+
 rewrites genotype_observation_id
+
 replaces raw producer values with normalized convenience values
+
 silently promotes complex relationships to direct relationships
+
 creates synthetic producer genotype observations
+
 hides unresolved relationships
+
 treats spanning-deletion `*` as an ordinary ALT allele without policy
+
 misclassifies execution provenance as biological evidence
+
 interprets genotype missingness as homozygous reference
+
 emits inheritance interpretation inside VDB genotype ingestion, declaration, or
 topology layers
+
 fails to distinguish TEP-GSC genotype-not-applicable status from TEP-VAP
 genotype validation failure
+
+classifies a genotype-not-applicable producer package as
+genotype_capability_unavailable_legacy
+
+assigns genotype_capability_not_applicable to a genotype-applicable TEP-VAP
+package
+
+assigns genotype_discovered to a genotype-not-applicable producer package
+
+assigns genotype_maturity_not_applicable to a genotype-applicable producer
+package
 ```
 
 Contract-violating outputs must not be treated as trusted genotype-aware VDB
@@ -1038,6 +1276,17 @@ genotype_topology_ready
 genotype_projection_ready
 ```
 
+This cumulative order applies only to genotype-applicable producer packages.
+
+A producer package whose evidence domain excludes genotype must instead use:
+
+```text
+genotype_maturity_state =
+    genotype_maturity_not_applicable
+```
+
+and must not enter the cumulative genotype maturity progression.
+
 Projection readiness may require later projection-specific documents and
 validation beyond this contract's preservation scope.
 
@@ -1050,7 +1299,9 @@ This contract is satisfied when downstream consumers can safely rely on VDB to:
 ```text
 1. classify genotype capability explicitly for each package
 
-2. report genotype maturity tier without overclaiming
+2. report genotype maturity without overclaiming, including the explicit
+   `genotype_maturity_not_applicable` state for genotype-not-applicable producer
+   packages
 
 3. require the complete genotype artifact set for trusted modern genotype
    ingestion
@@ -1076,9 +1327,13 @@ This contract is satisfied when downstream consumers can safely rely on VDB to:
 12. support legacy variant-only packages without inferred genotype
 
 13. support mixed corpora without treating genotype-not-applicable producers as
-    genotype failures
+    genotype failures, legacy genotype-applicable packages, or
+    `genotype_discovered` packages
 
-14. enforce anti-collapse and anti-overclaim boundaries
+14. preserve coherent producer-aware applicability, capability, and maturity
+    pairings
+
+15. enforce anti-collapse and anti-overclaim boundaries
 ```
 
 ---

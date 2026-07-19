@@ -159,6 +159,8 @@ trusted topology.
 The logical genotype schema consists of the following surfaces:
 
 ```text
+source_genotype_package_classifications
+
 source_genotype_observations
 
 genotype_artifact_index
@@ -294,11 +296,12 @@ The following fields may appear across multiple genotype schema surfaces.
 
 | Field | Requirement | Description |
 |---|---:|---|
-| `source_package_id` | required | VDB package identity for the ingested TEP-VAP package. |
+| `source_package_id` | required | VDB package identity for the ingested producer package. |
 | `tep_id` | recommended | Transport package identity when available. |
 | `producer_type` | required | Producer package type, for example `TEP-VAP` or `TEP-GSC`. |
+| `producer_genotype_applicability_state` | required where package-scoped | Whether genotype applies to the declared producer package type. |
 | `genotype_capability_state` | required where package-scoped | Canonical genotype capability state assigned by VDB. |
-| `genotype_maturity_state` | recommended where genotype-scoped | Highest genotype maturity tier supported by passed validation receipts. |
+| `genotype_maturity_state` | required where package-scoped genotype classification is recorded | Highest validated genotype maturity tier for a genotype-applicable package, or `genotype_maturity_not_applicable` when genotype is outside the producer package's evidence domain. |
 | `sample_id` | required where sample-scoped | Producer sample identity. |
 | `run_id` | required where run-scoped | Producer run identity. |
 | `genotype_observation_id` | required for genotype evidence | Producer genotype observation identity. |
@@ -312,6 +315,172 @@ The following fields may appear across multiple genotype schema surfaces.
 | `alternate_alleles_raw` | required for multiallelic brokerage | Source ALT list preserving order. |
 | `called_allele_indices` | required for allele-index brokerage when emitted | Called allele indices parsed from GT. |
 | `traceability_refs` | recommended | Structured references to source artifacts, rows, policies, and receipts. |
+
+---
+
+## 6A. `source_genotype_package_classifications`
+
+### 6A.1 Purpose
+
+`source_genotype_package_classifications` records the package-level genotype
+scope classification produced during VDB discovery.
+
+This surface distinguishes three independent questions:
+
+```text
+Does genotype apply to the producer package type?
+
+What genotype capability did the package provide?
+
+What validated genotype maturity state applies to the package?
+```
+
+Package classification must be completed before genotype-specific artifact or
+row-level evidence is trusted.
+
+### 6A.2 Cardinality
+
+```text
+exactly one row per registered source package
+```
+
+A package must not receive multiple competing genotype classifications.
+
+### 6A.3 Fields
+
+| Field | Requirement | Description |
+|---|---:|---|
+| `package_id` | required | Registered VDB package identity and foreign-key basis for the package classification. |
+| `tep_id` | recommended | Transport package identity when available. |
+| `producer_family` | required | Explicit classifier-dispatch family, currently `VAP` or `GSC`. |
+| `producer_type` | optional | Transport-facing producer type, for example `TEP-VAP` or `TEP-GSC`, when retained separately from the classifier family. |
+| `producer_genotype_applicability_state` | required | Whether genotype belongs to the producer package type's evidence domain. |
+| `genotype_capability_state` | required | Package-level genotype capability classification. |
+| `genotype_maturity_state` | required | Validated genotype maturity tier or explicit not-applicable state. |
+| `genotype_artifact_set_status` | required | State of the canonical genotype artifact set for this package. |
+| `execution_provenance_status` | required | Package execution-provenance requirement and registration state. |
+| `classification_status` | required | Whether package genotype classification completed successfully. |
+| `classification_reason` | required | Governed reason for the assigned classification. |
+| `trusted_modern_ingestion_ready` | required | Whether the package is eligible for trusted modern genotype ingestion. |
+| `traceability_refs` | recommended | References to package governance artifacts and validation receipts. |
+
+### 6A.4 Classifier Naming Boundary
+
+The implemented package-classification surface uses:
+
+```text
+package_id
+
+producer_family
+```
+
+`producer_family` is the explicit dispatch key used to select producer-specific
+genotype classification rules.
+
+Current governed values are:
+
+```text
+VAP
+
+GSC
+```
+
+`producer_type`, when retained, is transport metadata and may use values such as:
+
+```text
+TEP-VAP
+
+TEP-GSC
+```
+
+`producer_type` must not silently replace `producer_family` as the classifier
+dispatch key.
+
+Likewise, `source_package_id` may remain the logical package-reference field on
+other downstream genotype surfaces, but the implemented
+`source_genotype_package_classifications` surface uses `package_id`.
+
+These names must not be treated as interchangeable without an explicit mapping.
+
+### 6A.5 Required Classification Pairings
+
+Canonical package-level pairings include:
+
+```text
+modern genotype-capable TEP-VAP:
+    producer_family =
+        VAP
+
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_available
+
+    genotype_maturity_state =
+        genotype_discovered
+
+legacy variant-only TEP-VAP:
+    producer_family =
+        VAP
+
+    producer_genotype_applicability_state =
+        genotype_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_unavailable_legacy
+
+    genotype_maturity_state =
+        genotype_discovered
+
+TEP-GSC:
+    producer_family =
+        GSC
+
+    producer_genotype_applicability_state =
+        genotype_not_applicable_to_producer_type
+
+    genotype_capability_state =
+        genotype_capability_not_applicable
+
+    genotype_maturity_state =
+        genotype_maturity_not_applicable
+```
+
+`classification_status` communicates whether VDB successfully evaluated and
+recorded the package classification.
+
+It must not be replaced by misuse of `genotype_maturity_state`.
+
+### 6A.6 Required Invariants
+
+```text
+genotype_capability_not_applicable
+    requires
+genotype_not_applicable_to_producer_type
+    and
+genotype_maturity_not_applicable
+
+genotype_maturity_not_applicable
+    must not be assigned to a genotype-applicable producer package
+
+genotype_discovered
+    must not be assigned to a genotype-not-applicable producer package
+
+genotype_capability_unavailable_legacy
+    requires a genotype-applicable producer package
+
+one package_id
+    has exactly one package-level genotype classification
+
+one package classification
+    has exactly one explicit producer_family dispatch value
+```
+
+Future producer families must receive explicit producer-specific classification
+rules.
+
+They must not silently inherit TEP-VAP or TEP-GSC classification semantics.
 
 ---
 
@@ -1028,6 +1197,8 @@ genotype_capability_available
 
 genotype_capability_unavailable_legacy
 
+genotype_capability_not_applicable
+
 genotype_capability_incomplete
 
 genotype_capability_invalid
@@ -1035,7 +1206,23 @@ genotype_capability_invalid
 genotype_capability_unsupported_version
 ```
 
+Required semantic distinctions:
+
+```text
+genotype_capability_unavailable_legacy
+    genotype applies to the producer package type, but the legacy package did
+    not emit first-class genotype evidence
+
+genotype_capability_not_applicable
+    genotype is outside the declared producer package type's evidence domain
+```
+
+These values must not be treated as interchangeable.
+
 ### 19.2 `genotype_maturity_state`
+
+For genotype-applicable producer packages, the cumulative maturity progression
+is:
 
 ```text
 genotype_discovered
@@ -1054,6 +1241,23 @@ genotype_topology_ready
 
 genotype_projection_ready
 ```
+
+For producer package types whose evidence domains exclude genotype, the required
+state is:
+
+```text
+genotype_maturity_not_applicable
+```
+
+`genotype_maturity_not_applicable` is not part of the cumulative genotype
+maturity progression.
+
+It means that genotype maturity does not apply to the producer package's
+evidence grammar.
+
+Package classification completion must be represented through
+`classification_status` and validation receipts, not by assigning
+`genotype_discovered` to a genotype-not-applicable producer package.
 
 ### 19.3 `relationship_origin`
 
@@ -1307,19 +1511,133 @@ Raw value preservation and normalized nullability state are distinct.
 
 ---
 
+## 20A. Genotype-Not-Applicable Producer Representation
+
+For producer package types whose evidence domain excludes genotype, VDB must
+represent genotype scope explicitly without inventing legacy status.
+
+Recommended package-scoped fields:
+
+```text
+package_id
+
+tep_id
+
+producer_family
+
+producer_type
+
+producer_genotype_applicability_state
+
+genotype_capability_state
+
+genotype_maturity_state
+
+genotype_artifact_set_status
+
+execution_provenance_status
+
+classification_reason
+
+traceability_refs
+```
+
+Recommended TEP-GSC values:
+
+```text
+producer_family = GSC
+
+producer_type = TEP-GSC
+
+producer_genotype_applicability_state =
+    genotype_not_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_not_applicable
+
+genotype_maturity_state =
+    genotype_maturity_not_applicable
+
+genotype_artifact_set_status =
+    genotype_artifact_set_not_applicable
+
+execution_provenance_status =
+    execution_provenance_not_applicable
+
+classification_reason =
+    genotype_not_applicable_to_producer_type
+```
+
+This representation means that genotype is outside the declared TEP-GSC
+evidence grammar.
+
+The fact that VDB evaluated and recorded this classification is represented by:
+
+```text
+classification_status = classified
+```
+
+and by the associated validation receipts.
+
+It must not be represented by assigning:
+
+```text
+genotype_maturity_state = genotype_discovered
+```
+
+TEP-GSC contains phenotype-scoped gene evidence.
+
+It does not contain sample-specific genotype evidence.
+
+A genotype-not-applicable producer package must not synthesize:
+
+```text
+source_genotype_observations
+
+genotype_relationship_input_index rows
+
+direct genotype-to-variant relationships
+
+derived genotype-to-variant relationships
+
+genotype brokerage receipts
+```
+
+A genotype-not-applicable producer package must not be represented as:
+
+```text
+genotype_capability_unavailable_legacy
+```
+
+because legacy unavailability applies only when genotype belongs to the
+producer's evidence domain but was not emitted by the legacy package.
+
+---
+
 ## 21. Legacy Compatibility Representation
 
-For older TEP-VAP packages without genotype artifacts, VDB may materialize
-legacy states.
+For older genotype-applicable TEP-VAP packages without genotype artifacts, VDB
+may materialize explicit legacy states.
+
+This representation does not apply to producer package types whose evidence
+domain excludes genotype.
 
 Recommended fields for legacy-compatible package records:
 
 ```text
-source_package_id
+package_id
 
 tep_id
 
+producer_family
+
+producer_type
+
+producer_genotype_applicability_state
+
 genotype_capability_state
+
+genotype_maturity_state
 
 legacy_compatibility_mode
 
@@ -1335,7 +1653,18 @@ traceability_refs
 Recommended values:
 
 ```text
-genotype_capability_state = genotype_capability_unavailable_legacy
+producer_family = VAP
+
+producer_type = TEP-VAP
+
+producer_genotype_applicability_state =
+    genotype_applicable_to_producer_type
+
+genotype_capability_state =
+    genotype_capability_unavailable_legacy
+
+genotype_maturity_state =
+    genotype_discovered
 
 legacy_compatibility_mode = variant_only_legacy_compatibility_mode
 
@@ -1343,6 +1672,15 @@ genotype_context_state = genotype_context_unavailable
 
 genotype_projection_state = genotype_projection_not_evaluated
 ```
+
+For a legacy TEP-VAP package, `genotype_discovered` means that genotype
+applicability and capability classification completed.
+
+It does not mean that the package emitted genotype observations.
+
+Legacy records must not advance beyond `genotype_discovered` without the
+producer genotype substrate and the validation receipts required by the higher
+maturity state.
 
 Legacy records must not synthesize `source_genotype_observations`.
 
@@ -1451,7 +1789,29 @@ This schema is successful when VDB can represent:
 11. unresolved, ambiguous, spanning-deletion, symbolic, missing-identity, and
     not-evaluated states without treating them as absence
 
-12. legacy variant-only packages without inferred genotype
+12. legacy variant-only TEP-VAP packages without inferred genotype
+
+13. genotype-not-applicable producer packages using the coherent classification:
+
+    ```text
+    genotype_not_applicable_to_producer_type
+
+    genotype_capability_not_applicable
+
+    genotype_maturity_not_applicable
+    ```
+
+    without legacy misclassification or synthesized genotype evidence
+
+14. legacy genotype-applicable TEP-VAP packages using
+    `genotype_capability_unavailable_legacy` and `genotype_discovered` without
+    implying that genotype observations exist
+
+15. mixed-producer package classifications that preserve distinct evidence
+    grammars for TEP-VAP and TEP-GSC
+
+16. completed package classification without conflating classification status
+    with genotype evidence maturity
 ```
 
 The schema fails if it permits a VDB-derived relationship to masquerade as a
@@ -1477,6 +1837,9 @@ in code.
 The genotype evidence schema is layered:
 
 ```text
+source_genotype_package_classifications
+    package-level applicability, capability, and maturity classification
+
 source_genotype_observations
     immutable producer truth
 
